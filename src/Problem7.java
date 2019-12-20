@@ -6,9 +6,6 @@ import java.util.Set;
 public class Problem7 {
 
 	public static void main(String[] args) {
-		/*long test = 10009729;
-		boolean prim = isPrime(test);
-		System.out.print("Is " + test + " prime? : " + prim);*/
 		problem();
 
 	}

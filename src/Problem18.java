@@ -72,7 +72,7 @@ NOTE: As there are only 16384 routes, it is possible to solve this problem by tr
 				{6, 9, 3, 2, 7}
 			};
 		
-		System.out.println("Greatest Sum = " + Util.findGreatestSumPathOpt3(allnums2));
+		System.out.println("Greatest Sum = " + Util.findGreatestSumPath(allnums2));
 	
 		
 	}

@@ -37,17 +37,6 @@ NOTE: Once the chain starts the terms are allowed to go above one million.
 				//System.out.println("new biggest: " + i + " with "  + steps  + " steps");
 			}
 		}
-		
-/*		int test = 113383;
-		int steps = 0;
-		while(test!=1){
-			steps++;
-			test = updateNum(test);
-		}
-		System.out.println(test + " with "  + steps  + " steps");*/
-		
-		
-		
 		System.out.println("Found " + finalNum + " with " + biggestNumOfSteps + " steps");
 		
 	}

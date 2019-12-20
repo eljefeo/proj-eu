@@ -89,7 +89,7 @@ public class Util {
 	}
 	
 	
-	public static int findGreatestSumPathOpt3(int[][] allnums){
+	public static int findGreatestSumPath(int[][] allnums){
 		System.out.println("At line " + 1);
 		allnums[1][0] += allnums[0][0];
 		allnums[1][1] += allnums[0][0];
