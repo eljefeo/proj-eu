@@ -144,4 +144,40 @@ public class Util {
 		}
 	}
 
+	public static Set<Integer> getProperDivisors(int num){
+		
+		Set<Integer> factors = new HashSet<Integer>();
+		factors.add(1);
+		int half = num/2;
+		for(int i = 2; i <= half; i++){
+			if(num%i == 0){
+				factors.add(i);
+			}
+		}
+		return factors;
+	}
+	
+	public static int addAllIntegers(Set<Integer> nums){
+		int result = 0;
+		for(Integer num : nums){
+			result+=num;
+		}
+		return result;
+	}
+	
+	public static int getAmicableNumer(int num){
+		//return 0 if no amicable number found
+		 int sum1 = Util.addAllIntegers(Util.getProperDivisors(num));
+		 int sum2 = Util.addAllIntegers(Util.getProperDivisors(sum1));
+		 if(num==sum2 && num!=sum1){
+			 return sum2;
+		 } 
+		 
+		 return 0;
+		 
+	}
+	
+	public static boolean
+	
+	
 }
