@@ -1,3 +1,5 @@
+import java.util.HashSet;
+import java.util.Set;
 
 public class Problem23 {
 
@@ -18,6 +20,29 @@ Find the sum of all the positive integers which cannot be written as the sum of 
 	 */
 	public static void problem(){
 		
+		int max = 28123;
+		int total = 0;
+		
+		Set<Integer> abundNums = new HashSet<Integer>();
+		Set<Integer> sumOfAbundNums = new HashSet<Integer>();
+		for(int i=1; i<=max; i++){
+			if(Util.isAbundantNumber(i)){
+				abundNums.add(i);
+			}
+		}
+		for(Integer i : abundNums){
+			for(Integer j : abundNums){
+				sumOfAbundNums.add(i+j);
+			}
+		}
+		for(int i=1; i<=max; i++){
+			if(!sumOfAbundNums.contains(i)){
+				total+=i;
+			}
+		}
+		
+		
+		System.out.println("Found: " + total);
 	}
 	
 }

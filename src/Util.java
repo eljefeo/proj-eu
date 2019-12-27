@@ -177,7 +177,23 @@ public class Util {
 		 
 	}
 	
-	public static boolean
+	public static boolean isSumOfAbundantNumbers(int num){
+		for(int i=1; i<=num/2; i++){
+			
+			int num2 = num-i;
+			if(Util.isAbundantNumber(i) && Util.isAbundantNumber(num)){
+				return true;
+			}
+			
+		}
+		return false;
+		
+	}
+	
+	public static boolean isAbundantNumber(int num){
+		return Util.addAllIntegers(Util.getProperDivisors(num)) > num;
+	}
+	
 	
 	
 }

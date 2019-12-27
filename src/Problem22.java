@@ -68,8 +68,7 @@ What is the total of all the name scores in the file?
 	public static int getNameValue(int index, String name){
 		int charsum = 0;
 		for(int i=0; i<name.length(); i++){
-			char c = name.charAt(i);
-			charsum += charvals.get(c);
+			charsum += charvals.get(name.charAt(i));
 		}
 		return charsum*(index+1);
 		

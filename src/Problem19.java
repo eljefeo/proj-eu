@@ -28,12 +28,10 @@ How many Sundays fell on the first of the month during the twentieth century (1 
 		int dayOfWeek = 2;
 		int yearstart = 1901;
 		int yearend = 2000;
-		int dayindex = 0;
 		for(int year = yearstart; year<=yearend; year++){
 			for(int month=1; month<=12; month++){
 				int numOfDays = Util.getNumOfDaysInMonth(month, year);
 				for(int day=1; day<=numOfDays; day++){
-					dayindex++;
 					dayOfWeek++;
 					if(dayOfWeek == 8){
 						dayOfWeek = 1;
