@@ -19,9 +19,7 @@ public class Problem15 {
 		
 		for(int i = 1; i < height; i++){
 			for(int j = 1; j < height; j++){
-				long first = arr[i-1][j];
-				long second = arr[i][j-1];
-				arr[i][j] = first + second;
+				arr[i][j] = arr[i-1][j] + arr[i][j-1];
 			}
 		}
 		

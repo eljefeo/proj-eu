@@ -8,6 +8,9 @@ import java.util.Set;
 
 public class Util {
 	public static boolean isPrime(long num){
+		if(num==2){
+			return true;
+		}
 		if(num%2==0){
 			return false;
 		}
@@ -192,6 +195,19 @@ public class Util {
 	
 	public static boolean isAbundantNumber(int num){
 		return Util.addAllIntegers(Util.getProperDivisors(num)) > num;
+	}
+
+	public static boolean isCircularPrime(int num) {
+		String intStr = num+"";
+		for(int i=0; i<intStr.length(); i++){
+			intStr = intStr.substring(1) + intStr.charAt(0);
+			Integer newInt = Integer.parseInt(intStr);
+			if(!isPrime((long)newInt)){
+				return false;
+			}
+		}
+		return true;
+		
 	}
 	
 	

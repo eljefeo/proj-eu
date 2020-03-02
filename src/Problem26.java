@@ -23,6 +23,21 @@ public class Problem26 {
 	}
 	
 	public static void problem(){
+		System.out.println("Hi");
+		int a = 1000000;
+		int b = 54;
+		int c = 7;
+		
+		
+		float f = (float)a/(float)c;
+		System.out.println(f);
+		
+		
+		
+		f = f*10;
+		f = f*10;
+		System.out.println("f*10 : " + f);
+		 
 		
 	}
 

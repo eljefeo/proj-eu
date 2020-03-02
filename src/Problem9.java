@@ -13,6 +13,7 @@ public class Problem9 {
 			problem();
 	}
 	
+	
 	public static void problem(){
 		for(int i = 1; i < 1000; i++){
 			int a = (int) Math.pow(i, 2);

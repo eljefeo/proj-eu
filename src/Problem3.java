@@ -18,6 +18,7 @@ public class Problem3 {
 	public static void problem(){
 		// if a number is not prime, it is a composite number.
 		// all composite numbers have at least 1 prime factor that is less than or equal to the number's square root
+		//if a number has a prime factor less than or equal to its square root, it is not prime.
 		
 		
 		Set<Long> primes = new HashSet<Long>();
