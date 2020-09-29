@@ -25,7 +25,7 @@ public class Problem4 {
 			for (int j = min; j <= max; j++){
 				int prod = i*j;
 				String prodStr = prod + "";
-				if(isPalindrome(prodStr)){
+				if(Util.isPalindrome(prodStr)){
 					palindromes.add(prod);
 				}
 				
@@ -36,21 +36,6 @@ public class Problem4 {
 		System.out.println("Largest palindrome " + largestPal); 
 	}
 	
-	public static boolean isPalindrome(String str){
-		
-		if(str.length() > 0){
-			
-			int half = str.length() / 2;
-			for (int i = 0; i <= half ; i++){
-				char a = str.charAt(i);
-				char b = str.charAt(str.length()-1-i);
-				if(a != b){
-					return false;
-				}
-			}
-			return true;
-		}
-		return false;
-	}
+	
 
 }

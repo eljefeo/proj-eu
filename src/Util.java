@@ -1,16 +1,16 @@
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class Util {
 	public static boolean isPrime(long num){
-		if(num==2){
+		if(num < 0) {
+			return false;
+		}
+		if(num==2) {
 			return true;
 		}
+		
 		if(num%2==0){
 			return false;
 		}
@@ -208,6 +208,23 @@ public class Util {
 		}
 		return true;
 		
+	}
+	
+public static boolean isPalindrome(String str){
+		
+		if(str.length() > 0){
+			
+			int half = str.length() / 2;
+			for (int i = 0; i <= half ; i++){
+				char a = str.charAt(i);
+				char b = str.charAt(str.length()-1-i);
+				if(a != b){
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
 	}
 	
 	
