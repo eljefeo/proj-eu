@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class Problem26 {
 /*	
@@ -19,26 +21,36 @@ public class Problem26 {
 		
 	public static void main(String[] args) {
 		problem();
-
+		
 	}
-	
 	public static void problem(){
-		System.out.println("Hi");
-		int a = 1000000;
-		int b = 54;
-		int c = 7;
-		
-		
-		float f = (float)a/(float)c;
-		System.out.println(f);
-		
-		
-		
-		f = f*10;
-		f = f*10;
-		System.out.println("f*10 : " + f);
-		 
-		
+		int biggestRemainderSet = 0;
+		int biggestD = 0; // ;)
+		for(int i=1; i<1000; i++){
+			int remainderSize = getRepeatingDecimal(10,i);
+			if(remainderSize > biggestRemainderSet){
+				biggestRemainderSet = remainderSize;
+				biggestD = i;
+				System.out.println("New biggest set of remainders is size " + biggestRemainderSet + " for d=" + i);
+			}
+		}
+		System.out.println("Biggest set of remainders " + biggestRemainderSet + " for d=" + biggestD);
+	}
+	private static int getRepeatingDecimal(int numerator, int denom){
+		List<Integer> numerators = new ArrayList<Integer>();
+		while (numerator != 0){
+			numerators.add(numerator);
+			int result = numerator/denom;
+			int remainder = numerator%denom; 
+			numerator = result != 0 ? remainder*10 : numerator *10;
+			int numIndex = numerators.indexOf(numerator);
+			if(numIndex != -1){
+				//System.out.println("I think we are going to repeat, same numerator " + numerator);
+				//System.out.println("Final Results for " + denom + ": " + (results.size() - repeatingIndex) + " = " + Arrays.toString(results.toArray()) + "\n");
+				return numerators.size() - numIndex;
+			}
+		}
+		return 0;
 	}
 
 }
