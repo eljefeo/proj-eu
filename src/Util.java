@@ -1,6 +1,8 @@
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Util {
@@ -270,8 +272,8 @@ public class Util {
 
 	
 	///// Seems to add duplicates still, and it should not:
-	static Set<Integer[]> createAllCombinationsWithRepeatsAddToNum(int[] data, int combinationSize, int goal) {
-		Set<Integer[]> allcombs = new HashSet<Integer[]>();
+	static List<Integer[]> createAllCombinationsWithRepeatsAddToNum(int[] data, int combinationSize, int goal) {
+		List<Integer[]> allcombs = new ArrayList<Integer[]>();
 		
 		int indexToChange = combinationSize - 1; // start with last num in comb
 		Integer[] comb = new Integer[combinationSize];
@@ -293,11 +295,9 @@ public class Util {
 			if (addsUp(comb, goal)) {
 				Integer[] temp = comb.clone();
 				Arrays.sort(temp);
-				allcombs.add(temp);
+				if(!listContainsIntArray(allcombs, temp))
+					allcombs.add(temp);
 			}
-		//}
-		
-		//allcombs.add(comb.clone());
 		if (reset)
 			indexToChange = combinationSize - 1;
 
@@ -310,7 +310,7 @@ public class Util {
 
 	}
 
-	private static boolean isDone(Integer[] nums, int maxVal) {
+	public static boolean isDone(Integer[] nums, int maxVal) {
 		for (int i = 0; i < nums.length; i++) {
 			if (nums[i] != maxVal) {
 				return false;
@@ -319,7 +319,7 @@ public class Util {
 		return true;
 	}
 
-	private static boolean addsUp(Integer[] nums, int goal) {
+	public static boolean addsUp(Integer[] nums, int goal) {
 		int total = 0;
 		for (Integer i : nums) {
 			total += i;
@@ -330,7 +330,7 @@ public class Util {
 		return total == goal;
 	}
 
-	private static int getIndex(int[] data, int num) {
+	public static int getIndex(int[] data, int num) {
 
 		for (int i = 0; i < data.length; i++) {
 			if (data[i] == num) {
@@ -339,5 +339,15 @@ public class Util {
 		}
 		return 0;
 	}
+	
+	public static boolean listContainsIntArray(List<Integer[]> lis, Integer[] arr){
+		for(Integer[] ar : lis){
+			if(Arrays.equals(ar, arr)){
+				return true;
+			}
+		}
+		return false;
+	}
+
 
 }
