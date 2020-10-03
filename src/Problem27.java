@@ -40,8 +40,12 @@ public class Problem27 {
 		int a = -1000;
 		int b = -1000;
 		int oldb = -1000;
+		
 		int maxA = 999;
 		int maxB = 1000;
+		int winningA = 0;
+		int winningB = 0;
+		
 		int bestPCount = 0;
 		
 		while(a<maxA){
@@ -57,7 +61,9 @@ public class Problem27 {
 				}
 				if(n > bestPCount){
 					bestPCount = n;
-					System.out.println("New Best PCount : " + n + "\t for n=" + n + " b=" + b + " a=" + a + " and product a*b = " + (a*b));
+					winningA = a;
+					winningB = b;
+					//System.out.println("New Best PCount : " + n + "\t for n=" + n + " b=" + b + " a=" + a + " and product a*b = " + (a*b));
 					
 				} /*else if(n == bestPCount){
 					System.out.println("SAME TIED Best PCount : " + n + "\t for n=" + n + " b=" + b + " a=" + a + " and product a*b = " + (a*b));
@@ -65,6 +71,8 @@ public class Problem27 {
 			}
 		}
 		
+		
+		System.out.println("Best PCount : " + bestPCount + " with product of a*b : " + (winningA*winningB));
 		
 		
 	}
