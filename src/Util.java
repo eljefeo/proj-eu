@@ -1,6 +1,7 @@
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -343,6 +344,17 @@ public class Util {
 	public static boolean listContainsIntArray(List<Integer[]> lis, Integer[] arr){
 		for(Integer[] ar : lis){
 			if(Arrays.equals(ar, arr)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean listListContainsIntArray(List<List<Integer>> lis, List<Integer> arr){
+		Collections.sort(arr);
+		for(List<Integer> li : lis){
+			Collections.sort(li);
+			if(li.equals(arr)){
 				return true;
 			}
 		}
