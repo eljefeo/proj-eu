@@ -34,102 +34,118 @@ public class Problem31 {
 		problem();
 
 	}
+
 	static int goalcounter = 0;
 	static int allCounter = -1;
 	static int baseCounter = -1;
+
 	private static void problem() {
-		//int[] nums = new int[] { 1, 2, 3 };
-		//int goal = 6;
-		//recurs("", "abcd");
-		//recurn(new ArrayList<Integer>(), Arrays.asList(new Integer[]{1,2,3}));
-		
-		
-		 int[] nums = new int[] { 1, 2, 3 };
-		 //int[] data = { 0, 1, 2, 5, 10, 20, 100, 200 };
-		 int[] data = { 200, 100, 20, 10, 5, 2, 1};
-		 
-		 int goal = 6;
-		 int agoal = 200;
-		/* List<Integer[]> allcombs = Util.createAllCombinationsWithRepeatsAddToNum(new int[]{ 0, 1, 2, 3 }, 11, 6);
-		for(Integer[] l : allcombs){
-			for(Integer i : l){
-				System.out.print(i+" ");
-			}
-			System.out.println();
-		}*/
+		// int[] nums = new int[] { 1, 2, 3 };
+		// int goal = 6;
+		// recurs("", "abcd");
+		// recurn(new ArrayList<Integer>(), Arrays.asList(new
+		// Integer[]{1,2,3}));
+
+		int[] nums = new int[] { 1, 2, 3, 6 };
+		// int[] data = { 0, 1, 2, 5, 10, 20, 100, 200 };
+		int[] data = { 100, 20, 10, 5, 2, 1 };
+		int[] data1 = { 25, 10, 5, 1 };
+
+		int goal = 6;
+		int agoal = 200;
+		int bgoal = 100;
 		/*
-		 	0 3 3 	
-			1 2 3 
-			2 2 2 
+		 * List<Integer[]> allcombs =
+		 * Util.createAllCombinationsWithRepeatsAddToNum(new int[]{ 0, 1, 2, 3
+		 * }, 11, 6); for(Integer[] l : allcombs){ for(Integer i : l){
+		 * System.out.print(i+" "); } System.out.println(); }
+		 */
+		/*
+		 * 0 3 3 1 2 3 2 2 2
 		 */
 		List<String> alls = new ArrayList<String>();
-		//recurOfLength(nums[0], 0, nums, goal, new ArrayList<Integer>(), "", alls );
+		// recurOfLength(nums[0], 0, nums, goal, new ArrayList<Integer>(), "",
+		// alls );
 		List<List<Integer>> all = new ArrayList<List<Integer>>();
-		recurOfLength(nums[0], 0, data, agoal, new ArrayList<Integer>(),all);
-		/*System.out.print("Found : " + goalcounter);
-		for(String s : alls){
-			System.out.println("solution : " + s);
-		}*/
+		recurOfLength(0, 0, data, agoal, new ArrayList<Integer>(), all);
+		/*
+		 * System.out.print("Found : " + goalcounter); for(String s : alls){
+		 * System.out.println("solution : " + s); }
+		 */
+		all.add(Arrays.asList(200));
 		System.out.println("Heres " + all.size() + " solutions we found:");
-		for(List<Integer > li : all){
-			for(Integer i : li){
-				System.out.print(i+" ");
+		
+		/*for (List<Integer> li : all) {
+			for (Integer i : li) {
+				System.out.print(i + " ");
 			}
 			System.out.println();
+		}*/
+	}
+static int cc = 0;
+
+private static List<List<Integer>> recurOfLength(int aNum, int curTot, int[] allNums, int goal, List<Integer> curnums, List<List<Integer>> all) {
+	if(cc < 10)System.out.println("FFFFFFF : " + aNum + " " +cc++);
+	/*if(curTot == goal){
+		System.out.println("FFFFFFF : " + aNum + " " +cc);
+		printA(curnums);
+	}*/
+	//int newTot = curTot + aNum;
+	curTot += aNum; //System.out.println("adding " + curTot + "+" + aNum);
+	//if(cc <2)System.out.println("first add = "+ aNum + " - " + curTot);
+	List<Integer> ll = new ArrayList<Integer>();
+	ll.addAll(curnums);
+	ll.add(aNum);
+	
+	
+	
+	if (curTot == goal) {
+		if (!Util.listListContainsIntArray(all, ll)) {
+			System.out.println("Found #" + all.size());
+			//printA(ll);
+			all.add(ll);
+		}
+	} else if (curTot < goal) {
+
+		for (int i = 0; i < allNums.length; i++) {
+			//if(cc++ == 0)System.out.println("first i = "+allNums[i]);
+			recurOfLength(allNums[i], curTot, allNums, goal, ll, all);
 		}
 	}
+	return all;
+}
 
-	private static List<List<Integer>> recurOfLength(int aNum,int curTot, int[] allNums, int goal, List<Integer> curnums, List<List<Integer>> all) {
-		//allCounter++;
+
+	private static List<List<Integer>> recurOfLengthBackup(int aNum, int curTot, int[] allNums, int goal,
+			List<Integer> curnums, List<List<Integer>> all) {
+		if(aNum == goal){
+			System.out.println("FFFFFFF : ");
+			printA(curnums);
+		}
 		int newTot = curTot + aNum;
-		 List<Integer> ll = new ArrayList<Integer>();
-		 ll.addAll(curnums);
-		//sn+=aNum;
-		//curnums.add(aNum);
+		if(cc <2)System.out.println("first add = "+ aNum + " - " + newTot);
+		List<Integer> ll = new ArrayList<Integer>();
+		ll.addAll(curnums);
 		ll.add(aNum);
 		
-		//System.out.println("Adding " + aNum + "+" + curTot +" = " + newTot + " at counter : " + allCounter + " - " + sn);
-		//printA(ll);
 		
-		if (newTot==goal) {
-			
-			//System.out.println("Found one : " + goal + " == " + newTot + " -- " + sn);
-			//System.out.println("Found one : " + goal + " == " + newTot);
-			//printA(ll);
-			if(!Util.listListContainsIntArray(all, ll)){
+		
+		if (newTot == goal) {
+			if (!Util.listListContainsIntArray(all, ll)) {
 				System.out.println("Found #" + all.size());
 				printA(ll);
 				all.add(ll);
 			}
-			//alls.add(sn);
-			//curnums = new ArrayList<Integer>();
-			/*goalcounter++;
-			baseCounter++;*/
-		} else if(newTot < goal){
-			
-			 //System.out.println("Counter :" + allCounter);
-			 
-			
+		} else if (newTot < goal) {
+
 			for (int i = 0; i < allNums.length; i++) {
-				
-				
-				//System.out.println("-- cont counter :" + allCounter + " : " + i  + " :: at base " + baseCounter);
-				//recurOfLength(allNums[i],newTot,allNums, goal, ll, sn, alls);
-				recurOfLength(allNums[i],newTot,allNums, goal, ll, all);
+				if(cc++ == 0)System.out.println("first i = "+allNums[i]);
+				recurOfLength(allNums[i], newTot, allNums, goal, ll, all);
 			}
-			//curnums = new ArrayList<Integer>();
-		} //else {
-		//curnums = new ArrayList<Integer>();
-			//baseCounter++;
-		//}
+		}
 		return all;
 	}
-	
 
-
-	
-	
-	
 	private static void recurs(String sofar, String rest) {
 		if (rest.length() == 0) {
 			System.out.println(sofar);
@@ -142,8 +158,6 @@ public class Problem31 {
 		}
 	}
 
-	
-	
 	private static void recurn(List<Integer> s, List<Integer> r) {
 		if (r.isEmpty()) {
 			printA(s);
@@ -159,8 +173,6 @@ public class Problem31 {
 			}
 		}
 	}
-	
-	
 
 	private static void printA(List<Integer> l) {
 		for (Integer i : l) {
@@ -270,9 +282,9 @@ public class Problem31 {
 	public static boolean isRow(int row, double[][] array) {
 		return array != null && row >= 0 && row < array.length && array[row] != null;
 	}
-	
-	private static boolean listContainsStringInt(List<String> l){
-		for(String s : l){
+
+	private static boolean listContainsStringInt(List<String> l) {
+		for (String s : l) {
 			int aInt = Integer.parseInt(s);
 		}
 		return false;

@@ -351,10 +351,14 @@ public class Util {
 	}
 	
 	public static boolean listListContainsIntArray(List<List<Integer>> lis, List<Integer> arr){
-		Collections.sort(arr);
+		List<Integer> aa = new ArrayList<Integer>();
+		aa.addAll(arr);
+		Collections.sort(aa);
 		for(List<Integer> li : lis){
-			Collections.sort(li);
-			if(li.equals(arr)){
+			List<Integer> lli = new ArrayList<Integer>();
+			lli.addAll(li);
+			Collections.sort(lli);
+			if(lli.equals(aa)){
 				return true;
 			}
 		}
