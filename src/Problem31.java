@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,14 +32,31 @@ public class Problem31 {
 		 * +(i+1)+":"+s.substring(i+1));
 		 * System.out.println("remaining:"+remaining);
 		 */
-		problem();
-
+		//problem();
+		p();
 	}
 
 	static int goalcounter = 0;
 	static int allCounter = -1;
 	static int baseCounter = -1;
-
+	static int cc = 0;
+	static int[] data1 = { 25,10,5,1 };
+	static int[] data2 = { 3,2,1 };
+	static int tgoal = 50;
+	static List<List<Integer>> allGood;
+	static List<List<Integer>> allTries;
+	static List<List<Integer>> all;
+	static int ggoal = 6;
+	static int[] alln = new int[] {1,2,3};
+	//static List<int[]> allTries;
+	static int[][] sd;
+	static int[] prev;
+	private static void p(){
+		allGood = new ArrayList<List<Integer>>();
+		//recurLoop(0,0,data2,6, new ArrayList<Integer>(), all);
+		problem();
+	}
+	
 	private static void problem() {
 		// int[] nums = new int[] { 1, 2, 3 };
 		// int goal = 6;
@@ -46,14 +64,18 @@ public class Problem31 {
 		// recurn(new ArrayList<Integer>(), Arrays.asList(new
 		// Integer[]{1,2,3}));
 
-		int[] nums = new int[] { 1, 2, 3, 6 };
+		int[] nums = new int[] { 1, 2, 3};
 		// int[] data = { 0, 1, 2, 5, 10, 20, 100, 200 };
 		int[] data = { 100, 20, 10, 5, 2, 1 };
-		int[] data1 = { 25, 10, 5, 1 };
+		int[] data1 = {1,2,5,10,20,100} ;
+		int[] nums2 = { 1,5,10,25 };
 
 		int goal = 6;
 		int agoal = 200;
-		int bgoal = 100;
+		int bgoal = 50;
+		sd = new int[goal+1][goal+1];
+		prev = new int[goal+1];
+		System.out.println("prev 0 " + prev[0]);
 		/*
 		 * List<Integer[]> allcombs =
 		 * Util.createAllCombinationsWithRepeatsAddToNum(new int[]{ 0, 1, 2, 3
@@ -63,52 +85,219 @@ public class Problem31 {
 		/*
 		 * 0 3 3 1 2 3 2 2 2
 		 */
-		List<String> alls = new ArrayList<String>();
+		
 		// recurOfLength(nums[0], 0, nums, goal, new ArrayList<Integer>(), "",
 		// alls );
-		List<List<Integer>> all = new ArrayList<List<Integer>>();
-		recurOfLength(0, 0, data, agoal, new ArrayList<Integer>(), all);
-		/*
-		 * System.out.print("Found : " + goalcounter); for(String s : alls){
-		 * System.out.println("solution : " + s); }
-		 */
-		all.add(Arrays.asList(200));
-		System.out.println("Heres " + all.size() + " solutions we found:");
+		all = new ArrayList<List<Integer>>();
+		//List<int[]> all = new ArrayList<int[]>();
+		allTries = new ArrayList<List<Integer>>();
+		//allTries = new ArrayList<int[]>();
+		//recurOfLength(0, 0, nums, goal, new ArrayList<Integer>(), all);
+		long startT = System.nanoTime();
+	
+		recurLoop(data1, 200, 0);
+		//rrr(alln, 0);
+		 long endT = System.nanoTime();
+		  
+		  // Time = (end time - start time ) divided by a billion : because it is in nano seconds
+		  double time = (double) (endT - startT)/1000000000;
+		  
+		all.add(Arrays.asList(0));
+		//System.out.println("Heres " + all.size() + " solutions we found:");
+		cc++;
+		System.out.println("Heres " + cc + " solutions we found:");
 		
-		/*for (List<Integer> li : all) {
+		for (List<Integer> li : all) {
 			for (Integer i : li) {
 				System.out.print(i + " ");
 			}
 			System.out.println();
-		}*/
+		}
+		System.out.println("Did all in " + time +" seconds");
 	}
-static int cc = 0;
+/*
+private static boolean listContains(List<List<Integer>> all, List<Integer> one){
+	for(List<Integer> a : all){
+		List<Integer> aa = new ArrayList<Integer>();
+		aa.addAll(a);
+		Collections.sort(a);
+		
+	}
+	return false;
+}*/
+	
+	
+	/*
+	 if we are trying to make 6 with 1 2 and 3
+	 we can just say, if we have 3 and 2 and they are not greater than 6, we found a solution...
+	 can we leave out 1s?
+	 then 2s
+	 then ...?
+	 */
+	
+	private static void rrr(int[] d, int cur, int ind){
+		
+		if(cur == ggoal) cc++;
+		for(int i=ind; i<d.length; i++){
+			for(int j=d[i]; j<ggoal; j++){
+				//1-1=0
+			}
+		}
+		
+		// make combos of 3 and 2 of length 3 where order doesnt matter
+	
+	}
+
+	private static void recurLoop(int[] allNums, int goal,  int ind) {
+	
+		
+		
+		
+		if (goal==0) {
+				if(cc % 150 == 0){
+					System.out.print("\nFound #" + cc + " :: ");
+				}
+				cc++;
+				
+		} else if (goal>0) {//1 2 3
+			for (int i = ind; i < allNums.length; i++) {
+				
+			List<Integer> ll = new ArrayList<Integer>();
+			int newGoal = goal - allNums[i];
+			recurLoop(allNums, newGoal, i);
+					
+			}
+		} 
+	}
+	
+	
+	
+	private static boolean recurLoop2(int[] allNums, int goal, List<Integer> myNums, int ind) {
+		
+		//if(recoginze this one...) return this one?
+		//curTot += aNum; //System.out.println("adding " + curTot + "+" + aNum);
+		//int ng = goal;
+		//if(prev[ng] == 0){
+		//if(sd[goal][anum] == 0){
+		//allTries
+		/*if(Util.listListContainsIntArray(allTries, myNums)){
+			System.out.print("Contains this one already : " );
+			Util.printListInteger(myNums);
+			return false;
+		} else{
+			System.out.println("x adding a try ");
+			Util.printListInteger(myNums);
+			allTries.add(myNums);
+		}*/
+		//allTries.add(myNums);
+		
+		
+		if (goal==0) {
+			if (!Util.listListContainsIntArray(all, myNums)) {
+			
+				if(cc > 73000){
+					
+					System.out.println("Went tooooo far " + cc);
+					System.exit(0);
+				}	else if(cc % 150 == 0){
+				
+					System.out.print("\nFound #" + cc + " :: ");
+				} // Why are we adding duplicates
+				/*if(cc % 150 == 0){
+					System.out.print("\nFound #" + cc + " :: ");
+				}*/
+				/*System.out.print("\nFound #" + all.size() + " :: ");
+				Util.printListInteger(myNums);
+				*/
+				//all.add(myNums);
+				cc++;
+				//System.out.println("adding to goals " + goal);
+				//prev[ng] = 1;
+				return true;
+			} else {
+				System.out.println("Tried to add duplicate");
+			}
+		} else if (goal>0) {//1 2 3
+			for (int i = 0; i < allNums.length; i++) {
+				
+			List<Integer> ll = new ArrayList<Integer>();
+				ll.addAll(myNums);
+			ll.add(allNums[i]);
+				
+				
+				int newGoal = goal - allNums[i];
+				if(newGoal >= 0){
+					//if(sd[allNums[i]][allNums[anum]] != 1){
+						
+					
+					boolean lte0 = recurLoop2(allNums, newGoal, ll, i);
+					
+					if(lte0){
+						//System.out.println("Skipping this many things : " + (allNums.length-1 - i));
+						//Util.printListInteger(ll);
+						return false;
+					}	
+					//}
+				} 
+				
+				///sd[goal][i] = 1;
+				//sd[allNums[i]][allNums[anum]] = 1;
+			}
+		} else if (goal < 0) {
+			//System.out.print("Failed : ");
+			//Util.printListInteger(myNums);
+			//System.out.println("This is too big already: ");
+			//Util.printListInteger(myNums);
+			return true;
+		}
+		/*System.out.println("xx adding a try ");
+		Util.printListInteger(myNums);*/
+		//allTries.add(myNums);
+		
+		//} else {
+		//if(goal != 6){
+		//System.out.println("adding to goals " + goal);
+		//prev[ng] = 1;
+		
+		//}
+		//}
+		return false;
+		//store this one?
+		//return false;
+	}
 
 private static List<List<Integer>> recurOfLength(int aNum, int curTot, int[] allNums, int goal, List<Integer> curnums, List<List<Integer>> all) {
-	if(cc < 10)System.out.println("FFFFFFF : " + aNum + " " +cc++);
-	/*if(curTot == goal){
-		System.out.println("FFFFFFF : " + aNum + " " +cc);
-		printA(curnums);
-	}*/
-	//int newTot = curTot + aNum;
 	curTot += aNum; //System.out.println("adding " + curTot + "+" + aNum);
-	//if(cc <2)System.out.println("first add = "+ aNum + " - " + curTot);
 	List<Integer> ll = new ArrayList<Integer>();
 	ll.addAll(curnums);
 	ll.add(aNum);
-	
-	
-	
 	if (curTot == goal) {
-		if (!Util.listListContainsIntArray(all, ll)) {
+		if (!Util.listListContainsIntArray(all, ll)) { // Why are we adding duplicates
 			System.out.println("Found #" + all.size());
-			//printA(ll);
 			all.add(ll);
 		}
 	} else if (curTot < goal) {
-
 		for (int i = 0; i < allNums.length; i++) {
-			//if(cc++ == 0)System.out.println("first i = "+allNums[i]);
+			recurOfLength(allNums[i], curTot, allNums, goal, ll, all);
+		}
+	}
+	return all;
+}
+
+
+private static List<List<Integer>> recurOfLengthDoesAllBut222(int aNum, int curTot, int[] allNums, int goal, List<Integer> curnums, List<List<Integer>> all) {
+	//sd = new int[goal+1][nums.length]; // put this outside somewhere
+	curTot += aNum; //System.out.println("adding " + curTot + "+" + aNum);
+	List<Integer> ll = new ArrayList<Integer>();
+	ll.addAll(curnums);
+	ll.add(aNum);
+	if (curTot == goal) {
+		if (!Util.listListContainsIntArray(all, ll)) { // Why are we adding duplicates
+			System.out.println("Found #" + all.size());
+			all.add(ll);
+		}
+	} else if (curTot < goal) {
+		for (int i = 0; i < allNums.length; i++) {
 			recurOfLength(allNums[i], curTot, allNums, goal, ll, all);
 		}
 	}
@@ -120,7 +309,7 @@ private static List<List<Integer>> recurOfLength(int aNum, int curTot, int[] all
 			List<Integer> curnums, List<List<Integer>> all) {
 		if(aNum == goal){
 			System.out.println("FFFFFFF : ");
-			printA(curnums);
+			Util.printListInteger(curnums);
 		}
 		int newTot = curTot + aNum;
 		if(cc <2)System.out.println("first add = "+ aNum + " - " + newTot);
@@ -133,7 +322,7 @@ private static List<List<Integer>> recurOfLength(int aNum, int curTot, int[] all
 		if (newTot == goal) {
 			if (!Util.listListContainsIntArray(all, ll)) {
 				System.out.println("Found #" + all.size());
-				printA(ll);
+				Util.printListInteger(ll);
 				all.add(ll);
 			}
 		} else if (newTot < goal) {
@@ -160,7 +349,7 @@ private static List<List<Integer>> recurOfLength(int aNum, int curTot, int[] all
 
 	private static void recurn(List<Integer> s, List<Integer> r) {
 		if (r.isEmpty()) {
-			printA(s);
+			Util.printListInteger(s);
 		} else {
 			for (int i = 0; i < r.size(); i++) {
 				List<Integer> n = new ArrayList<Integer>();
@@ -174,12 +363,6 @@ private static List<List<Integer>> recurOfLength(int aNum, int curTot, int[] all
 		}
 	}
 
-	private static void printA(List<Integer> l) {
-		for (Integer i : l) {
-			System.out.print(i + " ");
-		}
-		System.out.println();
-	}
 
 	private static void problem3() {
 		int[] nums = new int[] { 1, 2, 5, 10, 20, 50, 100, 200 };

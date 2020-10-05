@@ -359,11 +359,48 @@ public class Util {
 			lli.addAll(li);
 			Collections.sort(lli);
 			if(lli.equals(aa)){
+			/*	System.out.println("Found a dup:");
+				printListInteger(arr);
+				System.out.print("  of  " );
+				printListInteger(li);*/
 				return true;
 			}
 		}
+		
+		return false;
+	}
+	
+	public static boolean listListContainsIntArray(List<int[]> lis, int[] arr){
+		int[] aa = arr;
+		Arrays.sort(aa);
+		for(int[] li : lis){
+			int[] lli = li;
+			Arrays.sort(lli);
+			
+			if(lli.equals(aa)){
+				/*System.out.println("Found a dup:");
+				printListInteger(arr);
+				System.out.print("  of  " );
+				printListInteger(li);*/
+				return true;
+			}
+		}
+		
 		return false;
 	}
 
+	static void printListInteger(List<Integer> l) {
+		for (Integer i : l) {
+			System.out.print(i + " ");
+		}
+		System.out.println();
+	}
+	
+	static void printListInteger(int[] l) {
+		for (int i : l) {
+			System.out.print(i + " ");
+		}
+		System.out.println();
+	}
 
 }
