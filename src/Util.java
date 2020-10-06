@@ -229,88 +229,6 @@ public class Util {
 		return false;
 	}
 
-	static Set<Integer[]> createAllCombinationsWithRepeats(int[] data, int combinationSize) {
-		Set<Integer[]> allcombs = new HashSet<Integer[]>();
-		int goal = 200;
-
-		// int[] data = { 0, 1, 2 };
-		// int[] data = { 0, 1, 2, 5, 10, 20, 100, 200 };
-		// List<Integer[]> allcombs = new ArrayList<Integer[]>();
-
-		int indexToChange = combinationSize - 1; // start with last num in comb
-		Integer[] comb = new Integer[combinationSize];
-		for (int i = 0; i < combinationSize; i++) {
-			comb[i] = data[0];
-		}
-
-		allcombs.add(comb.clone());
-
-		while (true) {
-			boolean reset = false;
-			while (comb[indexToChange] == data[data.length - 1] && indexToChange > 0) {
-				comb[indexToChange] = data[0];
-				indexToChange--;
-				reset = true;
-			}
-			int lasti = getIndex(data, comb[indexToChange]);
-			comb[indexToChange] = data[lasti + 1];
-			/*
-			 * if(addsUp(comb, goal)){ Integer[] temp = comb.clone();
-			 * Arrays.sort(temp); allcombs.add(temp); }
-			 */
-			allcombs.add(comb.clone());
-			if (reset)
-				indexToChange = combinationSize - 1;
-
-			if (isDone(comb, data[data.length - 1])) {
-				break;
-			}
-		}
-
-		return allcombs;
-
-	}
-
-	
-	///// Seems to add duplicates still, and it should not:
-	static List<Integer[]> createAllCombinationsWithRepeatsAddToNum(int[] data, int combinationSize, int goal) {
-		List<Integer[]> allcombs = new ArrayList<Integer[]>();
-		
-		int indexToChange = combinationSize - 1; // start with last num in comb
-		Integer[] comb = new Integer[combinationSize];
-		for (int i = 0; i < combinationSize; i++) {
-			comb[i] = data[0];
-		}
-		if (addsUp(comb, goal)) {
-			allcombs.add(comb.clone());
-		}
-		while (true) {
-			boolean reset = false;
-			while (comb[indexToChange] == data[data.length - 1] && indexToChange > 0) {
-				comb[indexToChange] = data[0];
-				indexToChange--;
-				reset = true;
-			}
-			int lasti = getIndex(data, comb[indexToChange]);
-			comb[indexToChange] = data[lasti + 1];
-			if (addsUp(comb, goal)) {
-				Integer[] temp = comb.clone();
-				Arrays.sort(temp);
-				if(!listContainsIntArray(allcombs, temp))
-					allcombs.add(temp);
-			}
-		if (reset)
-			indexToChange = combinationSize - 1;
-
-		if (isDone(comb, data[data.length - 1])) {
-			break;
-		}
-	}
-
-	return allcombs;
-
-	}
-
 	public static boolean isDone(Integer[] nums, int maxVal) {
 		for (int i = 0; i < nums.length; i++) {
 			if (nums[i] != maxVal) {
@@ -389,18 +307,70 @@ public class Util {
 		return false;
 	}
 
-	static void printListInteger(List<Integer> l) {
+	public static void printListInteger(List<Integer> l) {
 		for (Integer i : l) {
 			System.out.print(i + " ");
 		}
 		System.out.println();
 	}
 	
-	static void printListInteger(int[] l) {
+	public static void printListInteger(int[] l) {
 		for (int i : l) {
 			System.out.print(i + " ");
 		}
 		System.out.println();
 	}
+	
 
+	public static int[] getMissingDigits1Through9(int[] numDigits) {
+		int[] rest = new int[9 - numDigits.length];
+		for (int i = 0; i < rest.length; i++) {
+			for (int j = 1; j < 10; j++) {
+				if (!intArrayHasInt(numDigits, j) && !intArrayHasInt(rest, j)) {
+					rest[i] = j;
+				}
+
+			}
+		}
+		return rest;
+	}
+
+	public static boolean intArrayHasInt(int[] nums, int num) {
+		for (int i : nums) {
+			if (i == num) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static int[] splitIntNumsToArray(int num) {
+
+		int digitCount = countDigits(num);
+		int[] digits = new int[digitCount];
+		for (int i = digitCount - 1; i >= 0; i--) {
+			int r = num % 10;
+			digits[i] = r;
+			num /= 10;
+		}
+		return digits;
+	}
+
+	public static int countDigits(int num) {
+		int count = 0;
+		while (num != 0) {
+			num /= 10;
+			++count;
+		}
+		return count;
+	}
+	
+	public static int factorial(int num){
+		int fact = 1;
+		for(int i=1; i<=num; i++ ){
+			fact *= i;	
+		}
+		return fact;
+
+	}
 }
