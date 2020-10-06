@@ -499,4 +499,13 @@ public class Util {
 		return false;
 	}
 
+	public static long gcd(long a, long b) {
+	    return b == 0 ? a : gcd(b, a % b);
+	}
+
+	public static String reduceFraction(long a, long b) {
+	    long gcd = gcd(a, b);
+	    return (a / gcd) + "/" + (b / gcd);
+	}
+	
 }
