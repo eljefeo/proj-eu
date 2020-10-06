@@ -258,52 +258,52 @@ public class Util {
 		}
 		return 0;
 	}
-	
-	public static boolean listContainsIntArray(List<Integer[]> lis, Integer[] arr){
-		for(Integer[] ar : lis){
-			if(Arrays.equals(ar, arr)){
+
+	public static boolean listContainsIntArray(List<Integer[]> lis, Integer[] arr) {
+		for (Integer[] ar : lis) {
+			if (Arrays.equals(ar, arr)) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	public static boolean listListContainsIntArray(List<List<Integer>> lis, List<Integer> arr){
+
+	public static boolean listListContainsIntArray(List<List<Integer>> lis, List<Integer> arr) {
 		List<Integer> aa = new ArrayList<Integer>();
 		aa.addAll(arr);
 		Collections.sort(aa);
-		for(List<Integer> li : lis){
+		for (List<Integer> li : lis) {
 			List<Integer> lli = new ArrayList<Integer>();
 			lli.addAll(li);
 			Collections.sort(lli);
-			if(lli.equals(aa)){
-			/*	System.out.println("Found a dup:");
-				printListInteger(arr);
-				System.out.print("  of  " );
-				printListInteger(li);*/
+			if (lli.equals(aa)) {
+				/*
+				 * System.out.println("Found a dup:"); printListInteger(arr);
+				 * System.out.print("  of  " ); printListInteger(li);
+				 */
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
-	public static boolean listListContainsIntArray(List<int[]> lis, int[] arr){
+
+	public static boolean listListContainsIntArray(List<int[]> lis, int[] arr) {
 		int[] aa = arr;
 		Arrays.sort(aa);
-		for(int[] li : lis){
+		for (int[] li : lis) {
 			int[] lli = li;
 			Arrays.sort(lli);
-			
-			if(lli.equals(aa)){
-				/*System.out.println("Found a dup:");
-				printListInteger(arr);
-				System.out.print("  of  " );
-				printListInteger(li);*/
+
+			if (lli.equals(aa)) {
+				/*
+				 * System.out.println("Found a dup:"); printListInteger(arr);
+				 * System.out.print("  of  " ); printListInteger(li);
+				 */
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -313,14 +313,13 @@ public class Util {
 		}
 		System.out.println();
 	}
-	
+
 	public static void printListInteger(int[] l) {
 		for (int i : l) {
 			System.out.print(i + " ");
 		}
 		System.out.println();
 	}
-	
 
 	public static int[] getMissingDigits1Through9(int[] numDigits) {
 		int[] rest = new int[9 - numDigits.length];
@@ -343,7 +342,7 @@ public class Util {
 		}
 		return false;
 	}
-	
+
 	public static int[] splitIntNumsToArray(int num) {
 
 		int digitCount = countDigits(num);
@@ -364,13 +363,140 @@ public class Util {
 		}
 		return count;
 	}
-	
-	public static int factorial(int num){
+
+	public static int factorial(int num) {
 		int fact = 1;
-		for(int i=1; i<=num; i++ ){
-			fact *= i;	
+		for (int i = 1; i <= num; i++) {
+			fact *= i;
 		}
 		return fact;
 
 	}
+
+	public static boolean hasPandigitalIdentity(int[] multiplicandsAndMultipliers, int product) {
+
+		// should check somewhere if product and/or array doesnt have duplicate
+		// digits
+		// we do this check before calling this. Works I guess. Just gotta do it
+		// somewhere.
+		for (int i = 0; i < multiplicandsAndMultipliers.length; i++) {
+			int[] s1 = getIntsSublist(multiplicandsAndMultipliers, 0, i);
+			int[] s2 = getIntsSublist(multiplicandsAndMultipliers, i);
+			int sint1 = getIntFromIntArr(s1);
+			int sint2 = getIntFromIntArr(s2);
+			if (s1.length == 0 || s2.length == 0) {
+				continue;
+			}
+			if ((sint1 * sint2) == product) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean intHasDuplicateDigits(int num) {
+		int[] digits = Util.splitIntNumsToArray(num);
+		for (int i = 0; i < digits.length; i++) {
+			for (int j = 0; j < digits.length; j++) {
+				if (j != i && digits[i] == digits[j]) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private static int getIntFromIntArr(int[] nums) {
+		int result = 0;
+		for (int i = 0; i < nums.length; i++) {
+			result += nums[i] * (Math.pow(10, nums.length - 1 - i));
+		}
+		return result;
+	}
+
+	public static int[][] getAllCombinationsInt(int[][] combos, int[] nums, int[] choices, Integer comboInd) {
+
+		if (choices.length == 0) {
+			int firstnull = getFirstNullIntArrArr(combos);
+			combos[firstnull] = nums;
+		} else {
+			for (int i = 0; i < choices.length; i++) {
+				int[] nextNums = new int[nums.length + 1];
+				for (int j = 0; j < nums.length; j++) {
+					nextNums[j] = nums[j];
+				}
+				nextNums[nextNums.length - 1] = choices[i];
+
+				int[] choicesSub1 = getIntsSublist(choices, 0, i);
+				int[] choicesSub2 = getIntsSublist(choices, i + 1);
+				int[] newChoices = appendTwoIntArrays(choicesSub1, choicesSub2);
+				getAllCombinationsInt(combos, nextNums, newChoices, comboInd);
+			}
+		}
+
+		return combos;
+
+	}
+
+	public static int getFirstNullIntArrArr(int[][] combos) {
+		for (int i = 0; i < combos.length; i++) {
+			if (combos[i] == null) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	/*
+	 * private static void printIntArray(int[] arr) { System.out.print(
+	 * "printing array : "); for (int i : arr) { System.out.print(i + " "); }
+	 * System.out.println(""); }
+	 */
+
+	public static int[] getIntsSublist(int[] nums, int start, int end) {
+		// goes from start index inclusive, to end of array
+		int size = end - start;
+		int[] sub = new int[size];
+		int newArrCount = 0;
+		for (int i = start; i < end; i++) {
+			sub[newArrCount++] = nums[i];
+		}
+		return sub;
+	}
+
+	public static int[] getIntsSublist(int[] nums, int start) {
+		if (start < 0)
+			start = 0;
+		int size = nums.length - start;
+		int[] sub = new int[size];
+		int newArrCount = 0;
+		for (int i = start; i < nums.length; i++) {
+			sub[newArrCount++] = nums[i];
+		}
+		return sub;
+	}
+
+	public static int[] appendTwoIntArrays(int[] arr1, int[] arr2) {
+		int newSize = arr1.length + arr2.length;
+		int[] newArr = new int[newSize];
+		int newCounter = 0;
+		for (int i : arr1) {
+			newArr[newCounter++] = i;
+		}
+		for (int i : arr2) {
+			newArr[newCounter++] = i;
+		}
+		return newArr;
+	}
+
+	public static boolean intHasAZeroInIt(int num) {
+
+		int[] digits = Util.splitIntNumsToArray(num);
+		for (int i : digits) {
+			if (i == 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }
