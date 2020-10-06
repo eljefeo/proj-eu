@@ -354,8 +354,29 @@ public class Util {
 		}
 		return digits;
 	}
+	
+	public static long[] splitIntNumsToArray(long num) {
+
+		int digitCount = countDigits(num);
+		long[] digits = new long[digitCount];
+		for (int i = digitCount - 1; i >= 0; i--) {
+			long r = num % 10;
+			digits[i] = r;
+			num /= 10;
+		}
+		return digits;
+	}
 
 	public static int countDigits(int num) {
+		int count = 0;
+		while (num != 0) {
+			num /= 10;
+			++count;
+		}
+		return count;
+	}
+	
+	public static int countDigits(long num) {
 		int count = 0;
 		while (num != 0) {
 			num /= 10;
@@ -367,6 +388,15 @@ public class Util {
 	public static int factorial(int num) {
 		int fact = 1;
 		for (int i = 1; i <= num; i++) {
+			fact *= i;
+		}
+		return fact;
+
+	}
+	
+	public static long factorial(long num) {
+		long fact = 1;
+		for (long i = 1; i <= num; i++) {
 			fact *= i;
 		}
 		return fact;
@@ -506,6 +536,24 @@ public class Util {
 	public static String reduceFraction(long a, long b) {
 	    long gcd = gcd(a, b);
 	    return (a / gcd) + "/" + (b / gcd);
+	}
+	
+	public static int sumOfDigitFactorial(int num){
+		int[] digits = splitIntNumsToArray(num);
+		int total = 0;
+		for(int d : digits){
+			total += factorial(d);
+		}
+		return total;
+	}
+	
+	public static long sumOfDigitFactorial(long num){
+		long[] digits = splitIntNumsToArray(num);
+		int total = 0;
+		for(long d : digits){
+			total += factorial(d);
+		}
+		return total;
 	}
 	
 }
