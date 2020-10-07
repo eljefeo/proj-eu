@@ -212,8 +212,8 @@ public class Util {
 
 	}
 
-	public static boolean isPalindrome(String str) {
-
+	public static boolean isPalindromeString(String str) {
+//
 		if (str.length() > 0) {
 
 			int half = str.length() / 2;
@@ -436,7 +436,7 @@ public class Util {
 		return false;
 	}
 
-	private static int getIntFromIntArr(int[] nums) {
+	public static int getIntFromIntArr(int[] nums) {
 		int result = 0;
 		for (int i = 0; i < nums.length; i++) {
 			result += nums[i] * (Math.pow(10, nums.length - 1 - i));
@@ -554,6 +554,57 @@ public class Util {
 			total += factorial(d);
 		}
 		return total;
+	}
+	
+
+	public static String bin16(int i){
+		return String.format("%16s", Integer.toBinaryString(i)).replace(' ', '0');
+	}
+	public static String bin32(int i){
+		return String.format("%32s", Integer.toBinaryString(i)).replace(' ', '0');
+	}
+	public static String bin64(long i){
+		return String.format("%64s", Long.toBinaryString(i)).replace(' ', '0');
+	}
+	
+	public static int[] intToBitArray(int num) {
+		int[] bits = new int[countBits(num)];
+		for(int i=0; i<bits.length; i++){
+			bits[i] = num&1;
+			num>>=1;
+		}
+		return bits;
+	}
+	
+	public static int countBits(int num){
+		int count=0;
+		while(num>0){
+			count++;
+			num = num>>1;
+		}
+		return count;
+	}
+	
+	public static boolean isBinaryPalindromeNumber(int num){
+		int bitCount = Util.countBits(num);
+		int n = 0;
+		int temp = num;
+		for(int i=0; i<bitCount; i++){
+			if((temp&1) == 1){
+				n += (int) Math.pow(2,(bitCount-i-1));
+			}
+			temp>>=1;
+		}
+		return num == n;
+	}
+		  
+	public static int reverseDigits(int num){
+		int test = 0;
+		int[] digits = Util.splitIntNumsToArray(num);
+		for(int i=0; i<digits.length; i++){
+			test += digits[i]* Math.pow(10, i);
+		}
+		return test;
 	}
 	
 }

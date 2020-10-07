@@ -25,7 +25,7 @@ public class Problem4 {
 			for (int j = min; j <= max; j++){
 				int prod = i*j;
 				String prodStr = prod + "";
-				if(Util.isPalindrome(prodStr)){
+				if(Util.isPalindromeString(prodStr)){
 					palindromes.add(prod);
 				}
 				
