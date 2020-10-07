@@ -653,4 +653,32 @@ public class Util {
 		String f = first+""+second;
 		return Integer.parseInt(f);
 	}
+	
+	public static List<int[]> findRightTriangleSidesFromPerimeter(int p){
+		
+		
+		List<int[]> sols = new ArrayList<int[]>();
+		for(int i=p; i>2; i--){
+			int c = i-2; // how big can c be?
+			int a = p-c-1;
+			int b = p-c-a;
+			for(int j=1; j < p-c && b<=a;  j++){
+				if((a*a) + (b*b) == (c*c)){
+					sols.add(new int[]{p,a,b,c});
+					System.out.println("Found sol for " + p + " : " + a + " " + b + " " + c ); 
+				}
+				a = p-c-j;
+				b = p-c-a;
+			}	
+		}
+		return sols;
+	}
+	
+	public static boolean isInteger(double d){
+		return d - (int)d > 0;
+	}
+	
+	public static boolean isInteger(float f){
+		return f - (int)f > 0;
+	}
 }
