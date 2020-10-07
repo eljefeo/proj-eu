@@ -8,7 +8,8 @@ import java.util.Set;
 
 public class Util {
 	public static boolean isPrime(long num) {
-		if (num < 0) {
+		
+		if (num < 0 || num == 1) {
 			return false;
 		}
 		if (num == 2) {
@@ -605,6 +606,25 @@ public class Util {
 			test += digits[i]* Math.pow(10, i);
 		}
 		return test;
+	}
+	
+	public static boolean isTruncatablePrimeBackwardsAndForwards(int num) {
+		int dcount = Util.countDigits(num);
+		int test = num;
+		int test2 = num;
+
+		for (int i = 0; i < dcount; i++) {
+			test = test % (int) Math.pow(10, dcount - i);
+			test2 = test2 / 10;
+			if (!Util.isPrime(test)) {
+				return false;
+			}
+
+			if (test2 != 0 && !Util.isPrime(test2)) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 }
