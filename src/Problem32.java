@@ -24,8 +24,8 @@ public class Problem32 {
 
 	private static void problem() {
 		List<Integer> foundNums = new ArrayList<Integer>();
-		int max = 100000;
-		int step = 10000;
+		int max = 10000;
+		int step = 1000;
 		for (int i = 10; i < max; i++) {
 			if(i > step && i % step == 0){
 				System.out.println("Currently at : " + i);

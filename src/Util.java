@@ -406,6 +406,7 @@ public class Util {
 
 	public static boolean hasPandigitalIdentity(int[] multiplicandsAndMultipliers, int product) {
 
+		//used in problem 32
 		// should check somewhere if product and/or array doesnt have duplicate
 		// digits
 		// we do this check before calling this. Works I guess. Just gotta do it
@@ -627,4 +628,29 @@ public class Util {
 		return true;
 	}
 	
+	public static boolean isPandigitalNumber(int num){
+		String s = num+"";
+		for(int i=1;i<10;i++){
+			String iString = i+"";
+			int ind = s.indexOf(iString);
+			if(ind != -1){
+				String left = s.substring(0, ind);
+				String right = s.substring(ind+1);
+				s = left+right;
+				if(s.indexOf(iString) != -1){
+					//System.out.println("false at index " + ind + " for i=" + i + " -- " + left + " " + right + " :: " + s);
+					return false;
+				}
+			} else{
+				//System.out.println("false " + s + " for num " + i);
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public static int appendIntToInt(int first, int second){
+		String f = first+""+second;
+		return Integer.parseInt(f);
+	}
 }
