@@ -11,6 +11,7 @@ public class Problem40 {
 		
 		If dn represents the nth digit of the fractional part, find the value of the following expression.
 		
+		d1 x d10 x d100 x d1000 x d10000 x d100000 x d1000000
 	 */
 	
 	public static void main(String[] args) {

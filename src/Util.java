@@ -689,7 +689,7 @@ public class Util {
 		int temp=10;
 		int c = 1;
 		int stage = temp;
-		while(temp-1<nthDigit){ // xx will store the start of the range we are talking about, 2890, 38890, etc 
+		while(temp-1<nthDigit){ // stage will store the start of the range we are talking about, 2890, 38890, etc 
 			stage = temp;
 			temp += (9*(c+1)) * (int)Math.pow(10, c++);
 		}
