@@ -681,4 +681,43 @@ public class Util {
 	public static boolean isInteger(float f){
 		return f - (int)f > 0;
 	}
+	
+
+	public static int findNthDigitOfAllNums(int nthDigit){
+		if(nthDigit < 0) return -1;
+		if(nthDigit < 10) return nthDigit;
+		int temp=10;
+		int c = 1;
+		int stage = temp;
+		while(temp-1<nthDigit){ // xx will store the start of the range we are talking about, 2890, 38890, etc 
+			stage = temp;
+			temp += (9*(c+1)) * (int)Math.pow(10, c++);
+		}
+		int diffModC=(nthDigit-stage)%c;
+		int startingNum = ((nthDigit-stage)/c) + (int)Math.pow(10, c-1); 
+		int actualNumber = startingNum/(int)Math.pow(10, c-diffModC-1)%10;
+		return actualNumber;
+	}
+	
+	public static String findNthDigitOfAllNumsEasy(int num){
+		String b = makeAllNumsStringFromTo(0, 15000);
+		return b.charAt(num)+"";
+	}
+
+	
+	public static String makeAllNumsStringUpTo(int n){
+		String b = "";
+		for(int i=0; i<n; i++){
+			b+=i;
+		}
+		return b;
+	}
+	
+	public static String makeAllNumsStringFromTo(int start, int end){
+		String b = "";
+		for(int i=start; i<end; i++){
+			b+=i;
+		}
+		return b;
+	}
 }
