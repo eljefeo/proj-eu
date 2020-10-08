@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class Util {
 	public static boolean isPrime(long num) {
-		
+
 		if (num < 0 || num == 1) {
 			return false;
 		}
@@ -214,7 +214,7 @@ public class Util {
 	}
 
 	public static boolean isPalindromeString(String str) {
-//
+		//
 		if (str.length() > 0) {
 
 			int half = str.length() / 2;
@@ -355,7 +355,7 @@ public class Util {
 		}
 		return digits;
 	}
-	
+
 	public static long[] splitIntNumsToArray(long num) {
 
 		int digitCount = countDigits(num);
@@ -376,7 +376,7 @@ public class Util {
 		}
 		return count;
 	}
-	
+
 	public static int countDigits(long num) {
 		int count = 0;
 		while (num != 0) {
@@ -394,7 +394,7 @@ public class Util {
 		return fact;
 
 	}
-	
+
 	public static long factorial(long num) {
 		long fact = 1;
 		for (long i = 1; i <= num; i++) {
@@ -406,7 +406,7 @@ public class Util {
 
 	public static boolean hasPandigitalIdentity(int[] multiplicandsAndMultipliers, int product) {
 
-		//used in problem 32
+		// used in problem 32
 		// should check somewhere if product and/or array doesnt have duplicate
 		// digits
 		// we do this check before calling this. Works I guess. Just gotta do it
@@ -532,83 +532,84 @@ public class Util {
 	}
 
 	public static long gcd(long a, long b) {
-	    return b == 0 ? a : gcd(b, a % b);
+		return b == 0 ? a : gcd(b, a % b);
 	}
 
 	public static String reduceFraction(long a, long b) {
-	    long gcd = gcd(a, b);
-	    return (a / gcd) + "/" + (b / gcd);
+		long gcd = gcd(a, b);
+		return (a / gcd) + "/" + (b / gcd);
 	}
-	
-	public static int sumOfDigitFactorial(int num){
+
+	public static int sumOfDigitFactorial(int num) {
 		int[] digits = splitIntNumsToArray(num);
 		int total = 0;
-		for(int d : digits){
+		for (int d : digits) {
 			total += factorial(d);
 		}
 		return total;
 	}
-	
-	public static long sumOfDigitFactorial(long num){
+
+	public static long sumOfDigitFactorial(long num) {
 		long[] digits = splitIntNumsToArray(num);
 		int total = 0;
-		for(long d : digits){
+		for (long d : digits) {
 			total += factorial(d);
 		}
 		return total;
 	}
-	
 
-	public static String bin16(int i){
+	public static String bin16(int i) {
 		return String.format("%16s", Integer.toBinaryString(i)).replace(' ', '0');
 	}
-	public static String bin32(int i){
+
+	public static String bin32(int i) {
 		return String.format("%32s", Integer.toBinaryString(i)).replace(' ', '0');
 	}
-	public static String bin64(long i){
+
+	public static String bin64(long i) {
 		return String.format("%64s", Long.toBinaryString(i)).replace(' ', '0');
 	}
-	
+
 	public static int[] intToBitArray(int num) {
 		int[] bits = new int[countBits(num)];
-		for(int i=0; i<bits.length; i++){
-			bits[i] = num&1;
-			num>>=1;
+		for (int i = 0; i < bits.length; i++) {
+			bits[i] = num & 1;
+			num >>= 1;
 		}
 		return bits;
 	}
-	
-	public static int countBits(int num){
-		int count=0;
-		while(num>0){
+
+	public static int countBits(int num) {
+		int count = 0;
+		while (num > 0) {
 			count++;
-			num = num>>1;
+			num = num >> 1;
 		}
 		return count;
 	}
-	
-	public static boolean isBinaryPalindromeNumber(int num){
+
+	public static boolean isBinaryPalindromeNumber(int num) {
 		int bitCount = Util.countBits(num);
 		int n = 0;
 		int temp = num;
-		for(int i=0; i<bitCount; i++){
-			if((temp&1) == 1){
-				n += (int) Math.pow(2,(bitCount-i-1));
+		for (int i = 0; i < bitCount; i++) {
+			if ((temp & 1) == 1) {
+				n += (int) Math.pow(2, (bitCount - i - 1));
 			}
-			temp>>=1;
+			temp >>= 1;
 		}
 		return num == n;
 	}
-		  
-	public static int reverseDigits(int num){
+
+	public static int reverseDigits(int num) {
 		int test = 0;
 		int[] digits = Util.splitIntNumsToArray(num);
-		for(int i=0; i<digits.length; i++){
-			test += digits[i]* Math.pow(10, i);
+		for (int i = 0; i < digits.length; i++) {
+			test += digits[i] * Math.pow(10, i);
 		}
 		return test;
 	}
-	
+
 	public static boolean isTruncatablePrimeBackwardsAndForwards(int num) {
 		int dcount = Util.countDigits(num);
 		int test = num;
@@ -627,96 +628,118 @@ public class Util {
 		}
 		return true;
 	}
-	
-	public static boolean isPandigitalNumber(int num){
-		String s = num+"";
-		for(int i=1;i<10;i++){
-			String iString = i+"";
+
+	public static boolean isPandigitalNumber(int num) {
+		String s = num + "";
+		for (int i = 1; i < 10; i++) {
+			String iString = i + "";
 			int ind = s.indexOf(iString);
-			if(ind != -1){
+			if (ind != -1) {
 				String left = s.substring(0, ind);
-				String right = s.substring(ind+1);
-				s = left+right;
-				if(s.indexOf(iString) != -1){
-					//System.out.println("false at index " + ind + " for i=" + i + " -- " + left + " " + right + " :: " + s);
+				String right = s.substring(ind + 1);
+				s = left + right;
+				if (s.indexOf(iString) != -1) {
+					// System.out.println("false at index " + ind + " for i=" +
+					// i + " -- " + left + " " + right + " :: " + s);
 					return false;
 				}
-			} else{
-				//System.out.println("false " + s + " for num " + i);
+			} else {
+				// System.out.println("false " + s + " for num " + i);
 				return false;
 			}
 		}
 		return true;
 	}
-	
-	public static int appendIntToInt(int first, int second){
-		String f = first+""+second;
+
+	public static boolean isNthDigitPandigitalNumber(int num) {
+		int count = Util.countDigits(num);
+		String s = num + "";
+		for (int i = 1; i <= count; i++) {
+			String iString = i + "";
+			int ind = s.indexOf(iString);
+			if (ind != -1) {
+				String left = s.substring(0, ind);
+				String right = s.substring(ind + 1);
+				s = left + right;
+				if (s.indexOf(iString) != -1) {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static int appendIntToInt(int first, int second) {
+		String f = first + "" + second;
 		return Integer.parseInt(f);
 	}
-	
-	public static List<int[]> findRightTriangleSidesFromPerimeter(int p){
-		
-		
+
+	public static List<int[]> findRightTriangleSidesFromPerimeter(int p) {
+
 		List<int[]> sols = new ArrayList<int[]>();
-		for(int i=p; i>2; i--){
-			int c = i-2; // how big can c be?
-			int a = p-c-1;
-			int b = p-c-a;
-			for(int j=1; j < p-c && b<=a;  j++){
-				if((a*a) + (b*b) == (c*c)){
-					sols.add(new int[]{p,a,b,c});
-					System.out.println("Found sol for " + p + " : " + a + " " + b + " " + c ); 
+		for (int i = p; i > 2; i--) {
+			int c = i - 2; // how big can c be?
+			int a = p - c - 1;
+			int b = p - c - a;
+			for (int j = 1; j < p - c && b <= a; j++) {
+				if ((a * a) + (b * b) == (c * c)) {
+					sols.add(new int[] { p, a, b, c });
+					System.out.println("Found sol for " + p + " : " + a + " " + b + " " + c);
 				}
-				a = p-c-j;
-				b = p-c-a;
-			}	
+				a = p - c - j;
+				b = p - c - a;
+			}
 		}
 		return sols;
 	}
-	
-	public static boolean isInteger(double d){
-		return d - (int)d > 0;
-	}
-	
-	public static boolean isInteger(float f){
-		return f - (int)f > 0;
-	}
-	
 
-	public static int findNthDigitOfAllNums(int nthDigit){
-		if(nthDigit < 0) return -1;
-		if(nthDigit < 10) return nthDigit;
-		int temp=10;
+	public static boolean isInteger(double d) {
+		return d - (int) d > 0;
+	}
+
+	public static boolean isInteger(float f) {
+		return f - (int) f > 0;
+	}
+
+	public static int findNthDigitOfAllNums(int nthDigit) {
+		if (nthDigit < 0)
+			return -1;
+		if (nthDigit < 10)
+			return nthDigit;
+		int temp = 10;
 		int c = 1;
 		int stage = temp;
-		while(temp-1<nthDigit){ // stage will store the start of the range we are talking about, 2890, 38890, etc 
+		while (temp - 1 < nthDigit) { // stage will store the start of the range
+										// we are talking about, 2890, 38890,
+										// etc
 			stage = temp;
-			temp += (9*(c+1)) * (int)Math.pow(10, c++);
+			temp += (9 * (c + 1)) * (int) Math.pow(10, c++);
 		}
-		int diffModC=(nthDigit-stage)%c;
-		int startingNum = ((nthDigit-stage)/c) + (int)Math.pow(10, c-1); 
-		int actualNumber = startingNum/(int)Math.pow(10, c-diffModC-1)%10;
+		int diffModC = (nthDigit - stage) % c;
+		int startingNum = ((nthDigit - stage) / c) + (int) Math.pow(10, c - 1);
+		int actualNumber = startingNum / (int) Math.pow(10, c - diffModC - 1) % 10;
 		return actualNumber;
 	}
-	
-	public static String findNthDigitOfAllNumsEasy(int num){
+
+	public static String findNthDigitOfAllNumsEasy(int num) {
 		String b = makeAllNumsStringFromTo(0, 15000);
-		return b.charAt(num)+"";
+		return b.charAt(num) + "";
 	}
 
-	
-	public static String makeAllNumsStringUpTo(int n){
+	public static String makeAllNumsStringUpTo(int n) {
 		String b = "";
-		for(int i=0; i<n; i++){
-			b+=i;
+		for (int i = 0; i < n; i++) {
+			b += i;
 		}
 		return b;
 	}
-	
-	public static String makeAllNumsStringFromTo(int start, int end){
+
+	public static String makeAllNumsStringFromTo(int start, int end) {
 		String b = "";
-		for(int i=start; i<end; i++){
-			b+=i;
+		for (int i = start; i < end; i++) {
+			b += i;
 		}
 		return b;
 	}
