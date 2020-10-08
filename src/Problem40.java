@@ -17,33 +17,49 @@ public class Problem40 {
 	// then 10 + (9 Math.pow(10,digits.length or -1)
 	
 	private static void problem(){
+		
+		int test = 3210; //123 the second 6 in 66 (ones digit)
+		System.out.println("Easy mode " + test + " = " + findNthDigitOfAllNumsEasy(test) + " " + findNthDigitOfAllNumsEasy(test+1) + " " + findNthDigitOfAllNumsEasy(test+2) + " " + findNthDigitOfAllNumsEasy(test+3));
 	int x=10;
 	int c = 1;
-	x += (9*(c+1)) * (int)Math.pow(10, c);
-	System.out.println(x + " " + (9*(c+1)) + " " + (int)Math.pow(10, c));
-	c++;
-	x += (9*(c+1)) * (int)Math.pow(10, c);
-	System.out.println(x + " " + (9*(c+1)) + " " + (int)Math.pow(10, c));
-	c++;
-	x += (9*(c+1)) * (int)Math.pow(10, c);
-	System.out.println(x + " " + (9*(c+1)) + " " + (int)Math.pow(10, c));
 	
+	while(x-1<test){
+		x += (9*(c+1)) * (int)Math.pow(10, c++);
+		System.out.println(x + " " + c);
+	}
+	System.out.println("c="+c + " and x="+x);
+	int diff=x-test;
+	//int lkj = (diff / 10) - (9*c) + 10;
+	int lkj = ((test -10)/c)+ (int)Math.pow(10, c-1);// works for 2 digits kinda, from 10 - 189
+	if(c==2)System.out.println(x + " " + c + " diff:" + diff + " lkj:"+ lkj);
+	int poi = ((test -190)/c) + (int)Math.pow(10, c-1); //starts at 190=100, 193=101, 196=102
+	if(c==3)System.out.println(x + " " + c + " diff:" + diff + " poi:"+ poi);
+	
+	int wer = ((test-2890)/c) + (int)Math.pow(10, c-1); //starts at 190=100, 193=101, 196=102
+	if(c==4)System.out.println(x + " " + c + " diff:" + diff + " wer:"+ wer);
+	/*System.out.println(x + " " + (9*(c+1)) + " " + (int)Math.pow(10, c));
+	c++;
+	x += (9*(c+1)) * (int)Math.pow(10, c);
+	System.out.println(x + " " + (9*(c+1)) + " " + (int)Math.pow(10, c));
+	c++;
+	x += (9*(c+1)) * (int)Math.pow(10, c);
+	System.out.println(x + " " + (9*(c+1)) + " " + (int)Math.pow(10, c));
+	*/
 	//x +=9;
-	System.out.println("x " + x);
+/*	System.out.println("x " + x);
 	x+=180;
 	System.out.println("x " + x);
 	x+=2700;
 	System.out.println("x " + x);
 	x+=36000;
-	System.out.println("x " + x);
+	System.out.println("x " + x);*/
 	
 		
 		
 		
-		int t = 2894;
-		System.out.println("Easy mode " + t + " = " + findNthDigitOfAllNumsEasy(t));
 		
-		System.out.println(" " + (1450/1000));
+		
+		/*System.out.println(" " + (1450/1000));
 		System.out.println("start end : " + makeAllNumsStringFromTo(190, 220));
 		
 		int n1 = 191;
@@ -55,7 +71,7 @@ public class Problem40 {
 		//1   0   0   1   0   1   1   0   2   1   0   3   1   0   4   1   0   5   1   0   6   1   0   7   1   0   8   1   0   9   1   1   0
 		//190 191 192 193 194 195 196 197 198 199 200 201 202 203 204 205 206 207 208 209 210 211 212 213 214 215 216 217 218 219 220 221 222
 		
-		System.out.println("Got num : " + d1);
+		System.out.println("Got num : " + d1);*/
 	}
 	
 	private static int findNthDigitOfAllNums(int num){
