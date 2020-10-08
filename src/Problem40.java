@@ -9,53 +9,49 @@ public class Problem40 {
 	
 	//theres 10 1digit nums so 10 (0-9)
 	//theres 90 2digit nums so + 90*2 = 180 === 190-192 being 100 
-	//theres 900 3digit nums so + 900*3 = 2700 === 2890 2890-2893 being 1000
-	//theres 9000 4digit nums so + 9000*4 = 36000 === 38890
-	//theres 90000 5digit nums so + 90000*5
+	//theres 900 3digit nums so + 900*3 = 2700 === 2890 (2700 plus the previous 190) 2890-2893 being 1000
+	//theres 9000 4digit nums so + 9000*4 = 36000 === 38890 (36000 plus the previous 2890)
+	//theres 90000 5digit nums so + 90000*5 = 450000 = 488890 (450000 + 38890....)
+	//theres 900000 6digit nums so 900,000*6 = 5,400,000 = 5,888,890
+	//.....7
+	//.....8
+	
 	//....etc
 	//so count digits
 	// then 10 + (9 Math.pow(10,digits.length or -1)
 	
 	private static void problem(){
 		
-		int test = 322; //123 the second 6 in 66 (ones digit)
+		int test = 3221; //123 the second 6 in 66 (ones digit)
 		System.out.println("Easy mode " + test + " = " + findNthDigitOfAllNumsEasy(test) + " " + findNthDigitOfAllNumsEasy(test+1) + " " + findNthDigitOfAllNumsEasy(test+2) + " " + findNthDigitOfAllNumsEasy(test+3));
 	int x=10;
 	int c = 1;
 	int xx = x;
-	while(x-1<test){
+	while(x-1<test){ // xx will store the start of the range we are talking about, 2890, 38890, etc 
 		xx = x;
 		x += (9*(c+1)) * (int)Math.pow(10, c++);
-		//System.out.println(x + " " + c);
 	}
-	System.out.println("c="+c + " and x="+x + " annnd xx:" + xx);
-	int diff=x-test;
-	//int lkj = (diff / 10) - (9*c) + 10;
-	int startingNum = ((test -xx)/c)+ (int)Math.pow(10, c-1);
-	System.out.println(x + " " + c + " "+ " :starting num: "+ startingNum);
-	/*int lkj = ((test -xx)/c)+ (int)Math.pow(10, c-1);// works for 2 digits kinda, from 10 - 189
-	if(c==2)System.out.println(x + " " + c + " diff:" + diff + " lkj:"+ lkj);
-	int poi = ((test -xx)/c) + (int)Math.pow(10, c-1); //starts at 190=100, 193=101, 196=102
-	if(c==3)System.out.println(x + " " + c + " diff:" + diff + " poi:"+ poi);
+	int diffModC=(test-xx)%c;
+	System.out.println("c="+c + " and x="+x + " annnd xx:" + xx + "  diffModC="+diffModC);
+	//if diffModC == 0, we want the largest digit
+	//if diffModC == 1, we want the second largest digit
+	// ...etc...
+
 	
-	int wer = ((test-xx)/c) + (int)Math.pow(10, c-1); //starts at 190=100, 193=101, 196=102
-	if(c==4)System.out.println(x + " " + c + " diff:" + diff + " wer:"+ wer);*/
-	/*System.out.println(x + " " + (9*(c+1)) + " " + (int)Math.pow(10, c));
-	c++;
-	x += (9*(c+1)) * (int)Math.pow(10, c);
-	System.out.println(x + " " + (9*(c+1)) + " " + (int)Math.pow(10, c));
-	c++;
-	x += (9*(c+1)) * (int)Math.pow(10, c);
-	System.out.println(x + " " + (9*(c+1)) + " " + (int)Math.pow(10, c));
-	*/
-	//x +=9;
-/*	System.out.println("x " + x);
-	x+=180;
-	System.out.println("x " + x);
-	x+=2700;
-	System.out.println("x " + x);
-	x+=36000;
-	System.out.println("x " + x);*/
+
+	int startingNum = ((test -xx)/c)+ (int)Math.pow(10, c-1); 
+	int actualNumber = startingNum/(int)Math.pow(10, c-diffModC-1)%10;
+	
+	System.out.println("actualNumber " + actualNumber );
+	// got to turn the number they give us into the starting number? 
+	//like 12 is the 1 in the tens place of 11
+	//and 13 is the 1 in the ones place.
+	// we kinda like 12 cause that will give us the start of 11, and not just part of 11
+	//so also 322 gives us 144
+	//while 323 gives us the starting at next 4 
+	//
+	System.out.println(x + " " + c + " "+ " :starting num: "+ startingNum);
+	
 	
 		
 		
@@ -101,7 +97,7 @@ public class Problem40 {
 	}
 	
 	private static String findNthDigitOfAllNumsEasy(int num){
-		String b = makeAllNumsStringFromTo(0, 10000);
+		String b = makeAllNumsStringFromTo(0, 1500);
 		return b.charAt(num)+"";
 	}
 
