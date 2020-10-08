@@ -18,25 +18,28 @@ public class Problem40 {
 	
 	private static void problem(){
 		
-		int test = 3210; //123 the second 6 in 66 (ones digit)
+		int test = 322; //123 the second 6 in 66 (ones digit)
 		System.out.println("Easy mode " + test + " = " + findNthDigitOfAllNumsEasy(test) + " " + findNthDigitOfAllNumsEasy(test+1) + " " + findNthDigitOfAllNumsEasy(test+2) + " " + findNthDigitOfAllNumsEasy(test+3));
 	int x=10;
 	int c = 1;
-	
+	int xx = x;
 	while(x-1<test){
+		xx = x;
 		x += (9*(c+1)) * (int)Math.pow(10, c++);
-		System.out.println(x + " " + c);
+		//System.out.println(x + " " + c);
 	}
-	System.out.println("c="+c + " and x="+x);
+	System.out.println("c="+c + " and x="+x + " annnd xx:" + xx);
 	int diff=x-test;
 	//int lkj = (diff / 10) - (9*c) + 10;
-	int lkj = ((test -10)/c)+ (int)Math.pow(10, c-1);// works for 2 digits kinda, from 10 - 189
+	int startingNum = ((test -xx)/c)+ (int)Math.pow(10, c-1);
+	System.out.println(x + " " + c + " "+ " :starting num: "+ startingNum);
+	/*int lkj = ((test -xx)/c)+ (int)Math.pow(10, c-1);// works for 2 digits kinda, from 10 - 189
 	if(c==2)System.out.println(x + " " + c + " diff:" + diff + " lkj:"+ lkj);
-	int poi = ((test -190)/c) + (int)Math.pow(10, c-1); //starts at 190=100, 193=101, 196=102
+	int poi = ((test -xx)/c) + (int)Math.pow(10, c-1); //starts at 190=100, 193=101, 196=102
 	if(c==3)System.out.println(x + " " + c + " diff:" + diff + " poi:"+ poi);
 	
-	int wer = ((test-2890)/c) + (int)Math.pow(10, c-1); //starts at 190=100, 193=101, 196=102
-	if(c==4)System.out.println(x + " " + c + " diff:" + diff + " wer:"+ wer);
+	int wer = ((test-xx)/c) + (int)Math.pow(10, c-1); //starts at 190=100, 193=101, 196=102
+	if(c==4)System.out.println(x + " " + c + " diff:" + diff + " wer:"+ wer);*/
 	/*System.out.println(x + " " + (9*(c+1)) + " " + (int)Math.pow(10, c));
 	c++;
 	x += (9*(c+1)) * (int)Math.pow(10, c);
