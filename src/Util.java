@@ -27,28 +27,18 @@ public class Util {
 		return true;
 	}
 
-	public static BigInteger getTriangleNumberBigInt(int num) {
-		BigInteger total = BigInteger.valueOf(0);
-		for (long i = 1; i <= num; i++) {
-			total = total.add(BigInteger.valueOf(i));
-		}
-		return total;
+	public static int getNthTriangleNumberInt(int n){
+		return ((n+1)*n)/2;
 	}
 
-	public static long getTriangleNumberLong(int num) {
-		long total = 0;
-		for (long i = 1; i <= num; i++) {
-			total += i;
-		}
-		return total;
+	public static long getNthTriangleNumberLong(long n){
+		return ((n+1)*n)/2;
 	}
-
-	public static int getTriangleNumberInt(int num) {
-		int total = 0;
-		for (int i = 1; i <= num; i++) {
-			total += i;
-		}
-		return total;
+	
+	public static BigInteger getNthTriangleNumberBigInt(BigInteger n){
+		BigInteger one = new BigInteger("1");
+		BigInteger two = new BigInteger("2");
+		return (n.add(one).multiply(n)).divide(two);
 	}
 
 	public static Set<BigInteger> getFactorsBigInt(BigInteger num) {
@@ -185,15 +175,11 @@ public class Util {
 
 	public static boolean isSumOfAbundantNumbers(int num) {
 		for (int i = 1; i <= num / 2; i++) {
-
-			int num2 = num - i;
 			if (Util.isAbundantNumber(i) && Util.isAbundantNumber(num)) {
 				return true;
 			}
-
 		}
 		return false;
-
 	}
 
 	public static boolean isAbundantNumber(int num) {
@@ -469,6 +455,51 @@ public class Util {
 		return combos;
 
 	}
+	
+	public static List<Integer> makeAllPanditalNumsFromZeroTo(int end){
+		return makeAllPanditalNumsFromTo(0,end);
+	}
+	
+	public static List<Integer> makeAllPanditalNumsFromOneTo(int end){
+		return makeAllPanditalNumsFromTo(1,end);
+	}
+	
+	public static List<Integer> makeAllPanditalNumsFromTo(int start, int end){
+		List<String> all = new ArrayList<String>();
+		String s = "";
+		for(int i=start; i<=end; i++){
+			s += i;
+		}
+		Util.makeAllCharacterCombosRecur("", s, all);
+		List<Integer> alln = new ArrayList<Integer>();
+		for(String st : all){
+			alln.add(Integer.parseInt(st));
+		}
+		return alln;
+	}
+	
+	public static List<Long> makeAllPanditalNumsFromZeroTo(long end){
+		return makeAllPanditalNumsFromTo(0,end);
+	}
+	
+	public static List<Long> makeAllPanditalNumsFromOneTo(long end){
+		return makeAllPanditalNumsFromTo(1,end);
+	}
+	
+	public static List<Long> makeAllPanditalNumsFromTo(long start, long end){
+		List<String> all = new ArrayList<String>();
+		String s = "";
+		for(long i=start; i<=end; i++){
+			s += i;
+		}
+		Util.makeAllCharacterCombosRecur("", s, all);
+		List<Long> alln = new ArrayList<Long>();
+		for(String st : all){
+			if(st.charAt(0) != '0')
+			alln.add(Long.parseLong(st));
+		}
+		return alln;
+	}
 
 	public static int getFirstNullIntArrArr(int[][] combos) {
 		for (int i = 0; i < combos.length; i++) {
@@ -478,11 +509,7 @@ public class Util {
 		}
 		return -1;
 	}
-	/*
-	 * private static void printIntArray(int[] arr) { System.out.print(
-	 * "printing array : "); for (int i : arr) { System.out.print(i + " "); }
-	 * System.out.println(""); }
-	 */
+
 
 	public static int[] getIntsSublist(int[] nums, int start, int end) {
 		// goes from start index inclusive, to end of array
@@ -628,10 +655,10 @@ public class Util {
 		}
 		return true;
 	}
-
-	public static boolean isPandigitalNumber(int num) {
+	
+	public static boolean isPandigitalNumberFromTo(int start, int end, int num){
 		String s = num + "";
-		for (int i = 1; i < 10; i++) {
+		for (int i = start; i <= end; i++) {
 			String iString = i + "";
 			int ind = s.indexOf(iString);
 			if (ind != -1) {
@@ -639,36 +666,26 @@ public class Util {
 				String right = s.substring(ind + 1);
 				s = left + right;
 				if (s.indexOf(iString) != -1) {
-					// System.out.println("false at index " + ind + " for i=" +
-					// i + " -- " + left + " " + right + " :: " + s);
 					return false;
 				}
 			} else {
-				// System.out.println("false " + s + " for num " + i);
 				return false;
 			}
 		}
 		return true;
 	}
 
+	public static boolean isPandigitalNumberOneToNine(int num) {
+		return isPandigitalNumberFromTo(1, 9, num);
+	}
+	
+	public static boolean isPandigitalNumberZeroToNine(int num) {
+		return isPandigitalNumberFromTo(0, 9, num);
+	}
+
 	public static boolean isNthDigitPandigitalNumber(int num) {
 		int count = Util.countDigits(num);
-		String s = num + "";
-		for (int i = 1; i <= count; i++) {
-			String iString = i + "";
-			int ind = s.indexOf(iString);
-			if (ind != -1) {
-				String left = s.substring(0, ind);
-				String right = s.substring(ind + 1);
-				s = left + right;
-				if (s.indexOf(iString) != -1) {
-					return false;
-				}
-			} else {
-				return false;
-			}
-		}
-		return true;
+		return isPandigitalNumberFromTo(1, count, num);
 	}
 
 	public static int appendIntToInt(int first, int second) {
@@ -742,5 +759,64 @@ public class Util {
 			b += i;
 		}
 		return b;
+	}
+	
+	public static void makeAllCharacterCombosRecur(String s, String r, List<String> all){
+		if(r.length() == 0){
+			all.add(s);
+		} else {
+			for(int i=0; i<r.length(); i++){
+				String newS = s + r.charAt(i);
+				String newR = r.substring(0,i) + r.substring(i+1);
+				makeAllCharacterCombosRecur(newS, newR, all);
+			}
+		}
+	}
+	
+	public static int getNthTriangleNumber(int n){
+		return ((n+1)*n)/2;
+	}
+	
+	public static void testTriangleNumberIndexFinder(long to){
+		for(long i=0; i<to; i++){
+			long t = Util.getNthTriangleNumberLong(i);
+			long s = getNIndexfromTriangleNumber(t); 
+			if(s != i){
+				System.out.println("WRONG : i=" + i + " t=" + t + " s=" + s);
+				return;
+			}
+		}
+	}
+	
+	public static boolean isTriangleNumber(int t){
+		int test = getNIndexOfTriangleNumber(t);
+		int actual = getNthTriangleNumber(test);
+		return t == actual;
+	}
+	
+	public static int getNIndexOfTriangleNumber(int t){
+		int n =(int)Math.sqrt(t*2); 
+		int real = Util.getNthTriangleNumberInt(n);
+		if(t == real){
+			return n;
+		}
+		return -1;
+			
+	}
+	
+	public static long getNIndexfromTriangleNumber(long n){
+		return (long)Math.sqrt(n*2);
+	}
+	
+	public static int getIntValForLetter(char c){
+		return (int)c-64;
+		
+	}
+	public static int getWordToTriangleNumber(String s){
+		int total = 0;
+		for(int i=0; i<s.length();i++){
+			total += getIntValForLetter(s.charAt(i));
+		}
+		return total;
 	}
 }

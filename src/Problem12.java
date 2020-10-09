@@ -40,7 +40,7 @@ What is the value of the first triangle number to have over five hundred divisor
 		Map<BigInteger, Set<BigInteger>> prevFactors = new HashMap<BigInteger, Set<BigInteger>>();
 		
 		while(true){
-			int tri = Util.getTriangleNumberInt(ind);
+			int tri = Util.getNthTriangleNumberInt(ind);
 			Set<Integer> factors = Util.getFactorsInt(tri);
 			if(factors.size() > factorLimit){
 				System.out.print("Found: "  + tri + " with " + factors.size() + " factors");

@@ -39,7 +39,7 @@ public class Problem38 {
 				
 				num = Util.appendIntToInt(num, (j*i));
 			
-				if(Util.isPandigitalNumber(num)){
+				if(Util.isPandigitalNumberOneToNine(num)){
 					if (num>maxSol){
 						maxSol = num;
 					}
