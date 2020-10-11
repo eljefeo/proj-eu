@@ -11,13 +11,22 @@ public class Problem44 {
  
  pent x = b+b-  ? 
  y = how many nums before/after b do you want? positive num for after, neg for before
- x = sqrt(b*6) +1 ) /3 ) - y )
+ x = sqrt(b*6) +1 ) /3 ) - y ) ---------- the sqrt(b*6) here has a decimal that keeps getting closer to .5, it is .49something .499999 -- its .44 at 1, .47 at 2...
+ maybe we can test using that....if sqrt(b*6) has decimal .49 we are good? ---- no -other numbs end up with .49
  a = x^2 ) *3 ) -x ) /2
+ 
+ -- so how do we find y so that b+a and b-a are both pentagonal?
+ 
+ 
  
  22 +70 = 92
  70 is 3 more pents than 22 to add to a pent, but how do we know how many...how do we know 3?
  same goes for the one before...how do we know how many to minus?
  
+ 
+ 22 ::: 35 = 55
+ sqrt(55*6) +1 not divisible by 3....
+ 51 = 73
  
  but we want b + x to be pent and b-x or x-b to be pent
  
@@ -26,10 +35,47 @@ It can be seen that P4 + P7 = 22 + 70 = 92 = P8. However, their difference, 70 -
 Find the pair of pentagonal numbers, Pj and Pk, for which their sum and difference are pentagonal and D = |Pk - Pj| is minimised; what is the value of D?
 	 */
 	public static void main(String[] args) {
-		problem();
+		//problem();
 		//testPents();
-		//System.out.println("is pent " + Util.getPentagonalNumber(3556) + " " + Util.isPentagonal(18965926) + " " + Util.getPentIndex(18965926));
+		//System.out.println("is pent " + Util.getPentagonalNumber(355689) + " " + Util.isPentagonal(189771819237L) + " " + Util.getPentIndex(189771819237L));
+		testPentsFourNine();
 	} 
+	
+	public static void testPentsGood(){ // test pentagonal number creation and solving the index
+		int max = 200000000;
+		for(int i=1; i < 200000000; i++){
+			long pent = getPentagonalNumber(i);
+			long ind = getPentIndex(pent);
+			if(ind < 0){
+				System.out.println("FALSE :::: Test Pent #" + i + " :: pent=" + pent + " :: supposedly was this index:" +ind );//66845
+				return;
+			}
+		}
+		System.out.println("All Passed up to n=" + max);
+	}
+	public static void testPentsFourNine(){ // test pentagonal number creation and solving the index
+		int max = 100;
+		for(int i=1; i < max; i++){
+			long pent = getPentagonalNumber(i);
+			long ind = getPentIndex(pent);
+			double a = Math.sqrt(i*6);
+			
+			if(isPentagonal(i)){
+				System.out.println(i + " TRUE::: sqrt " + a + "   Test Pent #" + i + " :: pent=" + pent + " :: supposedly was this index:" +ind  +" ;; " + (a - (int)a));//66845
+			} else {
+				
+				System.out.println(i + " FALSE :::: sqrt " + a + "    Test Pent #" + i + " :: pent=" + pent + " :: supposedly was this index:" +ind  +" ;; " + (a - (int)a));//66845
+			}
+			
+			/*if(ind < 0){
+				System.out.println("FALSE :::: sqrt " + a + "    Test Pent #" + i + " :: pent=" + pent + " :: supposedly was this index:" +ind );//66845
+				return;
+			} else{
+				System.out.println("TRUE::: sqrt " + a + "   Test Pent #" + i + " :: pent=" + pent + " :: supposedly was this index:" +ind );
+			}*/
+		}
+		System.out.println("All Passed up to n=" + max);
+	}
 	public static long getPentagonalNumber(long n){
 		return n * (3*n - 1) /2;
 	}
