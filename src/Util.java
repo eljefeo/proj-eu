@@ -725,18 +725,16 @@ public class Util {
 			return -1;
 		if (nthDigit < 10)
 			return nthDigit;
-		int temp = 10;
 		int c = 1;
-		int stage = temp;
-		while (temp - 1 < nthDigit) { // stage will store the start of the range
-										// we are talking about, 2890, 38890,
-										// etc
-			stage = temp;
-			temp += (9 * (c + 1)) * (int) Math.pow(10, c++);
+		int stage = 10;
+		// stage will store the start of the range we are talking about, 10+ (2 digit nums), 190+ (3 digits), 2890 (4), 38890(5), 488890(6), 5888890(7)....
+		while (stage - 1 < nthDigit) { 
+			stage += 9 * (c + 1) * (int) Math.pow(10, c++);
 		}
-		int diffModC = (nthDigit - stage) % c;
+		stage -= 9 * c * (int)Math.pow(10, c-1);
+		int whatDigit = (nthDigit - stage) % c;
 		int startingNum = ((nthDigit - stage) / c) + (int) Math.pow(10, c - 1);
-		int actualNumber = startingNum / (int) Math.pow(10, c - diffModC - 1) % 10;
+		int actualNumber = startingNum / (int) Math.pow(10, c - whatDigit - 1) % 10;
 		return actualNumber;
 	}
 
@@ -818,5 +816,36 @@ public class Util {
 			total += getIntValForLetter(s.charAt(i));
 		}
 		return total;
+	}
+	
+	public static void testPents(){ // test pentagonal number creation and solving the index
+		int max = 200000000;
+		for(int i=1; i < 200000000; i++){
+			long pent = getPentagonalNumber(i);
+			long ind = getPentIndex(pent);
+			if(ind < 0){
+				System.out.println("FALSE :::: Test Pent #" + i + " :: pent=" + pent + " :: supposedly was this index:" +ind );//66845
+				return;
+			}
+		}
+		System.out.println("All Passed up to n=" + max);
+	}
+	
+	public static long getPentagonalNumber(long n){
+		return n * (3*n - 1) /2;
+	}
+	
+	public static long getPentIndex(long n){
+		long sqr =  (long)(Math.sqrt(n*6) + 1) / 3;
+		if(getPentagonalNumber(sqr) == n){
+			return sqr;
+		}
+		return -1;
+	}
+	
+	
+	public static boolean isPentagonal(long n){//1, 5, 12, 22, 35, 51, 70, 92, 117, 145, ...
+		return getPentIndex(n) > 0;
+		
 	}
 }

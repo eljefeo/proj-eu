@@ -32,7 +32,6 @@ public class Problem40 {
 	//....etc
 	//so count digits
 	// then 10 + (9 Math.pow(10,digits.length or -1)
-	
 	private static void problem(){
 		int product = 1;
 		for(int i=0; i<7; i++){
