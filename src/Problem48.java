@@ -22,7 +22,6 @@ public class Problem48 {
 			BigInteger c = new BigInteger(""+i).pow(i);
 			b = b.add(c);
 		}
-		//.....789498383642350667978127819110846700
 		System.out.println("Last ten digits: " + b.mod(new BigInteger(""+digits)));
 		
 	}
