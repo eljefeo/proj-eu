@@ -27,19 +27,46 @@ public class Util {
 		return true;
 	}
 
-	public static int getNthTriangleNumberInt(int n){
+	public static int getTriangleNumber(int n){
 		return ((n+1)*n)/2;
 	}
 
-	public static long getNthTriangleNumberLong(long n){
+	public static long getTriangleNumber(long n){
 		return ((n+1)*n)/2;
 	}
 	
-	public static BigInteger getNthTriangleNumberBigInt(BigInteger n){
+	public static BigInteger getTriangleNumber(BigInteger n){
 		BigInteger one = new BigInteger("1");
 		BigInteger two = new BigInteger("2");
 		return (n.add(one).multiply(n)).divide(two);
 	}
+	
+	public static long getIndexOfTriangleNumber(long t) {
+		long s = (long) Math.sqrt(t * 2);
+		if (getTriangleNumber(s) == t) {
+			return s;
+		}
+		return -1;
+	}
+
+	public static boolean isTriangleNumber(long n) {
+		return getIndexOfTriangleNumber(n) > 0;
+	}
+
+	public static void testTriangleNumbers() {
+
+		int max = 1000000;
+		for (long i = 1; i < max; i++) {
+			long tri = getTriangleNumber(i);
+			long ind = getIndexOfTriangleNumber(tri);
+			if (i != ind) {
+				System.out.println("This one doesnt work!! i:" + i + " hex:" + tri + " ind:" + ind);
+				return;
+			}
+		}
+		System.out.println("All passed triangle numbers from 1 to " + max + " (using longs)");
+	}
+
 
 	public static Set<BigInteger> getFactorsBigInt(BigInteger num) {
 
@@ -777,7 +804,7 @@ public class Util {
 	
 	public static void testTriangleNumberIndexFinder(long to){
 		for(long i=0; i<to; i++){
-			long t = Util.getNthTriangleNumberLong(i);
+			long t = Util.getTriangleNumber(i);
 			long s = getNIndexfromTriangleNumber(t); 
 			if(s != i){
 				System.out.println("WRONG : i=" + i + " t=" + t + " s=" + s);
@@ -794,7 +821,7 @@ public class Util {
 	
 	public static int getNIndexOfTriangleNumber(int t){
 		int n =(int)Math.sqrt(t*2); 
-		int real = Util.getNthTriangleNumberInt(n);
+		int real = Util.getTriangleNumber(n);
 		if(t == real){
 			return n;
 		}
@@ -818,11 +845,11 @@ public class Util {
 		return total;
 	}
 	
-	public static void testPents(){ // test pentagonal number creation and solving the index
+	public static void testPentagonalNumbers(){ // test pentagonal number creation and solving the index
 		int max = 200000000;
-		for(int i=1; i < 200000000; i++){
+		for(int i=1; i < max; i++){
 			long pent = getPentagonalNumber(i);
-			long ind = getPentIndex(pent);
+			long ind = getIndexOfPentagonalNumber(pent);
 			if(ind < 0){
 				System.out.println("FALSE :::: Test Pent #" + i + " :: pent=" + pent + " :: supposedly was this index:" +ind );//66845
 				return;
@@ -835,7 +862,7 @@ public class Util {
 		return n * (3*n - 1) /2;
 	}
 	
-	public static long getPentIndex(long n){
+	public static long getIndexOfPentagonalNumber(long n){
 		long sqr =  (long)(Math.sqrt(n*6) + 1) / 3;
 		if(getPentagonalNumber(sqr) == n){
 			return sqr;
@@ -844,8 +871,52 @@ public class Util {
 	}
 	
 	
-	public static boolean isPentagonal(long n){//1, 5, 12, 22, 35, 51, 70, 92, 117, 145, ...
-		return getPentIndex(n) > 0;
+	public static boolean isPentagonalNumber(long n){//1, 5, 12, 22, 35, 51, 70, 92, 117, 145, ...
+		return getIndexOfPentagonalNumber(n) > 0;
 		
 	}
+	
+	public static int getHexagonalNumber(int n){
+		return n * ((n*2) -1);
+	}
+	
+	public static long getHexagonalNumber(long n){
+		return n * ((n*2) -1);
+	}
+	
+	public static int getIndexFromHexagonal(int n){
+		int t = n / (int)Math.sqrt(n*2);
+		if(getHexagonalNumber(t) == n){
+			return t;
+		}
+		return -1;
+	}
+	
+	public static long getIndexOfHexagonal(long n){
+		long t = n / (long)Math.sqrt(n*2);
+		if(getHexagonalNumber(t) == n){
+			return t;
+		}
+		return -1;
+	}
+	
+	public static boolean isHexagonalNumber(long n){
+		return getIndexOfHexagonal(n) > 0;
+	}
+	
+
+	
+	public static void testHexNumbers(){
+		int max = 1000000;
+		for(long i=1; i<max; i++){
+			long hex = Util.getHexagonalNumber(i);
+			long ind = Util.getIndexOfHexagonal(hex);
+			if(i != ind){
+				System.out.println("This one doesnt work!! i:"+i + " hex:"+hex + " ind:" +ind);
+				return;
+			}
+		}
+		System.out.println("All passed hexagonal numbers from 1 to " + max + " (using longs)");
+	}
+
 }
