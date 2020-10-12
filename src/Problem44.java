@@ -7,7 +7,7 @@ public class Problem44 {
 	
 	private static void problem(){// cant find 2 pents that are nex to eachother that work... trying to find pents that are 2 away, then 3 away etc..
 		//1, 5, 12, 22, 35, 51, 70, 92, 117, 145, ...
-		int max = 1000000;
+		int max = 1000000; // we will just assume we can do this under a million. If we cant we just keep upping it until we find it, we will eventually. we could just do a while I guess..
 		for(int howFarApart=1; howFarApart < 10000; howFarApart++){
 			long dif = Util.getPentagonalNumber(howFarApart);
 			for(int i=1; i < max; i++){
@@ -20,7 +20,7 @@ public class Problem44 {
 						// we start with the smallest distance we can between the pentagonal numbers.
 						// so we check all numbers next to each other (1 away) under max (1 million)
 						// if we dont find anything, we start checking numbers that are 2 away, 3 away etc.. until we find a pair..
-						// that way we keep the difference as small as possible
+						// that way we keep the difference as small as possible until we find an answer
 						return;
 					}
 				}
