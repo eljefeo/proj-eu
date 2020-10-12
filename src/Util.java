@@ -95,7 +95,7 @@ public class Util {
 		return factors;
 	}
 
-	public static Set<Integer> getFactorsInt(int num) {
+	public static Set<Integer> getDistinctFactorsInt(int num) {
 
 		Set<Integer> factors = new HashSet<Integer>();
 		factors.add(1);
@@ -109,6 +109,20 @@ public class Util {
 		return factors;
 	}
 
+	public static Set<Integer> getDistinctPrimeFactors(int num) {
+
+		Set<Integer> factors = new HashSet<Integer>();
+		//factors.add(1);
+		int half = num / 2;
+		for (int i = 2; i <= half; i++) {
+			if (num % i == 0 && isPrime(i)) {
+				factors.add(i);
+			}
+		}
+		//factors.add(num);
+		return factors;
+	}
+	
 	public static int stringToInt(String numStr) {
 		return Integer.parseInt(numStr);
 	}
