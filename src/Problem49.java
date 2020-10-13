@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Problem49 {
 
@@ -14,7 +17,51 @@ public class Problem49 {
 	}
 	
 	private static void problem(){
+		int start = 1000;
+		int end = 9999;
+		for(int i = start; i < end; i++){
+			List<String> ls = new ArrayList<String>();
+			List<Integer> lsp = new ArrayList<Integer>();
+			Util.makeAllPermutationsRecur("", ""+i, ls);
+			Collections.sort(ls);
+			for(int j = 0; j < ls.size(); j++){
+				if(!ls.get(j).startsWith("0")){
+					Integer a = Integer.parseInt(ls.get(j));
+					if(Util.isPrime(a)){
+						lsp.add(a);
+					}
+				}
+				
+			}
+			if(find3Nums(lsp)){
+				return;
+			}
+		}
 		
+	}
+	
+	
+	private static boolean find3Nums(List<Integer> lsp){
+		for(int i = 0; i < lsp.size()-1; i++){
+			Integer a = lsp.get(i);
+			if(a == 1487)
+				return false; // skip the previously known one...
+			
+			for(int j = i+1; j < lsp.size(); j++){	
+				Integer b = lsp.get(j);
+				int dif = b-a;
+				if(dif == 0){
+					continue; // some have multiples of the same digit, so permutations would be duplicates
+				}
+				Integer c = b + dif;
+				if(lsp.contains(c)){
+					String answer = a+""+b+""+c;
+					System.out.println("Found a: "+a+" b:"+b+" c:" + c + " answer:"+answer);
+					return true;
+				}
+			}
+		} 
+		return false;
 	}
 
 }

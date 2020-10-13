@@ -511,7 +511,7 @@ public class Util {
 		for(int i=start; i<=end; i++){
 			s += i;
 		}
-		Util.makeAllCharacterCombosRecur("", s, all);
+		Util.makeAllPermutationsRecur("", s, all);
 		List<Integer> alln = new ArrayList<Integer>();
 		for(String st : all){
 			alln.add(Integer.parseInt(st));
@@ -533,7 +533,7 @@ public class Util {
 		for(long i=start; i<=end; i++){
 			s += i;
 		}
-		Util.makeAllCharacterCombosRecur("", s, all);
+		Util.makeAllPermutationsRecur("", s, all);
 		List<Long> alln = new ArrayList<Long>();
 		for(String st : all){
 			if(st.charAt(0) != '0')
@@ -800,14 +800,14 @@ public class Util {
 		return b;
 	}
 	
-	public static void makeAllCharacterCombosRecur(String s, String r, List<String> all){
+	public static void makeAllPermutationsRecur(String s, String r, List<String> all){
 		if(r.length() == 0){
 			all.add(s);
 		} else {
 			for(int i=0; i<r.length(); i++){
 				String newS = s + r.charAt(i);
 				String newR = r.substring(0,i) + r.substring(i+1);
-				makeAllCharacterCombosRecur(newS, newR, all);
+				makeAllPermutationsRecur(newS, newR, all);
 			}
 		}
 	}

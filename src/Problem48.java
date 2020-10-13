@@ -11,7 +11,12 @@ public class Problem48 {
 	
 	
 	public static void main(String[] args) {
-		problem();
+		double f = 5;
+		double t = 2;
+		double a = f/t;
+		System.out.println(" sdf " + a);
+		
+		//problem();
 	}
 	
 	private static void problem(){
