@@ -11,23 +11,21 @@ public class Problem50 {
 
 		Which prime, below one-million, can be written as the sum of the most consecutive primes?
 	*/
+	
 	public static void main(String[] args) {
 		problem();
 	}
 	
 	private static void problem(){
-		//int sum = 0;
-		//int pCounter = 0;
 		int end = 1000000;
 		int bestPCount = 0;
 		int bestPrime = 0;
 		for(int i=2; i<end; i++){
-			
 			if(Util.isPrime(i)){
-				//System.out.println("Starting with prime " + i);
 				int sum = i;
 				int pC = 1;
-				for(int j=i+1; (sum+j)<end; j++){
+				//for(int j=i+1; (sum+j)<end; j++){ // this will find 41 also (largest sum of consecutive primes below 100) but does many more calculations after 41
+				for(int j=i+2; (sum+j)<end; j+=2){ // this will not find 41 but will skip even numbers to save on unnecessary processing 
 					if(Util.isPrime(j)){
 						sum+=j;
 						pC++;
@@ -35,20 +33,13 @@ public class Problem50 {
 							if(pC > bestPCount){
 								bestPCount = pC;
 								bestPrime = sum;
-								System.out.println("New longest consecutive primes sum to a prime of " + bestPrime + " primes : " + bestPCount);
+								//System.out.println("New longest consecutive primes sum to a prime of " + bestPrime + " primes : " + bestPCount);
 							}
 						}
 					}
 				}
-				
-				
 			}
 		}
 		System.out.println("\n*******\nFinal Answer ::: longest consecutive primes sum to a prime is " + bestPrime + " with a count of: " + bestPCount);
 	}
-	
-/*	public static List<Integer> getLotsOfConsecutivePrimes(){
-		
-	}*/
-
 }

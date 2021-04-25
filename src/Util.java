@@ -776,6 +776,7 @@ public class Util {
 		int whatDigit = (nthDigit - stage) % c;
 		int startingNum = ((nthDigit - stage) / c) + (int) Math.pow(10, c - 1);
 		int actualNumber = startingNum / (int) Math.pow(10, c - whatDigit - 1) % 10;
+		System.out.println("whatDigit: "+whatDigit+" startingNum:"+startingNum+" actualNumber:"+actualNumber);
 		return actualNumber;
 	}
 

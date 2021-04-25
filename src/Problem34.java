@@ -20,7 +20,17 @@ public class Problem34 {
 	
 	
 	public static void main(String[] args) {
-		problem();
+		//problem();
+		//int test = 9999;
+		int i = 10;
+		while(true){
+			int sum = Util.sumOfDigitFactorial(i++);
+			if(sum < i){
+				System.out.println("sum of "+i+" = " + sum + " and is greater? " + (sum<i));
+			}
+		}
+		
+		
 	}
 	
 	private static void problem(){

@@ -56,7 +56,7 @@ public class Problem38 {
 		System.out.println("Max : " + maxSol);
 	}
 	
-	private static int[] appendIntArrayToIntArray(int[] someNums, int[]allNums){
+/*	private static int[] appendIntArrayToIntArray(int[] someNums, int[]allNums){
 		/// go through allnums and when we hit -1, start adding someNums to allNums at that index;
 		if(someNums.length > allNums.length){
 			System.out.println("ERROR - Cannot add someNums to AllNums, someNums is too big : " + someNums.length + " to fit in " + allNums.length);
@@ -73,7 +73,7 @@ public class Problem38 {
 			allNums[i] = someNums[i];
 		}
 		return allNums;
-	}
+	}*/
 
 	
 }
