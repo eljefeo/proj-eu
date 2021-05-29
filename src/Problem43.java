@@ -21,7 +21,7 @@ public class Problem43 {
 	private static void problem() {
 
 		long end = 9;
-		List<Long> alln = Util.makeAllPanditalNumsFromZeroTo(end);
+		List<Long> alln = Util.makeAllPandigitalNumsFromZeroTo(end);
 
 		int[] primes = new int[] { 2, 3, 5, 7, 11, 13, 17 };
 		long sum = 0;
@@ -29,7 +29,7 @@ public class Problem43 {
 			Long num = alln.get(i);
 			boolean isDivisibleByAll = true;
 			for (int j = 1; j <= 7; j++) { // only go to 7 since we get j+2 which ends up being index 7,8,9 with 9 as the final number
-				long sub1 = getSubIntFromIndexToIndex(j, j + 3, alln.get(i));
+				long sub1 = Util.getSubIntFromIndexToIndex(j, j + 3, alln.get(i));
 				if (sub1 % (primes[j - 1]) != 0) {
 					isDivisibleByAll = false;
 					break;
@@ -43,14 +43,6 @@ public class Problem43 {
 		System.out.println("Sum : " + sum );
 	}
 
-	public static int getSubIntFromIndexToIndex(int start, int end, int num) {
-		String s = "" + num;
-		return Integer.parseInt(s.substring(start, end));
-	}
 
-	public static long getSubIntFromIndexToIndex(int start, int end, long num) {
-		String s = "" + num;
-		return Long.parseLong(s.substring(start, end));
-	}
 
 }

@@ -348,6 +348,16 @@ public class Util {
 		}
 		System.out.println();
 	}
+	
+	public static int getSubIntFromIndexToIndex(int start, int end, int num) {
+		String s = "" + num;
+		return Integer.parseInt(s.substring(start, end));
+	}
+
+	public static long getSubIntFromIndexToIndex(int start, int end, long num) {
+		String s = "" + num;
+		return Long.parseLong(s.substring(start, end));
+	}
 
 	public static int[] getMissingDigits1Through9(int[] numDigits) {
 		int[] rest = new int[9 - numDigits.length];
@@ -519,7 +529,7 @@ public class Util {
 		return alln;
 	}
 	
-	public static List<Long> makeAllPanditalNumsFromZeroTo(long end){
+	public static List<Long> makeAllPandigitalNumsFromZeroTo(long end){
 		return makeAllPanditalNumsFromTo(0,end);
 	}
 	
@@ -932,6 +942,50 @@ public class Util {
 			}
 		}
 		System.out.println("All passed hexagonal numbers from 1 to " + max + " (using longs)");
+	}
+	
+public static boolean hasSameUniqueDigits(int a, int b){
+		
+		String at = a+"";
+		String bt = b+"";
+		// lets assume the solution has unique digits, no duplicate digits. This is like the example given in problem 52, and the example made no mention of allowing duplicate digits..
+		// if we find an answer, and it is wrong on the website, we can switch to allowing duplicate digits.
+		
+		if(hasDuplicateDigit(a) || hasDuplicateDigit(b) || at.length() != bt.length() || a == b){
+			return false;
+		}
+		
+		for(int i=0; i<at.length(); i++){
+			char c = at.charAt(i);
+			boolean hasThisDigit = false;
+			for(int j=0; j<bt.length(); j++){
+				char d = bt.charAt(j);
+				if(c == d){
+					hasThisDigit = true;
+					break;
+				}
+			}
+			if(!hasThisDigit){
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	public static boolean hasDuplicateDigit(int a){
+		String at = a+"";
+		if(at.length()>1){
+			for(int i=0; i<at.length(); i++){
+				char c = at.charAt(i);
+				for(int j=i+1; j<at.length(); j++){
+					if(c == at.charAt(j)){
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 }

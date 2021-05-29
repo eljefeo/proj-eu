@@ -14,20 +14,20 @@ public class Problem48 {
 		double f = 5;
 		double t = 2;
 		double a = f/t;
-		System.out.println(" sdf " + a);
+		//System.out.println(" sdf " + a);
 		
-		//problem();
+		problem();
 	}
 	
 	private static void problem(){
 		int max = 1001;
-		long digits = 10000000000L;
+		long tenDigits = 10000000000L;
 		BigInteger b = new BigInteger("0");
 		for(int i = 1; i < max; i++){
 			BigInteger c = new BigInteger(""+i).pow(i);
 			b = b.add(c);
 		}
-		System.out.println("Last ten digits: " + b.mod(new BigInteger(""+digits)));
+		System.out.println("Last ten digits: " + b.mod(new BigInteger(""+tenDigits)));
 		
 	}
 

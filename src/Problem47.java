@@ -34,11 +34,13 @@ public class Problem47 {
 					break;
 				}
 			}
+			
 			if(found){
-				System.out.println("We found " + i + ", " + (i+1) + ", " + (i+2));
+				//The solution is done. This next snippet is just to print the solution and factors for information purposes...
+				System.out.println("We found " + i + ", " + (i+1) + ", " + (i+2) + ", " + (i+3));
 				for(int j=0; j<numFactors; j++){
 					Set<Integer> factors = Util.getDistinctPrimeFactors(i+j);
-					System.out.println("factors of " + (i+j));
+					System.out.print("factors of " + (i+j) + " : ");
 					for(Integer k : factors){
 						System.out.print(k +" ");
 					}
