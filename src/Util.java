@@ -823,6 +823,30 @@ public class Util {
 		}
 	}
 	
+	public static void findCombinationsOfSizeRecur(int[] A, String out, int index, int lengthOfThing, int sampleSize) {
+        // invalid input
+        if (sampleSize > lengthOfThing) {
+            return;
+        }
+ 
+        // base case: combination size is `k`
+        if (sampleSize == 0)
+        {
+            System.out.println(out);
+            return;
+        }
+ 
+        // start from the next index till the last index
+        for (int j = index; j < lengthOfThing; j++) {
+        	findCombinationsOfSizeRecur(A, out + " " + (A[j]) , j + 1, lengthOfThing, sampleSize - 1);
+ 
+            // uncomment the following code to handle duplicates
+            /* while (j < n - 1 && A[j] == A[j + 1]) {
+                j++;
+            } */
+        }
+    }
+	
 	public static int getNthTriangleNumber(int n){
 		return ((n+1)*n)/2;
 	}
