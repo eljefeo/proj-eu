@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
 public class Util {
 	public static boolean isPrime(long num) {
 
@@ -1071,5 +1072,83 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		}
 		return false;
 	}
+	
+	
+	
+	
+	
+	/*
+	 * 
+	 * THESE FUNCTIONS ARE COPIED FROM DEADHORSE EVAL BY ELJEFEO - HOPEFULLY IF THEY GET UPDATED OVER THERE I REMEMBER TO UPDATE HERE....
+	 * SHOULD DO MAVEN LOL
+	 * 
+	 */
+	public static int deadHorseEval5(int a,int b,int c,int d,int e){
+		int x=(a^b^c^d^e)&8191,y=(a|b|c|d|e)&8191,z=y^x,v=y&y-1;
+		if((v&=v-1)==0)
+			return (a+b+c+d+e-x&8191)==(8191&(y^x)<<2) 
+			  ?0x1C000000|x|z<<13:0x18000000|z|x<<13; //4 of a kind or full house
+		else if((v&=v-1)==0)
+			return z!=0?0x8000000|x|z<<13
+			:0xC000000|(v=((a&b)==(a&8191)?a:(c&d)==(c&8191)?c:e)&8191^y)|v<<13;
+		else if((v&=v-1)==0) return 0x4000000|x|z<<13;
+		boolean strt=0x1F1D100%y==0,flsh=(a&b&c&d&e)!=0;
+		return strt?(x==4111?15:x)|(flsh?0x20000000:0x10000000):flsh?0x14000000:x;
+	}  
+	
+	// can send user readable strings into here like 'As or Jc or 9h'..
+	//capital letter for face cards and UPPER case letter for suit 
+	public  static int deadHorsePokerHumanEncodeEval5(String as, String bs, String cs, String ds, String es){
 
+		//convert string to numbers that the eval recognizes
+		char ac=as.charAt(0),bc=bs.charAt(0),cc=cs.charAt(0),dc=ds.charAt(0),ec=es.charAt(0);
+		
+		System.out.println("ac bc cc dc ec ");
+		System.out.println(ac=='A'?1<<12:ac=='K'?1<<11:ac=='Q'?1<<10:ac=='J'?1<<9:ac=='T'?1<<8:1<<(ac-50));
+		System.out.println(bc);
+		System.out.println(cc);
+		System.out.println(dc);
+		System.out.println(ec);
+		
+		int a=((ac=='A'?1<<12:ac=='K'?1<<11:ac=='Q'?1<<10:ac=='J'?1<<9:ac=='T'?1<<8:1<<(ac-50))
+		|((ac=as.charAt(1))=='S'?0x10000:ac=='H'?0x8000:ac=='C'?0x4000:0x2000));
+		
+		int b=((bc=='A'?1<<12:bc=='K'?1<<11:bc=='Q'?1<<10:bc=='J'?1<<9:bc=='T'?1<<8:1<<(bc-50))		
+		|((bc=bs.charAt(1))=='S'?0x10000:bc=='H'?0x8000:bc=='C'?0x4000:0x2000));
+		
+		int c=((cc=='A'?1<<12:cc=='K'?1<<11:cc=='Q'?1<<10:cc=='J'?1<<9:cc=='T'?1<<8:1<<(cc-50))
+		|((cc=cs.charAt(1))=='S'?0x10000:cc=='H'?0x8000:cc=='C'?0x4000:0x2000));
+		
+		int d=((dc=='A'?1<<12:dc=='K'?1<<11:dc=='Q'?1<<10:dc=='J'?1<<9:dc=='T'?1<<8:1<<(dc-50))
+		|((dc=ds.charAt(1))=='S'?0x10000:dc=='H'?0x8000:dc=='C'?0x4000:0x2000));
+		
+		int e=((ec=='A'?1<<12:ec=='K'?1<<11:ec=='Q'?1<<10:ec=='J'?1<<9:ec=='T'?1<<8:1<<(ec-50))
+		|((ec=es.charAt(1))=='S'?0x10000:ec=='H'?0x8000:ec=='C'?0x4000:0x2000));
+		
+		System.out.println("a b c d e ");
+		System.out.println(a);
+		System.out.println(b);
+		System.out.println(c);
+		System.out.println(d);
+		System.out.println(e);
+
+		return deadHorseEval5(a, b, c, d, e);
+	}
+
+	//give it human readable string cards, it will spit back a human readable hand type(pair, full house etc..)
+	public static String deadHorseHumanEncodeFullHandEval(String as, String bs, String cs, String ds, String es){
+		int res= Util.deadHorsePokerHumanEncodeEval5(as,bs,cs,ds,es);
+		return "unique hand value = " +res+ "\n"+ as + ", " + bs + ", " +cs+", " +ds+", "+es+"\n= "+ handNames[res>>26];
+	}
+	static String[] handNames = 
+		{
+			"High Card", "Pair", "Two Pair", "3 of a kind", 
+			"Straight", "Flush", "Full House", "4 of a kind", "Straight Flush"
+		};
+
+	/*
+	 * END DEADHORSE FUNCTIONS
+	 * 
+	 */
+	
 }
