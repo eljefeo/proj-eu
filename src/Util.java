@@ -440,6 +440,16 @@ public class Util {
 		return fact;
 
 	}
+	
+	public static BigInteger factorial(BigInteger num) {
+		BigInteger fact = new BigInteger(""+1); 
+		for (BigInteger i = new BigInteger(""+1); i.compareTo(num) != 1; i.add(new BigInteger(""+1))) {
+			//fact *= i;
+			fact.multiply(i);
+		}
+		return fact;
+
+	}
 
 	public static boolean hasPandigitalIdentity(int[] multiplicandsAndMultipliers, int product) {
 
@@ -996,7 +1006,7 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		String at = a+"";
 		String bt = b+"";
 		// lets assume the solution has unique digits, no duplicate digits. This is like the example given in problem 52, and the example made no mention of allowing duplicate digits..
-		// if we find an answer, and it is wrong on the website, we can switch to allowing duplicate digits.
+		// if we find an answer, and it is wrong on the website, we can switch to allowing duplicate digits....
 		
 		if(hasDuplicateDigit(a) || hasDuplicateDigit(b) || at.length() != bt.length() || a == b){
 			return false;
