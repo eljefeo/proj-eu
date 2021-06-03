@@ -441,14 +441,41 @@ public class Util {
 
 	}
 	
+	
 	public static BigInteger factorial(BigInteger num) {
 		BigInteger fact = new BigInteger(""+1); 
-		for (BigInteger i = new BigInteger(""+1); i.compareTo(num) != 1; i.add(new BigInteger(""+1))) {
-			//fact *= i;
-			fact.multiply(i);
+		for (BigInteger i = new BigInteger(""+1); i.compareTo(num) != 1; i = i.add(new BigInteger(""+1))) {
+			fact = fact.multiply(i);
 		}
 		return fact;
+	}
+	
+	public static BigInteger getNumberOfCombinations(int n, int r) {
 
+		BigInteger nb = new BigInteger(""+n);
+		BigInteger rb = new BigInteger(""+r);
+		
+		//n! / r! * (n-r)!
+		BigInteger nFact = factorial(nb);
+		BigInteger rFact = factorial(rb);
+		BigInteger nMinusRFact = factorial(nb.subtract(rb));
+		
+		try{
+			
+			BigInteger sol = nFact.divide(rFact.multiply(nMinusRFact));
+			//System.out.println("Sol  for n=" + n + " and r=" + r + " ::: " + sol);
+			return sol;
+		} catch(Exception e){
+			System.out.println("Failed at n, r ::: " + n + " , " + r);
+			System.out.println("nFact, rFact, nMinusRFact ::: " + nFact + ", " + rFact + ", " + nMinusRFact);
+			System.exit(0);
+		}
+		
+		
+		
+		return new BigInteger(""+0);
+		
+		
 	}
 
 	public static boolean hasPandigitalIdentity(int[] multiplicandsAndMultipliers, int product) {
