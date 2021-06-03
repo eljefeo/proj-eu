@@ -847,6 +847,29 @@ public class Util {
         }
     }
 	
+	public static void findCombinationsOfSizeRecurKeepTrack(int[] A, String out, int index, int lengthOfThing, int sampleSize, List<String> keepTrack) {
+        // invalid input
+        if (sampleSize > lengthOfThing) {
+            return;
+        }
+ 
+        // base case: combination size is `k`
+        if (sampleSize == 0) {
+            keepTrack.add(out);
+            return;
+        }
+ 
+        // start from the next index till the last index
+        for (int j = index; j < lengthOfThing; j++) {
+        	findCombinationsOfSizeRecurKeepTrack(A, out + " " + (A[j]) , j + 1, lengthOfThing, sampleSize - 1, keepTrack);
+ 
+            // uncomment the following code to handle duplicates
+            /* while (j < n - 1 && A[j] == A[j + 1]) {
+                j++;
+            } */
+        }
+    }
+	
 	public static int getNthTriangleNumber(int n){
 		return ((n+1)*n)/2;
 	}

@@ -13,23 +13,29 @@ By replacing the 3rd and 4th digits of 56**3 with the same digit, this 5-digit n
 Find the smallest prime which, by replacing part of the number (not necessarily adjacent digits) with the same digit, is part of an eight prime value family.
 	 */
 	
+	
+	//TODO Need to skip duplicates
+	// for example when we do 12, 13, 14, 15...
+	// we end up doing 1x for each
+	// which ends up being 11, 12, 13, 14, 15.... over and over again...
+	
+	
 	public static void main(String[] args) {
 		problem();
 	}
 	
 	private static void problem(){
-		//int max = 56004;
 		int maxPCount = 0;
 		int smallpr = 0;
-		//for(int i = 10; i < max; i++){
 		int i = 9;
-		while(maxPCount < 8){
+		
+		int desiredPrimeCount = 8;
+		
+		while(maxPCount < desiredPrimeCount){
 			i++;
 			int[] newData = replaceDigitsCheckForPrimes(i, maxPCount);
-			
 			int newPCount = newData[0];
 			int smallestPrime = newData[1];
-			
 			if(newPCount > maxPCount){
 				maxPCount = newPCount;
 				smallpr = smallestPrime;
@@ -52,13 +58,11 @@ Find the smallest prime which, by replacing part of the number (not necessarily 
 		// now that we have an array of the various indexes. We will get all combinations of indexes 
 		// we will then change all the digits at those indexes to the numbers 0-9 to check for primes
 		
-		
-		int smallestPrime = 0;
 		int[] returnData = new int[2];
 		
 		for(int howManyXs = 1; howManyXs < test.length(); howManyXs++){
 			List<String> differentCombinationsOfIndexes = new ArrayList<String>();
-	        findCombinationsOfSizeRecurKeepTrack(inds, "", 0, inds.length, howManyXs, differentCombinationsOfIndexes);
+	        Util.findCombinationsOfSizeRecurKeepTrack(inds, "", 0, inds.length, howManyXs, differentCombinationsOfIndexes);
 	        
 			for(String s : differentCombinationsOfIndexes){
 				s = s.trim();
@@ -75,16 +79,9 @@ Find the smallest prime which, by replacing part of the number (not necessarily 
 						nTest = nTest.substring(0,ind) + ds + nTest.substring(ind+1, nTest.length());
 					}
 					
-					if(nTest.startsWith("0")){
-						//System.out.println("Skipping : " + nTest);
+					if(nTest.startsWith("0")){ // skip if we made the first digit a 0. This changes the number altogether
 						continue;
-					} else {
-						//System.out.println("Not skipping : " + nTest);
-					}
-					
-					/*if(d == 0){
-						smallestNTest = nTest;
-					}*/
+					} 
 					Integer parsed = Integer.parseInt(nTest);
 					if(Util.isPrime(parsed)){
 						pCount++;
@@ -98,7 +95,6 @@ Find the smallest prime which, by replacing part of the number (not necessarily 
 					maxPCount = pCount;
 					returnData[0] = pCount;
 					returnData[1] = Integer.parseInt(smallestNTest);
-					//System.out.println("new larger Prime Count: " + pCount +  " :: From : " + smallestNTest);
 				}
 			}
 		}
@@ -109,28 +105,7 @@ Find the smallest prime which, by replacing part of the number (not necessarily 
 	
 
 	
-	public static void findCombinationsOfSizeRecurKeepTrack(int[] A, String out, int index, int lengthOfThing, int sampleSize, List<String> keepTrack) {
-        // invalid input
-        if (sampleSize > lengthOfThing) {
-            return;
-        }
- 
-        // base case: combination size is `k`
-        if (sampleSize == 0) {
-            keepTrack.add(out);
-            return;
-        }
- 
-        // start from the next index till the last index
-        for (int j = index; j < lengthOfThing; j++) {
-        	findCombinationsOfSizeRecurKeepTrack(A, out + " " + (A[j]) , j + 1, lengthOfThing, sampleSize - 1, keepTrack);
- 
-            // uncomment the following code to handle duplicates
-            /* while (j < n - 1 && A[j] == A[j + 1]) {
-                j++;
-            } */
-        }
-    }
+
 	
 	
 
