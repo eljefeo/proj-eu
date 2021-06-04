@@ -240,6 +240,11 @@ public class Util {
 		return true;
 
 	}
+	
+	
+	public static boolean isPalindromeInt(int i) {
+		return isPalindromeString(""+i);
+	}
 
 	public static boolean isPalindromeString(String str) {
 		//
