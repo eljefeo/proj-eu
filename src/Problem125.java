@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Problem125 {
 	/*
@@ -15,68 +17,43 @@ Find the sum of all the numbers less than 10^8 that are both palindromic and can
 	public static void main(String[] args) {
 		problem();
 		
-		addConsecutiveSquaresFromTo(25,26);
+		//Util.addConsecutiveSquaresFromTo(9,118);
 		
 	}
 
 	private static void problem() {
 
-		//int maxSum = 1000;
 		int power = 8;
 		int maxSum = (int) Math.pow(10, power);
-		int maxI = (int) Math.sqrt(maxSum) + 1; //(sqr root of 1000)
+		int maxI = (int) Math.sqrt(maxSum); //(sqr root of 10^power - wont need to go above this number, as this will be too big for the sum)
 		System.out.println("Max i : " + maxI);
-		List<Integer> palindromicSums = new ArrayList<Integer>();
 		
+		Set<Integer> palSums = new HashSet<Integer>(); // use a set to not allow duplicates
+		
+		long finalSum = 0;
 		int i = 1;
 		int oldI = i;
 		int sum = 0;
 		while(i < maxI) {
-			
-			//System.out.println("Starting with i: " + i);
-			int startI = i;
-			while(sum < maxSum) {
-				
-				
-					
-				
-				sum += Math.pow(i, 2);
-				
-				
-				if(i > oldI && sum > 1 && sum < maxSum && Util.isPalindromeInt(sum)) {
-					System.out.println("Found a palindrome sum : " + sum + " - with starting i:"+ startI + " and end i: " + i);
-					palindromicSums.add(sum);
+			while(sum < maxSum) { 
+				sum += (i*i);
+				if(i > oldI && sum < maxSum && Util.isPalindromeInt(sum)) { 
+					if(palSums.add(sum)) { // true if not duplicate
+						finalSum += sum;
+					}
 				}
-				
 				i++;
-				
 			}
-			
 			oldI++;
 			i = oldI;
 			sum = 0;
-			
 		}
 		
-		long finalSum = 0;
-		
-		for(Integer pal : palindromicSums) {
-			System.out.println("All sums : " + pal);
-			finalSum += pal;
-		}
-		System.out.println("Final Sum ::: " + finalSum);
+		System.out.println("Final Sum from " + palSums.size() + " nums ::: " + finalSum);
 	}
 	
 	
-	private static void addConsecutiveSquaresFromTo(int start, int end) {
-		long sum = 0;
-		for(int i = start; i <= end; i++) {
-			long isq = (long) Math.pow(i, 2);
-			System.out.println("Adding " + i + "squared (" + isq + ") to sum " + sum + " - which now makes " + (sum+isq) );
-			sum += isq;
-		}
-		System.out.println("Sums to : " + sum);
-	}
+	
 	
 	
 }

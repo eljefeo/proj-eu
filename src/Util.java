@@ -247,7 +247,7 @@ public class Util {
 	}
 
 	public static boolean isPalindromeString(String str) {
-		//
+		
 		if (str.length() > 0) {
 
 			int half = str.length() / 2;
@@ -912,6 +912,15 @@ public class Util {
             } */
         }
     }
+	
+	public static void addConsecutiveSquaresFromTo(int start, int end) {
+		long sum = 0;
+		for(int i = start; i <= end; i++) {
+			long isq = (i*i);
+			sum += isq;
+		}
+		System.out.println("Sums to : " + sum);
+	}
 	
 	public static int getNthTriangleNumber(int n){
 		return ((n+1)*n)/2;
