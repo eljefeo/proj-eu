@@ -28,10 +28,10 @@ public class Problem32 {
 		int step = 1000; // just used for logging
 		for (int i = 10; i < max; i++) {
 			if(i > step && i % step == 0){
-				System.out.println("Currently at : " + i);
+				System.out.println("Currently at : " + i); // just logging...
 			}
 			if(Util.intHasAZeroInIt(i) || Util.intHasDuplicateDigits(i)){
-				continue;
+				continue; // skip if there is a zero or more than 1 of any digit (this is already not pandigital)
 			}
 			
 			int[] numDigits = Util.splitIntNumsToArray(i);
