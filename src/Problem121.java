@@ -22,62 +22,47 @@ Find the maximum prize fund that should be allocated to a single game in which f
 	}
 	
 	private static void problem() {
-		int turnCount = 9; // breaks at 2 need to fix?
+		int turnCount = 15; // breaks at 2 need to fix?
 		
-		long howMuchToGive = howMuchShouldBankerGive(turnCount);
+		BigInteger howMuchToGive = howMuchShouldBankerGive(turnCount);
 		System.out.println("Banker should give : " + howMuchToGive);
-		
-		
-		//other(4); //9219406943
-				other2(turnCount);
-				//System.out.println("Num can be wrong : " + howManyCanBeWrong(4) + " how many total paths: " + getTotalPaths(4));
-		
 	}
 	
-	private static int howManyCanBeWrong(int turns){
+	private static int howManyCanYouMiss(int turns){
 		return turns - ((turns / 2)  + 1 );
 	}
 	
-	private static int getTotalPaths(int turns){
-		return Util.factorial(turns + 1);
+	private static BigInteger getTotalPaths(int turns){
+		return Util.factorial(new BigInteger(""+ (turns + 1)));
 	}
 	
-	private static int howMuchShouldBankerGive(int turns){
+	private static BigInteger howMuchShouldBankerGive(int turns){
 		
-		long winPaths = howManyPathsWin(turns);
-		long totalPaths = getTotalPaths(turns);
+		BigInteger winPaths = howManyPathsWin(turns);
+		BigInteger totalPaths = getTotalPaths(turns);
 		
-		double ratio = totalPaths/winPaths;
+		//double ratio = totalPaths/winPaths;
 		
 		System.out.println("Turn count: " + turns);
 		System.out.println("How many paths win: " + winPaths);
 		System.out.println("How many total paths: " + totalPaths);
-		System.out.println("ratio win to total count: " + ratio);
+		System.out.println("ratio win to total count: " + totalPaths.divide(winPaths));
 		
 		for(int i=1; i<10000; i++){
-			long bankerGives = i*winPaths;
-			long bankerTakes = totalPaths - winPaths;
-			
-			if(bankerGives > bankerTakes){
-				return (i-1) + 1; //we add one here because the banker will also give back the players $1 they paid to play the game
-			}
-			
+			return totalPaths.divide(winPaths);
 		}
 		
-		return 0;
+		return new BigInteger(""+0);
 		
 	}
 
-	private static long howManyPathsWin(int turnCount) {
+	private static BigInteger howManyPathsWin(int turnCount) {
 
-		int allBlue = 1; // always 1 path leads to all blue
-		int missCount = howManyCanBeWrong(turnCount);
-		
-		long totalCount = 0;
+		int missCount = howManyCanYouMiss(turnCount);
+		BigInteger totalCount = BigInteger.ZERO;
 		
 		System.out.println("How many can be wrong: " + missCount);
 		System.out.println("How many need to be right: " + (turnCount - missCount));
-		//int totalPaths = getTotalPaths(turnCount);
 		
 		int[] reds = new int[turnCount];
 		for(int i=1; i<=turnCount; i++){ // this builds an array like {1, 2, 3, 4, 5, 6, 7, ... depending on how many turns
@@ -86,27 +71,18 @@ Find the maximum prize fund that should be allocated to a single game in which f
 			reds[i-1] = i;
 		}
 		
-		
-		
-		
-		for(int i=0; i <= missCount;i++) {
-			//System.out.println("... totalCount start " + totalCount);
+		for(int i=0; i <= missCount;i++) { // if there are 5 turns, then you could win with 0 misses, 1 miss, or 2 misses...
+											// we are doing it kinda reversed. We are assuming there is a winning turn,
+												// and then calculating how many different ways you could win that way
+												// like if you win on turns 1, 2, 3 - how many different combos of the other reds on turns 4 and 5 could there be?
+												// that is the number of ways to win on turns 1,2,3
+												// then do the same for the other combinations of winning turns
+												//(this for loop is to inlcude winning with 0 misses, 1 miss, etc.. up until max num of misses)
 			List<String> combs = new ArrayList<String>();
 			Util.findCombinationsOfSizeRecurKeepTrack(reds, "", 0, reds.length, i, combs);
 			totalCount = calcPathCombinations(combs, totalCount);
-			//System.out.println("... totalCount end " + totalCount);
 		}
 		
-		
-		
-		
-		
-		// we are only doing the number of ways for the minimum to win (3 of 5 tries)
-				// but what about if they get 4 of 5? That also wins...
-		
-
-		
-		//totalCount += allBlue; // Since no miss is always an option that works for any case, just always add it now.
 		System.out.println("Final totalc : " + totalCount);
 		
 		return totalCount;
@@ -114,94 +90,26 @@ Find the maximum prize fund that should be allocated to a single game in which f
 	}
 	
 	
-	private static long calcPathCombinations(List<String> combs, long totalCount) {
+	private static BigInteger calcPathCombinations(List<String> combs, BigInteger totalCount) {
 		System.out.println("Row combination count (size) : " + combs.size() + " totalCount coming in: " + totalCount);
 		for(String s : combs){
 			s = s.trim();
-			//System.out.println("Row combinations to do : " + s);
 			String[] spl = s.split(" ");
-			
-			long oneRowCounter = 1;
+			BigInteger oneRowCounter = BigInteger.ONE;
 				for(int i=0; i<spl.length; i++){
-					//System.out.println("One row to do :" + spl[i] + ":");
-					
 					if(spl[i] != "") { // this means we had a combination of size 0 (no combo of rows)
-						Long aRow = Long.parseLong(spl[i]);
-						//System.out.println(" oneRowCounter :" + oneRowCounter + ":aRow:" + aRow + " totalCount:" + totalCount + " totalCount * aRow " + (oneRowCounter*aRow));
-						oneRowCounter *= aRow;
-					} else {
-						
+						int aRow = Integer.parseInt(spl[i]);
+						oneRowCounter = oneRowCounter.multiply(new BigInteger(""+aRow));
 					}
-					
 				}
 				
-				totalCount += oneRowCounter;
-				//System.out.println(" totalc : " + totalCount + "\n");
-			
+				totalCount = totalCount.add(oneRowCounter);
 		}
 		
 		return totalCount;
-		
 	}
-	
-	
-	private static void other(int limit){
-		//int limit = 7;
-		long[] outcomes = new long[limit+1];
-		outcomes[limit] = 1;
-		outcomes[limit-1] = 1;
-		                         
-		for (int i = 2; i <= limit; i++) {
-		    for(int j = 0; j < outcomes.length-1; j++){
-		        outcomes[j] = outcomes[j + 1];                    
-		    }
-		    outcomes[limit] = 0;
-		                 
-		    for (int j = outcomes.length-1; j > 0; j--) {
-		        outcomes[j] += outcomes[j - 1] * i;
-		    }
-		}
-		          
-		long positive = 0;
-		for (int i = 0; i < limit / 2+1; i++) {
-		    positive += outcomes[i];
-		}
-		
-		System.out.println("Positive? " + positive);
-		
-	}
-	
 	
 
-	
-	private static String other2(int turns) {
-		// Dynamic programming
-		
-		//int turns = 15;
-		
-		BigInteger[][] ways = new BigInteger[turns + 1][];
-		ways[0] = new BigInteger[]{BigInteger.ONE};
-		for (int i = 1; i <= turns; i++) {
-			ways[i] = new BigInteger[i + 1];
-			for (int j = 0; j <= i; j++) {
-				BigInteger temp = BigInteger.ZERO;
-				if (j < i)
-					temp = ways[i - 1][j].multiply(BigInteger.valueOf(i));
-				if (j > 0)
-					temp = temp.add(ways[i - 1][j - 1]);
-				ways[i][j] = temp;
-			}
-		}
-		
-		BigInteger numer = BigInteger.ZERO;
-		System.out.println("Other guys turns /2 +1 " + (turns / 2 + 1));
-		for (int i = turns / 2 + 1; i <= turns; i++)
-			numer = numer.add(ways[turns][i]);
-		long denoml = Util.factorial(turns + 1);
-		BigInteger denom = new BigInteger(""+denoml);
-		System.out.println("Done with other guys RUN: " + " denom? " + denom + " numer? " + numer + " ... "+ denom.divide(numer).toString());
-		return denom.divide(numer).toString();
-	}
 		/*
 		 different outcomes:
 		 br
