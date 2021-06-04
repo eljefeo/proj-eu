@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,21 +17,25 @@ Find the maximum prize fund that should be allocated to a single game in which f
 	
 	public static void main(String[] args) {
 		problem();
-		other(4); //9219406943
-		//System.out.println("Num can be wrong : " + howManyCanBeWrong(4) + " how many total paths: " + getTotalPaths(4));
+		
 		
 	}
 	
 	private static void problem() {
-		int turnCount = 6; // breaks at 2 need to fix?
+		int turnCount = 9; // breaks at 2 need to fix?
 		
 		long howMuchToGive = howMuchShouldBankerGive(turnCount);
 		System.out.println("Banker should give : " + howMuchToGive);
 		
+		
+		//other(4); //9219406943
+				other2(turnCount);
+				//System.out.println("Num can be wrong : " + howManyCanBeWrong(4) + " how many total paths: " + getTotalPaths(4));
+		
 	}
 	
 	private static int howManyCanBeWrong(int turns){
-		return turns - ((turns / 2) + 1);
+		return turns - ((turns / 2)  + 1 );
 	}
 	
 	private static int getTotalPaths(int turns){
@@ -67,6 +72,9 @@ Find the maximum prize fund that should be allocated to a single game in which f
 
 		int allBlue = 1; // always 1 path leads to all blue
 		int missCount = howManyCanBeWrong(turnCount);
+		
+		long totalCount = 0;
+		
 		System.out.println("How many can be wrong: " + missCount);
 		System.out.println("How many need to be right: " + (turnCount - missCount));
 		//int totalPaths = getTotalPaths(turnCount);
@@ -77,12 +85,37 @@ Find the maximum prize fund that should be allocated to a single game in which f
 											// and will look through how many reds in each to find out how many paths in the total tree
 			reds[i-1] = i;
 		}
-		List<String> combs = new ArrayList<String>();
-		Util.findCombinationsOfSizeRecurKeepTrack(reds, "", 0, reds.length, missCount, combs);
 		
-		long totalCount = 0;
 		
-		System.out.println("Row combination count (size) : " + combs.size());
+		
+		
+		for(int i=0; i <= missCount;i++) {
+			//System.out.println("... totalCount start " + totalCount);
+			List<String> combs = new ArrayList<String>();
+			Util.findCombinationsOfSizeRecurKeepTrack(reds, "", 0, reds.length, i, combs);
+			totalCount = calcPathCombinations(combs, totalCount);
+			//System.out.println("... totalCount end " + totalCount);
+		}
+		
+		
+		
+		
+		
+		// we are only doing the number of ways for the minimum to win (3 of 5 tries)
+				// but what about if they get 4 of 5? That also wins...
+		
+
+		
+		//totalCount += allBlue; // Since no miss is always an option that works for any case, just always add it now.
+		System.out.println("Final totalc : " + totalCount);
+		
+		return totalCount;
+		
+	}
+	
+	
+	private static long calcPathCombinations(List<String> combs, long totalCount) {
+		System.out.println("Row combination count (size) : " + combs.size() + " totalCount coming in: " + totalCount);
 		for(String s : combs){
 			s = s.trim();
 			//System.out.println("Row combinations to do : " + s);
@@ -90,20 +123,22 @@ Find the maximum prize fund that should be allocated to a single game in which f
 			
 			long oneRowCounter = 1;
 				for(int i=0; i<spl.length; i++){
-					//System.out.println("One row to do : " + spl[i]);
-					Long aRow = Long.parseLong(spl[i]);
-					//System.out.println(" oneRowCounter : " + oneRowCounter + " totalCount * aRow " + (oneRowCounter*aRow));
-					oneRowCounter *= aRow;
+					//System.out.println("One row to do :" + spl[i] + ":");
+					
+					if(spl[i] != "") { // this means we had a combination of size 0 (no combo of rows)
+						Long aRow = Long.parseLong(spl[i]);
+						//System.out.println(" oneRowCounter :" + oneRowCounter + ":aRow:" + aRow + " totalCount:" + totalCount + " totalCount * aRow " + (oneRowCounter*aRow));
+						oneRowCounter *= aRow;
+					} else {
+						
+					}
 					
 				}
 				
 				totalCount += oneRowCounter;
-				//System.out.println(" totalc : " + totalCount);
+				//System.out.println(" totalc : " + totalCount + "\n");
 			
 		}
-		
-		totalCount += allBlue; // Since no miss is always an option that works for any case, just always add it now.
-		System.out.println("Final totalc : " + totalCount);
 		
 		return totalCount;
 		
@@ -134,6 +169,38 @@ Find the maximum prize fund that should be allocated to a single game in which f
 		
 		System.out.println("Positive? " + positive);
 		
+	}
+	
+	
+
+	
+	private static String other2(int turns) {
+		// Dynamic programming
+		
+		//int turns = 15;
+		
+		BigInteger[][] ways = new BigInteger[turns + 1][];
+		ways[0] = new BigInteger[]{BigInteger.ONE};
+		for (int i = 1; i <= turns; i++) {
+			ways[i] = new BigInteger[i + 1];
+			for (int j = 0; j <= i; j++) {
+				BigInteger temp = BigInteger.ZERO;
+				if (j < i)
+					temp = ways[i - 1][j].multiply(BigInteger.valueOf(i));
+				if (j > 0)
+					temp = temp.add(ways[i - 1][j - 1]);
+				ways[i][j] = temp;
+			}
+		}
+		
+		BigInteger numer = BigInteger.ZERO;
+		System.out.println("Other guys turns /2 +1 " + (turns / 2 + 1));
+		for (int i = turns / 2 + 1; i <= turns; i++)
+			numer = numer.add(ways[turns][i]);
+		long denoml = Util.factorial(turns + 1);
+		BigInteger denom = new BigInteger(""+denoml);
+		System.out.println("Done with other guys RUN: " + " denom? " + denom + " numer? " + numer + " ... "+ denom.divide(numer).toString());
+		return denom.divide(numer).toString();
 	}
 		/*
 		 different outcomes:
