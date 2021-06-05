@@ -1133,6 +1133,37 @@ public static boolean hasSameUniqueDigits(int a, int b){
 	}
 	
 	
+	public static void calcSquareRootOfTwoCheckIfNumerMoreDigitsThanDenom(int howManyIterations){
+		
+		BigInteger numer = BigInteger.ONE, denom = BigInteger.TWO;
+		int counter = 0;
+		
+		for(int i=0; i< howManyIterations - 1; i++) { // we do - 1 because we already setup the first one above (1 / 2)
+			
+			numer = numer.add(denom.multiply(BigInteger.TWO)); // 5
+			//then reciprocal
+			BigInteger t = numer;
+			numer = denom;
+			denom = t;
+			
+			// we calculate the final numerator and denominator here just to see if numer has more digits than denom
+			// but only temp vars, we discard them as we continue the next loop, since we dont really need them until the very end
+			int tempNumerDigitCount = numer.add(denom).toString().length();
+			int tempDenomDigitCount = denom.toString().length();
+			
+			if(tempNumerDigitCount > tempDenomDigitCount) {
+				counter++;
+			}
+		}
+
+		// this will finish the calculation to actually get the final numerator and denominator to show:
+		//after the loop - must add 1 at the end
+		numer = numer.add(denom);
+		System.out.println("Finally:\nNumer :" + numer + " \ndenom: " + denom);
+		System.out.println("Finally count of numerators having more digits than denominators : " + counter);
+		
+	}
+	
 	
 	
 	
