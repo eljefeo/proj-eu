@@ -390,6 +390,21 @@ public class Util {
 		}
 		return false;
 	}
+	
+	public static int addUpAllDigits(BigInteger b) {
+		String bs = b.toString();
+		int sum = 0;
+		for(int i=0; i<bs.length(); i++) {
+			
+			String aChar = bs.charAt(i)+"";
+			
+			Integer a = Integer.parseInt(aChar);
+			sum += a;
+			
+		}
+		
+		return sum;
+	}
 
 	public static int[] splitIntNumsToArray(int num) {
 
