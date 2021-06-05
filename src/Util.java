@@ -245,6 +245,10 @@ public class Util {
 	public static boolean isPalindromeInt(int i) {
 		return isPalindromeString(""+i);
 	}
+	
+	public static boolean isPalindromeLong(long i) {
+		return isPalindromeString(""+i);
+	}
 
 	public static boolean isPalindromeString(String str) {
 		
@@ -398,8 +402,10 @@ public class Util {
 		}
 		return digits;
 	}
+	
+	
 
-	public static long[] splitIntNumsToArray(long num) {
+	public static long[] splitLongNumsToArray(long num) {
 
 		int digitCount = countDigits(num);
 		long[] digits = new long[digitCount];
@@ -671,7 +677,7 @@ public class Util {
 	}
 
 	public static long sumOfDigitFactorial(long num) {
-		long[] digits = splitIntNumsToArray(num);
+		long[] digits = splitLongNumsToArray(num);
 		int total = 0;
 		for (long d : digits) {
 			total += factorial(d);
@@ -730,6 +736,30 @@ public class Util {
 		}
 		return test;
 	}
+	
+	public static long reverseDigits(long num) {
+		long test = 0;
+		long[] digits = Util.splitLongNumsToArray(num);
+		for (int i = 0; i < digits.length; i++) {
+			test += digits[i] * Math.pow(10, i);
+		}
+		return test;
+	}
+	
+	
+	public static String reverseString(String s) {
+		 String reversed = "";
+		 for (int i = s.length()-1; i >= 0; i--) {
+			 reversed += s.charAt(i);
+		  } 
+		 return reversed; 
+	}
+	 
+	 public static BigInteger reverseDigitsThenAdd(BigInteger num) {
+			String reversed = Util.reverseString("" + num);
+			return num.add(new BigInteger(reversed));
+	 }
+	 
 
 	public static boolean isTruncatablePrimeBackwardsAndForwards(int num) {
 		int dcount = Util.countDigits(num);
