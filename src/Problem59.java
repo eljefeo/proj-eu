@@ -26,15 +26,10 @@ Your task has been made easy, as the encryption key consists of three lower case
 
 	private static void problem() {
 		
-		int howManyToSkip = 60;
-		int howManySkipped = 0;
 		//97 - 122 = lower case a - z in ascii
 		int[] lowerCaseAsciiChars = new int[] {
 				97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122
 		};
-		
-		
-		
 		
 		int[] cipherText = Problem59Helper.getCipherText();
 		System.out.println("cipher text length :" + cipherText.length);
@@ -42,7 +37,7 @@ Your task has been made easy, as the encryption key consists of three lower case
 		// key is duplicated over and over to cover the 1455 characters in the text..
 		
 		int[] key = new int[3];
-		here:
+
 		for(int i = 0; i < lowerCaseAsciiChars.length; i++) {
 			for(int j = 0; j < lowerCaseAsciiChars.length; j++) {
 				for(int k = 0; k < lowerCaseAsciiChars.length; k++) {
@@ -51,82 +46,35 @@ Your task has been made easy, as the encryption key consists of three lower case
 					key[1] = lowerCaseAsciiChars[j];
 					key[2] = lowerCaseAsciiChars[k];
 					
-					/*
-					 * if(decipherTextContainsThe(cipherText, key)) { if(howManySkipped++ >=
-					 * howManyToSkip) { System.exit(0); }
-					 * 
-					 * }
-					 */
-					if(decipherTextContainsThe(cipherText, key)) {
+					if(decipherTextContainsEulerText(cipherText, key)) {
 						System.out.println(" with key : " + key[0] + ", " + key[1] + ", " + key[2] + "  --- with sum: " + (key[0]+key[1] + key[2]));
 					}
-					/*
-					 * if(dec.equals("YAY")) { System.out.println("Is this the one?");
-					 * System.out.println(dec); }
-					 */
-					//System.out.println("combo : " + lowerCaseAsciiChars[i] + " , " + lowerCaseAsciiChars[j] + " , " + lowerCaseAsciiChars[k]);
-					
 				}
-				//123 then 234 then 345
 			}	
 		}
-		
-		
-		//int[] key = new int[] {1,2,3}; // this needs to be 3 lower case characters ascii code
-		
-		//decipherText(cipherText, key);
 	}
 	
 	
-	private static boolean decipherTextContainsThe(int[] cipherText,int[] key) {
+	private static boolean decipherTextContainsEulerText(int[] cipherText,int[] key) {
 		String deciphered = "";
 		
 		boolean mightBeGood = false;
-		//int tried = 0;
+		long runningTotal = 0;
+		
 		for(int i = 0; i < cipherText.length; i+=key.length) {
 			for(int j = 0; j < key.length; j++) {
-				
 				int oneChar = cipherText[i+j] ^ key[j];
-				
-				
-				
+				runningTotal += oneChar;
 				deciphered += Character.toString((char) oneChar);
-				
-				
-				//deciphered += Character.toString((char) oneChar);
 				if (oneChar == (int) 'r'  && !mightBeGood ) {
 					mightBeGood = stringEndsWithEulerText(deciphered);
-					//if(mightBeGood) {
-						//System.out.println("Part of sol : "+ deciphered);
-					//}
 				}
-				
-				/*
-				 * if(oneChar == (int)'e') { //System.out.println("Found e");
-				 * if(deciphered.length() > 2 && deciphered.charAt(deciphered.length()-2) ==
-				 * (int)'h') { //System.out.println("Found he"); if(
-				 * deciphered.charAt(deciphered.length()-3) == (int)'t' ||
-				 * deciphered.charAt(deciphered.length()-3) == (int)'T') {
-				 * 
-				 * //if(tried >= howManyToTry) { //System.out.println("Found the or The");
-				 * mightBeGood = true; //} else { // tried++; //}
-				 * 
-				 * } } }
-				 */
-				
-				//where to check for english word
-				// if this char is lowercase 'e' then maybe check last char for 'h' and char before that for 't' or 'T'
-				
-				
 			}
-			
-			//System.out.println("Deciphered so far : " + deciphered);
-			
 		}
 		
 		
 		  if(mightBeGood) { 
-			  System.out.println("Try this : " + deciphered);
+			  System.out.println("Try this : " + runningTotal + " if this text makes sense: " + deciphered);
 		  }
 		 
 		
