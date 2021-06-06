@@ -23,7 +23,30 @@ If this process is continued, what is the side length of the square spiral for w
 	 */
 	
 	public static void main(String[] args) {
-		
+		problem();
 	}
 
+	
+	private static void problem() {
+		
+		int currNum = 1, sideLength = 2, totalCornerCount = 1, primeCornerCount = 0;
+		double cutoffPercent = 0.1, ratio = 0;
+		while(true) {
+			for(int j = 0; j < 4; j++) { // 4 corners
+				currNum += sideLength;
+				totalCornerCount++;
+				if(Util.isPrime(currNum)){
+					primeCornerCount++;
+				}
+			}
+			
+			ratio = (double)primeCornerCount / (double)totalCornerCount;
+			if(ratio < cutoffPercent) {
+				System.out.println("Dropped below " + cutoffPercent + "  with side length: " + (sideLength+1));
+				return;
+			}
+			sideLength+=2;
+		}
+	}
+	
 }
