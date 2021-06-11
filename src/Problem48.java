@@ -11,11 +11,6 @@ public class Problem48 {
 	
 	
 	public static void main(String[] args) {
-		double f = 5;
-		double t = 2;
-		double a = f/t;
-		//System.out.println(" sdf " + a);
-		
 		problem();
 	}
 	
@@ -28,7 +23,7 @@ public class Problem48 {
 			b = b.add(c);
 		}
 		System.out.println("Last ten digits: " + b.mod(new BigInteger(""+tenDigits)));
-		
+		// sorry we cheated with BigInteger again...
 	}
 
 }

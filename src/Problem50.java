@@ -40,6 +40,6 @@ public class Problem50 {
 				}
 			}
 		}
-		System.out.println("\n*******\nFinal Answer ::: longest consecutive primes sum to a prime is " + bestPrime + " with a count of: " + bestPCount);
+		System.out.println("\n*******\nFinal Answer ::: longest consecutive primes that also sum to a prime is " + bestPrime + " with a prime count of: " + bestPCount);
 	}
 }

@@ -32,15 +32,17 @@ What is the value of the first triangle number to have over five hundred divisor
 
 	}
 	
+	//This thing takes forever to complete, like 10 minutes maybe. But it gets the right answer eventually...
+	
 	public static void problem(){
 		
 		int factorLimit = 500;
 		int ind = 1;
 		int biggestFactorSize = 0;
-		Map<BigInteger, Set<BigInteger>> prevFactors = new HashMap<BigInteger, Set<BigInteger>>();
+		//Map<BigInteger, Set<BigInteger>> prevFactors = new HashMap<BigInteger, Set<BigInteger>>();
 		
 		while(true){
-			int tri = Util.getTriangleNumber(ind);
+			int tri = Util.getNthTriangleNumber(ind);
 			Set<Integer> factors = Util.getDistinctFactorsInt(tri);
 			if(factors.size() > factorLimit){
 				System.out.print("Found: "  + tri + " with " + factors.size() + " factors");

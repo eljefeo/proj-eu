@@ -16,7 +16,6 @@ public class Util {
 		if (num == 2) {
 			return true;
 		}
-
 		if (num % 2 == 0) {
 			return false;
 		}
@@ -28,13 +27,6 @@ public class Util {
 		return true;
 	}
 
-	public static int getTriangleNumber(int n){
-		return ((n+1)*n)/2;
-	}
-
-	public static long getTriangleNumber(long n){
-		return ((n+1)*n)/2;
-	}
 	
 	public static BigInteger getTriangleNumber(BigInteger n){
 		BigInteger one = new BigInteger("1");
@@ -44,7 +36,7 @@ public class Util {
 	
 	public static long getIndexOfTriangleNumber(long t) {
 		long s = (long) Math.sqrt(t * 2);
-		if (getTriangleNumber(s) == t) {
+		if (getNthTriangleNumber(s) == t) {
 			return s;
 		}
 		return -1;
@@ -58,7 +50,7 @@ public class Util {
 
 		int max = 1000000;
 		for (long i = 1; i < max; i++) {
-			long tri = getTriangleNumber(i);
+			long tri = getNthTriangleNumber(i);
 			long ind = getIndexOfTriangleNumber(tri);
 			if (i != ind) {
 				System.out.println("This one doesnt work!! i:" + i + " hex:" + tri + " ind:" + ind);
@@ -66,6 +58,31 @@ public class Util {
 			}
 		}
 		System.out.println("All passed triangle numbers from 1 to " + max + " (using longs)");
+	}
+	
+	
+	public static int getNthSquareNumber(int i) {
+		return (int) Math.pow(i, 2);
+	}
+	
+	public static int getNthPentagonalNumber(int i) {
+		//n=n(3n-1)/2 1, 5, 12, 22, 35, 
+		return  i * ((3*i) - 1) / 2;
+	}
+	
+	public static int getNthHexagonalNumber(int i) {
+		//n=n(2n-1) 1, 6, 15, 28, 45, ... 
+		return ((2*i) - 1) * i;
+	}
+	
+	public static int getNthHeptagonalNumber(int i) {
+		//n=n(5n-3)/2 1, 7, 18, 34, 55, ...
+		return i * ((5*i) - 3) / 2;
+	}
+	
+	public static int getNthOctagonalNumber(int i) {
+		//n=n(3n-2) 1, 8, 21, 40, 65, ...
+		return ((3*i) - 2) * i;
 	}
 
 
@@ -971,9 +988,13 @@ public class Util {
 		return ((n+1)*n)/2;
 	}
 	
+	public static long getNthTriangleNumber(long n){
+		return ((n+1)*n)/2;
+	}
+	
 	public static void testTriangleNumberIndexFinder(long to){
 		for(long i=0; i<to; i++){
-			long t = Util.getTriangleNumber(i);
+			long t = Util.getNthTriangleNumber(i);
 			long s = getNIndexfromTriangleNumber(t); 
 			if(s != i){
 				System.out.println("WRONG : i=" + i + " t=" + t + " s=" + s);
@@ -990,7 +1011,7 @@ public class Util {
 	
 	public static int getNIndexOfTriangleNumber(int t){
 		int n =(int)Math.sqrt(t*2); 
-		int real = Util.getTriangleNumber(n);
+		int real = Util.getNthTriangleNumber(n);
 		if(t == real){
 			return n;
 		}
