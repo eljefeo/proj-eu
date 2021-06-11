@@ -30,8 +30,15 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 	static int hepFirst = 0, hepLast = 0;
 	static int octFirst = 0, octLast = 0;
 	
-
+	static Map<Integer, Integer[]> allFirstAndLastIndexes;
+	static Map<Integer, List<Integer>> allPolygonalNumbers;
+	static Map<Integer, Boolean> track;
 	public static void main(String[] args) {
+		allFirstAndLastIndexes = getFirstAndLastIndexes();
+		allPolygonalNumbers = getAll4DigitPolygonalNumbers();
+		track = new HashMap<Integer, Boolean>();// use to keep track of what ones we have done ( put 5 true means we found a pentagonal num..
+		
+		
 			problem();
 	}
 
@@ -44,41 +51,44 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 		// and make sure the last one is cyclic with the first one...
 		
 		
-		getFirstAndLastIndexes();
-		Map<Integer, List<Integer>> allNums = getAll4DigitPolygonalNumbers();
-		
-	//	int trin = 44;
-		
-		//System.out.println("triangle number " + trin + " is " + Util.getTriangleNumber(trin));
 		
 		
+		for(int i=3; i<=8; i++) {
+			Integer[] fl = allFirstAndLastIndexes.get(i);
+			
+			int f = getAPolygonalNumber(i, fl[0]);
+			int l = getAPolygonalNumber(i, fl[1]);
+			System.out.println("First and last index for " + i + " :: " + fl[0] + ", " + fl[1] + " and those nums are " + f + ", " + l);			
+		}
 		
-		System.out.println("tri number  is " + Util.getNthTriangleNumber(3));
-		System.out.println("square number  is " + Util.getNthSquareNumber(3));
-		System.out.println("pent number  is " + Util.getNthPentagonalNumber(3));
-		System.out.println("hex number  is " + Util.getNthHexagonalNumber(3));
-		System.out.println("hep number  is " + Util.getNthHeptagonalNumber(3));
-		System.out.println("oct number  is " + Util.getNthOctagonalNumber(3));
-		// get first 4 digit triangle num
+		findPolyNumThatStartsWith();
 		
-		
-		//int firstTriNumDetails[] = getFirst4DigitTriangleNumber();
-		//int first4dTriNum = firstTriNumDetails[0];
-		//int first4dTriIndex = firstTriNumDetails[1];
-		
-		
-		//System.out.println("First 4 digit triangle number is " + first4dTriNum + " at index " + first4dTriIndex);
-		
-		// so now we get the last 2 digits of this first tri num
-		//String last2OfTri = getLast2Digits(first4dTriNum);
-		//String first2OfTri = getFirst2Digits(first4dTriNum);
-		//System.out.println("Last 2 digits of tri num : " + last2OfTri + " and first 2 are : " + first2OfTri);
-		
-		
-		// now we have the last 2 digits... we want to find another polygonal number that starts with those first 2...
-		
-		
+	}
 	
+	public static int[] findPolyNumThatStartsWith(int whichThis, int num) {
+		
+		
+		
+		/*
+		for(int i = triFirst; i <= triLast; i++) {
+			int ti = Util.getNthTriangleNumber(i);
+			track.put(3, true);
+			
+			int sq = get4DigitSquareNumberThatStartsWith(ti);
+			if(sq != 0) {
+				
+			}
+			
+		}
+		*/
+		
+		if(num == 0) {
+			num = allFirstAndLastIndexes.get(whichThis)[0];
+		}
+		
+		for(int i=3; i<=8; i++) {
+			List<Integer> polyNums = allPolygonalNumbers.get(i);
+		}
 		
 		
 		
@@ -119,72 +129,28 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 			break;
 		}
 		
-		
+		return num;
 	}
 	
-	public static void magic() {
-		
-		Map<Integer, Boolean> track = new HashMap<Integer, Boolean>();
-		
-		
-		for(int i = triFirst; i <= triLast; i++) {
-			int ti = Util.getNthTriangleNumber(i);
-			track.put(3, true);
-			
-			int sq = get4DigitSquareNumberThatStartsWith(ti);
-			if(sq != 0) {
-				
-			}
-			
-		}
-	}
+
 	
 	
 	public static Map<Integer, List<Integer>>getAll4DigitPolygonalNumbers(){
+		
 		Map<Integer, List<Integer>> all = new HashMap<Integer, List<Integer>>();
 		
-		List<Integer> tri = new ArrayList<Integer>();
-		List<Integer> sq = new ArrayList<Integer>();
-		List<Integer> pent = new ArrayList<Integer>();
-		List<Integer> hex = new ArrayList<Integer>();
-		List<Integer> hep = new ArrayList<Integer>();
-		List<Integer> oct = new ArrayList<Integer>();
-		
-		for(int i=triFirst; i<=triLast; i++) {
-			tri.add(Util.getNthTriangleNumber(i));
+		for(int i=3; i<=8; i++) {
+			List<Integer> nums = new ArrayList<Integer>();
+			
+			Integer[] indexes = allFirstAndLastIndexes.get(i);
+			int firstIndex = indexes[0];
+			int lastIndex = indexes[1];
+			for(int j=firstIndex; j<=lastIndex; j++) {
+				nums.add(getAPolygonalNumber(i,j));
+			}
+			all.put(i, nums);
 		}
-		all.put(3, tri);
-		
-		for(int i=squareFirst; i<=squareLast; i++) {
-			sq.add(Util.getNthSquareNumber(i));
-		}
-		all.put(4, sq);
-		
-		for(int i=pentFirst; i<=pentLast; i++) {
-			pent.add(Util.getNthPentagonalNumber(i));
-		}
-		all.put(5, pent);
-		
-		for(int i=hexFirst; i<=hexLast; i++) {
-			hex.add(Util.getNthHexagonalNumber(i));
-		}
-		all.put(6, hex);
-		
-		for(int i=hepFirst; i<=hepLast; i++) {
-			hep.add(Util.getNthHeptagonalNumber(i));
-		}
-		all.put(7, hep);
-		
-		
-		for(int i=octFirst; i<=octLast; i++) {
-			oct.add(Util.getNthOctagonalNumber(i));
-		}
-		all.put(8, oct);
-		
 
-		
-		
-		
 		return all;
 	}
 	
@@ -202,139 +168,7 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 		
 		return 0;
 	}
-	
-	public static int getFirst4DigitTriangleNumberIndex() {
-		int f = 0;
-		int index = 0;
-		while (!isFourDigits(f)) {
-			index++;
-			f = Util.getNthTriangleNumber(index);
-		}
-		//return new int[] {first4dTriNum, index};
-		return index;
-	}
-	
-	public static int getLast4DigitTriangleNumberIndex() {
-		int f = 0;
-		int index = 0;
-		while (!isFiveDigits(f)) {
-			index++;
-			f = Util.getNthTriangleNumber(index);
-		}
-		//return new int[] {f, index};
-		return index-1;
-		
-	}
-	
-	public static int getFirst4DigitSquareNumberIndex() {
-		int f = 0;
-		int index = 0;
-		while (!isFourDigits(f)) {
-			index++;
-			f = Util.getNthSquareNumber(index);
-		}
-		//return new int[] {first4dSqaureNum, index};
-		return index;
-	}
-	
-	public static int getLast4DigitSquareNumberIndex() {
-		int f = 0;
-		int index = 0;
-		while (!isFiveDigits(f)) {
-			index++;
-			f = Util.getNthSquareNumber(index);
-		}
-		//return new int[] {first4dSqaureNum, index};
-		return index-1;
-	}
-	
-	public static int getFirst4DigitPentagonalNumberIndex() {
-		int f = 0;
-		int index = 0;
-		while (!isFourDigits(f)) {
-			index++;
-			f = Util.getNthPentagonalNumber(index);
-		}
-		//return new int[] {first4dSqaureNum, index};
-		return index;
-	}
-	
-	public static int getLast4DigitPentagonalNumberIndex() {
-		int f = 0;
-		int index = 0;
-		while (!isFiveDigits(f)) {
-			index++;
-			f = Util.getNthPentagonalNumber(index);
-		}
-		//return new int[] {first4dSqaureNum, index};
-		return index-1;
-	}
-	
-	public static int getFirst4DigitHexagonalNumberIndex() {
-		int f = 0;
-		int index = 0;
-		while (!isFourDigits(f)) {
-			index++;
-			f = Util.getNthHexagonalNumber(index);
-		}
-		//return new int[] {first4dSqaureNum, index};
-		return index;
-	}
-	
-	public static int getLast4DigitHexagonalNumberIndex() {
-		int f = 0;
-		int index = 0;
-		while (!isFiveDigits(f)) {
-			index++;
-			f = Util.getNthHexagonalNumber(index);
-		}
-		//return new int[] {first4dSqaureNum, index};
-		return index-1;
-	}
-	
-	public static int getFirst4DigitHeptagonalNumberIndex() {
-		int f = 0;
-		int index = 0;
-		while (!isFourDigits(f)) {
-			index++;
-			f = Util.getNthHeptagonalNumber(index);
-		}
-		//return new int[] {first4dSqaureNum, index};
-		return index;
-	}
-	
-	public static int getLast4DigitHeptagonalNumberIndex() {
-		int f = 0;
-		int index = 0;
-		while (!isFiveDigits(f)) {
-			index++;
-			f = Util.getNthHeptagonalNumber(index);
-		}
-		//return new int[] {first4dSqaureNum, index};
-		return index-1;
-	}
-	
-	public static int getFirst4DigitOctagonalNumberIndex() {
-		int f = 0;
-		int index = 0;
-		while (!isFourDigits(f)) {
-			index++;
-			f = Util.getNthOctagonalNumber(index);
-		}
-		//return new int[] {first4dSqaureNum, index};
-		return index;
-	}
-	
-	public static int getLast4DigitOctagonalNumberIndex() {
-		int f = 0;
-		int index = 0;
-		while (!isFiveDigits(f)) {
-			index++;
-			f = Util.getNthOctagonalNumber(index);
-		}
-		//return new int[] {first4dSqaureNum, index};
-		return index-1;
-	}
+
 	
 	public static String getLast2Digits(int n) {
 		String ns = n+"";
@@ -354,6 +188,37 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 		return ret;
 	}
 	
+
+
+	
+	public static Map<Integer, Integer[]> getFirstAndLastIndexes() {
+		Map<Integer, Integer[]> n = new HashMap<Integer, Integer[]>();
+		int pNum = 0;
+		for(int i=3; i<=8; i++) {
+			
+			pNum = 0;
+			int firstIndex = 0;
+			while (!isFourDigits(pNum)) {
+				firstIndex++;
+				pNum = getAPolygonalNumber(i, firstIndex);
+			}
+			
+			pNum = 0;
+			int lastIndex = 0;
+			while (!isFiveDigits(pNum)) {
+				lastIndex++;
+				pNum = getAPolygonalNumber(i, lastIndex);
+			}
+			lastIndex--;
+			
+			n.put(i, new Integer[] { firstIndex, lastIndex });
+		}
+		
+		return n;
+
+		
+	}
+	
 	
 	public static boolean isFourDigits(int n) {
 		String ns = "" + n;
@@ -363,33 +228,6 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 	public static boolean isFiveDigits(int n) {
 		String ns = "" + n;
 		return ns.length() == 5;
-	}
-
-	
-	public static void getFirstAndLastIndexes() {
-		triFirst = getFirst4DigitTriangleNumberIndex();
-		squareFirst = getFirst4DigitSquareNumberIndex();
-		pentFirst = getFirst4DigitPentagonalNumberIndex();
-		hexFirst = getFirst4DigitHexagonalNumberIndex();
-		hepFirst = getFirst4DigitHeptagonalNumberIndex();
-		octFirst = getFirst4DigitOctagonalNumberIndex();
-		
-		triLast = getLast4DigitTriangleNumberIndex();
-		squareLast = getLast4DigitSquareNumberIndex();
-		pentLast = getLast4DigitPentagonalNumberIndex();
-		hexLast = getLast4DigitHexagonalNumberIndex();
-		hepLast = getLast4DigitHeptagonalNumberIndex();
-		octLast = getLast4DigitOctagonalNumberIndex();
-		
-		System.out.println("First tri " + triFirst + " and last tri " + triLast);
-		System.out.println("First square " + squareFirst + " and last square " + squareLast);
-		System.out.println("First pent " + pentFirst + " and last pent " +	pentLast);
-		System.out.println("First hex " + hexFirst + " and last hex " + hexLast);
-		System.out.println("First hep " + hepFirst + " and last hep " + hepLast);
-		System.out.println("First oct " + octFirst + " and last oct " + octLast);
-		
-		
-		
 	}
 	
 }
