@@ -32,10 +32,12 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 	
 	static Map<Integer, Integer[]> allFirstAndLastIndexes;
 	static Map<Integer, List<Integer>> allPolygonalNumbers;
+	static Map<Integer, Integer> finalResult;
 	static Map<Integer, Boolean> track;
 	public static void main(String[] args) {
 		allFirstAndLastIndexes = getFirstAndLastIndexes();
 		allPolygonalNumbers = getAll4DigitPolygonalNumbers();
+		finalResult = new HashMap<Integer, Integer>(); // SHOULD WE KEEP THE ORDER?
 		track = new HashMap<Integer, Boolean>();// use to keep track of what ones we have done ( put 5 true means we found a pentagonal num..
 		
 		
@@ -61,33 +63,32 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 			System.out.println("First and last index for " + i + " :: " + fl[0] + ", " + fl[1] + " and those nums are " + f + ", " + l);			
 		}
 		
-		findPolyNumThatStartsWith();
+		int startingPolygonalNum = 3;
+		
+		List<Integer> triNums = allPolygonalNumbers.get(startingPolygonalNum);
+		for(Integer num : triNums) {
+			finalResult.put(startingPolygonalNum, num);
+			track.put(startingPolygonalNum, true);
+			findPolyNumThatStartsWith(num);
+		}
 		
 	}
 	
-	public static int[] findPolyNumThatStartsWith(int whichThis, int num) {
-		
-		
-		
-		/*
-		for(int i = triFirst; i <= triLast; i++) {
-			int ti = Util.getNthTriangleNumber(i);
-			track.put(3, true);
-			
-			int sq = get4DigitSquareNumberThatStartsWith(ti);
-			if(sq != 0) {
-				
-			}
-			
-		}
-		*/
-		
-		if(num == 0) {
-			num = allFirstAndLastIndexes.get(whichThis)[0];
-		}
+	public static int[] findPolyNumThatStartsWith(int num) {
 		
 		for(int i=3; i<=8; i++) {
+			
+			if(track.get(i)) {
+				continue;
+			}
+			
 			List<Integer> polyNums = allPolygonalNumbers.get(i);
+			for(Integer polyNum : polyNums) {
+				if(getLast2Digits(num).equals(getFirst2Digits(polyNum))) {
+					track.put(i, true);
+					findPolyNumThatStartsWith(polyNum);
+				}
+			}
 		}
 		
 		
