@@ -22,7 +22,8 @@ This is the only set of 4-digit numbers with this property.
 Find the sum of the only ordered set of six cyclic 4-digit numbers for which each polygonal type: triangle, square, pentagonal, hexagonal, heptagonal, and octagonal, is represented by a different number in the set.
 	 */
 	
-	
+	static int startPoly = 3, endPoly = 8;
+	static int totalPolyCount = (endPoly - startPoly) + 1;
 	static int triFirst = 0, triLast = 0;
 	static int squareFirst = 0, squareLast = 0;
 	static int pentFirst = 0, pentLast = 0;
@@ -38,7 +39,7 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 		allFirstAndLastIndexes = getFirstAndLastIndexes();
 		allPolygonalNumbers = getAll4DigitPolygonalNumbers();
 		finalResult = new HashMap<Integer, Integer>(); // SHOULD WE KEEP THE ORDER?
-		track = new HashMap<Integer, Boolean>();// use to keep track of what ones we have done ( put 5 true means we found a pentagonal num..
+		track = getEmptyTracking();//new HashMap<Integer, Boolean>();// use to keep track of what ones we have done ( put 5 true means we found a pentagonal num..
 		
 		
 			problem();
@@ -55,7 +56,7 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 		
 		
 		
-		for(int i=3; i<=8; i++) {
+		for(int i=startPoly; i<=endPoly; i++) {
 			Integer[] fl = allFirstAndLastIndexes.get(i);
 			
 			int f = getAPolygonalNumber(i, fl[0]);
@@ -63,20 +64,58 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 			System.out.println("First and last index for " + i + " :: " + fl[0] + ", " + fl[1] + " and those nums are " + f + ", " + l);			
 		}
 		
-		int startingPolygonalNum = 3;
+		int startingPolygonalNumType = 3;
 		
-		List<Integer> triNums = allPolygonalNumbers.get(startingPolygonalNum);
+		List<Integer> triNums = allPolygonalNumbers.get(startingPolygonalNumType);
+		
+		
+		
 		for(Integer num : triNums) {
-			finalResult.put(startingPolygonalNum, num);
-			track.put(startingPolygonalNum, true);
-			findPolyNumThatStartsWith(num);
+			
+			List<Integer> numsSoFar = new ArrayList<Integer>();
+			
+			finalResult.put(startingPolygonalNumType, num);
+			
+			track.put(startingPolygonalNumType, true); // this doesnt put duplicate entries right? Like 3, true - we cant put another 3, true right?
+			
+			numsSoFar.add(num);
+			
+			findPolyNumThatStartsWith(num, numsSoFar);
 		}
 		
 	}
 	
-	public static int[] findPolyNumThatStartsWith(int num) {
+	public static void /*List<Integer>*/ findPolyNumThatStartsWith(int num, List<Integer> polyNumsSoFar) {
 		
-		for(int i=3; i<=8; i++) {
+		boolean isDone = false;
+		
+		//int res = isTrackingComplete();
+		
+		if(isTrackingComplete()) {
+			//all are found....
+			if(polyNumsSoFar.size() == totalPolyCount) {
+				
+				if(getLast2Digits(polyNumsSoFar.get(totalPolyCount-1)).equals(getFirst2Digits(polyNumsSoFar.get(0)))) {
+					System.out.println("I think we have a winner !");
+					
+					int sum = 0;
+					for(Integer p : polyNumsSoFar) {
+						sum += p;
+						System.out.println("winning num: " + p);
+					}
+					System.out.println("winning SUM: " + sum);
+					return; //polyNumsSoFar;
+				}
+			} else {
+				System.out.println("Error! evalresults says nothing is left (all are true) but polynums size is not " + totalPolyCount + ", its " + polyNumsSoFar.size());
+				doDiagnostics(polyNumsSoFar);
+				System.exit(0);
+				return; //polyNumsSoFar;
+			}
+		}
+		
+		
+		for(int i=startPoly; i<=endPoly; i++) {
 			
 			if(track.get(i)) {
 				continue;
@@ -86,15 +125,62 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 			for(Integer polyNum : polyNums) {
 				if(getLast2Digits(num).equals(getFirst2Digits(polyNum))) {
 					track.put(i, true);
-					findPolyNumThatStartsWith(polyNum);
+					
+					List<Integer> copyOfPn = copyListInteger(polyNumsSoFar);
+					copyOfPn.add(polyNum);
+					findPolyNumThatStartsWith(polyNum, copyOfPn); /// maybe can do this with a while loop instead of recur?
 				}
 			}
+			
+			
+			track.put(i, false); 
+			
+		}
+		
+		return; 
+		
+	}
+	
+	public static List<Integer> copyListInteger(List<Integer> li){
+		List<Integer> ret = new ArrayList<Integer>();
+		for(Integer i : li) {
+			ret.add(i);
+		}
+		return ret;
+	}
+	
+	
+	public static boolean isTrackingComplete() {
+		for(Integer i : track.keySet()) {
+			if(!track.get(i)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public static Map<Integer, Boolean> getEmptyTracking() {
+		
+		
+		Map<Integer, Boolean> ret = new HashMap<Integer, Boolean>();
+		
+		for(int i=startPoly; i<=endPoly; i++) {
+			ret.put(i, false);
+		}
+		
+		return ret;
+		
+	}
+	
+	public static void doDiagnostics(List<Integer> p) {
+		System.out.println("polynums size: " + p.size());
+		for(Integer i : track.keySet()) {
+			System.out.println("Tracking : " + i  + " is set to " + track.get(i));
 		}
 		
 		
 		
 	}
-	
 	
 	public static int getAPolygonalNumber(int which, int ind) {
 		
