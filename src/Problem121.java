@@ -17,8 +17,6 @@ Find the maximum prize fund that should be allocated to a single game in which f
 	
 	public static void main(String[] args) {
 		problem();
-		
-		
 	}
 	
 	private static void problem() {
@@ -46,13 +44,10 @@ Find the maximum prize fund that should be allocated to a single game in which f
 		System.out.println("Turn count: " + turns);
 		System.out.println("How many paths win: " + winPaths);
 		System.out.println("How many total paths: " + totalPaths);
-		System.out.println("ratio win to total count: " + totalPaths.divide(winPaths));
+		BigInteger ratio =  totalPaths.divide(winPaths);
+		System.out.println("ratio win to total count: " + ratio);
 		
-		for(int i=1; i<10000; i++){
-			return totalPaths.divide(winPaths);
-		}
-		
-		return new BigInteger(""+0);
+		return ratio;
 		
 	}
 
