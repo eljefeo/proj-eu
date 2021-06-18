@@ -87,11 +87,7 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 	
 	public static void /*List<Integer>*/ findPolyNumThatStartsWith(int num, List<Integer> polyNumsSoFar) {
 		
-		boolean isDone = false;
-		
-		//int res = isTrackingComplete();
-		
-		if(isTrackingComplete()) {
+		if(!track.containsValue(false)) {
 			//all are found....
 			if(polyNumsSoFar.size() == totalPolyCount) {
 				
@@ -106,12 +102,7 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 					System.out.println("winning SUM: " + sum);
 					return; //polyNumsSoFar;
 				}
-			} else {
-				System.out.println("Error! evalresults says nothing is left (all are true) but polynums size is not " + totalPolyCount + ", its " + polyNumsSoFar.size());
-				doDiagnostics(polyNumsSoFar);
-				System.exit(0);
-				return; //polyNumsSoFar;
-			}
+			} 
 		}
 		
 		
@@ -122,17 +113,15 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 			}
 			
 			List<Integer> polyNums = allPolygonalNumbers.get(i);
+			
+			track.put(i, true);
 			for(Integer polyNum : polyNums) {
 				if(getLast2Digits(num).equals(getFirst2Digits(polyNum))) {
-					track.put(i, true);
-					
 					List<Integer> copyOfPn = copyListInteger(polyNumsSoFar);
 					copyOfPn.add(polyNum);
 					findPolyNumThatStartsWith(polyNum, copyOfPn); /// maybe can do this with a while loop instead of recur?
 				}
 			}
-			
-			
 			track.put(i, false); 
 			
 		}
@@ -149,43 +138,17 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 		return ret;
 	}
 	
-	
-	public static boolean isTrackingComplete() {
-		for(Integer i : track.keySet()) {
-			if(!track.get(i)) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
 	public static Map<Integer, Boolean> getEmptyTracking() {
-		
-		
 		Map<Integer, Boolean> ret = new HashMap<Integer, Boolean>();
-		
 		for(int i=startPoly; i<=endPoly; i++) {
 			ret.put(i, false);
 		}
-		
 		return ret;
-		
 	}
-	
-	public static void doDiagnostics(List<Integer> p) {
-		System.out.println("polynums size: " + p.size());
-		for(Integer i : track.keySet()) {
-			System.out.println("Tracking : " + i  + " is set to " + track.get(i));
-		}
-		
-		
-		
-	}
-	
+
 	public static int getAPolygonalNumber(int which, int ind) {
 		
 		int num = 0;
-		
 		
 		switch (which) {
 		case 3:
@@ -226,7 +189,7 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 		
 		Map<Integer, List<Integer>> all = new HashMap<Integer, List<Integer>>();
 		
-		for(int i=3; i<=8; i++) {
+		for(int i=startPoly; i<=endPoly; i++) {
 			List<Integer> nums = new ArrayList<Integer>();
 			
 			Integer[] indexes = allFirstAndLastIndexes.get(i);
@@ -241,21 +204,6 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 		return all;
 	}
 	
-
-	
-	
-	public static int get4DigitSquareNumberThatStartsWith(int start) {
-		//int first4dSquareIndex = fDetails[1];
-		for(int i = squareFirst; i <= squareLast; i++) {
-			int s = Util.getNthSquareNumber(i);
-			if(getFirst2Digits(s).equals(getLast2Digits(start))){
-				return s;
-			}
-		}
-		
-		return 0;
-	}
-
 	
 	public static String getLast2Digits(int n) {
 		String ns = n+"";
@@ -274,9 +222,6 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 		String ret = ns.charAt(0) + "" + ns.charAt(1);
 		return ret;
 	}
-	
-
-
 	
 	public static Map<Integer, Integer[]> getFirstAndLastIndexes() {
 		Map<Integer, Integer[]> n = new HashMap<Integer, Integer[]>();
