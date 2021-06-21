@@ -14,7 +14,7 @@ Find the smallest cube for which exactly five permutations of its digits are cub
 	}
 	
 	private static void problem() {
-		
+		// just start getting cubes... then permute their digits until we find one with 4 other cubes? Math.cbrt... (check if integer..)
 	}
 
 }
