@@ -30,12 +30,12 @@ anything?
 		problem();
 		
 		/// WHAT IF instead of this super slow way (didnt know it would be that slow)
-		// we just get all (a bunch?) of cubes, then check if any have the same digits? Would that take even longer - no this was super fast...solved this way ?
+		// we just get all (a bunch?) of cubes, then check if any have the same digits? Would that take even longer - no this was super fast...solved this way
 		System.out.println("anything?");
 	}
 	
 	private static void problem() {
-		int min = 200;//4640
+		int min = 200;
 		int max = 10000;
 		int targetNumberOfCubes = 5;
 		
