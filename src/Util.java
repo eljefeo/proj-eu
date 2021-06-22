@@ -928,6 +928,18 @@ public class Util {
 		}
 	}
 	
+	public static void makeAllPermutationsRecurNoDupesSet(String s, String r, Set<String> all){
+		if(r.length() == 0){
+			all.add(s);
+		} else {
+			for(int i=0; i<r.length(); i++){
+				String newS = s + r.charAt(i);
+				String newR = r.substring(0,i) + r.substring(i+1);
+				makeAllPermutationsRecurNoDupesSet(newS, newR, all);
+			}
+		}
+	}
+	
 	public static void findCombinationsOfSizeRecur(int[] A, String out, int index, int lengthOfThing, int sampleSize) {
         // invalid input
         if (sampleSize > lengthOfThing) {
@@ -935,8 +947,7 @@ public class Util {
         }
  
         // base case: combination size is `k`
-        if (sampleSize == 0)
-        {
+        if (sampleSize == 0) {
             System.out.println(out);
             return;
         }
