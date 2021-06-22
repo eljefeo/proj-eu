@@ -34,10 +34,8 @@ public class Problem63 {
 				if(b2.toString().length() == j) {
 					count++;
 					
-					//if(count % 10 == 0) {
-						System.out.println("Count at " + count + " for i=" + i + " and exponent=" + j + " for " + b2);
+					System.out.println("Count at " + count + " for i=" + i + " and exponent=" + j + " for " + b2);
 						
-					//}
 					
 				}
 			}
