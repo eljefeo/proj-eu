@@ -12,7 +12,7 @@ public class Problem63 {
 		//solved by just doing a whole bunch and seeing what the number is at the end
 		// dont know when to stop though....
 		int min = 1;
-		int max = 100000;
+		int max = 30000;
 		int count = 0;
 		int maxExponent = 50;
 		//int targetNumberOfCubes = 5;
