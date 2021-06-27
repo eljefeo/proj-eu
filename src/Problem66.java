@@ -31,29 +31,57 @@ Find the value of D <= 1000 in minimal solutions of x for which the largest valu
 
 	public static void main(String[] args) {
 		problem();
-		//346323031
+		
+		
+		//BigDecimal sq = new BigDecimal(""+4).sqrt(MathContext.DECIMAL64);
+		//BigDecimal fractionalPart = sq.remainder(BigDecimal.ONE);
+		//if(sq.signum() == 0 || sq.scale() <= 0 || sq.stripTrailingZeros().scale() <= 0) {
+		//if(fractionalPart.compareTo(BigDecimal.ZERO) == 0) {
+		//	System.out.println("skipping : " + 3 + " fraction : " + fractionalPart);
+		//}
+		
+		//x+1 = 36470, x-1 = 36468, decimalD = 761, all mult together = 1012120837560, sqrt = 1006042
+			//	Found x = 36469 ::: D = 761 ::: y = 1322
+		
+		//new with 64 decimal: 761 Found x = 1280001 ::: D = 761 ::: y = 46400
+		BigDecimal xp1 = new BigDecimal("1280002");
+		BigDecimal xm1 = new BigDecimal("1280000");
+		BigDecimal d = new BigDecimal("761");
+		BigDecimal m = xp1.multiply(xm1).multiply(d);
+		//BigDecimal s = new BigDecimal("169876986986234234.23").sqrt(MathContext.DECIMAL32);
+		BigDecimal s = m.sqrt(MathContext.DECIMAL128);
+		//System.out.println("m = " + m + " , s = " + s);
+		
+		//761
 		//wrong!
+		//761 Found x = 36469 ::: D = 761 ::: y = 1322
+		// some error with the math, maybe something with BigDecimals or something... those numbers dont add up... close but off by 437 ish, should be 1
 	}
 
 	private static void problem() {
-		int max = 1000;
+		int max = 661;
 		//int d = 7;	
 		
 		BigInteger maxX = BigInteger.ZERO;
-		
-		for(int d = 2; d <= max; d++) {
+		int maxD = 0;
+		for(int d = 661; d <= max; d++) {
 			
-			if(d % 10 == 0) {
-				System.out.println(" at " + d);
-			}
-			
+			//if(d % 100 == 0) {
+			//	System.out.println(" at " + d);
+			//}
+			System.out.println(" at " + d);
 			
 			BigInteger x = BigInteger.ONE;
 			BigDecimal y = new BigDecimal(""+0.1);
 
 			
-			BigDecimal sq = new BigDecimal(""+d).sqrt(MathContext.DECIMAL32);
-			if(sq.signum() == 0 || sq.scale() <= 0 || sq.stripTrailingZeros().scale() <= 0) {
+			
+			//skip perfect squares
+			BigDecimal sq = new BigDecimal(""+d).sqrt(MathContext.DECIMAL64);
+			BigDecimal fractionalPart = sq.remainder(BigDecimal.ONE);
+			//if(sq.signum() == 0 || sq.scale() <= 0 || sq.stripTrailingZeros().scale() <= 0) {
+			if(fractionalPart.compareTo(BigDecimal.ZERO) == 0) {
+				System.out.println("skipping : " + d);
 				continue;
 			}
 			//try {
@@ -68,9 +96,20 @@ Find the value of D <= 1000 in minimal solutions of x for which the largest valu
 				//return;
 			//}
 			
-			//System.out.println("start x = " + x + " ::: D = " + d + " ::: y = " + y + ", y - int y : " +(y - (int)y));
 			
-			boolean hasDecimalOrIsZero = y.signum() == 0 || y.scale() <= 0 || y.stripTrailingZeros().scale() <= 0; // maybe alter this, this function might actually change y - maybe use a duplicate var
+			
+			// setup first go
+			//System.out.println("start x = " + x + " ::: D = " + d + " ::: y = " + y + ", y - int y : " +(y - (int)y));
+			//BigDecimal yy = y;
+			//boolean hasDecimalOrIsZero = yy.signum() == 0 || yy.scale() <= 0 || yy.stripTrailingZeros().scale() <= 0; // maybe alter this, this function might actually change y - maybe use a duplicate var
+			
+			fractionalPart = y.remainder(BigDecimal.ONE); // Result:  0.4523434
+			
+			boolean hasDecimal = fractionalPart.compareTo(BigDecimal.ZERO) == 1;
+			//System.out.println("start dec = " + fractionalPart + " is " + hasDecimal);
+			//	continue;
+			//}
+			
 			//try {
 			//	y.toBigIntegerExact();
 			//	continue;
@@ -78,47 +117,61 @@ Find the value of D <= 1000 in minimal solutions of x for which the largest valu
 				
 			//}
 			
-			while(!hasDecimalOrIsZero) {
+			while(hasDecimal) {
 				
 				x = x.add(BigInteger.ONE);
-				// y = sqrt ( D(x+1)(x-1) ) / D
-				//System.out.println("(x+1) = " + (x+1)  +", (x-1) = " + (x-1));
-				//System.out.println("sqrt " + ((x+1) * (x-1) ) + " , x= "+ x + " ::: D = " + d + " ::: y = " + y);
-				BigDecimal xDecimal = new BigDecimal("" + x);
+				
+				if(x.mod(new BigInteger("100000")).compareTo(BigInteger.ZERO) == 0) {
+					System.out.println(" at x = " + x + "  for d = " + d);
+				}
+
+				BigDecimal xDecimal = new BigDecimal("" + x.toString());
+
 				BigDecimal xPlusOne = xDecimal.add(BigDecimal.ONE);
+				
 				BigDecimal xMinusOne = xDecimal.subtract(BigDecimal.ONE);
-				BigDecimal dBig = new BigDecimal("" + d);
+				
+				BigDecimal dBig  = new BigDecimal("" + d);
 				BigDecimal xx = dBig.multiply(xPlusOne).multiply(xMinusOne);
-				//if(d % 10 == 0) {
-				//	System.out.println("XX : " + xx);
-				//}
-				BigDecimal xxSquareRoot = xx.sqrt(MathContext.DECIMAL32);
-				BigDecimal dDecimal = new BigDecimal("" + d);
-				try{
-					y = xxSquareRoot.divide(dDecimal);
-					hasDecimalOrIsZero = y.signum() == 0 || y.scale() <= 0 || y.stripTrailingZeros().scale() <= 0;
-				} catch (Exception e) {
-					hasDecimalOrIsZero = false;
+
+				BigDecimal xxSquareRoot = xx.sqrt(MathContext.DECIMAL64);
+				
+
+				fractionalPart = xxSquareRoot.remainder( BigDecimal.ONE ); // Result:  0.4523434
+				if(fractionalPart.compareTo(BigDecimal.ZERO) == 1) {
+					//System.out.println("square root has dec, skipping : " + xxSquareRoot + " for d="+d+" and x="+x);
+					continue;
 				}
 				
-				hasDecimalOrIsZero = y.signum() == 0 || y.scale() <= 0 || y.stripTrailingZeros().scale() <= 0;
-				//System.out.println("doing x = " + x + " ::: D = " + d + " ::: y = " + y);
+				BigDecimal dDecimal = new BigDecimal("" + d);
+				
+				try{
+					y = xxSquareRoot.divide(dDecimal);
+					//yy = y;
+					
+					fractionalPart = y.remainder( BigDecimal.ONE ); // Result:  0.4523434
+					hasDecimal = fractionalPart.compareTo(BigDecimal.ZERO) == 1;
+					
+					//hasDecimalOrIsZero = yy.signum() == 0 || yy.scale() <= 0 || yy.stripTrailingZeros().scale() <= 0;
+				} catch (Exception e) {
+					hasDecimal = true;
+				}
 				
 			}
 			
-			//System.out.println("Found x = " + x + " ::: D = " + d + " ::: y = " + y);
-			//if(x > 0 ) {
-			//	System.out.println("ERROR : " + x);
-			//}
+			System.out.println("Found x = " + x + " ::: D = " + d + " ::: y = " + y);
+
 			if(x.compareTo(maxX) == 1) {
 				maxX = x;
+				maxD = d;
+				System.out.println("New biggest :: y = " + y + ", x = " + x + ", d = " + d);
 			}
 			
 			
 		}
 		
 		
-		System.out.println("Max x = " + maxX);
+		System.out.println("Max d = " + maxD);
 		
 	}
 
