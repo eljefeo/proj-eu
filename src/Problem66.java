@@ -57,8 +57,94 @@ Find the value of D <= 1000 in minimal solutions of x for which the largest valu
 		//761 Found x = 36469 ::: D = 761 ::: y = 1322
 		// some error with the math, maybe something with BigDecimals or something... those numbers dont add up... close but off by 437 ish, should be 1
 	}
+	
+	private static void problem() { 
+		//x^2 - Dy^2 = 1
+		int max = 5;
+		//int d = 7;	
+		
+		BigInteger maxX = BigInteger.ZERO;
+		int maxD = 0;
+		
+		for(int d = 5; d <= max; d++) {
 
-	private static void problem() {
+			//if(d % 100 == 0) {
+			//	System.out.println(" at " + d);
+			//}
+			System.out.println(" at " + d);
+			
+			BigInteger x = BigInteger.ONE;
+			BigDecimal y = new BigDecimal(""+0.1);
+
+			//skip perfect squares
+			BigDecimal sq = new BigDecimal(""+d).sqrt(MathContext.DECIMAL64);
+			BigDecimal fractionalPart = sq.remainder(BigDecimal.ONE);
+
+
+			if(fractionalPart.compareTo(BigDecimal.ZERO) == 0) {
+				System.out.println("skipping : " + d);
+				continue;
+			}
+
+			
+			fractionalPart = y.remainder(BigDecimal.ONE); // Result:  0.4523434
+			boolean hasDecimal = fractionalPart.compareTo(BigDecimal.ZERO) == 1;
+			int count = 0;
+			while(hasDecimal && count < 2) {
+				
+				x = x.add(BigInteger.ONE);
+				
+				if(x.mod(new BigInteger("100000")).compareTo(BigInteger.ZERO) == 0) {
+					System.out.println(" at x = " + x + "  for d = " + d);
+				}
+
+				BigDecimal xDecimal = new BigDecimal("" + x.toString());
+				BigDecimal xPlusOne = xDecimal.add(BigDecimal.ONE);
+				BigDecimal xMinusOne = xDecimal.subtract(BigDecimal.ONE);
+				BigDecimal dBig  = new BigDecimal("" + d);
+				BigDecimal xx = dBig.multiply(xPlusOne).multiply(xMinusOne);
+				BigDecimal xxSquareRoot = xx.sqrt(MathContext.DECIMAL64);
+				
+				fractionalPart = xxSquareRoot.remainder( BigDecimal.ONE ); // Result:  0.4523434
+				if(fractionalPart.compareTo(BigDecimal.ZERO) == 1) {
+					//System.out.println("square root has dec, skipping : " + xxSquareRoot + " for d="+d+" and x="+x);
+					continue;
+				}
+				
+				BigDecimal dDecimal = new BigDecimal("" + d);
+				
+				try{
+					y = xxSquareRoot.divide(dDecimal);
+					fractionalPart = y.remainder( BigDecimal.ONE ); // Result:  0.4523434
+					hasDecimal = fractionalPart.compareTo(BigDecimal.ZERO) == 1;
+					
+					//hasDecimalOrIsZero = yy.signum() == 0 || yy.scale() <= 0 || yy.stripTrailingZeros().scale() <= 0;
+				} catch (Exception e) {
+					hasDecimal = true;
+				}
+				
+			}
+			count++;
+			System.out.println("Found x = " + x + " ::: D = " + d + " ::: y = " + y + " with count " + count);
+
+			if(x.compareTo(maxX) == 1) {
+				maxX = x;
+				maxD = d;
+				System.out.println("New biggest :: y = " + y + ", x = " + x + ", d = " + d);
+			}
+			
+			
+		
+		}
+		System.out.println("Max d = " + maxD + " with biggest x = " + maxX);
+		
+	}
+
+	private static void problem2() { 
+		// brute force solving for y. Trying all x from 1,2,3,4,....
+		// until we get a y integer..
+		// super slow..
+		
 		int max = 661;
 		//int d = 7;	
 		
@@ -74,48 +160,19 @@ Find the value of D <= 1000 in minimal solutions of x for which the largest valu
 			BigInteger x = BigInteger.ONE;
 			BigDecimal y = new BigDecimal(""+0.1);
 
-			
-			
 			//skip perfect squares
 			BigDecimal sq = new BigDecimal(""+d).sqrt(MathContext.DECIMAL64);
 			BigDecimal fractionalPart = sq.remainder(BigDecimal.ONE);
-			//if(sq.signum() == 0 || sq.scale() <= 0 || sq.stripTrailingZeros().scale() <= 0) {
+
+
 			if(fractionalPart.compareTo(BigDecimal.ZERO) == 0) {
 				System.out.println("skipping : " + d);
 				continue;
 			}
-			//try {
-			//	sq.toBigIntegerExact();
-			//	continue;
-			//} catch(Exception e) {
-				
-			//}
-			//if(sq - (int)sq == 0) {
-				//System.out.println("Skipping " + d);
-			//	continue;
-				//return;
-			//}
-			
-			
-			
-			// setup first go
-			//System.out.println("start x = " + x + " ::: D = " + d + " ::: y = " + y + ", y - int y : " +(y - (int)y));
-			//BigDecimal yy = y;
-			//boolean hasDecimalOrIsZero = yy.signum() == 0 || yy.scale() <= 0 || yy.stripTrailingZeros().scale() <= 0; // maybe alter this, this function might actually change y - maybe use a duplicate var
+
 			
 			fractionalPart = y.remainder(BigDecimal.ONE); // Result:  0.4523434
-			
 			boolean hasDecimal = fractionalPart.compareTo(BigDecimal.ZERO) == 1;
-			//System.out.println("start dec = " + fractionalPart + " is " + hasDecimal);
-			//	continue;
-			//}
-			
-			//try {
-			//	y.toBigIntegerExact();
-			//	continue;
-			//} catch(Exception e) {
-				
-			//}
 			
 			while(hasDecimal) {
 				
@@ -126,17 +183,12 @@ Find the value of D <= 1000 in minimal solutions of x for which the largest valu
 				}
 
 				BigDecimal xDecimal = new BigDecimal("" + x.toString());
-
 				BigDecimal xPlusOne = xDecimal.add(BigDecimal.ONE);
-				
 				BigDecimal xMinusOne = xDecimal.subtract(BigDecimal.ONE);
-				
 				BigDecimal dBig  = new BigDecimal("" + d);
 				BigDecimal xx = dBig.multiply(xPlusOne).multiply(xMinusOne);
-
 				BigDecimal xxSquareRoot = xx.sqrt(MathContext.DECIMAL64);
 				
-
 				fractionalPart = xxSquareRoot.remainder( BigDecimal.ONE ); // Result:  0.4523434
 				if(fractionalPart.compareTo(BigDecimal.ZERO) == 1) {
 					//System.out.println("square root has dec, skipping : " + xxSquareRoot + " for d="+d+" and x="+x);
@@ -147,8 +199,6 @@ Find the value of D <= 1000 in minimal solutions of x for which the largest valu
 				
 				try{
 					y = xxSquareRoot.divide(dDecimal);
-					//yy = y;
-					
 					fractionalPart = y.remainder( BigDecimal.ONE ); // Result:  0.4523434
 					hasDecimal = fractionalPart.compareTo(BigDecimal.ZERO) == 1;
 					
