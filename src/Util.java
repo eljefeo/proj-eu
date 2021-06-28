@@ -211,6 +211,20 @@ public class Util {
 		}
 		return factors;
 	}
+	
+	public static int summation(int num) {
+		
+		return summationFromTo(1, num);
+	}
+	
+public static int summationFromTo(int start, int end) {
+		
+		int ret = 0;
+		for (int i = start; i <= end; i++) {
+			ret += i;
+		}
+		return ret;
+	}
 
 	public static int addAllIntegers(Set<Integer> nums) {
 		int result = 0;
