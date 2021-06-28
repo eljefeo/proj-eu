@@ -69,8 +69,19 @@ Find the value of D <= 1000 in minimal solutions of x for which the largest valu
 		//761 Found x = 36469 ::: D = 761 ::: y = 1322
 		// some error with the math, maybe something with BigDecimals or something... those numbers dont add up... close but off by 437 ish, should be 1
 	}
-	
 	private static void problem() { 
+		//d = x^2   - 1 / y^2
+		int max = 7;
+		for(int d = 2; d <= max; d++) {
+			for(int x = 2; x <= 100; x++) {
+				int xs = (int) Math.pow(x, 2);
+				
+				
+				
+			}
+		}
+	}
+	private static void problem3() { 
 		//x^2 - Dy^2 = 1
 		
 		//int d = 7;	
