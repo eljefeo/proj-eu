@@ -50,7 +50,7 @@ public class Problem64 {
 				
 				// Check for period:
 				Integer[] current = new Integer[] {firstWholeNum, firstBottom};
-				for(int j=0; j< track.size();j++) {
+				for(int j=0; j < track.size();j++) {
 					Integer[] ia = track.get(j);
 					if(ia.length == 2 && ia[0] == current[0] && ia[1] == current[1]) {
 						int periodSize = track.size() - j;
