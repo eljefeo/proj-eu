@@ -39,9 +39,9 @@ public class Problem65 {
 			num = den; 
 			den = temp;
 
-			//System.out.println("num = " + num + ", denom = " + den);
+			
 		}
-		
+		System.out.println(num + " / " + den);
 		System.out.println("Digits sum : " + Util.addUpAllDigits(num));
 		
 	}
