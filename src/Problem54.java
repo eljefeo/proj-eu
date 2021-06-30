@@ -19,27 +19,16 @@ public class Problem54 {
 	 */
 	
 	public static void main(String[] args){
+		pokerTest();
 		problem();
 	}
 
 	private static void problem() {
 		String[][] allHands = Problem54Helper.getHands(); 
-		//String[] aHand =  new String[] {"4S", "3S", "2S", "AS", "5S"};
-		//String[] bHand =  new String[] {"7C", "8C", "5C", "QD", "6C"};
-		//String res = Util.deadHorseHumanEncodeFullHandEval(aHand[0], aHand[1], aHand[2], aHand[3], aHand[4]);
-		//int res = Util.deadHorsePokerHumanEncodeEval5(aHand[0], aHand[1], aHand[2], aHand[3], aHand[4]);
-		
-		//System.out.println("Resulting hand : " + res);
-		//deadHorsePokerHumanEncodeEval5
-		
 		int player1WinCount = 0;
-		
-		
-		
 		for(String[] sa : allHands){
 			int player1Result = Util.deadHorsePokerHumanEncodeEval5(sa[0], sa[1], sa[2], sa[3], sa[4]);
 			int player2Result = Util.deadHorsePokerHumanEncodeEval5(sa[5], sa[6], sa[7], sa[8], sa[9]);
-			
 			if(player1Result > player2Result){
 				player1WinCount++;
 			}
@@ -49,4 +38,18 @@ public class Problem54 {
 		System.out.println("player 1 won this many: " + player1WinCount);
 		
 	}
+	
+	private static void pokerTest() {
+		String[] aHand =  new String[] {"4S", "3S", "2S", "AS", "5S"};
+		String[] bHand =  new String[] {"7C", "7S", "7H", "4H", "7D"};
+		String res = Util.deadHorseHumanEncodeFullHandEval(aHand[0], aHand[1], aHand[2], aHand[3], aHand[4]);
+		
+		System.out.println("Resulting A hand : " + res);
+
+		res = Util.deadHorseHumanEncodeFullHandEval(bHand[0], bHand[1], bHand[2], bHand[3], bHand[4]);
+		System.out.println("Resulting B hand : " + res);
+		//deadHorsePokerHumanEncodeEval5
+	}
+	
+	
 }
