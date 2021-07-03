@@ -36,62 +36,52 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 
 	 */
 	
-	static int MAX_NUM_DIGITS = 16;
-	
 	static int c = 0;
 	static BigInteger bgst = BigInteger.ZERO;
 	
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		//			6
-		// 	4	3	2
-		//			1
-				  //   5
-		
 		problem();
-		
-		
-		
 	}
 
 	private static void problem() {
-		int numOfLines = 3;
-		int lineSize = 3;
-		int[] l1 = new int[lineSize];
-		int[][] ll = new int[numOfLines][lineSize];
 		
 		
-		// for 3gon
-		// a 1 2 3 
-		// b 1 2 3 - but b2 must match a3
-		// c 1 2 3 - but c2 must match b3 and c3 must match a2
-		// all 3 must add to the same number
-		// only using nums 1-9 once
-		// no repeating nums 1-9
+		do3Gon();
+		System.out.println("We did this many sols for 3 gon: " + c);
+		System.out.println("Largest num for 3gon: " + bgst);
 		
-		List<Integer> oneNine = new ArrayList<Integer>(Arrays.asList(1,2,3,4,5,6,7,8,9));
-		
-		//int[] ott = new int[] {1,2,3,4,5,6,7,8,9,10};
+		//reset nums after 3gon:
+		c = 0;
+		bgst = BigInteger.ZERO;
 		
 		
-		//int[] r = new int[] {1,2,3,4,5,6};
-		//int[][] s = new int[][] { {0,0,0}, {0,0,0}, {0,0,0} }; // this will hold the 3gon numbers - filled with 0 for now to indicate there is no number there yet
-		//doRecur3Gon(s, r);
 		
+		do5Gon();
 		
+		System.out.println();
+		System.out.println("We did this many sols for 5 gon: " + c);
+		System.out.println("Largest num for 5gon: " + bgst);
+		
+	}
+	
+	private static void do3Gon() {
+		//for 3 gon in the project euler example
+		int[] r = new int[] {1,2,3,4,5,6};
+		int[][] s = new int[][] { {0,0,0}, {0,0,0}, {0,0,0} }; // this will hold the 3gon numbers - filled with 0 for now to indicate there is no number there yet
+		doRecurGon(s, r, 0);
+	}
+	
+	private static void do5Gon() {
+		//for 5 gon in the project euler example
 		int[] r = new int[] {1,2,3,4,5,6,7,8,9,10};
-		int[][] s = new int[][] { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} };
-		doRecur5Gon(s, r);
-		
-		System.out.println("We did this many sols: " + c);
-		System.out.println("Largest nums: " + bgst);
-		
+		int[][] s = new int[][] { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} }; // this will hold the 5gon numbers - filled with 0 for now to indicate there is no number there yet
+		doRecurGon(s, r, 16);
 	}
 	
 
 	
-	public static void doRecur5Gon(int[][] s, int[] r){
+	public static void doRecurGon(int[][] s, int[] r, int maxNumDigits){
 		
 		if(!shouldContinueCheckingGon(s)) {
 			return;
@@ -99,24 +89,24 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 		if(r.length == 0){
 			if(areAllSumsEqual(s)) {
 				c++;
-				System.out.println("We found a match for 5gon: ");// + s1 + " " + s2 + " " + s3);
-				printTwoDIntArray(s);
-				doLargestNumCheck(s);
+				//System.out.println("We found a match for gon: ");// + s1 + " " + s2 + " " + s3);
+				//printTwoDIntArray(s);
+				doLargestNumCheck(s, maxNumDigits);
 				
 			}
 			return;
 		} else {
 			for(int i=0; i<r.length; i++){
-				int[][] newS = addToTheNextSpot5Gon(s, r[i]);
+				int[][] newS = addToTheNextSpot(s, r[i]);
 				int[] newR = getNewArrayWithoutIndex(r, i);
-				doRecur5Gon(newS, newR);
+				doRecurGon(newS, newR, maxNumDigits);
 			}
 		}
 	}
 	
 	
 
-	private static void doLargestNumCheck(int[][] s) {
+	private static void doLargestNumCheck(int[][] s, int maxNumDigits) {
 		
 		String n = "";
 		for(int i=0; i<s.length; i++){
@@ -125,7 +115,7 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 			}
 		}
 		
-		if(n.length() != MAX_NUM_DIGITS) {
+		if(maxNumDigits > 0 && n.length() != maxNumDigits) {
 			return;
 		}
 		
@@ -136,65 +126,6 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 		
 	}
 
-	public static void doRecur3Gon(int[][] s, int[] r){
-		
-		if(!shouldContinueCheckingGon(s)) {
-			return;
-		}
-		
-		if(r.length == 0){
-			//if(c == 3)
-				//System.exit(0);
-			
-			// for 3gon
-			// a 1 2 3 
-			// b 1 2 3 - but b2 must match a3
-			// c 1 2 3 - but c2 must match b3 and c3 must match a2
-			// all 3 must add to the same number
-			// only using nums 1-9 once
-			// no repeating nums 1-9
-			// check here for the rules?
-			//all.add(s);
-			
-			//hardcode 3gon rules for now
-			
-			//System.out.println("We ended 3gon:");
-			
-		//	printTwoDIntArray(s);
-			
-			//we should do some other function to check along the way if the lines add up to the same number,
-			// if like, lines 1 and 2 dont add up to the same, then dont bother doing line 3?
-			//if(s[1][1] == s[0][2] && s[2][1] == s[1][2] && s[2][2] == s[0][1]) {
-			
-			//boolean areAllSumsEqual = areAllSumsEqual(s);
-			
-				//int s1 = s[0][0] + s[0][1] + s[0][2];
-				//int s2 = s[1][0] + s[1][1] + s[1][2];
-				//int s3 = s[2][0] + s[2][1] + s[2][2];
-				
-				//System.out.println("in the right spot at least... sums:" + s1 + " , " + s2 + " , " + s3);
-				
-				//if(s1 == s2 && s2 == s3) {
-				if(areAllSumsEqual(s)) {
-					c++;
-					System.out.println("We found a match for 3gon:");// + s1 + " " + s2 + " " + s3);
-					printTwoDIntArray(s);
-					doLargestNumCheck(s);
-				}
-			//}
-			
-			return;
-			
-			
-		} else {
-			for(int i=0; i<r.length; i++){
-				int[][] newS = addToTheNextSpot3Gon(s, r[i]);
-				int[] newR = getNewArrayWithoutIndex(r, i);
-				doRecur3Gon(newS, newR);
-			}
-		}
-	}
-	
 	private static boolean areAllSumsEqual(int[][] s) {
 		
 		int firstTot = 0;
@@ -246,7 +177,7 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 	}
 
 	
-	private static int[][] addToTheNextSpot5Gon(int[][] s, int n) {
+	private static int[][] addToTheNextSpot(int[][] s, int n) {
 		
 		int[][] ret = new int[s.length][s[0].length];
 		
@@ -257,15 +188,9 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 					
 					ret[i][j] = n;
 					if(i==0 && j==1) {
-						ret[4][2] = n;
-					}else if(i==0 && j==2) {
-						ret[1][1] = n;
-					} else if(i==1 && j==2) {
-						ret[2][1] = n;
-					} else if(i==2 && j==2) {
-						ret[3][1] = n;
-					} else if(i==3 && j==2) {
-						ret[4][1] = n;
+						ret[s.length-1][2] = n;
+					}else if (i != s.length-1 && j == s[i].length-1) {
+						ret[i+1][1] = n;
 					}
 					
 					found = true;
@@ -277,44 +202,7 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 		}
 		return ret;
 	}
-	
-	private static int[][] addToTheNextSpot3Gon(int[][] s, int n) {
-		
-		
-		//this is assuming the unused places are filled with 0
-		// so when we first find a 0 we put the n there, then put everything else back the way it was otherwise
-		
-		int[][] ret = new int[s.length][s[0].length];
-		
-		boolean found = false;
-		for(int i=0; i<s.length; i++) {
-			
-			for(int j=0; j<s[i].length; j++) {
-				if(!found && s[i][j] == 0) {
-					
-					
-					
-					ret[i][j] = n;
-					if(i==0 && j==1) {
-						ret[2][2] = n;
-					}else if(i==0 && j==2) {
-						ret[1][1] = n;
-					} else if(i==1 && j==2) {
-						ret[2][1] = n;
-					}
-					
-					found = true;
-					
-				}  else if(ret[i][j] == 0) {
-					ret[i][j] = s[i][j];
-				}
-			}
-			
-		}
-		
-		
-		return ret;
-	}
+
 
 	public static int[] getNewArrayWithoutIndex(int[] current, int indexToRemove) {
 		
@@ -338,5 +226,47 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 			System.out.println(":");
 		}
 	}
+	
+	//NOTES
+	
+	// for 3gon
+			// a 1 2 3 
+			// b 1 2 3 - but b2 must match a3
+			// c 1 2 3 - but c2 must match b3 and c3 must match a2
+			// all 3 must add to the same number
+			// only using nums 1-9 once
+			// no repeating nums 1-9
+	
+	//if(c == 3)
+	//System.exit(0);
+
+// for 3gon
+// a 1 2 3 
+// b 1 2 3 - but b2 must match a3
+// c 1 2 3 - but c2 must match b3 and c3 must match a2
+// all 3 must add to the same number
+// only using nums 1-9 once
+// no repeating nums 1-9
+// check here for the rules?
+//all.add(s);
+
+//hardcode 3gon rules for now
+
+//System.out.println("We ended 3gon:");
+
+//	printTwoDIntArray(s);
+
+//we should do some other function to check along the way if the lines add up to the same number,
+// if like, lines 1 and 2 dont add up to the same, then dont bother doing line 3?
+//if(s[1][1] == s[0][2] && s[2][1] == s[1][2] && s[2][2] == s[0][1]) {
+
+//boolean areAllSumsEqual = areAllSumsEqual(s);
+
+	//int s1 = s[0][0] + s[0][1] + s[0][2];
+	//int s2 = s[1][0] + s[1][1] + s[1][2];
+	//int s3 = s[2][0] + s[2][1] + s[2][2];
+	
+	//System.out.println("in the right spot at least... sums:" + s1 + " , " + s2 + " , " + s3);
+
 
 }
