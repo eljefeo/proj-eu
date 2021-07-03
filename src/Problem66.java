@@ -80,29 +80,21 @@ Find the value of D <= 1000 in minimal solutions of x for which the largest valu
 	
 	private static BigInteger pellsEquation(int i) { // currently returns x only, we can have it return y later if needed in the future
 		
-		
-			
 			double sn = Math.sqrt(i);
 			
 			if(sn - (int)sn == 0) {
-				return null; // dont do normal squares...
+				return null; // dont do perfect squares...
 			}
 			int sni = (int)sn;
 			BigInteger d = new BigInteger(""+i);
 			BigInteger snb = new BigInteger(""+sni);
 			BigInteger firstWholeNum = new BigInteger(""+sni);
-			
 			BigInteger startNumerator = new BigInteger(""+firstWholeNum);
 			BigInteger startDenom = BigInteger.ONE;
 			BigInteger prevNum = BigInteger.ONE;
 			BigInteger prevDenom = BigInteger.ZERO;
 			
-			
-			boolean foundSolution = false;
 			//System.out.println("start numerator : " + startNumerator + ", startDenom : " + startDenom + ", previousNumerator : " + prevNum + ", previousDenom : " + prevDenom);
-			
-			
-			
 			
 			// first fraction is 4 / 1
 			// we use the 4 to get the next period 1
@@ -111,47 +103,35 @@ Find the value of D <= 1000 in minimal solutions of x for which the largest valu
 			firstWholeNum = firstWholeNum.multiply(new BigInteger(""+(-1)));
 			BigInteger firstBottom = BigInteger.ONE;
 			
-			while(!foundSolution) {
-				
-				//so here we use a trick I figured out. I found the pattern where we use the last 2 numerators and the period number to find the next convergent.
+			while(true) {
+				//so here we use a trick I figured out, the pattern where we use the last 2 numerators and the period number to find the next convergent.
 				// its numerator * period (next whole number) and then + the previous numerator. This gives you the next numerator for the next convergent fraction
 				// same goes for denominator : denominator * period (next whole number) and then + the previous denominator
 				// this way we just keep figuring out the next fraction until we find one that works.
 				BigInteger periodNum = BigInteger.ZERO;
 				BigInteger firstNumer = firstBottom; // do reciprocal first, numer becomes denom for next iteration
 				firstWholeNum = firstWholeNum.multiply(new BigInteger(""+(-1)));
-				firstBottom = d.subtract((firstWholeNum.multiply(firstWholeNum))); // 23 - 9 = 14
+				firstBottom = d.subtract(firstWholeNum.multiply(firstWholeNum)); // 23 - 9 = 14
 				firstBottom = firstBottom.divide(firstNumer);
-				
-				periodNum = (snb.add(firstWholeNum)).divide(firstBottom);
-				firstWholeNum = firstWholeNum.subtract((periodNum.multiply(firstBottom))); // should be 4 - (1*7) = -3
-
+				periodNum = snb.add(firstWholeNum).divide(firstBottom);
+				firstWholeNum = firstWholeNum.subtract(periodNum.multiply(firstBottom)); // should be 4 - (1*7) = -3
 				BigInteger x = startNumerator.multiply(periodNum).add(prevNum);
 				BigInteger y = startDenom.multiply(periodNum).add(prevDenom);
 				prevNum = startNumerator;
 				startNumerator = x;
-				
 				prevDenom = startDenom;
 				startDenom = y;
-				
 				//System.out.println("Next fraction: " + x + " / " + y + " with period: " + periodNum);
-				
 				//check now if x^2 - Dy^2 = 1;
 				BigInteger x2 = x.multiply(x);
 				BigInteger dy2 = d.multiply(y.multiply(y));
-				
 				//System.out.println("Next fraction: " + x + " / " + y + " with period: " + periodNum + " with result = " + x2 + " - " + dy2 + " = " + (x2.subtract(dy2)));
-				
 				if(x2.subtract(dy2).compareTo(BigInteger.ONE) == 0) {
 					System.out.println("yay found it for d=" + d + ", x = " + x + ", y = " + y);
-					foundSolution = true;
 					return x;
 				}
 				
 			}
-		
-		return null;
-		
 	}
 	
 private static void period(int i) { // pretty much same function above but for int instead of bigInteger
