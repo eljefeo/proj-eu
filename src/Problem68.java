@@ -145,7 +145,8 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 		return true;
 	}
 
-	private static boolean shouldContinueCheckingGon(int[][] s) {
+	private static boolean shouldContinueCheckingGon(int[][] s) { 
+		// this gets used to stop processing the recursion if we come across a situation early on that we know wont work. Dont keep going and wasting time
 		int firstTot = 0;
 		for(int i=0; i<s[0].length; i++){
 			if(s[0][i] == 0) {
@@ -168,7 +169,7 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 				return false;
 			}
 			
-			if(s[i][0] < s[0][0]) {
+			if(s[i][0] < s[0][0]) { // this is only so we start with the smallest outer node (like they do in the PE example, also prevents duplicate solutions)
 				return false;
 			}
 			
