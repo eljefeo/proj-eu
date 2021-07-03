@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -73,10 +74,12 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 		//int[] ott = new int[] {1,2,3,4,5,6,7,8,9,10};
 		
 		
-		int[] r = new int[] {1,2,3,4,5,6};
-		int[][] s = new int[][] { {0,0,0}, {0,0,0}, {0,0,0} }; // this will hold the 3gon numbers - filled with 0 for now to indicate there is no number there yet
+		//int[] r = new int[] {1,2,3,4,5,6};
+		//int[][] s = new int[][] { {0,0,0}, {0,0,0}, {0,0,0} }; // this will hold the 3gon numbers - filled with 0 for now to indicate there is no number there yet
 		
-		
+		int[] r = new int[] {1,2,3,4,5,6,7,8,9,10};
+		int[][] s = new int[][] { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} }; // this will hold the 3gon numbers - filled with 0 for now to indicate there is no number there yet
+				
 		
 		
 		/*
@@ -120,18 +123,80 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 			//doRecur(newS, newR);
 		}
 		*/
-		doRecur3Gon(s, r);
-		
+		doRecur5Gon(s, r);
+		//doRecur3Gon(s, r);
+		System.out.println("We did this many sols: " + c);
+		System.out.println("Largest nums: " + bgst);
 		
 	}
 	
 	
 	static int c = 0;
+	static int biggest = 0;
+	static BigInteger bgst = BigInteger.ZERO;
+	
+	public static void doRecur5Gon(int[][] s, int[] r){
+		
+		if(!shouldContinueCheckingGon(s)) {
+			return;
+		}
+		
+		if(r.length == 0){
+			
+				
+				System.out.println("in the right spot at least... sums:");
+				
+			if(areAllSumsEqual(s)) {
+				c++;
+				System.out.println("We found a match for 5gon totalling : ");// + s1 + " " + s2 + " " + s3);
+				printTwoDIntArray(s);
+				doLargestNumCheck(s);
+				
+			}
+			//}
+			
+			return;
+			
+			
+		} else {
+			for(int i=0; i<r.length; i++){
+				int[][] newS = addToTheNextSpot5Gon(s, r[i]);
+				int[] newR = getNewArrayWithoutIndex(r, i);
+				doRecur5Gon(newS, newR);
+			}
+		}
+	}
+	
+	
+
+	private static void doLargestNumCheck(int[][] s) {
+		
+		String n = "";
+		
+		for(int i=0; i<s.length; i++){
+			for(int j=0; j<s[i].length; j++){
+				n += s[i][j];
+			}
+			
+		}
+		BigInteger b = new BigInteger(n);
+		//System.out.println(" comparing " + b + " to " + bgst);
+		if(b.compareTo(bgst) == 1) {
+			bgst = b;
+		}
+		
+	}
+
 	public static void doRecur3Gon(int[][] s, int[] r){
+		
+		if(!shouldContinueCheckingGon(s)) {
+			return;
+		}
+		
 		if(r.length == 0){
 			//if(c == 3)
 				//System.exit(0);
-			c++;
+			
 			// for 3gon
 			// a 1 2 3 
 			// b 1 2 3 - but b2 must match a3
@@ -150,18 +215,24 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 			
 			//we should do some other function to check along the way if the lines add up to the same number,
 			// if like, lines 1 and 2 dont add up to the same, then dont bother doing line 3?
-			if(s[1][1] == s[0][2] && s[2][1] == s[1][2] && s[2][2] == s[0][1]) {
-				int s1 = s[0][0] + s[0][1] + s[0][2];
-				int s2 = s[1][0] + s[1][1] + s[1][2];
-				int s3 = s[2][0] + s[2][1] + s[2][2];
+			//if(s[1][1] == s[0][2] && s[2][1] == s[1][2] && s[2][2] == s[0][1]) {
+			
+			//boolean areAllSumsEqual = areAllSumsEqual(s);
+			
+				//int s1 = s[0][0] + s[0][1] + s[0][2];
+				//int s2 = s[1][0] + s[1][1] + s[1][2];
+				//int s3 = s[2][0] + s[2][1] + s[2][2];
 				
 				//System.out.println("in the right spot at least... sums:" + s1 + " , " + s2 + " , " + s3);
 				
-				if(s1 == s2 && s2 == s3) {
-					System.out.println("We found a match for 3gon totalling : " + s1 + " " + s2 + " " + s3);
+				//if(s1 == s2 && s2 == s3) {
+				if(areAllSumsEqual(s)) {
+					c++;
+					System.out.println("We found a match for 3gon totalling : ");// + s1 + " " + s2 + " " + s3);
 					printTwoDIntArray(s);
+					doLargestNumCheck(s);
 				}
-			}
+			//}
 			
 			return;
 			
@@ -173,6 +244,94 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 				doRecur3Gon(newS, newR);
 			}
 		}
+	}
+	
+	private static boolean areAllSumsEqual(int[][] s) {
+		
+		int firstTot = 0;
+		// this works - at least to get the 8 solutions for a 3gon
+		for(int i=0; i<s[0].length; i++){
+			firstTot += s[0][i]; 
+		}
+		
+		for(int i=1; i<s.length; i++){
+			int tot = 0;
+			for(int j=0; j<s[i].length; j++){
+				tot += s[i][j];
+			}
+			if(tot != firstTot) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static boolean shouldContinueCheckingGon(int[][] s) {
+		int firstTot = 0;
+		// this still needs work, only gets 6 of the 8 
+		for(int i=0; i<s[0].length; i++){
+			if(s[0][i] == 0) {
+				return true;
+			}
+			firstTot += s[0][i]; 
+		}
+		
+		for(int i=1; i<s.length; i++){
+			int tot = 0;
+			for(int j=0; j<s[i].length; j++){
+				if(s[i][j] == 0) {
+					return true;
+				} else {
+					tot += s[i][j];
+				}
+			}
+			
+			if(tot != firstTot) {
+				return false;
+			}
+			
+			if(s[i][0] < s[0][0]) {
+				return false;
+			}
+			
+		}
+		return true;
+	}
+
+	
+	private static int[][] addToTheNextSpot5Gon(int[][] s, int n) {
+		
+		int[][] ret = new int[s.length][s[0].length];
+		
+		boolean found = false;
+		for(int i=0; i<s.length; i++) {
+			for(int j=0; j<s[i].length; j++) {
+				if(!found && s[i][j] == 0) {
+					
+					
+					
+					ret[i][j] = n;
+					//System.out.println("Found should add " + n + " with i=" + i + " and j=" + j);
+					if(i==0 && j==1) {
+						ret[4][2] = n;
+					}else if(i==0 && j==2) {
+						ret[1][1] = n;
+					} else if(i==1 && j==2) {
+						ret[2][1] = n;
+					} else if(i==2 && j==2) {
+						ret[3][1] = n;
+					} else if(i==3 && j==2) {
+						ret[4][1] = n;
+					}
+					
+					found = true;
+					
+				}  else if(ret[i][j] == 0) {
+					ret[i][j] = s[i][j];
+				}
+			}
+		}
+		return ret;
 	}
 	
 	private static int[][] addToTheNextSpot3Gon(int[][] s, int n) {
