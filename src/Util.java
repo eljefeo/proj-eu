@@ -117,6 +117,22 @@ public class Util {
 
 		Set<Integer> factors = new HashSet<Integer>();
 		factors.add(1);
+		int limit = num;
+		for (int i = 2; i < limit; i++) {
+			if (num % i == 0) {
+				limit = num / i;
+				factors.add(i);
+				factors.add(limit);
+			}
+		}
+		factors.add(num);
+		return factors;
+	}
+	
+	public static Set<Integer> getDistinctFactorsIntOldSlow(int num) {
+
+		Set<Integer> factors = new HashSet<Integer>();
+		factors.add(1);
 		int half = num / 2;
 		for (int i = 2; i <= half; i++) {
 			if (num % i == 0) {
@@ -128,6 +144,19 @@ public class Util {
 	}
 
 	public static Set<Integer> getDistinctPrimeFactors(int num) {
+
+		Set<Integer> factors = new HashSet<Integer>();
+		int limit = num;
+		for (int i = 2; i < limit; i++) {
+			if (num % i == 0 && isPrime(i)) {
+				limit = num / i;
+				factors.add(i);
+			}
+		}
+		return factors;
+	}
+	
+	public static Set<Integer> getDistinctPrimeFactorsOldSlow(int num) {
 
 		Set<Integer> factors = new HashSet<Integer>();
 		//factors.add(1);
@@ -200,6 +229,21 @@ public class Util {
 	}
 
 	public static Set<Integer> getProperDivisors(int num) {
+
+		Set<Integer> factors = new HashSet<Integer>();
+		factors.add(1);
+		int limit = num;
+		for (int i = 2; i < limit; i++) {
+			if (num % i == 0) {
+				limit = num / i;
+				factors.add(i);
+				factors.add(limit);
+			}
+		}
+		return factors;
+	}
+	
+	public static Set<Integer> getProperDivisorsOld(int num) {
 
 		Set<Integer> factors = new HashSet<Integer>();
 		factors.add(1);
