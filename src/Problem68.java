@@ -36,6 +36,12 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 
 	 */
 	
+	static int MAX_NUM_DIGITS = 16;
+	
+	static int c = 0;
+	static BigInteger bgst = BigInteger.ZERO;
+	
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//			6
@@ -50,11 +56,6 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 	}
 
 	private static void problem() {
-		// magic 3gon ring...
-		// magic 5gon ring...
-		// should we have code that makes 3gon rings, and make it generic to do anygon
-		// ...or just do 5
-		//
 		int numOfLines = 3;
 		int lineSize = 3;
 		int[] l1 = new int[lineSize];
@@ -76,88 +77,34 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 		
 		//int[] r = new int[] {1,2,3,4,5,6};
 		//int[][] s = new int[][] { {0,0,0}, {0,0,0}, {0,0,0} }; // this will hold the 3gon numbers - filled with 0 for now to indicate there is no number there yet
+		//doRecur3Gon(s, r);
+		
 		
 		int[] r = new int[] {1,2,3,4,5,6,7,8,9,10};
-		int[][] s = new int[][] { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} }; // this will hold the 3gon numbers - filled with 0 for now to indicate there is no number there yet
-				
-		
-		
-		/*
-		 * Test the util functions:
-		 * 
-		int[][] newS = addToTheNextSpot(sol, ot9[3]);
-		
-		for(int i=0; i<sol.length; i++){
-			int[] l = sol[i];
-			for(int j=0; j<l.length; j++){
-				System.out.print(" " + l[j]);
-			}
-			System.out.println(":");
-		}
-		
-		int[] newR = getNewArrayWithoutIndex(ot9, 0);
-		for(int i=0; i<newR.length; i++){
-			System.out.println("new array without : " + newR[i]);
-		}
-		
-		
-		for(int i=0; i<r.length; i++){
-			
-			
-			//String newS = s + r.charAt(i); // here we need to add i to the next spot...
-			int[][] newS = addToTheNextSpot(s, r[i]);
-			//String newR = r.substring(0,i) + r.substring(i+1); // this is the new rest
-			int[] newR = getNewArrayWithoutIndex(r, i);
-			
-			
-			System.out.println("Currently olds:");
-			printTwoDIntArray(s);
-			
-			
-			
-			System.out.println("Currently newS with r[" + i + "] = " + r[i]);
-			printTwoDIntArray(newS);
-			
-			// add
-			
-			//doRecur(newS, newR);
-		}
-		*/
+		int[][] s = new int[][] { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} };
 		doRecur5Gon(s, r);
-		//doRecur3Gon(s, r);
+		
 		System.out.println("We did this many sols: " + c);
 		System.out.println("Largest nums: " + bgst);
 		
 	}
 	
-	
-	static int c = 0;
-	static int biggest = 0;
-	static BigInteger bgst = BigInteger.ZERO;
+
 	
 	public static void doRecur5Gon(int[][] s, int[] r){
 		
 		if(!shouldContinueCheckingGon(s)) {
 			return;
 		}
-		
 		if(r.length == 0){
-			
-				
-				System.out.println("in the right spot at least... sums:");
-				
 			if(areAllSumsEqual(s)) {
 				c++;
-				System.out.println("We found a match for 5gon totalling : ");// + s1 + " " + s2 + " " + s3);
+				System.out.println("We found a match for 5gon: ");// + s1 + " " + s2 + " " + s3);
 				printTwoDIntArray(s);
 				doLargestNumCheck(s);
 				
 			}
-			//}
-			
 			return;
-			
-			
 		} else {
 			for(int i=0; i<r.length; i++){
 				int[][] newS = addToTheNextSpot5Gon(s, r[i]);
@@ -172,15 +119,17 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 	private static void doLargestNumCheck(int[][] s) {
 		
 		String n = "";
-		
 		for(int i=0; i<s.length; i++){
 			for(int j=0; j<s[i].length; j++){
 				n += s[i][j];
 			}
-			
 		}
+		
+		if(n.length() != MAX_NUM_DIGITS) {
+			return;
+		}
+		
 		BigInteger b = new BigInteger(n);
-		//System.out.println(" comparing " + b + " to " + bgst);
 		if(b.compareTo(bgst) == 1) {
 			bgst = b;
 		}
@@ -228,7 +177,7 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 				//if(s1 == s2 && s2 == s3) {
 				if(areAllSumsEqual(s)) {
 					c++;
-					System.out.println("We found a match for 3gon totalling : ");// + s1 + " " + s2 + " " + s3);
+					System.out.println("We found a match for 3gon:");// + s1 + " " + s2 + " " + s3);
 					printTwoDIntArray(s);
 					doLargestNumCheck(s);
 				}
@@ -249,7 +198,6 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 	private static boolean areAllSumsEqual(int[][] s) {
 		
 		int firstTot = 0;
-		// this works - at least to get the 8 solutions for a 3gon
 		for(int i=0; i<s[0].length; i++){
 			firstTot += s[0][i]; 
 		}
@@ -268,7 +216,6 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 
 	private static boolean shouldContinueCheckingGon(int[][] s) {
 		int firstTot = 0;
-		// this still needs work, only gets 6 of the 8 
 		for(int i=0; i<s[0].length; i++){
 			if(s[0][i] == 0) {
 				return true;
@@ -308,10 +255,7 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 			for(int j=0; j<s[i].length; j++) {
 				if(!found && s[i][j] == 0) {
 					
-					
-					
 					ret[i][j] = n;
-					//System.out.println("Found should add " + n + " with i=" + i + " and j=" + j);
 					if(i==0 && j==1) {
 						ret[4][2] = n;
 					}else if(i==0 && j==2) {
@@ -351,7 +295,6 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 					
 					
 					ret[i][j] = n;
-					//System.out.println("Found should add " + n + " with i=" + i + " and j=" + j);
 					if(i==0 && j==1) {
 						ret[2][2] = n;
 					}else if(i==0 && j==2) {
@@ -385,17 +328,6 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 		return ret;
 	}
 	
-	public static void makeAllPermutationsRecur(String s, String r, List<String> all){
-		if(r.length() == 0){
-			all.add(s);
-		} else {
-			for(int i=0; i<r.length(); i++){
-				String newS = s + r.charAt(i);
-				String newR = r.substring(0,i) + r.substring(i+1);
-				makeAllPermutationsRecur(newS, newR, all);
-			}
-		}
-	}
 	
 	public static void printTwoDIntArray(int[][] s) {
 		for(int i=0; i<s.length; i++){
