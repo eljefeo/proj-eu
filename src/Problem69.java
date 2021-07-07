@@ -193,7 +193,7 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 		 */
 		
 		//for testing:
-		int test = 60; // 30 is good, bad: 60, 120, 180....540...
+		int test = 60; // 30 is good, bad: 60 should be 16, 120, 180....540... are all bad
 		addAllPrimesUpto(primes, test);
 		System.out.println("Done getting this many primes to test: " + primes.size());
 		
@@ -257,22 +257,32 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 						
 						
 						int f = facts.get(j);
-						
+						System.out.println("running fact * = " + runningFactTimes);// + " and pf = " + pf + " and mult=" + mult);
 						runningFactTimes *= f;
 						
-						int pf = prime * f;
-						int mult = i / (pf);
-						System.out.println("running fact * = " + runningFactTimes + " and pf = " + pf + " and mult=" + mult);
-						for(int jk=1; jk < mult; jk++) {
-							if((prime*f*jk) % runningFactTimes == 0) {
-								System.out.println((prime*f*jk) + " is mod 0 for " + runningFactTimes);
+					}
+					for(int j = 0; j < facts.size(); j++) {
+						//int f = facts.get(j);
+						//int pf = prime * f;
+						//int mult = i / (pf);
+						int mult = i / prime;
+						System.out.println("Checking mod for mult " + mult);
+						for(int jk=1; jk < mult; jk++) { 
+							System.out.println("Checking mod for " + (prime*jk));
+							if((prime*jk) % runningFactTimes == 0) {
+								
 								//mult++;
 								phi--;
+								System.out.println((prime*jk) + " is getting skipped for prime " + prime + " with factor and jk " + jk + " running:"+ runningFactTimes);
+								//System.out.println((prime*f*jk) + " is mod 0 for " + runningFactTimes + " new phi " + phi);
+							} else {
+								
+								System.out.println((prime*jk) + " is getting Kept for prime " + prime + " with   and jk " + jk);
 							}
 							
 						}
 						
-						phi--;
+						phi--; //CAREFUL MIGHT PUT THIS BACK?
 						
 						System.out.println("Sooooo now for " + i + " with have oppositePhi of " + phi);
 						//numOfThisNumInI -= mult;
@@ -282,9 +292,9 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 						
 						
 						
-						System.out.println("But we should remove " + (mult-1) + " " + prime + "'s because they are mults of " + f + " :::: mult = i / (prime * f); " + i + " / (" + prime + " * " + f+ " )" );
+						//System.out.println("But we should remove " + (mult-1) + " " + prime + "'s because they are mults of " + f + " :::: mult = i / (prime * f); " + i + " / (" + prime + " * " + f+ " )" );
 						for(int jk=1; jk < mult; jk++) {
-							System.out.print(" " + (prime*f*jk));
+							System.out.print(" " + (prime*jk));
 							
 						}
 						System.out.println(" so now phi is "+ phi);
