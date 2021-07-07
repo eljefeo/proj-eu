@@ -49,41 +49,296 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 		//double d = getNOverPhi(13);
 		//System.out.println(" n over phi : " + 13 + " = " + d);
 	}
-	
-	public static Set<Integer> getDistinctFactorsIntN(int num) {
-
-		Set<Integer> factors = new HashSet<Integer>();
-		factors.add(1);
+	private static void problem() {
 		
 		
-		while(num % 2 == 0) {
-			num /= 2;
-			factors.add(num);
-		}
 		
-		int limit = (int) Math.sqrt(num);
-		int i = 3;
-		while(i <= limit) {
-			while(num % i == 0) {
-				num /= i;
-				factors.add(num);
+		
+		/*
+		 if we start with 2 
+		 we do 2 * 2 
+		 = 4
+		 then check from last (2) through 4
+		 // the idea is if we check all combinations, any numbers in between should be prime?
+		   
+		  so 2 - 4 we find 3
+		  add 3 to primes
+		  now primes has 2,3
+		  
+		  go through again (but we already did 2*2)....so 2 loops, second loop can start where we left off? at 3?
+		  
+		  so 2*3
+		  = 6
+		  
+		  go through 4 - 6
+		  gives us 5 - add to primes?
+		  
+		 
+		  
+		  then 3*3
+		  = 9
+		  
+		    6+2 = 8..
+		  is 8 < then 9? yes then 8-1 is prime?
+		  
+		  7 add to primes...
+		  
+		  
+		  
+		  
+		  
+		 */
+		
+		int max = 1000;
+		//int[] nums = new int[max];
+		List<Integer> primes = new ArrayList<Integer>();
+		//primes.add(2);
+		
+		//int c = 0;
+		
+		
+		 
+		
+		//2 3 5 = 30 - good
+		//(two 2's)2 2 3 5 = 60 = 16 , 17 = 1 (2) ::: this is because we removed 30 because of 3 mult of 2, then we removed 30 again because 5 mult of 3
+		// 2 2 2 3 5 = 120 = 32 , 35 = 3 (4)
+		// 2 2 2 2 3 5 = 240 = 64 , 71 = 7 (8)
+		// 2 2 2 2 2 3 5 = 480 = 128 , 143 = 15 (16)
+		
+		// (one 2 and two 3s) 2 3 3 5 = 90 = 24 , 26 = 2 (3)
+		// (one 2s and three 3s) 2 3 3 3 5 = 270 = 72 , 80 = 8 (9)
+		// (one 2s and four 3s) 2 3 3 3 5 = 810 = 216 , 242 = 26 (27)
+		// (one 2s and five 3s) 2 3 3 3 5 = 2,430 = 648 , 728 = 80 (81)
+		
+		////(two 2's) 2 2 3 5 7 = 420 = 96 , 125 = 29 (30) ::: 
+		////(two 2's) 2 2 3 5 11 = 660 = 160 , 197 = 37 (38) ::: +8
+		////(two 2's) 2 2 3 5 13 = 780 = 192 , 233 = 41 (42) :::+4
+		////(two 2's) 2 2 3 5 17 = 1020 = 256 , 305 = 49 (50) :::+8
+		////(two 2's) 2 2 3 5 19 = 1140 = 288 , 341 = 53 (54) :::+8
+		
+		
+	////(two 2's) 2 2 3 7 11 = 924 = 240 , 281 = 41 (42) ::: 
+			////(two 2's) 2 2 3 7 13 = 1092 = 288 , 333 = 45 (46) :::+4
+			////(two 2's) 2 2 3 5 17 = 1020 = 256 , 305 = 49 (50) :::+8
+			////(two 2's) 2 2 3 5 19 = 1140 = 288 , 341 = 53 (54) :::+8
+		
+	////(two 2's) 2 2 7 11 = 308 = 120 , 121 = 1 (2) ::: 
+	////(two 2's) 2 2 7 13 = 364 = 144 , 145 = 1 (2) ::: 
+		
+	////(two 2's) 2 2 7 11 17 = 5236 = 1920 , 1989 = 69 (70) ::: 
+	////(two 2's) 2 2 7 13 17 = 6188 = 2304 , 2377 = 73 (74) ::: 
+		
+		// 2 7 11 17 = 2618 = 960 , 993 = 33 (34) === is this 17 * 2? or 17 + 11 + 7 +2  = 37 no
+		// 2 7 11 29 = 4466 = 1680 , 1725 = 45 (46) === is this .??? 29 + 11 + 7 + 2 = 49 no
+		
+		//17 29 41 = 20213 = 17920 = good
+		// when we have 3 factors....we are good.... 4 or more....we are bad...and worse as it goes
+		
+		// (two 2s and two 3s) 2 2 3 3 5 = 180 = 48 , 53 = 5 (6) - this is like the one 2 and two 3, but *2 because we have another 2?
+		// (two 2s and three 3s) 2 2 3 3 3 5 = 540 = 144 , 161 = 17 (18) * 
+		// (two 2s and four 3s) 2 2 3 3 3 3 5 = 1,620 = 432 , 485 = 53 (54)
+		
+		
+		// (three 2s and two 3s) 2 2 2 3 3 5 = 360 = 96 , 107  = 12-1=11 - this is like the one 2 and two 3, but *2 because we have another 2?
+		
+		// I think we are taking away too many, like we take away some 3's but we already took some away from the 2's? something like that...
+		//taking away too many for sure I think
+		
+		
+		/*
+		//( two 2's two 3's two 5's one 7 ) 2 2 3 3 5 5 7
+		// 6,300
+		// real 1440 
+		// ours 1917
+		// over 477 (478)
+		
+		(two 2's two 3's one 5 one 7) 2 2 3 3 5 7 = 1,260 = 288 , 381 = 93 (94)
+		 
+		 ok so I think I figured it out
+		 its how many of each factor.....
+		 
+		 so if there are two 2's then we need to do 2 to the power of 1 (however many 2's -1)
+		 so if there were three 2's its 2to the power of 3-1 = 2 ==== 2 to the power of 2
+		 And do that for each factor
+		 so if there are three 3's and four 5's we do 3^2 * 5^3 = 9 * 125
+		 
+		 lets try 2 2 3 3 3 5 5 5 7 7 11
+		 7,276,500
+		 2^1 = 2
+		 3^2 = 9
+		 5^2 = 25
+		 7^1 = 7
+		 11^0 = 1
+		 phi for 7276500 = 2334144 with nphi = 3.1174169202928352
+		 - 3,150
+		 2,330,994
+		 
+		 real phi 1512000
+		 
+		 ....???? 
+		 we are over by 822,144???
+		 
+		 
+		 what if we try:
+		 lets try 2 2 3 3 3 5 5 5 7 11
+		 1,039,500
+		 real: 216000
+		 
+		 ours : 333444 (333445)
+		 diff of : 117,444 (117,445)
+		 2 2's
+		 n 3 
+		 no 7's ???
+		 
+		 */
+		
+		//for testing:
+		int test = 60; // 30 is good, bad: 60, 120, 180....540...
+		addAllPrimesUpto(primes, test);
+		System.out.println("Done getting this many primes to test: " + primes.size());
+		
+		
+		// for this approach I am trying to find all the numbers that DO HAVE SOMETHING IN COMMON with the number. Then take the difference at the end...
+		// so for 6 we try to find 2,3,4
+		// that should leave 1,5
+		for (int i = test; i < test+1; i++) { // this is all the numbers we need to check 2 - a million
+		
+			//System.out.println("new I = " + i);
+			
+			//int numToGetPhiFor = i;
+			List<Integer> facts = new ArrayList<Integer>();
+			
+			// go through all primes in our list (should be only primes less than this number)
+			// if divisible by any - not prime..
+			// if at the end of the list not divisible..prime?
+			boolean isPrime = true;
+			int phi = 0; // set to 1 because every number has 1 has a coprime?
+			for(int p = 0; p < primes.size(); p++) {
+				
+				
+				int prime = primes.get(p);
+				
+				
+				if(i % prime == 0) { // i is not prime - but we found a factor...
+					// what do we do with this factor now...
+					
+					isPrime = false;
+					
+					int numOfThisNumInI = i / prime;
+					numOfThisNumInI -= 1;
+					// we take away 1 because we are only looking at numbers BELOW this num...
+					// so for 6 (with prime=2) 6/2 = 3 ... meaning there are three 2's in 6 (2,4,6) but we only want below 6 so 3-1 = 2 (2,4)
+					
+					int howManyOfTheseFactors = 0;
+					int tempI = i;
+					
+					
+					
+					while(tempI % prime == 0) {
+						tempI /= prime;
+						howManyOfTheseFactors++;
+						//System.out.println("counted one " + howManyOfTheseFactors);
+					}
+					System.out.println("Counted this many factors of " + prime + " for " + i + " = " + howManyOfTheseFactors);
+					
+					
+					
+					phi += numOfThisNumInI;
+					System.out.println("Adding " + (numOfThisNumInI) + " to phi for " + prime + "'s in " + i + " ::: in " + i + " we have " + numOfThisNumInI + " " + prime + "'s");
+					for(int jk=1; jk <= numOfThisNumInI; jk++) {
+						System.out.print(" " + (prime*jk));
+						
+					}
+					System.out.println(" ");
+					System.out.println("So now for " + i + " with have oppositePhi of " + phi);
+					int runningFactTimes = 1;
+					for(int j = 0; j < facts.size(); j++) {
+						
+						
+						
+						int f = facts.get(j);
+						
+						runningFactTimes *= f;
+						
+						int pf = prime * f;
+						int mult = i / (pf);
+						System.out.println("running fact * = " + runningFactTimes + " and pf = " + pf + " and mult=" + mult);
+						for(int jk=1; jk < mult; jk++) {
+							if((prime*f*jk) % runningFactTimes == 0) {
+								System.out.println((prime*f*jk) + " is mod 0 for " + runningFactTimes);
+								//mult++;
+								phi--;
+							}
+							
+						}
+						
+						phi--;
+						
+						System.out.println("Sooooo now for " + i + " with have oppositePhi of " + phi);
+						//numOfThisNumInI -= mult;
+						//phi -= (mult-1);
+						
+						
+						
+						
+						
+						System.out.println("But we should remove " + (mult-1) + " " + prime + "'s because they are mults of " + f + " :::: mult = i / (prime * f); " + i + " / (" + prime + " * " + f+ " )" );
+						for(int jk=1; jk < mult; jk++) {
+							System.out.print(" " + (prime*f*jk));
+							
+						}
+						System.out.println(" so now phi is "+ phi);
+					}
+					facts.add(prime);
+					
+					//int howMany = i / prime;
+					// if we are doing 12 lets say (i = 12)
+					// and this prime is 2
+					// then howMany is 6
+					// so 6-1 = 5 is how many 2's are below 12
+					
+					// then we get to 3
+					// howMany gives us 4-1 = 3
+					// so 3 3's below 12... but we dont want the 6...
+					
+				}
+				
+				
+				
 			}
-			i += 2;
+			
+			if(isPrime) {
+				//System.out.println(i + " is prime...adding to primes");
+				phi = i-1;
+				primes.add(i);
+			} else {
+				phi = i - 1 - phi; // -1 because we really just have 5 numbers to look at for 6 = all numbers BELOW, not including
+				// so we have 1,2,3,4,5 to work with... we have found 3 so far for 6 (2,3,4) so 5-3 = 2 (1,5)
+			}
+			
+			
+			double nOverPhi = (double) i/phi;
+			System.out.println("phi for " + i + " = " + phi + " with nphi = " + nOverPhi);
+			//if(i == 18 || i == 12)
+				//System.out.println("Adding 1 to " + nums[i] + " with i=" + i + " is now " + (nums[i]+1));
+			//nums[i]++;
+			if(i % 1000 == 0) {
+				System.out.println("Doing : " + i);
+			}
+			
 		}
 		
-		/*for (int i = 2; i < limit; i++) {
-			if (num % i == 0) {
-				limit = num / i;
-				factors.add(i);
-				factors.add(limit);
-			}
-		}
-		factors.add(num);
-		*/
-		return factors;
 	}
 	
-	private static void problem() {
+	private static void addAllPrimesUpto(List<Integer> primes, int test) {
+		for(int i = 2; i<test; i++) {
+			if(Util.isPrime(i)) {
+				primes.add(i);
+			}
+		}
+		
+	}
+	private static void problem456() {
 		
 		List<Integer> primes = new ArrayList<Integer>();
 		// TODO Auto-generated method stub
@@ -92,7 +347,7 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 		// 6 and 4 are not coprime because they have 2 in common
 		double maxD = 0;
 		int maxN = 0;
-		int max = 25;
+		int max = 100;
 		
 		int[] nums = new int[max]; // this will maybe hold all the numbers to a million, index is the num (so a million indexes?) and the value is the ... value (num of coprimes)
 		//this might not work...toobig?
@@ -103,8 +358,8 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 			
 			
 			
-			if(i == 18 || i == 12)
-				System.out.println("Adding 1 to " + nums[i] + " with i=" + i + " is now " + (nums[i]+1));
+			//if(i == 18 || i == 12)
+				//System.out.println("Adding 1 to " + nums[i] + " with i=" + i + " is now " + (nums[i]+1));
 			nums[i]++;
 			if(i % 1000 == 0) {
 				System.out.println("Doing : " + i);
@@ -135,37 +390,61 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 				//System.out.println("Skipping nonprime : " + i);
 				continue;
 			}
-			System.out.println("DOING NEW PRIME: " + i + " = " + d + " NOW DOING ALL MULTIPLES OF " + i);
+			//System.out.println("DOING NEW PRIME: " + i + " = " + d + " NOW DOING ALL MULTIPLES OF " + i);
 			
 			int ij = 0;
 			for (int j = 2; (ij=i*j) < max; j++) {
 			
-				//ij = i*j;
+				ij = i*j;
 				//System.out.println("Doing i=" + i + " , j=" + j + " : i*j = " + (i*j));
 				
-				if((ij) == 18) {
-					System.out.println("18 Doing i=" + i + " , j=" + j + " : i*j = " + ij + " :: and adding " + (j-1) + " to " + nums[ij]);
-				}
+				//if((ij) == 18) {
+				//	System.out.println("18 Doing i=" + i + " , j=" + j + " : ij = " + ij + " :: and adding " + (j-1) + " to " + nums[ij]);
+				//}
 				//should it be i * (j-1)? then check for mult of those? random thought
+				
+				
+				//for (int k = 1; k < j; k++) {
+				//	System.out.println("heres the nums for " + ij + " : " + (i*k));
+				//}
+				
 				int div = 0;
-				if(j > i) {
+				//if(j > i) {
 					for(Integer k : primes) {
-						if(j % k == 0) {
-							System.out.println("divisible : "+ j + " with " + k + " for num " + ij + " for prime " + i);
-							div++;
+						for (int l = 2; l < j; l++) {
+							if((l*i) % k == 0) {
+								div++;
+							}
 						}
+						//if(j % k == 0) {
+						//	System.out.println("divisible skipping : "+ j + " with " + k + " for num(ij) " + ij + " for prime " + i);
+							
+						//}
 					}
-				}
-				System.out.println("num " + ij + " final div = " + div + " for prime "+ i);
+				//}
+				//boolean isDiv = false;
+				//for(Integer k : primes) {
+				//	if(j % k == 0) {
+				//		System.out.println("divisible skipping : "+ j + " with " + k + " for num(ij) " + ij + " for prime " + i);
+				//		isDiv = true;
+				//		break;
+				//	}
+				//}
+				
+						
+				
+				nums[ij] += j-1-div;
+				
+				//System.out.println("num " + ij + " final div = " + div + " for prime "+ i + " and j-1=" + (j-1) + " :: so finally adding " + (j-1-div));
 					//div = howManyDivisibleBy(primes, j);
 				//if(!howManyDivisibleBy(primes, j)) {
 					//System.out.println("is not divisible .... going with  i=" + i + " ij=" + ij);
-				if((ij) == 18) {
+				//if((ij) == 18) {
 					//	System.out.println("Doing i=" + i + " , j=" + j + " : i*j = " + ij + " :: and adding " + (j-1) + " to " + nums[ij]);
-					System.out.println(" .... going with  i=" + i + " j=" + j + " ij=" + ij + " :: div = "+ div + " and then j-1-div=" + (j-1-div));
-				}
+				//	System.out.println(" .... going with  i=" + i + " j=" + j + " ij=" + ij + " :: div = "+ div + " and then j-1-div=" + (j-1-div));
+				//}
 					
-				nums[ij] += j-1-div;
+				
 					
 				//} else {
 					//System.out.println("IS skipping divisible .... not going with  i=" + i + " ij=" + ij);
@@ -430,6 +709,40 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 			} 
 		}
 		return true;
+	}
+	
+	
+	public static Set<Integer> getDistinctFactorsIntN(int num) {
+
+		Set<Integer> factors = new HashSet<Integer>();
+		factors.add(1);
+		
+		
+		while(num % 2 == 0) {
+			num /= 2;
+			factors.add(num);
+		}
+		
+		int limit = (int) Math.sqrt(num);
+		int i = 3;
+		while(i <= limit) {
+			while(num % i == 0) {
+				num /= i;
+				factors.add(num);
+			}
+			i += 2;
+		}
+		
+		/*for (int i = 2; i < limit; i++) {
+			if (num % i == 0) {
+				limit = num / i;
+				factors.add(i);
+				factors.add(limit);
+			}
+		}
+		factors.add(num);
+		*/
+		return factors;
 	}
 
 }
