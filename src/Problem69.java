@@ -109,6 +109,32 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 		//				30 		 	2 3 5 = 	 	8 or 22 
 		
 				
+		/*
+		 so what Im seeing is this....
+		 the primes are themselves - 1 
+		 so 2 = 1
+		 3 = 2
+		 5 = 4
+		 7 = 6
+		 11 = 10
+		 etc...
+		 
+		 Then..
+		 for any number that has one of those primes you get that number
+		 
+		 then if they have any duplicates of those primes, you multiply by that prime?
+		 
+		 so like 5 7 = 35
+		 this would be 4 * 6 = 24
+		 
+		 but if its 3 5 5 7
+		 that is 3-1 * 5-1 * 7-1 = 2*4*6 = 48
+		 but there is more than one 5 so 48*5 = 240
+		 
+		 
+		 yes this actually f*%#ing works I think...
+		 */
+		
 				//			105		7 3 5 = 48 or 57
 				//			75		5 3 5 = 40 or 35
 				//			45		3 3 5 = 24 or 21
@@ -233,132 +259,51 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 		
 		//for testing:
 		
-		int max = 81;
-		
-		List<List<Integer>> ln = new ArrayList<List<Integer>>();;
-		
-		
-		
-		
+		int max = 1000000;
 		
 		double maxD = 0;
 		int maxN = 0;
-		//int[] nums = new int[max];
 		
 		List<Integer> primes = new ArrayList<Integer>();
 		
-		int test = max; // 30 is good, bad: 60 should be 16, 120, 180....540... are all bad
-		addAllPrimesUpto(primes, test);
-		System.out.println("Done getting this many primes to test: " + primes.size());
-		//for(int i=0; i<max; i++) {
-		//	List<Integer> lnn = new ArrayList<Integer>();
-		//	for(Integer p : primes) {
-		//		lnn.add(p);
-		//	}
-		//	ln.add(lnn);
-		//}
-		//System.out.println("ln size " + ln.size() + " lnn0 size " + ln.get(5).size());
-		
-		
-		
-		
-		// for this approach I am trying to find all the numbers that DO HAVE SOMETHING IN COMMON with the number. Then take the difference at the end...
-		// so for 6 we try to find 2,3,4
-		// that should leave 1,5
-		for (int i = test; i < test+1; i++) { // this is all the numbers we need to check 2 - a million
-		//for (int i = 2; i < max; i++) {
+		//int test = max; // 30 is good, bad: 60 should be 16, 120, 180....540... are all bad
+		//addAllPrimesUpto(primes, test);
+		//System.out.println("Done getting this many primes to test: " + primes.size());
+
+		//for (int i = test; i < test+1; i++) { // this is all the numbers we need to check 2 - a million
+		for (int i = 2; i < max; i++) {
 			
-			
-			if(i % 1000 == 0) {
+			if(i % 10000 == 0) {
 				System.out.println("Doing : " + i);
 			}
 			
-			//System.out.println("new I = " + i);
-			
-			//List<Integer> facts = new ArrayList<Integer>();
-			
 			boolean isPrime = true;
-			int phi = 0; // set to 1 because every number has 1 has a coprime?
-			
-			List<Integer> thisNumYes = new ArrayList<Integer>();
-			List<Integer> thisNumNo = new ArrayList<Integer>();
-			Set<Integer> factors = new HashSet<Integer>();
+			int phi = 1; // set to 1 because every number has 1 has a coprime?
 			
 			for(int p = 0; p < primes.size(); p++) {
 				
 				int prime = primes.get(p);
 				
 				if(i % prime == 0) { 
-					
+					phi *= (prime-1);
 					isPrime = false;
-					
-					int numOfThisNumInI = i / prime;
-					
-					numOfThisNumInI -= 1;
-					// we take away 1 because we are only looking at numbers BELOW this num...
-					// so for 6 (with prime=2) 6/2 = 3 ... meaning there are three 2's in 6 (2,4,6) but we only want below 6 so 3-1 = 2 (2,4)
-					
-					int howManyOfTheseFactors = 0;
-					int tempI = i;
-					
+					int tempI = i/prime;
 					while(tempI % prime == 0) {
 						tempI /= prime;
-						howManyOfTheseFactors++;
+						phi *= prime;
 					}
-					System.out.println("counted  " + howManyOfTheseFactors + " " + prime + "'s in " + i);
-					// 2 2 3 5 = 12
-					// 4 6 10 = 20
-					// 6 10 = 16
-					// 15 = 15
-					// ...5? = 5
-					
-					//int runningFactTimes = 1;
-					for(int jk=1; jk <= numOfThisNumInI; jk++) {
-						
-						int pf = prime*jk;
-						
-						boolean alone = true;
-						
-						//for(int j = 0; j < factors.size(); j++) {
-						for(int f : factors) {
-							//int f = factors.get(j);
-							if(pf % f == 0) {
-								alone = false;
-								break;
-							} 
-						}
-						if(alone) {
-								thisNumYes.add(pf);
-								phi++;
-						} else {
-							thisNumNo.add(pf);
-						}
-						
-					}
-					
-					factors.add(prime);
 				}
 			}
 			
 			if(isPrime) {
-				System.out.println(i + " is prime...adding to primes");
+				//System.out.println(i + " is prime...adding to primes");
 				phi = i-1;
 				primes.add(i);
-			} else {
-				phi = i - 1 - phi; // -1 because we really just have 5 numbers to look at for 6 = all numbers BELOW, not including
-				// so we have 1,2,3,4,5 to work with... we have found 3 so far for 6 (2,3,4) so 5-3 = 2 (1,5)
-			}
+			} 
 			
 			double nOverPhi = (double) i/phi;
-			//if(i == 18 || i == 12)
-				//System.out.println("Adding 1 to " + nums[i] + " with i=" + i + " is now " + (nums[i]+1));
-			//nums[i]++;
 			
-			
-			for(int j : thisNumYes) {
-				System.out.println("Found this " + j);
-			}
-			System.out.println("phi for " + i + " = " + phi + " with nphi = " + nOverPhi + " thismany:"+thisNumYes.size());
+			//System.out.println("phi for " + i + " = " + phi + " with nphi = " + nOverPhi);
 			
 			if(nOverPhi > maxD) {
 				maxD = nOverPhi;
