@@ -89,10 +89,7 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 		  
 		 */
 		
-		int max = 1000;
-		//int[] nums = new int[max];
-		List<Integer> primes = new ArrayList<Integer>();
-		//primes.add(2);
+		
 		
 		//int c = 0;
 		
@@ -163,7 +160,7 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 		 so if there are three 3's and four 5's we do 3^2 * 5^3 = 9 * 125
 		 
 		 lets try 2 2 3 3 3 5 5 5 7 7 11
-		 7,276,500
+		 7276500
 		 2^1 = 2
 		 3^2 = 9
 		 5^2 = 25
@@ -193,16 +190,31 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 		 */
 		
 		//for testing:
-		int test = 60; // 30 is good, bad: 60 should be 16, 120, 180....540... are all bad
-		addAllPrimesUpto(primes, test);
+		
+		int max = 100000;
+		double maxD = 0;
+		int maxN = 0;
+		//int[] nums = new int[max];
+		List<Integer> primes = new ArrayList<Integer>();
+		//primes.add(2);
+		
+		//int test = 7276500; // 30 is good, bad: 60 should be 16, 120, 180....540... are all bad
+		//addAllPrimesUpto(primes, test);
+		
 		System.out.println("Done getting this many primes to test: " + primes.size());
 		
 		
 		// for this approach I am trying to find all the numbers that DO HAVE SOMETHING IN COMMON with the number. Then take the difference at the end...
 		// so for 6 we try to find 2,3,4
 		// that should leave 1,5
-		for (int i = test; i < test+1; i++) { // this is all the numbers we need to check 2 - a million
-		
+		//for (int i = test; i < test+1; i++) { // this is all the numbers we need to check 2 - a million
+		for (int i = 2; i < max; i++) {
+			
+			
+			if(i % 1000 == 0) {
+				System.out.println("Doing : " + i);
+			}
+			
 			//System.out.println("new I = " + i);
 			
 			//int numToGetPhiFor = i;
@@ -213,6 +225,11 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 			// if at the end of the list not divisible..prime?
 			boolean isPrime = true;
 			int phi = 0; // set to 1 because every number has 1 has a coprime?
+			
+			
+			List<Integer> thisNumYes = new ArrayList<Integer>();
+			List<Integer> thisNumNo = new ArrayList<Integer>();
+			
 			for(int p = 0; p < primes.size(); p++) {
 				
 				
@@ -239,28 +256,51 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 						howManyOfTheseFactors++;
 						//System.out.println("counted one " + howManyOfTheseFactors);
 					}
-					System.out.println("Counted this many factors of " + prime + " for " + i + " = " + howManyOfTheseFactors);
+					//System.out.println("Counted this many " + prime + "'s for " + i + " = " + howManyOfTheseFactors);
 					
 					
 					
-					phi += numOfThisNumInI;
-					System.out.println("Adding " + (numOfThisNumInI) + " to phi for " + prime + "'s in " + i + " ::: in " + i + " we have " + numOfThisNumInI + " " + prime + "'s");
+					//phi += numOfThisNumInI;
+					//System.out.println("Adding " + (numOfThisNumInI) + " to phi for " + prime + "'s in " + i + " ::: in " + i + " we have " + numOfThisNumInI + " " + prime + "'s");
+					int runningFactTimes = 1;
 					for(int jk=1; jk <= numOfThisNumInI; jk++) {
-						System.out.print(" " + (prime*jk));
+						
+						int pf = prime*jk;
+						
+						boolean alone = true;
+						for(int j = 0; j < facts.size(); j++) {
+							
+							int f = facts.get(j);
+							
+							if(pf % f == 0) {
+								alone = false;
+								break;
+							} 
+						}
+						if(alone) {
+								//System.out.println("Yes keeping: " + pf);
+								thisNumYes.add(pf);
+								phi++;
+							
+						} else {
+							//System.out.println("Not keeping: " + pf);
+							thisNumNo.add(pf);
+							//phi++;
+						}
 						
 					}
-					System.out.println(" ");
-					System.out.println("So now for " + i + " with have oppositePhi of " + phi);
-					int runningFactTimes = 1;
+					//System.out.println(" ");
+					//System.out.println("So now for " + i + " with have oppositePhi of " + phi);
+					
+					/*
 					for(int j = 0; j < facts.size(); j++) {
-						
-						
-						
 						int f = facts.get(j);
 						System.out.println("running fact * = " + runningFactTimes);// + " and pf = " + pf + " and mult=" + mult);
 						runningFactTimes *= f;
-						
 					}
+					*/
+					
+					/*
 					for(int j = 0; j < facts.size(); j++) {
 						//int f = facts.get(j);
 						//int pf = prime * f;
@@ -299,6 +339,8 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 						}
 						System.out.println(" so now phi is "+ phi);
 					}
+					
+					*/
 					facts.add(prime);
 					
 					//int howMany = i / prime;
@@ -317,6 +359,18 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 				
 			}
 			
+			
+			//for(Integer j : thisNumYes) {
+			//	System.out.println("Kept this num for " + i + " : " + j);
+			//}
+			
+			//for(Integer j : thisNumNo) {
+			//	System.out.println("had these duplicates for " + i + " : " + j);
+			//}
+			
+			//System.out.println("In total we Kept this many for " + i + " : " + thisNumYes.size());
+			//System.out.println("In total we had these duplicates for " + i + " : " + thisNumNo.size());
+			
 			if(isPrime) {
 				//System.out.println(i + " is prime...adding to primes");
 				phi = i-1;
@@ -327,16 +381,25 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 			}
 			
 			
+			
+			
+			
 			double nOverPhi = (double) i/phi;
-			System.out.println("phi for " + i + " = " + phi + " with nphi = " + nOverPhi);
+			//System.out.println("phi for " + i + " = " + phi + " with nphi = " + nOverPhi);
 			//if(i == 18 || i == 12)
 				//System.out.println("Adding 1 to " + nums[i] + " with i=" + i + " is now " + (nums[i]+1));
 			//nums[i]++;
-			if(i % 1000 == 0) {
-				System.out.println("Doing : " + i);
+			
+		
+			
+			if(nOverPhi > maxD) {
+				maxD = nOverPhi;
+				maxN = i;
 			}
 			
 		}
+		
+		System.out.println("Max nOverPhi = " + maxD +  " for num = " + maxN);
 		
 	}
 	
@@ -477,6 +540,12 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 			
 			double dd = (double) i / (double)((i-nums[i]));
 			System.out.println("final " + i + " : " + nums[i] + " = " + (i-nums[i]) + " ::: " + dd);
+			
+			if(dd > maxD) {
+				maxD = dd;
+				//maxN = ;
+			}
+			
 		}
 		
 		System.out.println("Max N = : " + maxN + " with phi/n = " + maxD);
