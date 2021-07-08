@@ -112,53 +112,6 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 //notes:
 
 
-/*
- if we start with 2 
- we do 2 * 2 
- = 4
- then check from last (2) through 4
- // the idea is if we check all combinations, any numbers in between should be prime?
-   
-  so 2 - 4 we find 3
-  add 3 to primes
-  now primes has 2,3
-  
-  go through again (but we already did 2*2)....so 2 loops, second loop can start where we left off? at 3?
-  
-  so 2*3
-  = 6
-  
-  go through 4 - 6
-  gives us 5 - add to primes?
-  
- 
-  
-  then 3*3
-  = 9
-  
-    6+2 = 8..
-  is 8 < then 9? yes then 8-1 is prime?
-  
-  7 add to primes...
-  
-  
-  
-  
-  
- */
-
-
-
-//int c = 0;
-
-
- 
-
-//2 3 5 = 30 - good
-//(two 2's)2 2 3 5 = 60 = 16 , 17 = 1 (2) ::: this is because we removed 30 because of 3 mult of 2, then we removed 30 again because 5 mult of 3
-// 2 2 2 3 5 = 120 = 32 , 35 = 3 (4)
-// 2 2 2 2 3 5 = 240 = 64 , 71 = 7 (8)
-// 2 2 2 2 2 3 5 = 480 = 128 , 143 = 15 (16)
 
 //				4500 		2 2 3 3 5 5 5 = 1200 or 3300
 //				2250		2 3 3 5 5 5 = 	600 or 1650
@@ -168,8 +121,10 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 
 		
 /*
+ * ---------- ANSWER TO THIS MADNESS -----------
+ * 
  so what Im seeing is this....
- the primes are themselves - 1 
+ the secret value for primes are themselves - 1 (this also is the phi value for said prime)
  so 2 = 1
  3 = 2
  5 = 4
@@ -177,10 +132,10 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
  11 = 10
  etc...
  
- Then..
- for any number that has one of those primes you get that number
+ Then..start with 1
+ as you find factors (primes) for any number that has one of those primes you multiply by the secret value (prime-1)
  
- then if they have any duplicates of those primes, you multiply by that prime?
+ then if they have any duplicates of those primes, you multiply by that prime
  
  so like 5 7 = 35
  this would be 4 * 6 = 24
@@ -190,7 +145,11 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
  but there is more than one 5 so 48*5 = 240
  
  
- yes this actually f*%#ing works I think...
+ yes this actually f*%#ing works ...only took 3 days of staring and thinking trying to find this strange pattern
+ The pattern has revealed itself to me. Its not the fasest way Im sure, but I did it myself goshDarnit!
+ 
+  * ---------- / ANSWER TO THIS MADNESS -----------
+ 
  */
 
 		//			105		7 3 5 = 48 or 57
@@ -244,4 +203,11 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 	////(two 2's) 2 2 3 7 13 = 1092 = 288 
 	////(two 2's) 2 2 3 5 17 = 1020 = 256
 	////(two 2's) 2 2 3 5 19 = 1140 = 288 
+
+////(two 2's) 2 2 7 11 = 308 = 120 , 121 = 1 (2) ::: 
+////(two 2's) 2 2 7 13 = 364 = 144 , 145 = 1 (2) ::: 
+
+////(two 2's) 2 2 7 11 17 = 5236 = 1920 , 1989 = 69 (70) ::: 
+////(two 2's) 2 2 7 13 17 = 6188 = 2304 , 2377 = 73 (74) ::: 
+
 
