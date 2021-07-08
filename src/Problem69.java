@@ -108,3 +108,140 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 		
 	}
 }
+
+//notes:
+
+
+/*
+ if we start with 2 
+ we do 2 * 2 
+ = 4
+ then check from last (2) through 4
+ // the idea is if we check all combinations, any numbers in between should be prime?
+   
+  so 2 - 4 we find 3
+  add 3 to primes
+  now primes has 2,3
+  
+  go through again (but we already did 2*2)....so 2 loops, second loop can start where we left off? at 3?
+  
+  so 2*3
+  = 6
+  
+  go through 4 - 6
+  gives us 5 - add to primes?
+  
+ 
+  
+  then 3*3
+  = 9
+  
+    6+2 = 8..
+  is 8 < then 9? yes then 8-1 is prime?
+  
+  7 add to primes...
+  
+  
+  
+  
+  
+ */
+
+
+
+//int c = 0;
+
+
+ 
+
+//2 3 5 = 30 - good
+//(two 2's)2 2 3 5 = 60 = 16 , 17 = 1 (2) ::: this is because we removed 30 because of 3 mult of 2, then we removed 30 again because 5 mult of 3
+// 2 2 2 3 5 = 120 = 32 , 35 = 3 (4)
+// 2 2 2 2 3 5 = 240 = 64 , 71 = 7 (8)
+// 2 2 2 2 2 3 5 = 480 = 128 , 143 = 15 (16)
+
+//				4500 		2 2 3 3 5 5 5 = 1200 or 3300
+//				2250		2 3 3 5 5 5 = 	600 or 1650
+//				450	 		2 3 3 5 5 = = 	120 or 330
+// 				90    		2 3 3 5 = 		24 or 66
+//				30 		 	2 3 5 = 	 	8 or 22 
+
+		
+/*
+ so what Im seeing is this....
+ the primes are themselves - 1 
+ so 2 = 1
+ 3 = 2
+ 5 = 4
+ 7 = 6
+ 11 = 10
+ etc...
+ 
+ Then..
+ for any number that has one of those primes you get that number
+ 
+ then if they have any duplicates of those primes, you multiply by that prime?
+ 
+ so like 5 7 = 35
+ this would be 4 * 6 = 24
+ 
+ but if its 3 5 5 7
+ that is 3-1 * 5-1 * 7-1 = 2*4*6 = 48
+ but there is more than one 5 so 48*5 = 240
+ 
+ 
+ yes this actually f*%#ing works I think...
+ */
+
+		//			105		7 3 5 = 48 or 57
+		//			75		5 3 5 = 40 or 35
+		//			45		3 3 5 = 24 or 21
+	// 				30 		2 3 5 = 8 or 22
+
+		//    	    65		5 13 =  48 or 17
+		//		    55		5 11 =  40 or 15
+		//	        35		5 7  =  24 or 11
+
+			//	    39		3 13 =  24 or 15
+			//		33    	3 11 =  20 or 13
+			//		21		3 7 =   12 or 9
+			//	    15    	3 5 =    8 or 6
+			//		9		3 3 =    6 or 3
+
+			//		81      3 3 3 3 =  54 or 27
+			//		27      3 3 3 	=  18 or 8
+			//		9		3 3 	=   6 or 3
+			//		3   	3  		=   2 or 1 
+
+
+
+			// 		14		2 7 =  6 or 8
+			//      10  	2 5 =  4 or 6
+			//		6		2 3 =  2 or 4
+
+			//		11		11 =   10 or 1
+			//		7   	7  =   6 or 1
+			//		5   	5  =   4 or 1
+			//		3   	3  =   2 or 1
+			//		2   	2  =   1 or 1
+
+
+// (one 2s and three 3s) 2 3 3 3 5 = 270 = 72 or 198
+// (one 2s and four 3s)  2 3 3 3 3 5 = 810 = 216 or 594
+// (one 2s and five 3s)  2 3 3 3 3 3 5 = 2,430 = 648 
+
+//			    2 3 5 7 = 210 = 48 or 162
+////(two 2's) 2 2 3 5 7 = 420 = 96 or 323(324) == 
+
+//              2 3 5 11 = 330 = 80 or 249 (250)
+////(two 2's) 2 2 3 5 11 = 660 = 160 or 499 (500) == up 64 or up 176
+////(two 2's) 2 2 3 5 13 = 780 = 192 or 587 (588) == up 32 or up 88
+////(two 2's) 2 2 3 5 17 = 1020 = 256 or 763 (764) == up 64 or up 176
+////(two 2's) 2 2 3 5 19 = 1140 = 288 or 851 (852)  == up 32 or up 88
+
+
+	////(two 2's) 2 2 3 7 11 = 924 = 240 
+	////(two 2's) 2 2 3 7 13 = 1092 = 288 
+	////(two 2's) 2 2 3 5 17 = 1020 = 256
+	////(two 2's) 2 2 3 5 19 = 1140 = 288 
+
