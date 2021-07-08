@@ -31,6 +31,9 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 		
 		long startT = System.nanoTime();
 		problem();
+		//problemDidntKnowTheSecret();
+		
+		
 		long endT = System.nanoTime();
 		  
 		  double time = (double) (endT - startT)/1000000000;
@@ -224,7 +227,7 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
  so like 5 7 = 35
  this would be 4 * 6 = 24
  
- but if its 3 5 5 7
+ but if its 3 5 5 7 = 525
  that is 3-1 * 5-1 * 7-1 = 2*4*6 = 48
  but there is more than one 5 so 48*5 = 240
  
