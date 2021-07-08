@@ -41,7 +41,7 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 	}
 	private static void problem() {
 		
-		int max = 10;
+		int max = 1000000;
 		double maxD = 0;
 		int maxN = 0;
 		int maxPhi = 0;
@@ -64,18 +64,16 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 			
 			for(int p = 0; p < primes.size(); p++) {
 				int prime = primes.get(p);
+				//if(prime > (int)Math.sqrt(tempI))
 				if(prime > tempI)
 					break; 
-					// break out early if the primes are higher than our num, no need to continue. Save some time
+					// break out early if the primes are larger than our num, no need to continue. Save some time
 			
 				if(i % prime == 0) {
 					phi *= (prime-1);
 					tempI = tempI/prime;
-					System.out.println("Just curious what tempI/phi is for i=" + i + " and prime=" + prime + " tempI=" + tempI + " and phi=" + phi + " :: " + (tempI/phi));
 					while(tempI % prime == 0) {
-						System.out.println("Just curious what tempI/phi is for i=" + i + " and prime=" + prime + " tempI=" + tempI + " and phi=" + phi + " :: " + (tempI/phi));
 						tempI /= prime;
-						
 						phi *= prime;
 					}
 				}
