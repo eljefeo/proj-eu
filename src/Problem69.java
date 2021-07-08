@@ -39,7 +39,63 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 		
 		System.out.println("::::");
 	}
+	
 	private static void problem() {
+		
+		//this is a shortcut I figured out
+		// since the PE problem only asks for N, doesnt care about phi or phi(n) etc..
+		//this is a shortcut to find the N that has the largest n/phi(n) without knowing phi at all
+		// even more bestest notes:
+		// found that the largest numbers are just the primes multiplied by each
+		// so 2, then 3
+		// then 2*3
+		// then 2*3*5
+		//then 2*3*5*7
+		//then 2*3*5*7*11
+		//then 2*3*5*7*11*13 etc....
+		/*
+		 
+		 so whatever highest n/phi(n) you want is just
+		 
+		 primes from smallest to highest until you go over that number
+		 
+		 so under 1,000,000?
+		 keeping adding the primes until you go over a million
+		 
+		 // so 2, then 3
+		// then 6 = 2*3
+		// then 30 = 2*3*5
+		//then 210 = 2*3*5*7
+		//then 2,310 =  2*3*5*7*11
+		//then 30,030 = 2*3*5*7*11*13 
+		//then 510,510 = 2*3*5*7*11*13*17
+		 //then 9,699,690 = 2*3*5*7*11*13*17*19
+		  oops that last one went above 1million
+		  then the answer is 510510
+		 */
+		int max = 1000000;
+		double maxD = 0;
+		int maxN = 0;
+		int maxPhi = 0;
+		
+		int n = 1;
+		int mult = 1;
+		List<Integer> primes = new ArrayList<Integer>();
+		
+		while(mult < max) {
+			getNextPrime(primes, n++);
+			mult *= primes.get(primes.size()-1);
+		}
+		
+		mult /= primes.get(primes.size()-1);
+		
+		System.out.println("Found : " + mult);
+		
+	}
+	
+	
+	
+	private static void problemDidntKnowTheSecret() {
 		
 		int max = 1000000;
 		double maxD = 0;
@@ -97,6 +153,31 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 		
 	}
 	
+	private static void getNextPrime(List<Integer> primes, int n) {
+		
+		
+		int pr = n;
+		while(true) {
+			pr++;
+			
+			boolean foundPrime = true;
+			for(int p = 0; p < primes.size(); p++) {
+				int prime = primes.get(p);
+				if(pr % prime == 0) {
+					foundPrime = false;
+					break;
+				}
+			}
+			
+			if(foundPrime) {
+				primes.add(pr);
+				return;
+			}
+			
+		}
+		
+	}
+	
 	private static void addAllPrimesUpto(List<Integer> primes, int test) {
 		for(int i = 2; i<test; i++) {
 			if(Util.isPrime(i)) {
@@ -107,7 +188,12 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 	}
 }
 
-//notes:
+
+
+
+
+
+//original notes:
 
 
 
