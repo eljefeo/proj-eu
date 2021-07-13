@@ -27,12 +27,10 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 	
 	static Map<Integer, Integer[]> allFirstAndLastIndexes; // this is just to help us narrow down the 4 digit nums, smallest and largest 4digit numbers. So we can loop through those and avoid any other numbers
 	static Map<Integer, List<Integer>> allPolygonalNumbers;
-	static Map<Integer, Integer> finalResult;
 	static Map<Integer, Boolean> track;
 	public static void main(String[] args) {
 		allFirstAndLastIndexes = getFirstAndLastIndexes();
 		allPolygonalNumbers = getAll4DigitPolygonalNumbers();
-		finalResult = new HashMap<Integer, Integer>(); // SHOULD WE KEEP THE ORDER?
 		track = getEmptyTracking();//new HashMap<Integer, Boolean>();// use to keep track of what ones we have done ( put 5 true means we found a pentagonal num..
 		
 		int test = 12345;
@@ -70,12 +68,10 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 		
 		List<Integer> polygonalNums = allPolygonalNumbers.get(startingPolygonalNumType);
 		
-		
 		for(Integer num : polygonalNums) {
 			// go through each number from whatever starting polygonal type was chosen above, one has to be part of a useable circle... try em all and at least one will work
 			
 			List<Integer> numsSoFar = new ArrayList<Integer>();
-			finalResult.put(startingPolygonalNumType, num);
 			track.put(startingPolygonalNumType, true); // this doesnt put duplicate entries right? Like 3, true - we cant put another 3, true right?
 			numsSoFar.add(num);
 			
@@ -119,7 +115,6 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 			
 			track.put(i, true); // once we use a polygonal type, set this to true for that polygon so the rest of the recursion will use other types. since we only are going to use 1 of each type in the circle
 			for(Integer polyNum : polyNums) {
-				//if(getLast2Digits(num).equals(getFirst2Digits(polyNum))) {
 				if(Util.getLast2DigitsInt(num) == Util.getFirst2DigitsInt(polyNum)) {
 					List<Integer> copyOfPn = Util.copyIntegerList(polyNumsSoFar);
 					copyOfPn.add(polyNum);
