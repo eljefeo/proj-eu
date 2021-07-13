@@ -24,14 +24,8 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 	
 	static int startPoly = 3, endPoly = 8;
 	static int totalPolyCount = (endPoly - startPoly) + 1;
-	static int triFirst = 0, triLast = 0;
-	static int squareFirst = 0, squareLast = 0;
-	static int pentFirst = 0, pentLast = 0;
-	static int hexFirst = 0, hexLast = 0;
-	static int hepFirst = 0, hepLast = 0;
-	static int octFirst = 0, octLast = 0;
 	
-	static Map<Integer, Integer[]> allFirstAndLastIndexes;
+	static Map<Integer, Integer[]> allFirstAndLastIndexes; // this is just to help us narrow down the 4 digit nums, smallest and largest 4digit numbers. So we can loop through those and avoid any other numbers
 	static Map<Integer, List<Integer>> allPolygonalNumbers;
 	static Map<Integer, Integer> finalResult;
 	static Map<Integer, Boolean> track;
@@ -41,8 +35,10 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 		finalResult = new HashMap<Integer, Integer>(); // SHOULD WE KEEP THE ORDER?
 		track = getEmptyTracking();//new HashMap<Integer, Boolean>();// use to keep track of what ones we have done ( put 5 true means we found a pentagonal num..
 		
-		
-			problem();
+		int test = 12345;
+		System.out.println("last 2 of " + test + " = " + Util.getLast2DigitsInt(test));
+		System.out.println("first 2 of " + test + " = " + Util.getFirst2DigitsInt(test));
+		problem();
 	}
 
 	private static void problem() {
@@ -59,39 +55,46 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 		for(int i=startPoly; i<=endPoly; i++) {
 			Integer[] fl = allFirstAndLastIndexes.get(i);
 			
-			int f = getAPolygonalNumber(i, fl[0]);
-			int l = getAPolygonalNumber(i, fl[1]);
+			int f = Util.getAPolygonalNumber(i, fl[0]);
+			int l = Util.getAPolygonalNumber(i, fl[1]);
 			System.out.println("First and last index for " + i + " :: " + fl[0] + ", " + fl[1] + " and those nums are " + f + ", " + l);			
 		}
 		
+		
+		
+		// start the circle here with a triangle number. Technically can start with any polygonal type, penta / hexa /septa etc...
+				// in the end it will all be a circle so doesnt really matter which you start with, just picked triangle..
+		// you can start with any other polygon to get the same result ( square = 4, penta = 5, hexa = 6, septa = 7, octa = 8)
+		//int startingPolygonalNumType = 6; -- this will start the search with hexagonal for example, doesnt matter any will work since its a circle anyway
 		int startingPolygonalNumType = 3;
 		
-		List<Integer> triNums = allPolygonalNumbers.get(startingPolygonalNumType);
+		List<Integer> polygonalNums = allPolygonalNumbers.get(startingPolygonalNumType);
 		
 		
-		
-		for(Integer num : triNums) {
+		for(Integer num : polygonalNums) {
+			// go through each number from whatever starting polygonal type was chosen above, one has to be part of a useable circle... try em all and at least one will work
 			
 			List<Integer> numsSoFar = new ArrayList<Integer>();
-			
 			finalResult.put(startingPolygonalNumType, num);
-			
 			track.put(startingPolygonalNumType, true); // this doesnt put duplicate entries right? Like 3, true - we cant put another 3, true right?
-			
 			numsSoFar.add(num);
 			
-			findPolyNumThatStartsWith(num, numsSoFar);
+			// start the recursive check...Put a num in the list, then recursion will go through all other polygonal nums and see if a combination makes a circle
+			findPolyNumThatStartsWith(num, numsSoFar); 
 		}
 		
 	}
 	
 	public static void /*List<Integer>*/ findPolyNumThatStartsWith(int num, List<Integer> polyNumsSoFar) {
 		
+		//the track object is just a boolean for each polygonal type
+		// 5 = false (for example) means we have not used a pentagonal number in this circle yet so its up for grabs to try in the circle somewhere
+		// 
 		if(!track.containsValue(false)) {
 			//all are found....
 			if(polyNumsSoFar.size() == totalPolyCount) {
 				
-				if(getLast2Digits(polyNumsSoFar.get(totalPolyCount-1)).equals(getFirst2Digits(polyNumsSoFar.get(0)))) {
+				if(Util.getLast2DigitsInt(polyNumsSoFar.get(totalPolyCount-1)) == Util.getFirst2DigitsInt(polyNumsSoFar.get(0))) {
 					System.out.println("I think we have a winner !");
 					
 					int sum = 0;
@@ -114,29 +117,22 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 			
 			List<Integer> polyNums = allPolygonalNumbers.get(i);
 			
-			track.put(i, true);
+			track.put(i, true); // once we use a polygonal type, set this to true for that polygon so the rest of the recursion will use other types. since we only are going to use 1 of each type in the circle
 			for(Integer polyNum : polyNums) {
-				if(getLast2Digits(num).equals(getFirst2Digits(polyNum))) {
-					List<Integer> copyOfPn = copyListInteger(polyNumsSoFar);
+				//if(getLast2Digits(num).equals(getFirst2Digits(polyNum))) {
+				if(Util.getLast2DigitsInt(num) == Util.getFirst2DigitsInt(polyNum)) {
+					List<Integer> copyOfPn = Util.copyIntegerList(polyNumsSoFar);
 					copyOfPn.add(polyNum);
-					findPolyNumThatStartsWith(polyNum, copyOfPn); /// maybe can do this with a while loop instead of recur?
+					findPolyNumThatStartsWith(polyNum, copyOfPn); 
 				}
 			}
 			track.put(i, false); 
-			
 		}
 		
 		return; 
 		
 	}
-	
-	public static List<Integer> copyListInteger(List<Integer> li){
-		List<Integer> ret = new ArrayList<Integer>();
-		for(Integer i : li) {
-			ret.add(i);
-		}
-		return ret;
-	}
+
 	
 	public static Map<Integer, Boolean> getEmptyTracking() {
 		Map<Integer, Boolean> ret = new HashMap<Integer, Boolean>();
@@ -145,43 +141,6 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 		}
 		return ret;
 	}
-
-	public static int getAPolygonalNumber(int which, int ind) {
-		
-		int num = 0;
-		
-		switch (which) {
-		case 3:
-			num = Util.getNthTriangleNumber(ind);
-			break;
-			
-		case 4:
-			num = Util.getNthSquareNumber(ind);
-			break;
-			
-		case 5:
-			num = Util.getNthPentagonalNumber(ind);
-			break;
-			
-		case 6:
-			num = Util.getNthHexagonalNumber(ind);
-			break;
-			
-		case 7:
-			num = Util.getNthHeptagonalNumber(ind);
-			break;
-			
-		case 8:
-			num = Util.getNthOctagonalNumber(ind);
-			break;
-			
-		default:
-			break;
-		}
-		
-		return num;
-	}
-	
 
 	
 	
@@ -196,50 +155,31 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 			int firstIndex = indexes[0];
 			int lastIndex = indexes[1];
 			for(int j=firstIndex; j<=lastIndex; j++) {
-				nums.add(getAPolygonalNumber(i,j));
+				nums.add(Util.getAPolygonalNumber(i,j));
 			}
 			all.put(i, nums);
 		}
 
 		return all;
 	}
-	
-	
-	public static String getLast2Digits(int n) {
-		String ns = n+"";
-		if(ns.length() < 2) {
-			return "";
-		}
-		String ret = ns.charAt(ns.length()-2) + "" + ns.charAt(ns.length()-1);
-		return ret;
-	}
-	
-	public static String getFirst2Digits(int n) {
-		String ns = n+"";
-		if(ns.length() < 2) {
-			return "";
-		}
-		String ret = ns.charAt(0) + "" + ns.charAt(1);
-		return ret;
-	}
-	
+
 	public static Map<Integer, Integer[]> getFirstAndLastIndexes() {
 		Map<Integer, Integer[]> n = new HashMap<Integer, Integer[]>();
 		int pNum = 0;
-		for(int i=3; i<=8; i++) {
+		for(int i=startPoly; i<=endPoly; i++) {
 			
 			pNum = 0;
 			int firstIndex = 0;
-			while (!isFourDigits(pNum)) {
+			while (!Util.isThisManyDigits(pNum, 4)) {
 				firstIndex++;
-				pNum = getAPolygonalNumber(i, firstIndex);
+				pNum = Util.getAPolygonalNumber(i, firstIndex);
 			}
 			
 			pNum = 0;
 			int lastIndex = 0;
-			while (!isFiveDigits(pNum)) {
+			while (!Util.isThisManyDigits(pNum, 5)) {
 				lastIndex++;
-				pNum = getAPolygonalNumber(i, lastIndex);
+				pNum = Util.getAPolygonalNumber(i, lastIndex);
 			}
 			lastIndex--;
 			
@@ -248,18 +188,8 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 		
 		return n;
 
-		
 	}
 	
-	
-	public static boolean isFourDigits(int n) {
-		String ns = "" + n;
-		return ns.length() == 4;
-	}
-	
-	public static boolean isFiveDigits(int n) {
-		String ns = "" + n;
-		return ns.length() == 5;
-	}
+
 	
 }
