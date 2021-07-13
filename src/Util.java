@@ -26,6 +26,35 @@ public class Util {
 		}
 		return true;
 	}
+	
+
+	public static int getAPolygonalNumber(int which, int ind) {
+		
+		switch (which) {
+		case 3:
+			return Util.getNthTriangleNumber(ind);
+			
+		case 4:
+			return Util.getNthSquareNumber(ind);
+			
+		case 5:
+			return Util.getNthPentagonalNumber(ind);
+			
+		case 6:
+			return Util.getNthHexagonalNumber(ind);
+			
+		case 7:
+			return Util.getNthHeptagonalNumber(ind);
+			
+		case 8:
+			return Util.getNthOctagonalNumber(ind);
+			
+		default:
+			break;
+		}
+		
+		return 0;
+	}
 
 	
 	public static BigInteger getTriangleNumber(BigInteger n){
@@ -85,6 +114,44 @@ public class Util {
 		return ((3*i) - 2) * i;
 	}
 
+	
+	public static List<Integer> getPrimeFactorsOrig(int num) {
+        int n = num;
+        List<Integer> factors = new ArrayList<Integer>();
+        for (int i = 2; i <= n / i; i++) {
+            while (n % i == 0) {
+                factors.add(i);
+                n /= i;
+            }
+        }
+        if (n > 1) {
+            factors.add(n);
+        }
+        return factors;
+    }
+	
+	public static List<Integer> getPrimeFactors(int num) {
+        int n = num;
+        
+        List<Integer> factors = new ArrayList<Integer>();
+        
+        while (n % 2 == 0) {
+            factors.add(2);
+            n /= 2;
+        }
+        
+        
+        for (int i = 3; i <= n / i; i+=2) {
+            while (n % i == 0) {
+                factors.add(i);
+                n /= i;
+            }
+        }
+        if (n > 1) {
+            factors.add(n);
+        }
+        return factors;
+    }
 
 	public static Set<BigInteger> getFactorsBigInt(BigInteger num) {
 
@@ -129,6 +196,31 @@ public class Util {
 		return factors;
 	}
 	
+	/* trying to think of shortcuts for factoring..
+	public static Set<Integer> getDistinctFactorsIntN(int num) {
+
+		Set<Integer> factors = new HashSet<Integer>();
+		factors.add(1);
+		
+		
+		while(num % 2 == 0) {
+			num /= 2;
+			factors.add(num);
+		}
+		
+		int limit = (int) Math.sqrt(num);
+		int i = 3;
+		while(i <= limit) {
+			while(num % i == 0) {
+				num /= i;
+				factors.add(num);
+			}
+			i += 2;
+		}
+		
+		return factors;
+	}
+	*/
 	public static Set<Integer> getDistinctFactorsIntOldSlow(int num) {
 
 		Set<Integer> factors = new HashSet<Integer>();
@@ -1178,6 +1270,38 @@ public static int summationFromTo(int start, int end) {
 		System.out.println("All passed hexagonal numbers from 1 to " + max + " (using longs)");
 	}
 	
+public static boolean isPermutationDigits(int a, int b){
+		
+		String at = a+"";
+		String bt = b+"";
+		// lets assume the solution has unique digits, no duplicate digits. This is like the example given in problem 52, and the example made no mention of allowing duplicate digits..
+		// if we find an answer, and it is wrong on the website, we can switch to allowing duplicate digits....
+		
+		
+		
+		if(at.length() != bt.length() || a == b){
+			return false;
+		}
+		
+		for(int i=0; i<at.length(); i++){
+			char c = at.charAt(i);
+			boolean hasThisDigit = false;
+			for(int j=0; j<bt.length(); j++){
+				char d = bt.charAt(j);
+				if(c == d){
+					hasThisDigit = true;
+					bt = bt.substring(0,j) + bt.substring(j+1);
+					break;
+				}
+			}
+			if(!hasThisDigit){
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 public static boolean hasSameUniqueDigits(int a, int b){
 		
 		String at = a+"";
@@ -1349,5 +1473,49 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		
 		return 1;
 	}
+	
+	public static boolean isThisManyDigits(int n, int howManyDigits) {
+		return ("" + n).length() == howManyDigits;
+	}
+	
+	
+	public static List<Integer> copyIntegerList(List<Integer> li){
+		List<Integer> ret = new ArrayList<Integer>();
+		for(Integer i : li) {
+			ret.add(i);
+		}
+		return ret;
+	}
+	
+	
+	public static int getFirst2DigitsInt(int n) {
+		int num = n;
+		while(num > 100) {
+			num /= 10;
+		}
+		return num;
+	}
+	
+	public static int getLast2DigitsInt(int n) {
+		return (n%100);
+	}
+	
+	public static String getLast2Characters(int n) {
+		String ns = n+"";
+		if(ns.length() < 2) {
+			return "";
+		}
+		String ret = ns.charAt(ns.length()-2) + "" + ns.charAt(ns.length()-1);
+		return ret;
+	}
+	
+	public static String getFirst2Characters(int n) {
+		String ns = n+"";
+		if(ns.length() < 2) {
+			return "";
+		}
+		return ns.charAt(0) + "" + ns.charAt(1);
+	}
+	
 	
 }
