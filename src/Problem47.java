@@ -18,24 +18,34 @@ public class Problem47 {
 			 
 	 */
 	public static void main(String[] args) {
+		long startT = System.nanoTime();
+		
 		problem();
+		
+		long endT = System.nanoTime();
+		double time = (double) (endT - startT)/1000000000;
+		System.out.println("Took " + time + " seconds");
 	}
 	
 	
 	private static void problem(){
 		int max = 1000000;
+		//int max = 30;
 		int numFactors = 4;
 		for(int i = 20; i< max; i++){
 			boolean found = true;
-			for(int j=0; j<numFactors; j++){
-				Set<Integer> factors = Util.getDistinctPrimeFactors(i+j);
+			int m = i+numFactors;
+			for(; i<m; i++){
+				Set<Integer> factors = Util.getDistinctPrimeFactors(i);
 				if(factors.size() != numFactors){
 					found = false;
+					i++;
 					break;
 				}
 			}
-			
 			if(found){
+				i-=numFactors; // go backwards to the beginning of the winning nums;
+				System.out.println("Win at i " + (i-numFactors));
 				//The solution is done. This next snippet is just to print the solution and factors for information purposes...
 				System.out.println("We found " + i + ", " + (i+1) + ", " + (i+2) + ", " + (i+3));
 				for(int j=0; j<numFactors; j++){
