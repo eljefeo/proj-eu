@@ -8,7 +8,6 @@ public class Problem10  extends ProblemImpl{
 	
 	public static void main(String[] args) {
 		new Problem10().runProblem();
-
 	}
 	
 	public void problem(){
