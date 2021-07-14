@@ -1,11 +1,12 @@
 
-public class Problem1 {
+public class Problem1 extends ProblemImpl {
 	
 	public static void main(String[] args){
-		problem();
+		new Problem1().runProblem();
 	}
 
-	public static void problem(){
+	@Override
+	public void problem(){
 		//Summation of all multiples of 3 or 5 less than 1000
 		int total = 0;
 		for(int i = 0; i < 1000; i++){

@@ -1,5 +1,5 @@
 
-public class Problem10 {
+public class Problem10  extends ProblemImpl{
 
 /*	
 	The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
@@ -7,11 +7,11 @@ public class Problem10 {
 			Find the sum of all the primes below two million.*/
 	
 	public static void main(String[] args) {
-		problem();
+		new Problem10().runProblem();
 
 	}
 	
-	public static void problem(){
+	public void problem(){
 		int max = 2000000;
 		long runningTotal = 2;
 		for(int i = 3; i < max; i+=2){
