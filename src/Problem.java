@@ -12,7 +12,7 @@ public interface Problem {
 		
 		
 		//System.out.printf("dexp: %f\n", dexp);
-		System.out.printf("\nTook %f seconds", time);
+		System.out.printf("\nTook %f seconds\n", time);
 	}
 	
 	public void problem();

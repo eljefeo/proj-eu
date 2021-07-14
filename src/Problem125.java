@@ -1,9 +1,7 @@
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-public class Problem125 {
+public class Problem125 extends ProblemImpl{
 	/*
 	 * 
 	 * 
@@ -16,13 +14,15 @@ Find the sum of all the numbers less than 10^8 that are both palindromic and can
 	 */
 
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem125();
+		p.runProblem();
 		
 		//Util.addConsecutiveSquaresFromTo(9,118);
 		
 	}
 
-	private static void problem() {
+	@Override
+	public void problem() {
 
 		int power = 8;
 		int maxSum = (int) Math.pow(10, power);

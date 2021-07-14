@@ -1,8 +1,9 @@
 
-public class Problem14 {
+public class Problem14 extends ProblemImpl{
 
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem14();
+		p.runProblem();
 
 	}
 	
@@ -19,7 +20,8 @@ NOTE: Once the chain starts the terms are allowed to go above one million.
 	 * 
 	 */
 	
-	public static void problem(){
+	@Override
+	public void problem(){
 		
 		int biggestNumOfSteps = 0;
 		int finalNum = 0;

@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class Problem13 {
+public class Problem13 extends ProblemImpl{
 
 	/*
 	 * Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
@@ -109,11 +109,13 @@ public class Problem13 {
 	 */
 	
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem13();
+		p.runProblem();
 
 	}
 	
-	public static void problem(){
+	@Override
+	public void problem(){
 		
 		String allnums[] = {
 				"37107287533902102798797998220837590246510135740250",

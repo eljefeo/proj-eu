@@ -2,7 +2,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem121 {
+public class Problem121 extends ProblemImpl{
 
 	
 	/*
@@ -16,10 +16,12 @@ Find the maximum prize fund that should be allocated to a single game in which f
 	 */
 	
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem121();
+		p.runProblem();
 	}
 	
-	private static void problem() {
+	@Override
+	public void problem() {
 		int turnCount = 15; // breaks at 2 need to fix?
 		
 		BigInteger howMuchToGive = howMuchShouldBankerGive(turnCount);
