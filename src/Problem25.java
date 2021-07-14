@@ -1,13 +1,14 @@
 import java.math.BigInteger;
 
-public class Problem25 {
+public class Problem25 extends ProblemImpl{
 
 	public static void main(String[] args) {
-		problem();
-
+		Problem p = new Problem25();
+		p.runProblem();
 	}
 	
-	public static void problem(){
+	@Override
+	public void problem(){
 		BigInteger num1= new BigInteger("1");
 		BigInteger num2 = new BigInteger("1");
 		

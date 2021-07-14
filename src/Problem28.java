@@ -1,5 +1,5 @@
 
-public class Problem28 {
+public class Problem28 extends ProblemImpl{
 	/*
 	 * Starting with the number 1 and moving to the right in a clockwise
 	 * direction a 5 by 5 spiral is formed as follows:
@@ -19,10 +19,12 @@ public class Problem28 {
 	 */
 	
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem28();
+		p.runProblem();
 	}
 
-	private static void problem() {
+	@Override
+	public void problem() {
 		int side = 1001;
 		int sum = addCorners(side);
 		if(sum != -1){

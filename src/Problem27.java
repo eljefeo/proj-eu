@@ -1,5 +1,5 @@
 
-public class Problem27 {
+public class Problem27 extends ProblemImpl{
 	
 	/*
 	 Euler discovered the remarkable quadratic formula: n^2 + n + 41
@@ -23,7 +23,9 @@ public class Problem27 {
 	 */
 
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem27();
+		p.runProblem();
+	
 		/*int n=0;
 		while(n< 1000){
 			n++;
@@ -36,7 +38,8 @@ public class Problem27 {
 
 	}
 	 
-	private static void problem(){
+	@Override
+	public void problem(){
 		int a = -1000;
 		int b = -1000;
 		int oldb = -1000;

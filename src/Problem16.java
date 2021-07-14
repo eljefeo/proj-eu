@@ -1,7 +1,11 @@
 import java.math.BigInteger;
 
-public class Problem16 {
+public class Problem16 extends ProblemImpl{
 
+	public static void main(String[] args) {
+		Problem p = new Problem16();
+		p.runProblem();
+	}
 	
 	/*
 	2^15 = 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
@@ -10,12 +14,8 @@ What is the sum of the digits of the number 2^1000?
 	 * 
 	 */
 	
-	public static void main(String[] args) {
-		problem();
-
-	}
-	
-	public static void problem(){
+	@Override
+	public void problem(){
 		
 		BigInteger total = new BigInteger("1");
 		for(int i = 1; i <= 1000; i++){

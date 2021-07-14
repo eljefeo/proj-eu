@@ -1,5 +1,5 @@
 
-public class Problem19 {
+public class Problem19 extends ProblemImpl{
 
 	
 	/*
@@ -18,11 +18,13 @@ How many Sundays fell on the first of the month during the twentieth century (1 
 	 */
 	
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem19();
+		p.runProblem();
 
 	}
 	
-	public static void problem(){
+	@Override
+	public void problem(){
 		
 		int numOfSundaysOnFirstOfMonth = 0;
 		int dayOfWeek = 2;

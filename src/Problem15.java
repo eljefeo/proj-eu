@@ -1,14 +1,17 @@
 
-public class Problem15 {
-	public static void main(String[] args) {
-		problem();
 
+public class Problem15 extends ProblemImpl{
+
+	public static void main(String[] args) {
+		Problem p = new Problem15();
+		p.runProblem();
 	}
 	
 	/*Starting in the top left corner of a 2×2 grid, and only being able to move to the right and down, there are exactly 6 routes to the bottom right corner.
 	How many such routes are there through a 20×20 grid?*/
 
-	private static void problem() {
+	@Override
+	public  void problem() {
 		int height = 21;
 		long[][] arr = new long[height][height];
 		

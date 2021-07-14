@@ -1,12 +1,13 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class Problem23 {
+public class Problem23 extends ProblemImpl{
 
 	public static void main(String[] args) {
-		problem();
-
+		Problem p = new Problem23();
+		p.runProblem();
 	}
+
 
 	/*
 	 * 
@@ -21,7 +22,8 @@ However, this upper limit cannot be reduced any further by analysis even though 
 
 Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
 	 */
-	public static void problem(){
+	@Override
+	public void problem(){
 		
 		int max = 28123;
 		int total = 0;

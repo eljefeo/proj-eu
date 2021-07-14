@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Problem24 {
+public class Problem24 extends ProblemImpl{
 	
 /*	A permutation is an ordered arrangement of objects. For example, 3124 is one possible permutation of the digits 1, 2, 3 and 4. If all of the permutations are listed numerically or alphabetically, we call it lexicographic order. The lexicographic permutations of 0, 1 and 2 are:
 
@@ -14,12 +14,13 @@ public class Problem24 {
 	static List<String> perms = new ArrayList<String>();
 	
 	public static void main(String[] args) {
-		problem();
-
+		Problem p = new Problem24();
+		p.runProblem();
 	}
 	
 
-	public static void problem(){
+	@Override
+	public void problem(){
 		String numstr = "";
 		char[] numChars = {
 				'0','1','2','3','4','5','6','7','8','9'

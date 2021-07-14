@@ -20,7 +20,7 @@ public class ProblemImpl implements Problem{
 				
 				
 				//you can also do this to run other methods in here for some testing maybe
-				((Problem121) p).test();
+				((Problem999) p).test();
 			}
 	 
 	 

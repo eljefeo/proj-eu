@@ -1,5 +1,5 @@
 
-public class Problem17 {
+public class Problem17 extends ProblemImpl{
 
 	
 	/*
@@ -16,13 +16,13 @@ NOTE: Do not count spaces or hyphens. For example, 342 (three hundred and forty-
 	
 	
 	public static void main(String[] args) {
-		problem();
-		
-
+		Problem p = new Problem17();
+		p.runProblem();
 	}
 	
 	
-	public static void problem(){
+	@Override
+	public void problem(){
 		String zeroTnine[] = {
 				"one", "two", "three","four","five","six","seven","eight","nine"
 		};

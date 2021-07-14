@@ -2,7 +2,7 @@ import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Problem29 {
+public class Problem29 extends ProblemImpl{
 
 	
 	/*
@@ -22,10 +22,12 @@ public class Problem29 {
 	 */
 	
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem29();
+		p.runProblem();
 	}
 	
-	private static void problem(){
+	@Override
+	public void problem(){
 		int lowerBound = 2;
 		int higherBound = 100;
 		Set<BigInteger> nums = new HashSet<BigInteger>();

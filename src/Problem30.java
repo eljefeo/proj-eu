@@ -1,5 +1,5 @@
 
-public class Problem30 {
+public class Problem30 extends ProblemImpl{
 	
 	/*
 	 Surprisingly there are only three numbers that can be written as the sum of fourth powers of their digits:
@@ -16,10 +16,12 @@ public class Problem30 {
 	 */
 
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem30();
+		p.runProblem();
 	}
 	
-	private static void problem(){
+	@Override
+	public void problem(){
 		int pow = 5;
 		int num = 2;
 		int tottot = 0;

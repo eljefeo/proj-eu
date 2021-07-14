@@ -1,11 +1,11 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class Problem21 {
+public class Problem21 extends ProblemImpl{
 
 	public static void main(String[] args) {
-		problem();
-
+		Problem p = new Problem21();
+		p.runProblem();
 	}
 
 	/*
@@ -22,7 +22,8 @@ public class Problem21 {
 	 * 
 	 */
 
-	public static void problem() {
+	@Override
+	public void problem() {
 		Set<Integer> an = new HashSet<Integer>();
 		int runningTotal = 0;
 		for (int i = 1; i < 10000; i++) {

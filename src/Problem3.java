@@ -3,19 +3,22 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Problem3 {
+public class Problem3 extends ProblemImpl{
 	
 /*	The prime factors of 13195 are 5, 7, 13 and 29.
 
 	What is the largest prime factor of the number 600851475143 ?*/
 
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem3();
+		p.runProblem();
+	
 		//squareRootOf(47);
 
 	}
 	
-	public static void problem(){
+	@Override
+	public void problem(){
 		// if a number is not prime, it is a composite number.
 		// all composite numbers have at least 1 prime factor that is less than or equal to the number's square root
 		//if a number has a prime factor less than or equal to its square root, it is not prime.

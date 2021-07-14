@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem26 {
+public class Problem26 extends ProblemImpl{
 /*	
 	A unit fraction contains 1 in the numerator. The decimal representation of the unit fractions with denominators 2 to 10 are given:
 
@@ -20,10 +20,12 @@ public class Problem26 {
 		*/
 		
 	public static void main(String[] args) {
-		problem();
-		
+		Problem p = new Problem26();
+		p.runProblem();
 	}
-	public static void problem(){
+	
+	@Override
+	public void problem(){
 		int biggestRemainderSet = 0;
 		int biggestD = 0; // ;)
 		for(int i=1; i<1000; i++){

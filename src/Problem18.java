@@ -1,4 +1,4 @@
-public class Problem18 {
+public class Problem18 extends ProblemImpl{
 
 	
 	/*
@@ -40,12 +40,14 @@ NOTE: As there are only 16384 routes, it is possible to solve this problem by tr
 	 */
 	
 	
+	
 	public static void main(String[] args) {
-		problem();
-
+		Problem p = new Problem18();
+		p.runProblem();
 	}
 	
-	public static void problem(){
+	@Override
+	public void problem(){
 		int allnums2[][] = {
 				{75},
 				{95, 64},

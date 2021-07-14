@@ -3,10 +3,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Problem22 {
+public class Problem22 extends ProblemImpl{
 
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem22();
+		p.runProblem();
 	}
 	
 	/*
@@ -54,8 +55,8 @@ What is the total of all the name scores in the file?
 	
 	
 	
-	
-	public static void problem(){
+	@Override
+	public void problem(){
 		java.util.Collections.sort(names);
 		
 		int runningTotal = 0;
