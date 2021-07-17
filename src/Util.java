@@ -262,6 +262,29 @@ public class Util {
 		return factors;
 	}
 	
+	public static int getNextPrime(List<Integer> primes, int n) {
+		int pr = n;
+		int sqrt = (int) (Math.sqrt(n)+1);
+		while (true) {
+			pr++;
+			boolean foundPrime = true;
+			for (int p = 0; p < primes.size(); p++) {
+				int prime = primes.get(p);
+				if(prime > sqrt)
+					break;
+				
+				if (pr % prime == 0) {
+					foundPrime = false;
+					break;
+				}
+			}
+			if (foundPrime) 
+				return pr;
+			
+		}
+
+	}
+	
 	public static int stringToInt(String numStr) {
 		return Integer.parseInt(numStr);
 	}
