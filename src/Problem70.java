@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class Problem70 {
+public class Problem70 extends ProblemImpl {
 
 	/*
 	 * Euler's Totient function, phi(n) [sometimes called the phi function], is used
@@ -22,10 +22,6 @@ public class Problem70 {
 
 	public static void main(String[] args) { // this thing takes like 22 minutes.... we should use the actual formula instead of trying to use our little brain. Need to look up totient equations
 
-		int n = 1000;
-		int nt = n/10;
-		long startT = System.nanoTime();
-		
 		//doFactorsStuff();
 		
 		 //problem();
@@ -42,7 +38,10 @@ public class Problem70 {
 			/*
 			 * for(Integer i : primes) { System.out.println("prime : " + i); }
 			 */
-		problemBeforeOtherSecret(); // we could speed it up by only doing 2 primes, all combos of just 2 primes...
+		
+		Problem p = new Problem70();
+		p.runProblem();
+	
 		// but we dont know that for sure..like that would work, but how do I know that would work and not just by chance.
 		
 		
@@ -53,11 +52,6 @@ public class Problem70 {
 		
 		//doFactorsStuff();
 		
-		long endT = System.nanoTime();
-
-		double time = (double) (endT - startT) / 1000000000;
-		System.out.println("problem Took " + time + " seconds");
-
 		//startT = System.nanoTime();
 		//randPrime(n);
 		//endT = System.nanoTime();
@@ -91,35 +85,6 @@ public class Problem70 {
 		 }
 		 
 	}
-
-	public static List<Integer> getPrimeFactors(int num) {
-        int n = num;
-        
-        List<Integer> factors = new ArrayList<Integer>();
-        
-        while (n % 2 == 0) {
-            factors.add(2);
-            n /= 2;
-        }
-        
-        for (int i = 3; i <= Math.sqrt(n); i += 2) {
-        	while (n % i == 0) {
-                factors.add(i);
-                n /= i;
-            }
-        }
-        if (n > 2) {
-            factors.add(n);
-        }
-        return factors;
-    }
-
-
-	private static void problem() {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 
 
@@ -193,7 +158,10 @@ public class Problem70 {
 		
 	}
 
-	private static void problemBeforeOtherSecret() {
+	
+	
+	
+	public void problem() {
 
 		int max = (int) Math.pow(10, 7), step = max/10;
 		double smalD = 10;
@@ -201,7 +169,7 @@ public class Problem70 {
 		int smalPhi = 0;
 
 		List<Integer> primes = new ArrayList<Integer>();
-
+		primes.add(2);
 		// for testing:
 		// int test = max;
 		// addAllPrimesUpto(primes, test);
@@ -210,107 +178,76 @@ public class Problem70 {
 		// for (int i = test; i < test+1; i++) { // this is all the numbers we need to
 		// check 2 - a million
 
-		for (int i = 2; i < max; i++) {
+		nums:
+		for (int i = 3; i < max; i++) {
 
 			if (i % step == 0)
-				System.out.println("Doing : " + i);
-
-			//List<Integer> factors = new ArrayList<Integer>();
+				System.out.println((i*10/step) + "% complete");
 			
 			int phi = 1; // set to 1 because every number has 1 has a coprime?
 			int tempI = i;
-			int sqrt = (int) Math.sqrt(i);
-			boolean shouldSkip = false;
 			int factorCount = 0;
 			
 			for (int p = 0; p < primes.size(); p++) {
 				int prime = primes.get(p);
-				
-				if (tempI == 1) {
-					//System.out.println("Breaking out for prime : " + prime + " with num " + i + " with tempI "+ tempI);
-					break;
-				}
-				
-				//if(prime > Math.sqrt(tempI)) {
-					//tempI /= prime;
-				//	phi *= (prime - 1);
-				//	System.out.println("Should we be doing this prime : " + prime + " with num: " + tempI);
-				//	break;
-				//}
-				
-				// break out early if the primes are larger than our num, no need to continue. Save some time
-
-				if (i % prime == 0) {
-					
-					factorCount++;
-					
-					if(factorCount > 2) { // smallest ratio should be with numbers that are composed of only 2 primes...
-						shouldSkip = true;
-						//System.out.println("skipping due to > 2 prime factors");
+				if(prime > Math.sqrt(tempI)) {
+					if(factorCount == 0) { // if no factors below sqrt of num, that num is prime
+						primes.add(i);
+						continue nums;// but we dont want to actually use phi of primes, its too big, so we skip it but use the prime for later
+					} else if(tempI > 1) { // else if no other primes under sqrt, but has other factors, then tempI is now prime and is the second factor. 
+						//This means we found a num with only 2 factors which is what we want
+						phi *= (tempI - 1);
 						break;
 					}
-				
-					//factors.add(prime);
 					
-					phi *= (prime - 1);
-					tempI /= prime;
-					
-					
-					//while (tempI % prime == 0) {
-					if(tempI % prime == 0) {
-						//factorCount++;
-						//if(factorCount > 2) { // smallest ratio should be with numbers that are composed of only 2 primes...
-							shouldSkip = true;
-							//System.out.println("skipping due to > 2 prime factors");
-							break;
-						//}
-						//tempI /= prime;
-						//phi *= prime;
-					}
-					
-					//if(shouldSkip || factorCount > 2) {
-					//	break;
-					//}
+				}
+
+				if (tempI % prime == 0) { // we found a factor of i
+					factorCount++;
+					tempI /= prime; // divide our temp value, dividing out this factor
+					if(factorCount > 1 || tempI % prime == 0) { 
+						// tempI % prime == 0  this num (i) is divisible by the same factor twice, this is not what we want. This will increase phi and we want phi to be closest to 1
 						
+						// factorCount > 1  smallest ratio should be with numbers that are composed of only 2 primes...
+						// if we get here and we found more than 1 factor, we should have caught it above in the sqrt check for a num with only 2 factors. 
+						// the fact that we are here means we are at a num with > 2 factors... skip it
+						continue nums;
+					}
+					phi *= (prime - 1);
 				}
 			}
-
-			if(shouldSkip)
-				continue;
-			
-			boolean isPrime = false;
-			
-			
-			if (phi == 1) {
-				//isPrime = true;
-				//phi = i - 1;
-				primes.add(i); // add primes as we go for the next larger numbers
-			} else {
-
+				
 				if(Util.isPermutationDigits(i, phi)) {
 					double nOverPhi = (double) i / phi;
-					// System.out.println("phi for " + i + " = " + phi + " with nphi = " +
-					// nOverPhi);
 					if (nOverPhi < smalD) {
 						smalD = nOverPhi;
 						smalN = i;
 						smalPhi = phi;
 						System.out.println("New smallest permutation nOverPhi = " + smalD + " for num = " + smalN + " with phi=" + smalPhi);
-						//System.out.println("Factors for " + i + " :");
-						//for(Integer f : factors) {
-						//	System.out.print(" " + f);
-						//}
-						System.out.println("");
 					}
 				}
-				
-				
-			}
 		}
 
-		System.out.println("Smallest nOverPhi = " + smalD + " for num = " + smalN + " with phi=" + smalPhi);
+		System.out.println("Smallest nOverPhi = " + smalD + " for num = " + smalN + " with phi=" + smalPhi + " with prime count : " + primes.size() + " under " + max);
 
 	}
+	
+	
+	public static int getSmallestFactor(int n, int startFrom) {
+		
+		if(n % 2 == 0) {
+			return 2;
+		}
+        
+        int sqrt = (int) Math.sqrt(n);
+        for (int i = startFrom; i <= sqrt; i += 2) {
+        	if(n % i == 0)
+        		return i;
+        }
+        return n;
+	}
+	
+	
 	
 	private static List<Integer> getPrimesUnderNoSqr(int max) {
 		
