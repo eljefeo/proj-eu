@@ -3,7 +3,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Problem69 {
+public class Problem69 extends ProblemImpl{
 	
 	/*
 	 
@@ -29,21 +29,14 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 
 	public static void main(String[] args) {
 		
-		long startT = System.nanoTime();
-		problem();
+		Problem p = new Problem69();
+		p.runProblem();
+		
 		//problemDidntKnowTheSecret();
 		
-		
-		long endT = System.nanoTime();
-		  
-		  double time = (double) (endT - startT)/1000000000;
-		System.out.println("Took " + time + " seconds");
-
-		
-		System.out.println("::::");
 	}
 	
-	private static void problem() {
+	public void problem() {
 		
 		//this is a shortcut I figured out
 		// since the PE problem only asks for N, doesnt care about phi or phi(n) etc..
@@ -77,9 +70,6 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 		  then the answer is 510510
 		 */
 		int max = 1000000;
-		double maxD = 0;
-		int maxN = 0;
-		int maxPhi = 0;
 		
 		int n = 1;
 		int mult = 1;
@@ -112,7 +102,7 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 		//addAllPrimesUpto(primes, test);
 		//System.out.println("Done getting this many primes to test: " + primes.size());
 		//for (int i = test; i < test+1; i++) { // this is all the numbers we need to check 2 - a million
-		
+		//long totaldone = 0;
 		for (int i = 2; i < max; i++) {
 			
 			if(i % 100000 == 0)
@@ -121,22 +111,30 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 			int phi = 1; // set to 1 because every number has 1 has a coprime?
 			int tempI = i;
 			
+			boolean shouldSkip = false;
+			
 			for(int p = 0; p < primes.size(); p++) {
 				int prime = primes.get(p);
 				//if(prime > (int)Math.sqrt(tempI))
 				if(prime > tempI)
 					break; 
+				
 					// break out early if the primes are larger than our num, no need to continue. Save some time
 			
 				if(i % prime == 0) {
 					phi *= (prime-1);
 					tempI = tempI/prime;
+					//totaldone++;
 					while(tempI % prime == 0) {
+						//totaldone++;
 						tempI /= prime;
 						phi *= prime;
 					}
 				}
 			}
+			
+			//if(shouldSkip)
+			//	continue;
 			
 			if(phi == 1) {
 				phi = i-1;
@@ -149,10 +147,11 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 				maxD = nOverPhi;
 				maxN = i;
 				maxPhi = phi;
+				System.out.println("new bigger phi for " + i + " = " + phi + " with nphi = " + nOverPhi);
 			}
 		}
 		
-		System.out.println("Max nOverPhi = " + maxD +  " for num = " + maxN + " with phi=" + maxPhi);
+		System.out.println("Max nOverPhi = " + maxD +  " for num (answer is this) = " + maxN + " with phi=" + maxPhi); //2635759
 		
 	}
 	
