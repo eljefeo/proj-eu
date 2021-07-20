@@ -130,6 +130,7 @@ public class Util {
         return factors;
     }
 	
+
 	public static List<Integer> getPrimeFactors(int num) {
         int n = num;
         
@@ -140,14 +141,13 @@ public class Util {
             n /= 2;
         }
         
-        
-        for (int i = 3; i <= n / i; i+=2) {
-            while (n % i == 0) {
+        for (int i = 3; i <= Math.sqrt(n); i += 2) {
+        	while (n % i == 0) {
                 factors.add(i);
                 n /= i;
             }
         }
-        if (n > 1) {
+        if (n > 2) {
             factors.add(n);
         }
         return factors;
@@ -221,6 +221,9 @@ public class Util {
 		return factors;
 	}
 	*/
+	
+	
+	
 	public static Set<Integer> getDistinctFactorsIntOldSlow(int num) {
 
 		Set<Integer> factors = new HashSet<Integer>();

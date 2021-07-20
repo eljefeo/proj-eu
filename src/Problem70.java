@@ -22,8 +22,8 @@ public class Problem70 {
 
 	public static void main(String[] args) { // this thing takes like 22 minutes.... we should use the actual formula instead of trying to use our little brain. Need to look up totient equations
 
-		int n = 10000000;
-		//int nt = n/10;
+		int n = 1000;
+		int nt = n/10;
 		long startT = System.nanoTime();
 		
 		//doFactorsStuff();
@@ -33,26 +33,16 @@ public class Problem70 {
 		 //List<Integer> primes =  getPrimesUnder(n);
 		 //System.out.println("prime count: " + primes.size());
 		 
-		 List<Integer> primes =  getPrimesUnderNoSqr(n);
-		 System.out.println("prime count: " + primes.size());
+		 //List<Integer> primes =  getPrimesUnderNoSqr(n);
+		 //System.out.println("prime count: " + primes.size());
 		 
-		 /*
-		 int[] c = new int[nt];
-		 for(int i = 1; i < n; i++) {
-			 int sqrt = (int)Math.sqrt(i);
-			 //System.out.println("Sqrt of " + i + " = " + sqrt);
-			 c[sqrt]++;
-		 }
+		//testSquareRootStuff();
 		 
-		 for(int i = 0; i < nt; i++) {
-			 System.out.println("Sqrt count of " + i + " = " + c[i]);
-		 }
 		 
-		 */
 			/*
 			 * for(Integer i : primes) { System.out.println("prime : " + i); }
 			 */
-		//problemBeforeOtherSecret(); // we could speed it up by only doing 2 primes, all combos of just 2 primes...
+		problemBeforeOtherSecret(); // we could speed it up by only doing 2 primes, all combos of just 2 primes...
 		// but we dont know that for sure..like that would work, but how do I know that would work and not just by chance.
 		
 		
@@ -68,7 +58,6 @@ public class Problem70 {
 		double time = (double) (endT - startT) / 1000000000;
 		System.out.println("problem Took " + time + " seconds");
 
-		
 		//startT = System.nanoTime();
 		//randPrime(n);
 		//endT = System.nanoTime();
@@ -86,8 +75,44 @@ public class Problem70 {
 		
 		//System.out.println(":::: has same digits " + Util.isPermutationDigits(213245, 542312));
 	}
+	
+	public static void testSquareRootStuff() { 
+		int n = 1000;
+		int nt = n/10;
+		int[] c = new int[nt];
+		 for(int i = 1; i < n; i++) {
+			 int sqrt = (int)Math.sqrt(i);
+			 //System.out.println("Sqrt of " + i + " = " + sqrt);
+			 c[sqrt]++;
+		 }
+		 
+		 for(int i = 0; i < nt; i++) {
+			 System.out.println("Sqrt count of " + i + " = " + c[i]);
+		 }
+		 
+	}
 
-
+	public static List<Integer> getPrimeFactors(int num) {
+        int n = num;
+        
+        List<Integer> factors = new ArrayList<Integer>();
+        
+        while (n % 2 == 0) {
+            factors.add(2);
+            n /= 2;
+        }
+        
+        for (int i = 3; i <= Math.sqrt(n); i += 2) {
+        	while (n % i == 0) {
+                factors.add(i);
+                n /= i;
+            }
+        }
+        if (n > 2) {
+            factors.add(n);
+        }
+        return factors;
+    }
 
 
 	private static void problem() {
@@ -170,7 +195,7 @@ public class Problem70 {
 
 	private static void problemBeforeOtherSecret() {
 
-		int max = 10000000, step = max/10;
+		int max = (int) Math.pow(10, 7), step = max/10;
 		double smalD = 10;
 		int smalN = 0;
 		int smalPhi = 0;
@@ -194,7 +219,7 @@ public class Problem70 {
 			
 			int phi = 1; // set to 1 because every number has 1 has a coprime?
 			int tempI = i;
-			
+			int sqrt = (int) Math.sqrt(i);
 			boolean shouldSkip = false;
 			int factorCount = 0;
 			
@@ -205,9 +230,18 @@ public class Problem70 {
 					//System.out.println("Breaking out for prime : " + prime + " with num " + i + " with tempI "+ tempI);
 					break;
 				}
+				
+				//if(prime > Math.sqrt(tempI)) {
+					//tempI /= prime;
+				//	phi *= (prime - 1);
+				//	System.out.println("Should we be doing this prime : " + prime + " with num: " + tempI);
+				//	break;
+				//}
+				
 				// break out early if the primes are larger than our num, no need to continue. Save some time
 
 				if (i % prime == 0) {
+					
 					factorCount++;
 					
 					if(factorCount > 2) { // smallest ratio should be with numbers that are composed of only 2 primes...
@@ -220,24 +254,23 @@ public class Problem70 {
 					
 					phi *= (prime - 1);
 					tempI /= prime;
-					while (tempI % prime == 0) {
-						factorCount++;
-						if(factorCount > 2) { // smallest ratio should be with numbers that are composed of only 2 primes...
+					
+					
+					//while (tempI % prime == 0) {
+					if(tempI % prime == 0) {
+						//factorCount++;
+						//if(factorCount > 2) { // smallest ratio should be with numbers that are composed of only 2 primes...
 							shouldSkip = true;
 							//System.out.println("skipping due to > 2 prime factors");
 							break;
-						}
-						//factors.add(prime);
-						tempI /= prime;
-						phi *= prime;
+						//}
+						//tempI /= prime;
+						//phi *= prime;
 					}
-					if(shouldSkip || factorCount > 2) {
-						//break;
-					 // smallest ratio should be with numbers that are composed of only 2 primes...
-						shouldSkip = true;
-						//System.out.println("skipping due to > 2 prime factors");
-						break;
-					}
+					
+					//if(shouldSkip || factorCount > 2) {
+					//	break;
+					//}
 						
 				}
 			}
