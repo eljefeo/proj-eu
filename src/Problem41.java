@@ -1,4 +1,4 @@
-import java.util.List;
+
 
 public class Problem41 extends ProblemImpl{
 
