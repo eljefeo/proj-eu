@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem33 {
+public class Problem33 extends ProblemImpl {
 	/*
 	 * The fraction 49/98 is a curious fraction, as an inexperienced
 	 * mathematician in attempting to simplify it may incorrectly believe that
@@ -18,10 +18,11 @@ public class Problem33 {
 	 */
 
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem33();
+		p.runProblem();
 	}
 
-	private static void problem() {
+	public void problem() {
 
 		double a = 4;
 		double b = 8;
@@ -59,7 +60,12 @@ public class Problem33 {
 			denTot *= arr[1];
 		}
 		System.out.println("sol tot : " + numTot + " / " + denTot);
-		System.out.println("sol reduced tot : " + Util.reduceFraction(numTot, denTot));
+		
+		int[] reduced = Util.reduceFractionNumerDenom(numTot, denTot);
+		
+		System.out.println("sol reduced tot : " + reduced[0] + " / " + reduced[1]);
+		
+		System.out.println("Answer -- found denominator : " + reduced[1]);
 	}
 
 	private static boolean hasAlready(List<int[]> sols, int a, int b) {

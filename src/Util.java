@@ -874,6 +874,11 @@ public static int summationFromTo(int start, int end) {
 		long gcd = gcd(a, b);
 		return (a / gcd) + "/" + (b / gcd);
 	}
+	
+	public static int[] reduceFractionNumerDenom(long a, long b) {
+		long gcd = gcd(a, b);
+		return new int[] {(int) (a / gcd), (int) (b / gcd)};
+	}
 
 	public static int sumOfDigitFactorial(int num) {
 		int[] digits = splitIntNumsToArray(num);

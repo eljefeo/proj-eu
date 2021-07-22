@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem32 {
+public class Problem32 extends ProblemImpl{
 
 	/*
 	 * We shall say that an n-digit number is pandigital if it makes use of all
@@ -19,10 +19,11 @@ public class Problem32 {
 	 * 
 	 */
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem32();
+		p.runProblem();
 	}
 
-	private static void problem() {
+	public void problem() {
 		List<Integer> foundNums = new ArrayList<Integer>();
 		int max = 10000;
 		int step = 1000; // just used for logging

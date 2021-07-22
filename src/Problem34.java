@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem34 {
+public class Problem34 extends ProblemImpl {
 		/*
 		 
 		 
@@ -20,20 +20,24 @@ public class Problem34 {
 	
 	
 	public static void main(String[] args) {
-		//problem();
+		
+		Problem p = new Problem34();
+		p.runProblem();
+		
+		
 		//int test = 9999;
-		int i = 10;
-		while(true){
-			int sum = Util.sumOfDigitFactorial(i++);
-			if(sum < i){
-				System.out.println("sum of "+i+" = " + sum + " and is greater? " + (sum<i));
-			}
-		}
+		//int i = 10;
+		//while(true){
+			//int sum = Util.sumOfDigitFactorial(i++);
+			//if(sum < i){
+				//System.out.println("sum of "+i+" = " + sum + " and is greater? " + (sum<i));
+			//}
+		//}
 		
 		
 	}
 	
-	private static void problem(){
+	public void problem(){
 		List<Long> sols = new ArrayList<Long>();
 		int max = 9999999;
 		for(long i=3; i<max; i++){

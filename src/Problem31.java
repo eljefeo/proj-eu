@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Problem31 {
+public class Problem31 extends ProblemImpl {
 
 	/*
 	 * In the United Kingdom the currency is made up of pound ($) and pence (p).
@@ -22,12 +22,13 @@ public class Problem31 {
 	// public static List<Integer[]> allcombs;
 
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem31();
+		p.runProblem();
 	}
 
 	static List<List<Integer>> all;
 
-	private static void problem() {
+	public void problem() {
 		all = new ArrayList<List<Integer>>();
 		int[] UKcoins = {1,2,5,10,20,50,100,200} ;
 		int agoal = 200;
