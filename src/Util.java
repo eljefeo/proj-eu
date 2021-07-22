@@ -433,9 +433,25 @@ public static int summationFromTo(int start, int end) {
 	}
 	
 	
-	public static boolean isPalindromeInt(int i) {
+	
+	
+public static boolean isPalindromeInt(int i) {
 		return isPalindromeString(""+i);
 	}
+
+
+public static boolean isPalindromeIntSlower(int num) { //slower but just fun to do with only ints and no strings
+		int dCount = Util.countDigits(num);
+		int t = num, mp = 0;
+		for(int i=1; i<dCount; i+=2){
+			mp = (int) Math.pow(10, dCount-i);
+			if(t/mp != t%mp%10) 
+				return false;
+			t = (t%mp)/10;
+		}
+		return true;
+}
+
 	
 	public static boolean isPalindromeLong(long i) {
 		return isPalindromeString(""+i);
@@ -586,16 +602,14 @@ public static int summationFromTo(int start, int end) {
 		String bs = b.toString();
 		int sum = 0;
 		for(int i=0; i<bs.length(); i++) {
-			
 			String aChar = bs.charAt(i)+"";
-			
 			Integer a = Integer.parseInt(aChar);
 			sum += a;
-			
 		}
-		
 		return sum;
 	}
+	
+	
 
 	public static int[] splitIntNumsToArray(int num) {
 
@@ -624,6 +638,10 @@ public static int summationFromTo(int start, int end) {
 	}
 
 	public static int countDigits(int num) {
+		return (int)(Math.log10(num)+1);
+	}
+	
+	public static int countDigitsOld(int num) {
 		int count = 0;
 		while (num != 0) {
 			num /= 10;
@@ -647,7 +665,6 @@ public static int summationFromTo(int start, int end) {
 			fact *= i;
 		}
 		return fact;
-
 	}
 
 	public static long factorial(long num) {
@@ -656,7 +673,6 @@ public static int summationFromTo(int start, int end) {
 			fact *= i;
 		}
 		return fact;
-
 	}
 	
 	
@@ -762,6 +778,8 @@ public static int summationFromTo(int start, int end) {
 
 	}
 	
+	
+	
 	public static List<Integer> makeAllPanditalNumsFromZeroTo(int end){
 		return makeAllPanditalNumsFromTo(0,end);
 	}
@@ -770,6 +788,58 @@ public static int summationFromTo(int start, int end) {
 		return makeAllPanditalNumsFromTo(1,end);
 	}
 	
+	
+	/*
+	public static List<Integer> makeAllPrimePanditalNumsFromOneTo(int end){
+		return makeAllPrimePanditalNumsFromTo(1,end);
+	}
+	
+	public static List<Integer> makeAllPrimePanditalNumsFromTo(int start, int end){
+		List<String> all = new ArrayList<String>();
+		String s = "";
+		for(int i=start; i<=end; i++){
+			s += i;
+		}
+		Util.makeAllPrimePermutationsRecur("", s, all);
+		List<Integer> alln = new ArrayList<Integer>();
+		for(String st : all){
+			alln.add(Integer.parseInt(st));
+		}
+		return alln;
+	}
+	
+	public static void makeAllPrimePermutationsRecur(String s, String r, List<String> all){
+		if(r.length() == 0){
+			all.add(s);
+		} else {
+			
+			//System.out.println("Continuing to do r = " + r);
+			for(int i=0; i<r.length(); i++){
+				String newS = s + r.charAt(i);
+				String newR = r.substring(0,i) + r.substring(i+1);
+				
+				boolean shouldSkip = true;
+				for(int j=0; j<newR.length(); j++){
+					System.out.println("Checking newR=" + newR + " specifically " + newR.charAt(j));
+					if(Integer.parseInt(newR.charAt(j)+"") % 2 != 0) { 
+						// check if the only numbers that are left are all even,  then the last number will end up being even, so not prime
+						//System.out.println("Should not skip because newR = " + newR);
+						shouldSkip = false;
+						break;
+					}
+				}
+				
+				if(shouldSkip) {
+					System.out.println("Should yes skip because newR = " +newR);
+					continue;
+				}
+					
+				
+				makeAllPermutationsRecur(newS, newR, all);
+			}
+		}
+	}
+	*/
 	public static List<Integer> makeAllPanditalNumsFromTo(int start, int end){
 		List<String> all = new ArrayList<String>();
 		String s = "";

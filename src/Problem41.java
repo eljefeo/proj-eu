@@ -1,3 +1,4 @@
+import java.util.List;
 
 public class Problem41 extends ProblemImpl{
 
@@ -8,17 +9,36 @@ What is the largest n-digit pandigital prime that exists?
 	 */
 	
 	public static void main(String[] args) { // TAKES 12 sec
+		//int test = 1233334;
+		//System.out.println("count digits : " + Util.countDigitsOld(test) + " vs " + Util.countDigits(test));
+		
 		Problem p = new Problem41();
 		p.runProblem();
+		//System.out.println("div : " + (3034/1000));
+		
+		
+		
 	}
 	
 	public void problem(){
+		
+		int solution = 0;
+		// can we just do all pandigital numbers...
+		for(int i=2; i<10; i++)
+			for(Integer s : Util.makeAllPanditalNumsFromOneTo(i)) 
+				if(Util.isPrime(s) && s > solution) 
+					solution = s;
+		
+		System.out.println("Max: " + solution);
+	}  
+
+	public void problem2(){ //old slow way
 		int test  = 6582143;
 		/*boolean isNthDigitPandigital = isNthDigitPandigitalNumber(test);
 		boolean isPrime = Util.isPrime(test);
 		System.out.println(test + " is nth digit pandigital? " + isNthDigitPandigital);
 		System.out.println(test + " is prime? " + isPrime);*/
-		int max = 99999999;
+		int max = 999999999;
 		int solution = 0;
 		int step = 10000000;
 		for(int i=0; i<max; i++){
