@@ -1,7 +1,6 @@
-import java.util.ArrayList;
 import java.util.List;
 
-public class Problem39 {
+public class Problem39 extends ProblemImpl{
 
 	
 	/*
@@ -13,10 +12,11 @@ public class Problem39 {
 	 */
 	
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem39();
+		p.runProblem();
 	}
 	
-	private static void problem(){
+	public void problem(){
 		// Right triangle perimeter = a+b + sqrRoot(a^2 + b^2)
 		// a and b are the 2 sides on the right angle. C is the longest side
 		// a^2 + b^2 = c^2
@@ -33,7 +33,7 @@ public class Problem39 {
 				maxP = p;
 			}
 		}
-		System.out.println("Max P : " + maxP + " with count " + maxPCount);
+		System.out.println("Answer: " + maxP + " with count " + maxPCount);
 	}
 	
 

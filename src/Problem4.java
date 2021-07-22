@@ -2,7 +2,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Problem4 {
+public class Problem4 extends ProblemImpl{
 
 	
 /*	A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
@@ -12,28 +12,27 @@ public class Problem4 {
 	
 	public static void main(String[] args) {
 		
-		problem();
+		Problem p = new Problem4();
+		p.runProblem();
 	}
 	
-	public static void problem(){
+	public void problem(){
 		
 		Set<Integer> palindromes = new HashSet<Integer>();
 		
 		int min = 100;
 		int max = 999;
+		int largest = 0;
 		for (int i = min; i <= max; i++){
 			for (int j = min; j <= max; j++){
 				int prod = i*j;
-				String prodStr = prod + "";
-				if(Util.isPalindromeString(prodStr)){
-					palindromes.add(prod);
+				if(Util.isPalindromeInt(prod) && prod > largest){
+					largest = prod;
 				}
-				
 			}
 		}
 		
-		int largestPal = Collections.max(palindromes);
-		System.out.println("Largest palindrome " + largestPal); 
+		System.out.println("Largest palindrome " + largest); 
 	}
 	
 	

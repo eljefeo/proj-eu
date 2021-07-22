@@ -1,5 +1,5 @@
 
-public class Problem36 {
+public class Problem36 extends ProblemImpl{
 
 	/*
 	 * 
@@ -15,10 +15,11 @@ public class Problem36 {
 	 */
 
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem36();
+		p.runProblem();
 	}
 
-	private static void problem() {
+	public void problem() {
 		int max = 1000000;
 		int sum = 0;
 		

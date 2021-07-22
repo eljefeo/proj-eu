@@ -10,15 +10,14 @@ import java.util.Set;
 public class Util {
 	public static boolean isPrime(long num) {
 
-		if (num < 0 || num == 1) {
-			return false;
-		}
 		if (num == 2) {
 			return true;
 		}
-		if (num % 2 == 0) {
+		
+		if (num < 0 || num == 1 || num % 2 == 0) {
 			return false;
 		}
+		
 		for (long i = 3; i <= Math.sqrt(num); i += 2) {
 			if (num % i == 0) {
 				return false;
@@ -431,7 +430,6 @@ public static int summationFromTo(int start, int end) {
 			}
 		}
 		return true;
-
 	}
 	
 	
@@ -976,17 +974,12 @@ public static int summationFromTo(int start, int end) {
 
 	public static boolean isTruncatablePrimeBackwardsAndForwards(int num) {
 		int dcount = Util.countDigits(num);
-		int test = num;
-		int test2 = num;
+		int test = num, test2 = num;
 
 		for (int i = 0; i < dcount; i++) {
 			test = test % (int) Math.pow(10, dcount - i);
 			test2 = test2 / 10;
-			if (!Util.isPrime(test)) {
-				return false;
-			}
-
-			if (test2 != 0 && !Util.isPrime(test2)) {
+			if (!Util.isPrime(test) || (test2 != 0 && !Util.isPrime(test2))) {
 				return false;
 			}
 		}
@@ -1026,8 +1019,7 @@ public static int summationFromTo(int start, int end) {
 	}
 
 	public static int appendIntToInt(int first, int second) {
-		String f = first + "" + second;
-		return Integer.parseInt(f);
+		return Integer.parseInt(first + "" + second);
 	}
 
 	public static List<int[]> findRightTriangleSidesFromPerimeter(int p) {

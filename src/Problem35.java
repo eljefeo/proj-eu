@@ -9,13 +9,14 @@ How many circular primes are there below one million?
  * 
  * 
  */
-public class Problem35 {
+public class Problem35 extends ProblemImpl{
 	
 	public static void main(String[] args){
-		problem();
+		Problem p = new Problem35();
+		p.runProblem();
 	}
 	
-	public static void problem(){
+	public void problem(){
 		int max = 1000000;
 		int counter = 0;
 		//System.out.println("Is Cir Prime : " + 5 + " : " +  Util.isCircularPrime(a));

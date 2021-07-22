@@ -1,5 +1,5 @@
 
-public class Problem40 {
+public class Problem40 extends ProblemImpl{
 
 	/*
 	 	An irrational decimal fraction is created by concatenating the positive integers:
@@ -15,8 +15,8 @@ public class Problem40 {
 	 */
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		problem();
+		Problem p = new Problem40();
+		p.runProblem();
 	}
 	
 	
@@ -32,7 +32,7 @@ public class Problem40 {
 	//....etc
 	//so count digits
 	// then 10 + (9 Math.pow(10,digits.length or -1)
-	private static void problem(){
+	public void problem(){
 		int product = 1;
 		for(int i=0; i<7; i++){
 			product *= Util.findNthDigitOfAllNums((int)Math.pow(10, i));;

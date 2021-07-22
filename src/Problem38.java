@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem38 {
+public class Problem38 extends ProblemImpl{
 	/*
 	 * Take the number 192 and multiply it by each of 1, 2, and 3:
 	 * 
@@ -19,13 +19,14 @@ public class Problem38 {
 	 */
 
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem38();
+		p.runProblem();
 	}
 
-	private static void problem() {
+	public void problem() { // TODO when do we stop...why do we just go to 999999
 		int maxSol = 0;
 		int min = 1;
-		int max = 999999;
+		int max = 9999; // if we start doing 5 digit numbers we will at least end up with 10 digits in the result, too many
 		List<int[]> numsAndN = new ArrayList<int[]>();
 		
 		for (int i = min; i < max; i++) {
