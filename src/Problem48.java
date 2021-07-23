@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class Problem48 {
+public class Problem48 extends ProblemImpl{
 
 	/*
 	 The series, 1^1 + 2^2 + 3^3 + ... + 10^10 = 10405071317.
@@ -11,10 +11,11 @@ public class Problem48 {
 	
 	
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem48();
+		p.runProblem();
 	}
 	
-	private static void problem(){
+	public void problem(){
 		int max = 1001;
 		long tenDigits = 10000000000L;
 		BigInteger b = new BigInteger("0");

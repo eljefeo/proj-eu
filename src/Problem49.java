@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Problem49 {
+public class Problem49 extends ProblemImpl{
 
 	/*
 	 The arithmetic sequence, 1487, 4817, 8147, in which each of the terms increases by 3330, is unusual in two ways: (i) each of the three terms are prime, and, (ii) each of the 4-digit numbers are permutations of one another.
@@ -13,10 +13,11 @@ public class Problem49 {
 	 */
 	
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem49();
+		p.runProblem();
 	}
 	
-	private static void problem(){
+	public void problem(){
 		int start = 1000;
 		int end = 9999;
 		for(int i = start; i < end; i++){

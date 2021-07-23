@@ -1,5 +1,5 @@
 
-public class Problem50 {
+public class Problem50 extends ProblemImpl {
 
 	/*
 	The prime 41, can be written as the sum of six consecutive primes:
@@ -13,10 +13,11 @@ public class Problem50 {
 	*/
 	
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem50();
+		p.runProblem();
 	}
 	
-	private static void problem(){
+	public void problem(){
 		int end = 1000000;
 		int bestPCount = 0;
 		int bestPrime = 0;
