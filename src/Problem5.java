@@ -59,9 +59,6 @@ public class Problem5 extends ProblemImpl{
 			for(int j=0; j < tempCount.length; j++) 
 				if(tempCount[j] > primeCounts[j]) 
 					primeCounts[j] = tempCount[j];
-				
-			
-			
 		}
 		
 		int tot = 1;
