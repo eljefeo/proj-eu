@@ -1307,9 +1307,9 @@ public static boolean isPalindromeIntSlower(int num) { //slower but just fun to 
 	}
 	
 	public static long getIndexOfPentagonalNumber(long n){
-		long sqr =  (long)(Math.sqrt(n*6) + 1) / 3;
-		if(getPentagonalNumber(sqr) == n){
-			return sqr;
+		long pent =  (long)(Math.sqrt(n*6) + 1) / 3;
+		if(getPentagonalNumber(pent) == n){
+			return pent;
 		}
 		return -1;
 	}
@@ -1609,6 +1609,113 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		}
 		return ns.charAt(0) + "" + ns.charAt(1);
 	}
+	
+	
+	public static List<Integer> getPrimesUnderNoSqr(int max) {
+		// this method does not have to calculate the square root of the number to find the limit
+		// we use some math tricks to know what the square root is
+		// for some reason it is slower than just calculating the square root everytime lol
+		int n = 1;
+		List<Integer> primes = new ArrayList<Integer>();
+		
+		int sqrtCounter = 1;
+		int sqrtNext = 3;
+		int sqrt = 1;
+		
+		primes.add(2);
+		
+		
+		while ((n+=2) < max) {
+			
+			sqrtCounter+=2;
+			
+			boolean foundPrime = true;
+			for (int p = 0; p < primes.size(); p++) {
+				int prime = primes.get(p);
+				if(prime > sqrt)
+					break;
+				
+				if (n % prime == 0) {
+					foundPrime = false;
+					break;
+				}
+			}
+			if (foundPrime) {
+				primes.add(n);
+			}
+			//System.out.println("Doing " + n + " with sqrtnext = " + sqrtNext + " with counter = " + sqrtCounter + " , and sqrt = " + sqrt );
+				
+			
+			if(sqrtCounter > sqrtNext-2) { // here is where we calculate the square root
+				sqrtNext += 2;
+				sqrtCounter = sqrtNext-sqrtCounter;
+				sqrt++;
+				//System.out.println("Setting sqrtnext to " + sqrtNext + " with counter now " + sqrtCounter + " , and sqrt is now " + sqrt );
+			
+			}  	
+				
+		}
+		
+		return primes;
+		
+	}
+	
+	public static List<Integer> getPrimesUnder(int max) {
+		
+		int n = 1;
+		List<Integer> primes = new ArrayList<Integer>();
+		
+		//int sqrtCounter = 1;
+		//int sqrtNext = 3;
+		//int sqrt = 1;
+		
+		primes.add(2);
+		
+		
+		while ((n+=2) < max) {
+			
+			//sqrtCounter+=2;
+			
+			
+			int sqrt = (int) Math.sqrt(n);
+			
+			
+			boolean foundPrime = true;
+			for (int p = 0; p < primes.size(); p++) {
+				int prime = primes.get(p);
+				if(prime > sqrt)
+					break;
+				
+				if (n % prime == 0) {
+					foundPrime = false;
+					break;
+				}
+			}
+			if (foundPrime) {
+				primes.add(n);
+			}
+
+				
+		}
+		
+		
+		
+		return primes;
+		
+	}
+
+
+
+	public static List<Integer> getPrimesUnder2(int num) {
+		List<Integer> primes = new ArrayList<Integer>();
+		for (int i = 2; i < num; i++) {
+			if (Util.isPrime(i)) {
+				primes.add(i);
+			}
+		}
+		return primes;
+	}
+	
 	
 	
 }

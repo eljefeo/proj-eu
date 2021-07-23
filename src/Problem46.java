@@ -1,5 +1,5 @@
 
-public class Problem46 {
+public class Problem46 extends ProblemImpl{
 	
 	/*
 	 It was proposed by Christian Goldbach that every odd composite number can be written as the sum of a prime and twice a square.
@@ -17,6 +17,12 @@ public class Problem46 {
 	 */
 
 	public static void main(String[] args) {
+		
+		Problem p = new Problem46();
+		p.runProblem();
+	}
+	
+	public void problem() {
 		long max = 1000000;
 		for(long i = 9; i < max; i+=2){
 			
@@ -25,20 +31,23 @@ public class Problem46 {
 			}
 			
 			boolean isMatch = true;
-			for(long j=1; (2*Math.pow(j, 2)) < i-1; j++){
-				long dif = i - (long)(2*Math.pow(j, 2));
+			long twiceSquare = 0;
+			for(long j=1; (twiceSquare = (long) (2*Math.pow(j, 2))) < i-2; j++){
+				// we go through all twice squares less than the number
+				// then we see if the difference is a prime
+				// this means yes that num is the sum of a prime and twice a square
+				long dif = i - twiceSquare;
 				if(Util.isPrime(dif)){
 					isMatch = false;  // this means it CAN be written as sum of a prime and twice a square.
 					break;
 				}
 			}
-			if(isMatch) { 
+			if(isMatch) { // if we dont 'break' in the loop above then we have the answer;
 				System.out.println("Yay : " + i );
 				return;
 			}
 			
 		}
-
 	}
 
 }

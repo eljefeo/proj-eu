@@ -1,6 +1,8 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
-public class Problem47 {
+public class Problem47 extends ProblemImpl {
 
 	/*
 	 The first two consecutive numbers to have two distinct prime factors are:
@@ -18,47 +20,55 @@ public class Problem47 {
 			 
 	 */
 	public static void main(String[] args) {
-		long startT = System.nanoTime();
-		
-		problem();
-		
-		long endT = System.nanoTime();
-		double time = (double) (endT - startT)/1000000000;
-		System.out.println("Took " + time + " seconds");
+		Problem p = new Problem47();
+		p.runProblem();
 	}
 	
-	
-	private static void problem(){
-		int max = 1000000;
-		//int max = 30;
-		int numFactors = 4;
-		for(int i = 20; i< max; i++){
-			boolean found = true;
-			int m = i+numFactors;
-			for(; i<m; i++){
-				Set<Integer> factors = Util.getDistinctPrimeFactors(i);
-				if(factors.size() != numFactors){
-					found = false;
-					i++;
-					break;
-				}
-			}
-			if(found){
-				i-=numFactors; // go backwards to the beginning of the winning nums;
-				System.out.println("Win at i " + (i-numFactors));
-				//The solution is done. This next snippet is just to print the solution and factors for information purposes...
-				System.out.println("We found " + i + ", " + (i+1) + ", " + (i+2) + ", " + (i+3));
-				for(int j=0; j<numFactors; j++){
-					Set<Integer> factors = Util.getDistinctPrimeFactors(i+j);
-					System.out.print("factors of " + (i+j) + " : ");
-					for(Integer k : factors){
-						System.out.print(k +" ");
+	public void problem(){
+		
+		int howManyFactors = 4, howManyConsecutive = 4, i = 3;
+		List<Integer> primes = Util.getPrimesUnder(i-1);
+		
+			doit:
+			for(int m = i+howManyConsecutive; i<m; i++){
+				// we pretty much just start counting the prime factors of i
+				// we keep track of primes as we go, so finding factors is just go through the list of primes to see if they are a factor
+				// we keep extending the condition of the for loop. That way the only way out of the for loop is to solve the problem
+				int temp = i, factCount = 0;
+				
+				for(Integer p : primes) {
+					if(p > Math.sqrt(temp)) {
+						if(factCount == 0) {
+							primes.add(i);
+							m = i+howManyConsecutive+1;
+							continue doit;
+						} else if(temp > 1) {
+							factCount++; 
+						}
+						
+						break;
 					}
-					System.out.println();
+					if(temp % p == 0) {
+						factCount++;
+						if(factCount > 4) {
+							m = i+howManyConsecutive+1;
+							continue doit;
+						}
+						
+						while(temp % p == 0)
+							temp /= p;
+					}
 				}
-				return;
+				
+				if(factCount != howManyFactors) {
+					m = i+howManyConsecutive+1;
+					continue doit;
+				}
 			}
-		}
+			
+			System.out.println("First prime (of " + howManyConsecutive + " consecutive) to have " + howManyFactors + " factors: " + (i-howManyConsecutive));
+
 	}
+
 
 }

@@ -70,6 +70,77 @@ public class Problem70 extends ProblemImpl {
 		//System.out.println(":::: has same digits " + Util.isPermutationDigits(213245, 542312));
 	}
 	
+	public void problem() {
+
+		int max = (int) Math.pow(10, 7), step = max/10;
+		double smalD = 10;
+		int smalN = 0;
+		int smalPhi = 0;
+
+		List<Integer> primes = new ArrayList<Integer>();
+		primes.add(2);
+		// for testing:
+		// int test = max;
+		// addAllPrimesUpto(primes, test);
+		// System.out.println("Done getting this many primes to test: " +
+		// primes.size());
+		// for (int i = test; i < test+1; i++) { // this is all the numbers we need to
+		// check 2 - a million
+
+		nums:
+		for (int i = 3; i < max; i++) {
+
+			if (i % step == 0)
+				System.out.println((i*10/step) + "% complete");
+			
+			int phi = 1; // set to 1 because every number has 1 has a coprime?
+			int tempI = i;
+			int factorCount = 0;
+			
+			for (int p = 0; p < primes.size(); p++) {
+				int prime = primes.get(p);
+				if(prime > Math.sqrt(tempI)) {
+					if(factorCount == 0) { // if no factors below sqrt of num, that num is prime
+						primes.add(i);
+						continue nums;// but we dont want to actually use phi of primes, its too big, so we skip it but use the prime for later
+					} else if(tempI > 1) { // else if no other primes under sqrt, but has other factors, then tempI is now prime and is the second factor. 
+						//This means we found a num with only 2 factors which is what we want
+						phi *= (tempI - 1);
+						break;
+					}
+					
+				}
+
+				if (tempI % prime == 0) { // we found a factor of i
+					factorCount++;
+					tempI /= prime; // divide our temp value, dividing out this factor
+					if(factorCount > 1 || tempI % prime == 0) { 
+						// tempI % prime == 0  this num (i) is divisible by the same factor twice, this is not what we want. This will increase phi and we want phi to be closest to 1
+						
+						// factorCount > 1  smallest ratio should be with numbers that are composed of only 2 primes...
+						// if we get here and we found more than 1 factor, we should have caught it above in the sqrt check for a num with only 2 factors. 
+						// the fact that we are here means we are at a num with > 2 factors... skip it
+						continue nums;
+					}
+					phi *= (prime - 1);
+				}
+			}
+				
+				if(Util.isPermutationDigits(i, phi)) {
+					double nOverPhi = (double) i / phi;
+					if (nOverPhi < smalD) {
+						smalD = nOverPhi;
+						smalN = i;
+						smalPhi = phi;
+						//System.out.println("New smallest permutation nOverPhi = " + smalD + " for num = " + smalN + " with phi=" + smalPhi);
+					}
+				}
+		}
+
+		System.out.println("Smallest nOverPhi = " + smalD + " for num = " + smalN + " with phi=" + smalPhi + " with prime count : " + primes.size() + " under " + max);
+
+	}
+	
 	public static void testSquareRootStuff() { 
 		int n = 1000;
 		int nt = n/10;
@@ -85,8 +156,6 @@ public class Problem70 extends ProblemImpl {
 		 }
 		 
 	}
-
-
 
 	private static void doFactorsStuff() {
 		List<Integer> thingsToFactor = new ArrayList<Integer>();
@@ -161,76 +230,7 @@ public class Problem70 extends ProblemImpl {
 	
 	
 	
-	public void problem() {
 
-		int max = (int) Math.pow(10, 7), step = max/10;
-		double smalD = 10;
-		int smalN = 0;
-		int smalPhi = 0;
-
-		List<Integer> primes = new ArrayList<Integer>();
-		primes.add(2);
-		// for testing:
-		// int test = max;
-		// addAllPrimesUpto(primes, test);
-		// System.out.println("Done getting this many primes to test: " +
-		// primes.size());
-		// for (int i = test; i < test+1; i++) { // this is all the numbers we need to
-		// check 2 - a million
-
-		nums:
-		for (int i = 3; i < max; i++) {
-
-			if (i % step == 0)
-				System.out.println((i*10/step) + "% complete");
-			
-			int phi = 1; // set to 1 because every number has 1 has a coprime?
-			int tempI = i;
-			int factorCount = 0;
-			
-			for (int p = 0; p < primes.size(); p++) {
-				int prime = primes.get(p);
-				if(prime > Math.sqrt(tempI)) {
-					if(factorCount == 0) { // if no factors below sqrt of num, that num is prime
-						primes.add(i);
-						continue nums;// but we dont want to actually use phi of primes, its too big, so we skip it but use the prime for later
-					} else if(tempI > 1) { // else if no other primes under sqrt, but has other factors, then tempI is now prime and is the second factor. 
-						//This means we found a num with only 2 factors which is what we want
-						phi *= (tempI - 1);
-						break;
-					}
-					
-				}
-
-				if (tempI % prime == 0) { // we found a factor of i
-					factorCount++;
-					tempI /= prime; // divide our temp value, dividing out this factor
-					if(factorCount > 1 || tempI % prime == 0) { 
-						// tempI % prime == 0  this num (i) is divisible by the same factor twice, this is not what we want. This will increase phi and we want phi to be closest to 1
-						
-						// factorCount > 1  smallest ratio should be with numbers that are composed of only 2 primes...
-						// if we get here and we found more than 1 factor, we should have caught it above in the sqrt check for a num with only 2 factors. 
-						// the fact that we are here means we are at a num with > 2 factors... skip it
-						continue nums;
-					}
-					phi *= (prime - 1);
-				}
-			}
-				
-				if(Util.isPermutationDigits(i, phi)) {
-					double nOverPhi = (double) i / phi;
-					if (nOverPhi < smalD) {
-						smalD = nOverPhi;
-						smalN = i;
-						smalPhi = phi;
-						System.out.println("New smallest permutation nOverPhi = " + smalD + " for num = " + smalN + " with phi=" + smalPhi);
-					}
-				}
-		}
-
-		System.out.println("Smallest nOverPhi = " + smalD + " for num = " + smalN + " with phi=" + smalPhi + " with prime count : " + primes.size() + " under " + max);
-
-	}
 	
 	
 	public static int getSmallestFactor(int n, int startFrom) {
@@ -247,130 +247,7 @@ public class Problem70 extends ProblemImpl {
         return n;
 	}
 	
-	
-	
-	private static List<Integer> getPrimesUnderNoSqr(int max) {
-		
-		int n = 1;
-		List<Integer> primes = new ArrayList<Integer>();
-		
-		int sqrtCounter = 1;
-		int sqrtNext = 3;
-		int sqrt = 1;
-		
-		primes.add(2);
-		
-		
-		while ((n+=2) < max) {
-			
-			sqrtCounter+=2;
-			
-			boolean foundPrime = true;
-			for (int p = 0; p < primes.size(); p++) {
-				int prime = primes.get(p);
-				if(prime > sqrt)
-					break;
-				
-				if (n % prime == 0) {
-					foundPrime = false;
-					break;
-				}
-			}
-			if (foundPrime) {
-				primes.add(n);
-			}
-			//System.out.println("Doing " + n + " with sqrtnext = " + sqrtNext + " with counter = " + sqrtCounter + " , and sqrt = " + sqrt );
-				
-			
-			if(sqrtCounter > sqrtNext-2) {
-				sqrtNext += 2;
-				sqrtCounter = sqrtNext-sqrtCounter;
-				sqrt++;
-				//System.out.println("Setting sqrtnext to " + sqrtNext + " with counter now " + sqrtCounter + " , and sqrt is now " + sqrt );
-			
-			}  	
-				
-		}
-		
-		
-		
-		return primes;
-		
-	}
-	
-private static List<Integer> getPrimesUnder(int max) {
-		
-		int n = 1;
-		List<Integer> primes = new ArrayList<Integer>();
-		
-		//int sqrtCounter = 1;
-		//int sqrtNext = 3;
-		//int sqrt = 1;
-		
-		primes.add(2);
-		
-		
-		while ((n+=2) < max) {
-			
-			//sqrtCounter+=2;
-			
-			
-			int sqrt = (int) Math.sqrt(n);
-			
-			
-			boolean foundPrime = true;
-			for (int p = 0; p < primes.size(); p++) {
-				int prime = primes.get(p);
-				if(prime > sqrt)
-					break;
-				
-				if (n % prime == 0) {
-					foundPrime = false;
-					break;
-				}
-			}
-			if (foundPrime) {
-				primes.add(n);
-			}
-			//System.out.println("Doing " + n + " with sqrtnext = " + sqrtNext + " with counter = " + sqrtCounter + " , and sqrt = " + sqrt );
-				
-			
-			
-				
-		}
-		
-		
-		
-		return primes;
-		
-	}
 
-
-
-	private static void addAllPrimesUpto(List<Integer> primes, int test) {
-		for (int i = 2; i < test; i++) {
-			if (Util.isPrime(i)) {
-				primes.add(i);
-			}
-		}
-
-	}
-	
-	
-
-	private static void problem2() {
-
-		int test = 510510; // ten million
-		// 210 2310 30030 510510
-		List<Integer> facts = Util.getPrimeFactors(test);
-
-		for (Integer i : facts) {
-			System.out.println("Factor : " + i);
-		}
-		System.out.println("**********");
-		// facts = Util.getPrimeFactors2(test);
-
-	}
 
 	/*
 	 * Factor : 2 Factor : 2 Factor : 2 Factor : 5 Factor : 5 Factor : 5 Factor : 5
