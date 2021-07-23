@@ -1664,41 +1664,21 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		
 		int n = 1;
 		List<Integer> primes = new ArrayList<Integer>();
-		
-		//int sqrtCounter = 1;
-		//int sqrtNext = 3;
-		//int sqrt = 1;
-		
 		primes.add(2);
-		
-		
 		while ((n+=2) < max) {
-			
-			//sqrtCounter+=2;
-			
-			
 			int sqrt = (int) Math.sqrt(n);
-			
-			
-			boolean foundPrime = true;
 			for (int p = 0; p < primes.size(); p++) {
 				int prime = primes.get(p);
-				if(prime > sqrt)
+				if(prime > sqrt) {
+					primes.add(n);
 					break;
+				}
 				
 				if (n % prime == 0) {
-					foundPrime = false;
 					break;
 				}
 			}
-			if (foundPrime) {
-				primes.add(n);
-			}
-
-				
 		}
-		
-		
 		
 		return primes;
 		
@@ -1706,7 +1686,7 @@ public static boolean hasSameUniqueDigits(int a, int b){
 
 
 
-	public static List<Integer> getPrimesUnder2(int num) {
+	public static List<Integer> getPrimesUnderOtherSlow(int num) {
 		List<Integer> primes = new ArrayList<Integer>();
 		for (int i = 2; i < num; i++) {
 			if (Util.isPrime(i)) {
