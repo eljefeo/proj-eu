@@ -1,3 +1,4 @@
+import java.util.List;
 
 public class Problem10 extends ProblemImpl{
 
@@ -11,6 +12,19 @@ public class Problem10 extends ProblemImpl{
 	}
 	
 	public void problem(){
+		int max = 2000000;
+		long runningTotal = 0;
+		List<Integer> primes = Util.getPrimesUnder(max);
+		for(int i : primes)
+			runningTotal += i;
+		System.out.println("Found: " + runningTotal);
+	}
+	
+	public void problemOld(){
+		
+		//Found: 142913828922
+
+		//Took 0.640592 seconds
 		int max = 2000000;
 		long runningTotal = 2;
 		for(int i = 3; i < max; i+=2){
