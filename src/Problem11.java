@@ -1,5 +1,5 @@
 
-public class Problem11 extends ProblemImpl{
+public class Problem11 extends ProblemImpl { //Took 0.000237 seconds
 
 	
 	/*

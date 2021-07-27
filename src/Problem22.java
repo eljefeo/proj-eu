@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Problem22 extends ProblemImpl{
+public class Problem22 extends ProblemImpl { //Took 0.009570 seconds
 
 	public static void main(String[] args) {
 		Problem p = new Problem22();

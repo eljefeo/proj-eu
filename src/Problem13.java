@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class Problem13 extends ProblemImpl{
+public class Problem13 extends ProblemImpl { //Took 0.002628 seconds
 
 	/*
 	 * Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.

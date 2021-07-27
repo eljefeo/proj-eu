@@ -1,7 +1,7 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class Problem21 extends ProblemImpl{
+public class Problem21 extends ProblemImpl { //Took 0.093497 seconds
 
 	public static void main(String[] args) {
 		Problem p = new Problem21();

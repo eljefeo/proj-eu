@@ -8,21 +8,33 @@ import java.util.Set;
 
 
 public class Util {
+	public static boolean isPrime(int num) {
+
+		if (num == 2) 
+			return true;
+		
+		if (num < 0 || num == 1 || num % 2 == 0) 
+			return false;
+		
+		for (long i = 3; i <= Math.sqrt(num); i += 2) 
+			if (num % i == 0) 
+				return false;
+			
+		return true;
+	}
+	
 	public static boolean isPrime(long num) {
 
-		if (num == 2) {
+		if (num == 2) 
 			return true;
-		}
 		
-		if (num < 0 || num == 1 || num % 2 == 0) {
+		if (num < 0 || num == 1 || num % 2 == 0) 
 			return false;
-		}
 		
-		for (long i = 3; i <= Math.sqrt(num); i += 2) {
-			if (num % i == 0) {
+		for (long i = 3; i <= Math.sqrt(num); i += 2) 
+			if (num % i == 0) 
 				return false;
-			}
-		}
+			
 		return true;
 	}
 	
@@ -408,16 +420,57 @@ public static int summationFromTo(int start, int end) {
 	}
 
 	public static boolean isSumOfAbundantNumbers(int num) {
-		for (int i = 1; i <= num / 2; i++) {
-			if (Util.isAbundantNumber(i) && Util.isAbundantNumber(num)) {
-				return true;
+		for (int i = 12; i <= num ; i++) {
+			if (Util.isAbundantNumber(i) ) {
+				int diff = num - i;
+				if(isAbundantNumber(diff)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public static boolean isSumOfAbundantNumbersWithLog(int num) {
+		for (int i = 12; i <= num/2 ; i++) {
+			if (Util.isAbundantNumber(i) ) {
+				int diff = num - i;
+				if(isAbundantNumber(diff)) {
+					System.out.println(num + " = " + i + " + " + diff + " = " + (i+diff));
+					return true;
+				}
 			}
 		}
 		return false;
 	}
 
-	public static boolean isAbundantNumber(int num) {
+	public static boolean isAbundantNumberSlowerSimpler(int num) {
 		return Util.addAllIntegers(Util.getProperDivisors(num)) > num;
+	}
+	
+	public static boolean isAbundantNumber(int num) {
+		
+		int total = 1;
+		Set<Integer> factors = new HashSet<Integer>();
+		factors.add(1);
+		int limit = num;
+		for (int i = 2; i < limit; i++) {
+			if (num % i == 0) {
+				limit = num / i;
+				
+				if(factors.add(i)) {
+					total += i;
+					if(total > num)
+						return true;
+				}
+				if(factors.add(limit)) {
+					total += limit;
+					if(total > num)
+						return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public static boolean isCircularPrime(int num) {
@@ -440,7 +493,8 @@ public static boolean isPalindromeInt(int i) {
 	}
 
 
-public static boolean isPalindromeIntSlower(int num) { //slower but just fun to do with only ints and no strings
+public static boolean isPalindromeIntSlower(int num) { 
+	//slower but just fun to do with only ints and no strings
 		int dCount = Util.countDigits(num);
 		int t = num, mp = 0;
 		for(int i=1; i<dCount; i+=2){
@@ -1611,10 +1665,10 @@ public static boolean hasSameUniqueDigits(int a, int b){
 	}
 	
 	
-	public static List<Integer> getPrimesUnderNoSqr(int max) {
+	public static List<Integer> getPrimesUnder(int max) {
 		// this method does not have to calculate the square root of the number to find the limit
-		// we use some math tricks to know what the square root is
-		// for some reason it is slower than just calculating the square root everytime lol
+		// we use some pattern I noticed to know what the square root is
+		// a little faster because we dont have to do Math.sqrt(num)
 		int n = 1;
 		List<Integer> primes = new ArrayList<Integer>();
 		
@@ -1624,34 +1678,26 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		
 		primes.add(2);
 		
-		
 		while ((n+=2) < max) {
 			
 			sqrtCounter+=2;
 			
-			boolean foundPrime = true;
 			for (int p = 0; p < primes.size(); p++) {
 				int prime = primes.get(p);
-				if(prime > sqrt)
-					break;
-				
-				if (n % prime == 0) {
-					foundPrime = false;
+				if(prime > sqrt) {
+					primes.add(n);
 					break;
 				}
-			}
-			if (foundPrime) {
-				primes.add(n);
-			}
-			//System.out.println("Doing " + n + " with sqrtnext = " + sqrtNext + " with counter = " + sqrtCounter + " , and sqrt = " + sqrt );
 				
+				if (n % prime == 0)
+					break;
+				
+			}
 			
-			if(sqrtCounter > sqrtNext-2) { // here is where we calculate the square root
+			if(sqrtCounter > sqrtNext-2) { // here is where we calculate the next square root
 				sqrtNext += 2;
 				sqrtCounter = sqrtNext-sqrtCounter;
 				sqrt++;
-				//System.out.println("Setting sqrtnext to " + sqrtNext + " with counter now " + sqrtCounter + " , and sqrt is now " + sqrt );
-			
 			}  	
 				
 		}
@@ -1660,8 +1706,7 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		
 	}
 	
-	public static List<Integer> getPrimesUnder(int max) {
-		
+	public static List<Integer> getPrimesUnderWithSqrt(int max) {
 		int n = 1;
 		List<Integer> primes = new ArrayList<Integer>();
 		primes.add(2);
@@ -1674,19 +1719,16 @@ public static boolean hasSameUniqueDigits(int a, int b){
 					break;
 				}
 				
-				if (n % prime == 0) {
+				if (n % prime == 0) 
 					break;
-				}
 			}
 		}
-		
 		return primes;
-		
 	}
 
 
 
-	public static List<Integer> getPrimesUnderOtherSlow(int num) {
+	public static List<Integer> getPrimesUnderSlow(int num) {
 		List<Integer> primes = new ArrayList<Integer>();
 		for (int i = 2; i < num; i++) {
 			if (Util.isPrime(i)) {

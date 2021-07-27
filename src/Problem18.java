@@ -1,4 +1,4 @@
-public class Problem18 extends ProblemImpl{
+public class Problem18 extends ProblemImpl { //Took 0.001747 seconds
 
 	
 	/*
@@ -66,7 +66,7 @@ NOTE: As there are only 16384 routes, it is possible to solve this problem by tr
 				{4, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23}
 			};
 		
-		int allnums[][] = {
+		int allnums[][] = { //for testing
 				{3},
 				{7, 4},
 				{2, 4, 6},

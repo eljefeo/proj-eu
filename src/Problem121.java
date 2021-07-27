@@ -2,7 +2,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem121 extends ProblemImpl{
+public class Problem121 extends ProblemImpl { //Took 0.048192 seconds
 
 	
 	/*

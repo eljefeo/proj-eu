@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class Problem20 extends ProblemImpl{
+public class Problem20 extends ProblemImpl { //Took 0.001608 seconds
 
 	public static void main(String[] args) {
 		Problem p = new Problem20();

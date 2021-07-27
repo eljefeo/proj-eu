@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem51 {
+public class Problem51 extends ProblemImpl{
 
 	
 	/*
@@ -20,16 +20,123 @@ Find the smallest prime which, by replacing part of the number (not necessarily 
 	// which ends up being 11, 12, 13, 14, 15.... over and over again...
 	
 	
-	public static void main(String[] args) {
-		problem();
+	public static void main(String[] args) { //takes 15 sec, need to speed up
+		Problem p = new Problem51();
+		//p.runProblem();
+		problem2();
+		
+		/*
+		List<String> differentCombinationsOfIndexes = new ArrayList<String>();
+		int[] inds = new int[] {5,3,2,4,1};
+        Util.findCombinationsOfSizeRecurKeepTrack(inds, "", 0, inds.length, 2, differentCombinationsOfIndexes);
+        
+        for(String s : differentCombinationsOfIndexes) {
+        	System.out.println("comb : " + s);
+        }
+        
+        !!New max p count : 4 for number : 11
+!!New max p count : 5 for number : 11
+!!New max p count : 6 for number : 13
+!!New max p count : 7 for number : 56003
+!!New max p count : 8 for number : 121313
+        
+        */
 	}
 	
-	private static void problem(){
+	public void problem3(){
+		
+
+		int maxPCount = 0;
+		int smallpr = 0;
+		//int i = 9;
+		
+		int desiredPrimeCount = 8;
+		
+		// what if we focus on digit count instead of all nums
+		// so if we had a start num like 111 - we can do a base number lets say 11X (the two 1's) and the thing we will test replacing is the X
+		// we can increment the base and do it again 
+		// like 111 -> 112 113 114 115 etc..
+		// then
+		// 121 122 123 124 125 126, then 131 132 133
+		
+		
+		// so like for 1111 we do 111X then 11XX then 1X1X etc...
+		// we can keep track of the base ( the 1's above) and the thing to change (the X's above)
+		// we can just keep track of the indexes
+		// int[] baseIndexes = new int[];
+		// int[] xIndexes = new int[];
+		// we can start with digit counts
+		// do 2 digits, then do 3 digits, then do 4 then 5, 6 etc...
+		/*
+		 
+		  so for 2 digits
+		  lets start with 3 digits, harder to do but will get the idea down because there is a number in the middle instead of just the ends
+		 
+		 */
+		
+		int dCount = 3; // digit count
+		// 111 
+		
+		for(int i=1; i<dCount; i++){
+			int base = dCount - i; // how many digits we use to stay the same
+			int xs = dCount - base;
+			System.out.printf("\nbase = %s   xs = %s", base, xs);
+			// first is 2, next iteration is 1
+			// we always want to replace at least one digit, and never want to replace them all
+			
+			// now we know how many digits will be static and how many will be x's ( will be changing through 1-9)
+			// we find all combinations of......
+		}
+	}
+	
+	// or can we do something with finding all primes under some num
+	// then can we be super smart and check if the digits of those primes match up somehow?
+	// we could do 2 digit primes, then 3 then 4 etc.. and run our algorithm?
+	//
+	public static void problem2(){
+		int maxDigitCountPlusOne = 4, numToStop = (int) Math.pow(10, maxDigitCountPlusOne+1);
+		System.out.printf("\nhighestDigitCount = %d   numToStop = %d", maxDigitCountPlusOne, numToStop);
+		List<Integer> allP = Util.getPrimesUnder(numToStop);
+		// all digit primes 5 or less digits
+		//int howManyMaxDigits = 
+		//List<List<Integer>> allDigitPrimes = new ArrayList<List<Integer>>();
+		
+		
+		// where are the changes in digit counts?
+		// like in that list of primes, index 23 is the first of 3 digit primes? and index 389 is first 4 digit? etc..
+		//int digitChanges = new int[maxDigitCountPlusOne-1];
+		
+		
+		//for(int i=0; i<allP.size(); i++){
+		int pi = 0;
+		for(int i=1; i<maxDigitCountPlusOne; i++){	
+			int p, tens = (int) Math.pow(10, i);
+			while((p = allP.get(pi)) < tens) {
+				
+				System.out.println(i + " digits = " + p + " :: tens = " + tens);
+				
+				if(pi == allP.size()-1) 
+					break;
+				
+				
+				pi++;
+			}
+			
+			// do our magic which we still need to write - that handles this many digits..
+			//1x 2x 3x etc..
+			// then x1 x2 x3 etc..
+			
+			
+		}
+	}
+	
+	public void problem(){
 		int maxPCount = 0;
 		int smallpr = 0;
 		int i = 9;
 		
 		int desiredPrimeCount = 8;
+		
 		
 		while(maxPCount < desiredPrimeCount){
 			i++;
@@ -40,6 +147,8 @@ Find the smallest prime which, by replacing part of the number (not necessarily 
 				maxPCount = newPCount;
 				smallpr = smallestPrime;
 				System.out.println("!!New max p count : " + newPCount + " for number : " + smallpr);
+			} else if (newPCount == 3) {
+				System.out.println("!!3 p count : " + newPCount + " for number : " + smallestPrime);
 			}
 		}
 	}
@@ -71,18 +180,27 @@ Find the smallest prime which, by replacing part of the number (not necessarily 
 				String smallestNTest = "";
 				int pCount = 0;
 				String nTest = test;
+				
+				//l:
 				for(int d = 0; d < 10; d++){
 					
 					for(String sp : spl){
-						String ds = ""+d;
+						//if(sp == (""+(nTest.length()-1)) && d%2==0)
+							//continue l; // attempt to skip numbs that are even
+						
+						
+						//String ds = ""+d;
 						Integer ind = Integer.parseInt(sp);
-						nTest = nTest.substring(0,ind) + ds + nTest.substring(ind+1, nTest.length());
+						nTest = nTest.substring(0,ind) + d + nTest.substring(ind+1); //, nTest.length());
 					}
 					
 					if(nTest.startsWith("0")){ // skip if we made the first digit a 0. This changes the number altogether
 						continue;
 					} 
 					Integer parsed = Integer.parseInt(nTest);
+					//if(parsed % 2 == 0)
+					//	continue;
+					
 					if(Util.isPrime(parsed)){
 						pCount++;
 						if(smallestNTest == ""){

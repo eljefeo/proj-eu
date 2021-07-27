@@ -1,6 +1,6 @@
 
 
-public class Problem15 extends ProblemImpl{
+public class Problem15 extends ProblemImpl { //Took 0.000206 seconds
 
 	public static void main(String[] args) {
 		Problem p = new Problem15();

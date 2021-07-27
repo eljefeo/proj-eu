@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Problem23 extends ProblemImpl{
@@ -23,29 +25,40 @@ However, this upper limit cannot be reduced any further by analysis even though 
 Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
 	 */
 	@Override
-	public void problem(){
+	
+	public void problem(){ // Took 0.378610 seconds
+
 		
-		int max = 28123;
+		//int max = 28123 + 1;
+		int max = 28123 + 1 - 12;
 		int total = 0;
-		
-		Set<Integer> abundNums = new HashSet<Integer>();
+		//4179871
+		List<Integer> abundNums = new ArrayList<Integer>();
 		Set<Integer> sumOfAbundNums = new HashSet<Integer>();
-		for(int i=1; i<=max; i++){
+		for(int i=1; i<max; i++){
 			if(Util.isAbundantNumber(i)){
 				abundNums.add(i);
 			}
 		}
-		for(Integer i : abundNums){
-			for(Integer j : abundNums){
-				sumOfAbundNums.add(i+j);
-			}
-		}
-		for(int i=1; i<=max; i++){
-			if(!sumOfAbundNums.contains(i)){
-				total+=i;
+		
+		for(int i = 0; i < abundNums.size(); i++) {
+			int pi = abundNums.get(i);
+			for(int j = i; j < abundNums.size(); j++) {
+				
+				int pj = abundNums.get(j);
+				
+				if(pi + pj > max) 
+					break;
+					//since we put the nums in abundNums list in ascending order
+					// we can break if we go above the limit, since next iterations will be even larger
+				
+				sumOfAbundNums.add(pi + pj);
 			}
 		}
 		
+		for(int i=1; i<max; i++)
+			if(!sumOfAbundNums.contains(i))
+				total+=i;
 		
 		System.out.println("Found: " + total);
 	}
