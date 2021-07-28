@@ -1,6 +1,7 @@
 import java.util.List;
 
-public class Problem5 extends ProblemImpl{
+public class Problem5 extends ProblemImpl { //Took 0.001478 seconds
+
 	
 	/*
 	 * 
