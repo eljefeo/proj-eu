@@ -38,6 +38,42 @@ public class Util {
 		return true;
 	}
 	
+	public int lcm(int a, int b) { //assuming both nums are positive
+		int h, l;
+		if(a < b) {
+			l = a;
+			h = b;
+		} else {
+			h = a;
+			l = b;
+		}
+		int i = 2, lcm = h;
+		while(lcm % l != 0) 
+			lcm = h * i++;
+		
+		
+		return lcm;
+	}
+	
+	
+	public long lcm(long a, long b) { //assuming both nums are positive
+		long h, l;
+		if(a < b) {
+			l = a;
+			h = b;
+		} else {
+			h = a;
+			l = b;
+		}
+		//int i = 2;
+		long lcm = h;
+		while(lcm % l != 0) 
+			lcm += h;
+		
+		
+		return lcm;
+	}
+	
 
 	public static int getAPolygonalNumber(int which, int ind) {
 		
