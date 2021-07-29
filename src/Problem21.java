@@ -1,7 +1,7 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class Problem21 extends ProblemImpl { //Took 0.093497 seconds
+public class Problem21 extends ProblemImpl { //Took 0.076784 seconds
 
 	public static void main(String[] args) {
 		Problem p = new Problem21();
@@ -33,13 +33,16 @@ public class Problem21 extends ProblemImpl { //Took 0.093497 seconds
 			}
 			int amicableNum = Util.getAmicableNumer(i);
 			if (amicableNum != 0) {
-				an.add(i);
-				an.add(amicableNum);
+				if(an.add(i))
+					runningTotal += i;
+				
+				if(an.add(amicableNum))
+					runningTotal += amicableNum;
 			}
 		}
-		for (Integer sum : an) {
-			runningTotal += sum;
-		}
+		//for (Integer sum : an) {
+		//	runningTotal += sum;
+		//}
 		System.out.println("Final sum : " + runningTotal);
 	}
 
