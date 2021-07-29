@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class Problem70 extends ProblemImpl {
+public class Problem70 extends ProblemImpl { //Took 1.977199 seconds - probably because doing 10,000,000 not much we can do ...
 
 	/*
 	 * Euler's Totient function, phi(n) [sometimes called the phi function], is used
@@ -20,7 +20,7 @@ public class Problem70 extends ProblemImpl {
 	 * 
 	 */
 
-	public static void main(String[] args) { // this thing takes like 22 minutes.... we should use the actual formula instead of trying to use our little brain. Need to look up totient equations
+	public static void main(String[] args) {
 
 		//doFactorsStuff();
 		
@@ -70,8 +70,8 @@ public class Problem70 extends ProblemImpl {
 		//System.out.println(":::: has same digits " + Util.isPermutationDigits(213245, 542312));
 	}
 	
+	
 	public void problem() {
-
 		int max = (int) Math.pow(10, 7), step = max/10;
 		double smalD = 10;
 		int smalN = 0;
@@ -96,51 +96,148 @@ public class Problem70 extends ProblemImpl {
 			int phi = 1; // set to 1 because every number has 1 has a coprime?
 			int tempI = i;
 			int factorCount = 0;
-			
+			int sqrt = (int) Math.sqrt(tempI);
 			for (int p = 0; p < primes.size(); p++) {
+				
 				int prime = primes.get(p);
-				if(prime > Math.sqrt(tempI)) {
-					if(factorCount == 0) { // if no factors below sqrt of num, that num is prime
+				
+				if(prime > sqrt) {
+					if(factorCount == 0) {//or if tempI == i { // if no factors below sqrt of num, that num is prime
 						primes.add(i);
 						continue nums;// but we dont want to actually use phi of primes, its too big, so we skip it but use the prime for later
 					} else if(tempI > 1) { // else if no other primes under sqrt, but has other factors, then tempI is now prime and is the second factor. 
 						//This means we found a num with only 2 factors which is what we want
 						phi *= (tempI - 1);
+						double nOverPhi = (double) i / phi;
+						if(nOverPhi < smalD && Util.isPermutationDigits(i, phi)) {
+							smalD = nOverPhi;
+							smalN = i;
+							smalPhi = phi;
+						}
 						break;
+					} else {
+						System.out.println("Hmmm we are here with i = " + i + " tempI = " + tempI);
 					}
 					
 				}
 
 				if (tempI % prime == 0) { // we found a factor of i
-					factorCount++;
 					tempI /= prime; // divide our temp value, dividing out this factor
-					if(factorCount > 1 || tempI % prime == 0) { 
+					factorCount++;
+					if(factorCount > 1 || tempI % prime == 0)  
+						continue nums;
 						// tempI % prime == 0  this num (i) is divisible by the same factor twice, this is not what we want. This will increase phi and we want phi to be closest to 1
-						
-						// factorCount > 1  smallest ratio should be with numbers that are composed of only 2 primes...
+						// factorCount > 1  smallest ratio should be with numbers that are composed of only 2 primes (and not the same 2 primes)...
 						// if we get here and we found more than 1 factor, we should have caught it above in the sqrt check for a num with only 2 factors. 
 						// the fact that we are here means we are at a num with > 2 factors... skip it
-						continue nums;
-					}
+						
 					phi *= (prime - 1);
+					sqrt = (int) Math.sqrt(tempI);
 				}
 			}
-				
-				if(Util.isPermutationDigits(i, phi)) {
-					double nOverPhi = (double) i / phi;
-					if (nOverPhi < smalD) {
-						smalD = nOverPhi;
-						smalN = i;
-						smalPhi = phi;
-						//System.out.println("New smallest permutation nOverPhi = " + smalD + " for num = " + smalN + " with phi=" + smalPhi);
-					}
-				}
+			
 		}
 
 		System.out.println("Smallest nOverPhi = " + smalD + " for num = " + smalN + " with phi=" + smalPhi + " with prime count : " + primes.size() + " under " + max);
 
 	}
 	
+	
+	public void problemDoAllTwoPrimeCombosTakesForever() {
+		//there are simply too many primes to check against each other(under 10million...)
+		// might be fine with less primes, but not useable here..
+		
+		// lets just get all primes under
+		// then do combinations of 2 primes...
+		int max = (int) Math.pow(10, 7), step = max/10;
+		double smalD = 10;
+		int smalN = 0;
+		int smalPhi = 0;
+		List<Integer> primes = Util.getPrimesUnder(max);
+		System.out.println("total primes: " + primes.size());
+		
+		for (int i = 0; i < primes.size(); i++) {
+			//int c = 0;
+			
+			int pi = primes.get(i);
+			System.out.println("on prime " + pi);
+			for (int j = i; j < primes.size(); j++) {
+				//if (c++ % primes.size()/10 == 0)
+					//System.out.println("did " + c);
+				int pj = primes.get(j);
+				
+				int phi = (pi-1) * (pj-1);
+				int mult = (pi*pj);
+				double nOverPhi = (double) mult / phi;
+				if(nOverPhi < smalD && Util.isPermutationDigits(mult, phi)) {
+					
+						smalD = nOverPhi;
+						smalN = mult;
+						smalPhi = phi;
+						System.out.println("New smallest permutation nOverPhi = " + smalD + " for num = " + smalN + " with phi=" + smalPhi);
+					
+				}
+				
+			}
+			
+		}
+	}
+	
+	public void problemd() {
+		
+		System.out.println("This way calculates phi for all nums, unlike the other that breaks on nums with >2 factors (which is more optimized)");
+		
+		int max = (int) Math.pow(10, 7), step = max/10;
+		double smalD = 10;
+		int smalN = 0;
+		int smalPhi = 0;
+		
+		List<Integer> primes = new ArrayList<Integer>();
+		
+		for (int i = 2; i < max; i++) {
+			int phi = 1; // set to 1 because every number has 1 has a coprime?
+			int tempI = i;
+			int sqrt = (int)Math.sqrt(tempI);
+			for (int p = 0; p < primes.size(); p++) {
+				int prime = primes.get(p);
+				if(prime > sqrt) 
+					break;
+				
+				if (i % prime == 0) {
+					phi *= (prime - 1);
+					tempI /=  prime;
+					while (tempI % prime == 0) {
+						tempI /= prime;
+						phi *= prime;
+					}
+					sqrt = (int)Math.sqrt(tempI);
+				}
+			}
+			
+			if(tempI == i) {
+				phi = i-1;
+				primes.add(i); 
+			} else if(tempI > 1){
+				phi *= (tempI - 1);
+			}  
+			
+			double nOverPhi = (double) i / phi;
+			if(nOverPhi < smalD && Util.isPermutationDigits(i, phi)) {
+				
+					smalD = nOverPhi;
+					smalN = i;
+					smalPhi = phi;
+					//System.out.println("New smallest permutation nOverPhi = " + smalD + " for num = " + smalN + " with phi=" + smalPhi);
+				
+			}
+		}
+		
+		System.out.println("Smallest nOverPhi = " + smalD + " for num = " + smalN + " with phi=" + smalPhi + " with prime count : " + primes.size() + " under " + max);
+
+		
+	}
+
+
 	public static void testSquareRootStuff() { 
 		int n = 1000;
 		int nt = n/10;
