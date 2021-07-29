@@ -32,7 +32,7 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 		Problem p = new Problem69();
 		p.runProblem();
 		
-		//problemDidntKnowTheSecret();
+		problemWOldFashionedWay();
 		
 	}
 	
@@ -75,18 +75,79 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 		int mult = 1;
 		List<Integer> primes = new ArrayList<Integer>();
 		
+		
+		/// NEED TO DO TESTING ON getNextPrime and getNextPrime2
+		// WHY DOES GETNEXTPRIME FAIL BUT 2 WORKS???????
+		
 		while(mult < max) {
-			getNextPrime(primes, n++);
+			Util.getNextPrime2(primes, n++);
 			mult *= primes.get(primes.size()-1);
 		}
 		
 		mult /= primes.get(primes.size()-1);
 		
-		System.out.println("Found : " + mult);
+		System.out.println("slipped into winners circle: Found : " + mult);
 		
 	}
 	
-	
+	public static void problemWOldFashionedWay() {
+		
+		System.out.println("This way calculates actual phi, unlike the one above that just goes to the answer without getting phi");
+		
+		int max = 1000000;
+		double maxD = 0;
+		int maxN = 0;
+		int maxPhi = 0;
+		
+		List<Integer> primes = new ArrayList<Integer>();
+		
+		for (int i = 2; i < max; i++) {
+			
+			int phi = 1; // set to 1 because every number has 1 has a coprime?
+			int tempI = i;
+			
+			if (tempI % 2 == 0) {
+				tempI = tempI / 2;
+				while (tempI % 2 == 0) {
+					tempI /= 2;
+					phi *= 2;
+				}
+			}
+			for (int p = 0; p < primes.size(); p++) {
+				int prime = primes.get(p);
+				if(prime > (int)Math.sqrt(tempI)) 
+					break;
+				
+				if (i % prime == 0) {
+					phi *= (prime - 1);
+					tempI = tempI / prime;
+					while (tempI % prime == 0) {
+						tempI /= prime;
+						phi *= prime;
+					}
+				}
+			}
+			
+			if(tempI == i) {
+				phi = i-1;
+				primes.add(i); 
+			} else if(tempI > 1){
+				phi *= (tempI - 1);
+			}  
+			
+			double nOverPhi = (double) i/phi;
+			if(nOverPhi > maxD) {
+				maxD = nOverPhi;
+				maxN = i;
+				maxPhi = phi;
+				System.out.println("new bigger phi for " + i + " = " + phi + " with nphi = " + nOverPhi);
+			}
+		}
+		
+		System.out.println("Max nOverPhi = " + maxD +  " for num (answer is this) = " + maxN + " with phi=" + maxPhi); //2635759
+		
+		
+	}
 	
 	private static void problemDidntKnowTheSecret() {
 		
@@ -155,30 +216,7 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 		
 	}
 	
-	private static void getNextPrime(List<Integer> primes, int n) {
-		
-		
-		int pr = n;
-		while(true) {
-			pr++;
-			
-			boolean foundPrime = true;
-			for(int p = 0; p < primes.size(); p++) {
-				int prime = primes.get(p);
-				if(pr % prime == 0) {
-					foundPrime = false;
-					break;
-				}
-			}
-			
-			if(foundPrime) {
-				primes.add(pr);
-				return;
-			}
-			
-		}
-		
-	}
+
 	
 	private static void addAllPrimesUpto(List<Integer> primes, int test) {
 		for(int i = 2; i<test; i++) {
