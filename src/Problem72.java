@@ -50,17 +50,10 @@ public class Problem72 extends ProblemImpl { //Took 0.217028 seconds
 			
 			int phi = 1; // set to 1 because every number has 1 has a coprime?
 			int tempI = i;
-			
-			if (tempI % 2 == 0) {
-				tempI = tempI / 2;
-				while (tempI % 2 == 0) {
-					tempI /= 2;
-					phi *= 2;
-				}
-			}
+			int sqrt = (int)Math.sqrt(tempI);
 			for (int p = 0; p < primes.size(); p++) {
 				int prime = primes.get(p);
-				if(prime > (int)Math.sqrt(tempI)) 
+				if(prime > sqrt) 
 					break;
 				
 				if (i % prime == 0) {
@@ -70,6 +63,8 @@ public class Problem72 extends ProblemImpl { //Took 0.217028 seconds
 						tempI /= prime;
 						phi *= prime;
 					}
+					
+					sqrt = (int)Math.sqrt(tempI);
 				}
 			}
 			
