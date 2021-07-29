@@ -1,5 +1,5 @@
 
-public class Problem71 extends ProblemImpl{
+public class Problem71 extends ProblemImpl { //Took 0.001484 seconds
 
 	
 	/*
@@ -19,7 +19,12 @@ By listing the set of reduced proper fractions for d <= 1,000,000 in ascending o
 	
 	public static void main(String[] args) { //Took 0.029194 seconds
 		new Problem71().runProblem();
+		
+		//int a = 30, b = 5;
+		//System.out.println("gcd of " + a + " " + b + " = " + Util.gcd(a,b) + " :: reduced " + Util.reduceFractionString(a, b));
+		
 	}
+	
 	/*
 	 
 	 so after looking at these fractions for a while here's what Im thinking
@@ -54,72 +59,29 @@ By listing the set of reduced proper fractions for d <= 1,000,000 in ascending o
 	
 
 	
-	
-	public long[] lcmWithMult(long a, long b) { //assuming both nums are positive
-		
-		long h, l;
-		if(a == b) 
-			return new long[] { a, 1 };
-		
-		if(a < b) {
-			l = a;
-			h = b;
-		} else {
-			h = a;
-			l = b;
-		}
-		int i = 2;
-		long lcm = h;
-		while(lcm % l != 0) {
-			//System.out.println("lcm is " + lcm + " i="+ i + " h=" + h + " l=" + l);
-			lcm = h * i++;
-			//System.out.println("new lcm is " + lcm + " i="+ i + " h=" + h + " l=" + l);
-		}
-		
-		// the second thing in the array is how much to multiple the HIGHER number to to get the lcm
-		return new long[] { lcm, i-1 };
-	}
-	
-	public long[] reduceFraction(long n, long d) {
-		
-		//int i = 2;
-		long na = n, da = d;
-		for(int i=2; i < d/2; i++) {
-			if(na % i == 0 && da % i == 0) {
-				while (na % i == 0 && da % i == 0) {
-					na /= i;
-					da /= i;	
-				}
-				i++;
-			}
-		}
-		
-		return new long[] {na, da};
-	}
+
 	
 	@Override
 	public void problem() {
 
 		int max = 1000000;
-		int nGoal = 3, dGoal = 7;
+		int numerGoal = 3, denomGoal = 7;
 		
-		for(int i=max; i > 0; i--) { 	// denom
+		for(int i=max; i > 1; i--) { 	// denom
 			
-			if(i == dGoal)
+			if(i == denomGoal) // lets assume there are other numbers in between...like 3/7 and 4/7 have some numbers in between lets just assume
 				continue;
 			
-			long[] dets  = lcmWithMult(i, dGoal);
+			long[] lcm  = Util.lcmWithMult(i, denomGoal);
 			
-			long w = dets[1];
-			if(dGoal < i) // the second thing in the array
+			long w = denomGoal < i ? lcm[0] / denomGoal : lcm[1];
+			 // the second thing in the array
 				// is how many to mult the HIGHER num to to get the lcm
 				// but we dont know if the i we are testing is higher / lower than dGoal
 				// so we need to do this only if dGoal is less than i
-				w = dets[0] / dGoal;
-			
-
-			long newN = (nGoal * w) - 1;
-			long[] red = reduceFraction(newN, dets[0]);
+				
+			long newNumerator = (numerGoal * w) - 1;
+			long[] red = Util.reduceFraction(newNumerator, lcm[0]);
 			if(red[1] <= max) {
 				System.out.println("Fraction is " + red[0] + "/" + red[1]);
 				System.out.println("Answer: " + red[0]);
