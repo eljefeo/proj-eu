@@ -32,7 +32,7 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 		Problem p = new Problem69();
 		p.runProblem();
 		
-		problemWOldFashionedWay();
+		//problemWOldFashionedWay();
 		
 	}
 	
@@ -90,7 +90,7 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 		
 	}
 	
-	public static void problemWOldFashionedWay() {
+	public void problemOldFashionedWay() {
 		
 		System.out.println("This way calculates actual phi, unlike the one above that just goes to the answer without getting phi");
 		
