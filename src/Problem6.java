@@ -1,9 +1,9 @@
 
-public class Problem6 {
+public class Problem6 extends ProblemImpl { //Took 0.000227 seconds
 
 	public static void main(String[] args) {
-		problem();
-
+		Problem p = new Problem6();
+		p.runProblem();
 	}
 
 	
@@ -20,8 +20,7 @@ public class Problem6 {
 	 * 
 	 */
 	
-	public static void problem(){
-		
+	public void problem(){
 		int sqSum = 0;
 		int sumSq = 0;
 		int max = 100;

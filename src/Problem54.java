@@ -1,5 +1,5 @@
 
-public class Problem54 {
+public class Problem54 extends ProblemImpl { //Took 0.002600 seconds
 	
 	/*
 	 * project euler problem 54 talks about 5 card poker rules in depth here....
@@ -19,11 +19,12 @@ public class Problem54 {
 	 */
 	
 	public static void main(String[] args){
+		Problem p = new Problem54();
 		pokerTest();
-		problem();
+		p.runProblem();
 	}
 
-	private static void problem() {
+	public void problem() {
 		String[][] allHands = Problem54Helper.getHands(); 
 		int player1WinCount = 0;
 		for(String[] sa : allHands){

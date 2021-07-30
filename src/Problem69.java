@@ -3,7 +3,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Problem69 extends ProblemImpl{
+public class Problem69 extends ProblemImpl {
 	
 	/*
 	 

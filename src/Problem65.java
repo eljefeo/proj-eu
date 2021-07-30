@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class Problem65 {
+public class Problem65 extends ProblemImpl { //Took 0.002743 seconds
 
 	
 	/*
@@ -23,10 +23,11 @@ public class Problem65 {
 	 */
 	
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem65();
+		p.runProblem();
 	}
 
-	private static void problem() {
+	public void problem() {
 		int t = 100;
 		BigInteger num = BigInteger.ONE;
 		BigInteger den = new BigInteger("" + Util.getEPeriod(t));

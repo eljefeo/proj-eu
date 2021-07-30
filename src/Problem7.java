@@ -3,10 +3,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Problem7 {
+public class Problem7 extends ProblemImpl { //Took 0.014207 seconds
 
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem7();
+		p.runProblem();
 
 	}
 	
@@ -17,7 +18,7 @@ public class Problem7 {
 		What is the 10 001st prime number?
 	 */
 	
-	public static void problem(){
+	public void problem(){
 		
 		
 		List<Long> primes = new ArrayList<Long>();

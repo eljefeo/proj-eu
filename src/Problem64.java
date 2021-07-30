@@ -1,16 +1,17 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem64 {
+public class Problem64 extends ProblemImpl { //Took 0.067875 seconds
 
 	
 	//Odd period square roots
 	
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem64();
+		p.runProblem();
 	}
 	
-	private static void problem() {
+	public void problem() {
 		
 		int max = 10000;
 		int oddPerCounter = 0;

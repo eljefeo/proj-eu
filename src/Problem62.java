@@ -3,7 +3,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Problem62 {
+public class Problem62 extends ProblemImpl{
 	
 	 /*
 	 
@@ -24,17 +24,18 @@ anything?
 
 	static Set<Long> allNums;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) { //Took 1.548868 seconds
 		
 		allNums = new HashSet<Long>();
-		problem();
+		Problem p = new Problem62();
+		p.runProblem();
 		
 		/// WHAT IF instead of this super slow way (didnt know it would be that slow)
 		// we just get all (a bunch?) of cubes, then check if any have the same digits? Would that take even longer - no this was super fast...solved this way
-		System.out.println("anything?");
+		//System.out.println("anything?");
 	}
 	
-	private static void problem() {
+	public void problem() {
 		int min = 200;
 		int max = 10000;
 		int targetNumberOfCubes = 5;

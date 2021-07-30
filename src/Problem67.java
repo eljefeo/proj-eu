@@ -1,12 +1,13 @@
 
-public class Problem67 {
+public class Problem67 extends ProblemImpl { //Took 0.003008 seconds
 
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem67();
+		p.runProblem();
 
 	}
 
-	public static void problem(){
+	public void problem(){
 		int allnums[][] = {
 				{59},
 				{73, 41},

@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class Problem53 {
+public class Problem53 extends ProblemImpl { //Took 0.115581 seconds
 	
 	/*
 	 There are exactly ten ways of selecting three from five, 12345:
@@ -24,7 +24,8 @@ public class Problem53 {
 	 */
 
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem53();
+		p.runProblem();
 		//int fact = Util.factorial(6);
 		//BigInteger bFact = factorial(new BigInteger(""+6));
 		//System.out.println("Test " + fact + " ... " + bFact);
@@ -33,7 +34,7 @@ public class Problem53 {
 	}
 
 	
-	private static void problem(){
+	public void problem(){
 		
 		int min = 1;
 		int max = 101;

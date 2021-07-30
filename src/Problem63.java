@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class Problem63 {
+public class Problem63 extends ProblemImpl { //Took 0.130695 seconds
 	
 	/*
 	 	The 5-digit number, 16807=7^5, is also a fifth power. Similarly, the 9-digit number, 134217728=8^9, is a ninth power.
@@ -9,10 +9,15 @@ public class Problem63 {
 	 */
 
 	public static void main(String[] args) {
+		Problem p = new Problem63();
+		p.runProblem();
+	}
+	
+	public void problem() {
 		//solved by just doing a whole bunch and seeing what the number is at the end
 		// dont know when to stop though....
 		int min = 1;
-		int max = 30000;
+		int max = 1000;
 		int count = 0;
 		int maxExponent = 50;
 		//int targetNumberOfCubes = 5;
@@ -22,7 +27,7 @@ public class Problem63 {
 		for(int i = min; i < max; i++) {
 			
 			
-			if(i%1000 == 0) { // just for logging
+			if(i%100 == 0) { // just for logging
 				System.out.println("Doing " + i + "....");
 			}
 			

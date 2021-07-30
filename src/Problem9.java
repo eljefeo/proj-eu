@@ -1,5 +1,5 @@
 
-public class Problem9 {
+public class Problem9 extends ProblemImpl { //Took 0.006984 seconds
 	
 	/*A Pythagorean triplet is a set of three natural numbers, a < b < c, for which,
 
@@ -10,10 +10,11 @@ public class Problem9 {
 	Find the product abc.*/
 
 	public static void main(String[] args) {
-			problem();
+		Problem p = new Problem9();
+		p.runProblem();
 	}
 	
-	public static void problem(){
+	public void problem(){
 		for(int i = 1; i < 1000; i++){
 			int a = (int) Math.pow(i, 2);
 			for(int j = i+1; j < 1000; j++){

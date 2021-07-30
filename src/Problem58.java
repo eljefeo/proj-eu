@@ -1,5 +1,5 @@
 
-public class Problem58 {
+public class Problem58 extends ProblemImpl { //Took 0.384939 seconds
 
 	
 	/*
@@ -23,11 +23,13 @@ If this process is continued, what is the side length of the square spiral for w
 	 */
 	
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem58();
+		p.runProblem();
+		
 	}
 
 	
-	private static void problem() {
+	public void problem() {
 		
 		int currNum = 1, sideLength = 2, totalCornerCount = 1, primeCornerCount = 0;
 		double cutoffPercent = 0.1, ratio = 0;

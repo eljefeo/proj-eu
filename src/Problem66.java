@@ -1,13 +1,6 @@
-import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.MathContext;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-public class Problem66 {
+public class Problem66 extends ProblemImpl { //Took 0.041852 seconds
 	
 	/*
 	 
@@ -53,11 +46,12 @@ Find the value of D <= 1000 in minimal solutions of x for which the largest valu
 	*/
 	
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem66();
+		p.runProblem();
 }
 	
 	
-	private static void problem() {
+	public void problem() {
 		int max = 1000;
 		BigInteger maxX = BigInteger.ZERO;
 		int maxD = 0;

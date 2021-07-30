@@ -1,6 +1,6 @@
 
 
-public class Problem57 {
+public class Problem57 extends ProblemImpl { //Took 0.029620 seconds
 	
 	/*
 	 
@@ -25,12 +25,11 @@ In the first one-thousand expansions, how many fractions contain a numerator wit
 	 */
 
 	public static void main(String[] args) {
-
-		problem();
-
+		Problem p = new Problem57();
+		p.runProblem();
 	}
 
-	private static void problem() {
+	public void problem() {
 		//1 + 3/2	     7/5      17/12		41/29 
 		
 		//forget the one for now

@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class Problem55 {
+public class Problem55 extends ProblemImpl { //Took 0.082786 seconds
 
 	/*
 	 * If we take 47, reverse and add, 47 + 74 = 121, which is palindromic.
@@ -33,11 +33,12 @@ public class Problem55 {
 		// BigInteger b = new BigInteger("1234215");
 		// System.out.println(addReverseBigInt(b));
 
-		problem();
+		Problem p = new Problem55();
+		p.runProblem();
 
 	}
 
-	private static void problem() {
+	public void problem() {
 		//int sn = 196; // This is a lychrel number (well it seems to be at least... nothing has been proven)
 		int maxIterations = 50;
 		int maxNum = 10000;

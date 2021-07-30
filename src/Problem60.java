@@ -1,7 +1,6 @@
-import java.util.ArrayList;
 import java.util.List;
 
-public class Problem60 {
+public class Problem60 extends ProblemImpl { //Took 3.267360 seconds
 
 	
 	/*
@@ -14,31 +13,36 @@ Find the lowest sum for a set of five primes for which any two primes concatenat
 	 */
 	
 	
-	static int totalCounter = 0;
+	//static int totalCounter = 0;
 	
 	public static void main(String[] args) {
 		//maybe find all primes lower than 10k and check?
 		
-		
-		problem();
-		System.out.println("Counted : " + totalCounter);
+		//System.out.println("Counted : " + totalCounter);
+		Problem p = new Problem60();
+		p.runProblem();
+		//System.out.println("Counted : " + totalCounter);
 	}
 
-	private static void problem() {
-		
+	public void problem9() {
+		System.out.println("helllllllo");
+	}
+	
+	public void problem() {
 		
 		int end = 10000;
 		int start = 3;
 		int comboSize = 5;
 		int pCount = 0;
 		
+		List<Integer> primes = Util.getPrimesUnder(end);
 		for(int i=start; i<end; i+=2) {
 			if(Util.isPrime(i)) {
 				pCount++;
 			}
 		}
 		int[] nums = new int[pCount];
-		System.out.println("Pcount : " + pCount);
+	
 		
 		pCount = 0;
 		for(int i=start; i<end; i++) {
@@ -46,58 +50,51 @@ Find the lowest sum for a set of five primes for which any two primes concatenat
 				nums[pCount++] = i; 
 			}
 		}
-		
+		System.out.println("Pcount : " + pCount);
 		findCombinationsOfSizeRecurCheckPrimesi(nums, new int[comboSize], 0, nums.length, comboSize, 0);
 		
 	}
 	
-	public static void findCombinationsOfSizeRecurCheckPrimesi(int[] A, int[] track, int index, int lengthOfThing, int sampleSize, int ti) {
+	public static boolean findCombinationsOfSizeRecurCheckPrimesi(int[] A, int[] track, int index, int lengthOfThing, int sampleSize, int ti) {
         // invalid input
         if (sampleSize > lengthOfThing) {
-            return;
+            return false;
         }
         
-        //check so far first
+        //check so far first - if these primes make primes together
         if(ti>1) {
         	 int[] temp = new int[ti];
-             for(int i=0; i<ti; i++) {
-             	if(track[i]!=0)
+             for(int i=0; i<ti; i++) 
+             	//if(track[i]!=0)
              		temp[i] = track[i];
-             }
-             if(!checkIntCombinationsForPrimes(temp)) {
-             	return;
-             }
              
+             if(!checkIntCombinationsForPrimes(temp)) 
+             	return false;
         }
         
         // base case: combination size is k
         if (sampleSize == 0) {
-        	if(checkIntCombinationsForPrimes(track)) {
+        	//if(checkIntCombinationsForPrimes(track)) {
         		System.out.println("Found one");
         		int sum = 0;
         		for(int i:track) {
         			System.out.print(" " + i);
         			sum += i;
-        		
         		}
         		System.out.println("\n sum " + sum);
-        		System.exit(0);
-        		
-        	}
-        	return;
+        		//System.exit(0);
+        		return true;
+        	//}
+        	//return false;
         }
  
         // start from the next index till the last index
         for (int j = index; j < lengthOfThing; j++) {
-        	
         	track[ti] = A[j];
-        	findCombinationsOfSizeRecurCheckPrimesi(A, track , j + 1, lengthOfThing, sampleSize - 1, ti + 1);
-        	
-            // uncomment the following code to handle duplicates
-            /* while (j < n - 1 && A[j] == A[j + 1]) {
-                j++;
-            } */
+        	if(findCombinationsOfSizeRecurCheckPrimesi(A, track , j + 1, lengthOfThing, sampleSize - 1, ti + 1))
+        		return true;
         }
+        return false;
     }
 	
 	public static int[] splitStringToNums(String s ) {

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Problem68 {
+public class Problem68 extends ProblemImpl { //Took 0.022789 seconds
 
 	
 	/*
@@ -41,10 +41,11 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 	
 	
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem68();
+		p.runProblem();
 	}
 
-	private static void problem() {
+	public void problem() {
 		
 		
 		do3Gon();

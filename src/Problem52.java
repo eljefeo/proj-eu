@@ -1,5 +1,5 @@
 
-public class Problem52 {
+public class Problem52 extends ProblemImpl { //Took 0.064497 seconds
 
 	
 	/*
@@ -11,11 +11,12 @@ public class Problem52 {
 	 */
 	
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem52();
+		p.runProblem();
 
 	}
 	
-	private static void problem(){
+	public void problem(){
 		
 		for(int i=10; i<Integer.MAX_VALUE; i++){
 			boolean hasSame = true;

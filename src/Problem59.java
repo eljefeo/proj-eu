@@ -1,5 +1,5 @@
 
-public class Problem59 {
+public class Problem59 extends ProblemImpl { //Took 3.428538 seconds
 	
 	/*
 	 Each character on a computer is assigned a unique code and the preferred standard is ASCII (American Standard Code for Information Interchange). For example, uppercase A = 65, asterisk (*) = 42, and lowercase k = 107.
@@ -14,7 +14,8 @@ Your task has been made easy, as the encryption key consists of three lower case
 	 */
 
 	public static void main(String[] args) {
-		problem();
+		Problem p = new Problem59();
+		p.runProblem();
 		
 		//char e = 'e';
 		//System.out.println("char " + (int)e);
@@ -24,7 +25,7 @@ Your task has been made easy, as the encryption key consists of three lower case
 		 */
 	}
 
-	private static void problem() {
+	public void problem() {
 		
 		//97 - 122 = lower case a - z in ascii
 		int[] lowerCaseAsciiChars = new int[] {
