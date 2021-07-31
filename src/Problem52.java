@@ -1,5 +1,5 @@
 
-public class Problem52 extends ProblemImpl { //Took 0.064497 seconds
+public class Problem52 implements Problem { //Took 0.064497 seconds
 
 	
 	/*
@@ -16,7 +16,7 @@ public class Problem52 extends ProblemImpl { //Took 0.064497 seconds
 
 	}
 	
-	public void problem(){
+	public String problem(){
 		
 		for(int i=10; i<Integer.MAX_VALUE; i++){
 			boolean hasSame = true;
@@ -29,13 +29,13 @@ public class Problem52 extends ProblemImpl { //Took 0.064497 seconds
 			
 			if(hasSame){
 				System.out.println("HAS SAME !!! " + i);
-				return;
+				return "" + i;
 			}
 			
 		}
 		
 		System.out.println("done...no answer??? - You need to go Long...   ;)");
-		
+		return null;
 	}
 	
 	

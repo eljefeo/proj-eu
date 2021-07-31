@@ -3,7 +3,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Problem23 extends ProblemImpl{
+public class Problem23 implements Problem { //Took 0.384670 seconds
 
 	public static void main(String[] args) {
 		Problem p = new Problem23();
@@ -26,7 +26,7 @@ Find the sum of all the positive integers which cannot be written as the sum of 
 	 */
 	@Override
 	
-	public void problem(){ // Took 0.378610 seconds
+	public String problem(){ // Took 0.378610 seconds
 
 		
 		//int max = 28123 + 1;
@@ -60,7 +60,8 @@ Find the sum of all the positive integers which cannot be written as the sum of 
 			if(!sumOfAbundNums.contains(i))
 				total+=i;
 		
-		System.out.println("Found: " + total);
+		//System.out.println("Found: " + total);
+		return "" + total;
 	}
 	
 }

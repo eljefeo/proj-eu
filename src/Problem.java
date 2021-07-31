@@ -1,14 +1,16 @@
 
 public interface Problem {
 	
-	public default void runProblem() {
+	public default String runProblem() {
 		long startT = System.nanoTime();
-		problem();
+		String answer = problem();
 		long endT = System.nanoTime();
 		double time = (double) (endT - startT) / 1000000000;
-		System.out.printf("\nTook %f seconds\n", time);
+		System.out.printf("Took %f seconds\n", time);
+		System.out.printf("Answer : %s", answer);
+		return answer;
 	}
 	
-	public void problem();
+	public String problem();
 
 }

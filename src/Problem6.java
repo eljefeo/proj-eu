@@ -1,5 +1,5 @@
 
-public class Problem6 extends ProblemImpl { //Took 0.000227 seconds
+public class Problem6 implements Problem { //Took 0.000227 seconds
 
 	public static void main(String[] args) {
 		Problem p = new Problem6();
@@ -20,7 +20,7 @@ public class Problem6 extends ProblemImpl { //Took 0.000227 seconds
 	 * 
 	 */
 	
-	public void problem(){
+	public String problem(){
 		int sqSum = 0;
 		int sumSq = 0;
 		int max = 100;
@@ -38,6 +38,8 @@ public class Problem6 extends ProblemImpl { //Took 0.000227 seconds
 		System.out.println("squared first then added: " + sqSum);
 		System.out.println("Added first then squared: " + sumSq);
 		System.out.println("Diff: " + (sumSq - sqSum));
+		
+		return "" + (sumSq - sqSum);
 		
 	}
 	

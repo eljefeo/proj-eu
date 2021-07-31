@@ -3,7 +3,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Problem69 extends ProblemImpl {
+public class Problem69 implements Problem {
 	
 	/*
 	 
@@ -36,7 +36,7 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 		
 	}
 	
-	public void problem() {
+	public String problem() {
 		
 		//this is a shortcut I figured out
 		// since the PE problem only asks for N, doesnt care about phi or phi(n) etc..
@@ -87,7 +87,7 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 		mult /= primes.get(primes.size()-1);
 		
 		System.out.println("slipped into winners circle: Found : " + mult);
-		
+		return "" + mult;
 	}
 	
 	public void problemOldFashionedWay() {

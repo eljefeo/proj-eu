@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class Problem55 extends ProblemImpl { //Took 0.082786 seconds
+public class Problem55 implements Problem { //Took 0.082786 seconds
 
 	/*
 	 * If we take 47, reverse and add, 47 + 74 = 121, which is palindromic.
@@ -38,7 +38,7 @@ public class Problem55 extends ProblemImpl { //Took 0.082786 seconds
 
 	}
 
-	public void problem() {
+	public String problem() {
 		//int sn = 196; // This is a lychrel number (well it seems to be at least... nothing has been proven)
 		int maxIterations = 50;
 		int maxNum = 10000;
@@ -49,6 +49,7 @@ public class Problem55 extends ProblemImpl { //Took 0.082786 seconds
 			}
 		}
 		System.out.println("Count of Lychrel numbers below " + maxNum + " is ::: " + counter);
+		return "" + counter;
 	}
 
 	private static boolean isLychrelNumber(int n, int howManyIterationsToCheck) {

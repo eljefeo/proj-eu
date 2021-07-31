@@ -1,5 +1,5 @@
 
-public class Problem17 extends ProblemImpl { //Took 0.000227 seconds
+public class Problem17 implements Problem { //Took 0.000227 seconds
 
 	
 	/*
@@ -22,7 +22,7 @@ NOTE: Do not count spaces or hyphens. For example, 342 (three hundred and forty-
 	
 	
 	@Override
-	public void problem(){
+	public String problem(){
 		String zeroTnine[] = {
 				"one", "two", "three","four","five","six","seven","eight","nine"
 		};
@@ -81,7 +81,8 @@ NOTE: Do not count spaces or hyphens. For example, 342 (three hundred and forty-
 		letters+=3;
 		letters+=thousand.length();
 		
-		System.out.print("Num of letters " + letters);
+		//System.out.print("Num of letters " + letters);
+		return "" + letters;
 	}
 
 }

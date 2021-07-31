@@ -1,5 +1,5 @@
 
-public class Problem59 extends ProblemImpl { //Took 3.428538 seconds
+public class Problem59 implements Problem { //Took 3.428538 seconds
 	
 	/*
 	 Each character on a computer is assigned a unique code and the preferred standard is ASCII (American Standard Code for Information Interchange). For example, uppercase A = 65, asterisk (*) = 42, and lowercase k = 107.
@@ -25,7 +25,7 @@ Your task has been made easy, as the encryption key consists of three lower case
 		 */
 	}
 
-	public void problem() {
+	public String problem() {
 		
 		//97 - 122 = lower case a - z in ascii
 		int[] lowerCaseAsciiChars = new int[] {
@@ -47,16 +47,21 @@ Your task has been made easy, as the encryption key consists of three lower case
 					key[1] = lowerCaseAsciiChars[j];
 					key[2] = lowerCaseAsciiChars[k];
 					
-					if(decipherTextContainsEulerText(cipherText, key)) {
+					long res = decipherTextContainsEulerText(cipherText, key);
+					if(res != 0) {
 						System.out.println(" with key : " + key[0] + ", " + key[1] + ", " + key[2] + "  --- with sum: " + (key[0]+key[1] + key[2]));
+						return "" + res;
 					}
 				}
 			}	
 		}
+		
+		return null;
+		
 	}
 	
 	
-	private static boolean decipherTextContainsEulerText(int[] cipherText,int[] key) {
+	private static long decipherTextContainsEulerText(int[] cipherText,int[] key) {
 		String deciphered = "";
 		
 		boolean mightBeGood = false;
@@ -76,10 +81,11 @@ Your task has been made easy, as the encryption key consists of three lower case
 		
 		  if(mightBeGood) { 
 			  System.out.println("Try this : " + runningTotal + " if this text makes sense: " + deciphered);
+			  return runningTotal;
 		  }
 		 
 		
-		return mightBeGood;
+		return 0;
 	}
 	
 	private static boolean stringEndsWithEulerText(String text) {
@@ -88,7 +94,7 @@ Your task has been made easy, as the encryption key consists of three lower case
 				&& text.charAt(text.length()-2) == (int)'e'
 				&& text.charAt(text.length()-3) == (int)'l'
 				&& text.charAt(text.length()-4) == (int)'u'
-				&& (text.charAt(text.length()-5) == (int)'E' || text.charAt(text.length()-5) == (int)'e');
+				&& (text.charAt(text.length()-5) == (int)'E');
 			
 		
 	}

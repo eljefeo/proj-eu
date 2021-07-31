@@ -1,5 +1,5 @@
 
-public class Problem71 extends ProblemImpl { //Took 0.001484 seconds
+public class Problem71 implements Problem { //Took 0.001484 seconds
 
 	
 	/*
@@ -62,7 +62,7 @@ By listing the set of reduced proper fractions for d <= 1,000,000 in ascending o
 
 	
 	@Override
-	public void problem() {
+	public String problem() {
 
 		int max = 1000000;
 		int numerGoal = 3, denomGoal = 7;
@@ -85,11 +85,11 @@ By listing the set of reduced proper fractions for d <= 1,000,000 in ascending o
 			if(red[1] <= max) {
 				System.out.println("Fraction is " + red[0] + "/" + red[1]);
 				System.out.println("Answer: " + red[0]);
-				return;
+				return "" + red[0];
 			}
 			
 		}
-		
+		return null;
 	}
 
 }

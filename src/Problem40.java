@@ -1,5 +1,5 @@
 
-public class Problem40 extends ProblemImpl{
+public class Problem40 implements Problem {
 
 	/*
 	 	An irrational decimal fraction is created by concatenating the positive integers:
@@ -32,12 +32,13 @@ public class Problem40 extends ProblemImpl{
 	//....etc
 	//so count digits
 	// then 10 + (9 Math.pow(10,digits.length or -1)
-	public void problem(){
+	public String problem(){
 		int product = 1;
 		for(int i=0; i<7; i++){
 			product *= Util.findNthDigitOfAllNums((int)Math.pow(10, i));;
 		}
-		System.out.println("Solution : " + product);
+		//System.out.println("Solution : " + product);
+		return "" + product;
 	}
 	
 	

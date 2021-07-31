@@ -1,5 +1,5 @@
 
-public class Problem36 extends ProblemImpl{
+public class Problem36 implements Problem {
 
 	/*
 	 * 
@@ -19,7 +19,7 @@ public class Problem36 extends ProblemImpl{
 		p.runProblem();
 	}
 
-	public void problem() {
+	public String problem() {
 		int max = 1000000;
 		int sum = 0;
 		
@@ -30,8 +30,8 @@ public class Problem36 extends ProblemImpl{
 			}
 		}
 		
-		System.out.println("Sum of all numbers, less than one million, that are palindromic in base 10 and base 2 : " + sum);
-
+		//System.out.println("Sum of all numbers, less than one million, that are palindromic in base 10 and base 2 : " + sum);
+		return "" + sum; 
 	}
 
 }

@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class Problem63 extends ProblemImpl { //Took 0.130695 seconds
+public class Problem63 implements Problem { //Took 0.130695 seconds
 	
 	/*
 	 	The 5-digit number, 16807=7^5, is also a fifth power. Similarly, the 9-digit number, 134217728=8^9, is a ninth power.
@@ -13,7 +13,7 @@ public class Problem63 extends ProblemImpl { //Took 0.130695 seconds
 		p.runProblem();
 	}
 	
-	public void problem() {
+	public String problem() {
 		//solved by just doing a whole bunch and seeing what the number is at the end
 		// dont know when to stop though....
 		int min = 1;
@@ -47,8 +47,8 @@ public class Problem63 extends ProblemImpl { //Took 0.130695 seconds
 			
 		}
 		
-		System.out.println("FINAL Count at " + count); 
-
+		//System.out.println("FINAL Count at " + count); 
+		return "" + count;
 	}
 
 }

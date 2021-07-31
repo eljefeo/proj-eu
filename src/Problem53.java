@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class Problem53 extends ProblemImpl { //Took 0.115581 seconds
+public class Problem53 implements Problem { //Took 0.115581 seconds
 	
 	/*
 	 There are exactly ten ways of selecting three from five, 12345:
@@ -34,7 +34,7 @@ public class Problem53 extends ProblemImpl { //Took 0.115581 seconds
 	}
 
 	
-	public void problem(){
+	public String problem(){
 		
 		int min = 1;
 		int max = 101;
@@ -53,7 +53,8 @@ public class Problem53 extends ProblemImpl { //Took 0.115581 seconds
 			
 		}
 		
-		System.out.println("Count : " + counter);
+		//System.out.println("Count : " + counter);
+		return "" + counter;
 		
 	}
 

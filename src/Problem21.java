@@ -1,7 +1,7 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class Problem21 extends ProblemImpl { //Took 0.076784 seconds
+public class Problem21 implements Problem { //Took 0.076784 seconds
 
 	public static void main(String[] args) {
 		Problem p = new Problem21();
@@ -23,7 +23,7 @@ public class Problem21 extends ProblemImpl { //Took 0.076784 seconds
 	 */
 
 	@Override
-	public void problem() {
+	public String problem() {
 		Set<Integer> an = new HashSet<Integer>();
 		int runningTotal = 0;
 		for (int i = 1; i < 10000; i++) {
@@ -43,7 +43,8 @@ public class Problem21 extends ProblemImpl { //Took 0.076784 seconds
 		//for (Integer sum : an) {
 		//	runningTotal += sum;
 		//}
-		System.out.println("Final sum : " + runningTotal);
+		//System.out.println("Final sum : " + runningTotal);
+		return "" + runningTotal;
 	}
 
 }

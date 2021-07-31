@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Problem22 extends ProblemImpl { //Took 0.009570 seconds
+public class Problem22  implements Problem { //Took 0.009570 seconds
 
 	public static void main(String[] args) {
 		Problem p = new Problem22();
@@ -56,14 +56,15 @@ What is the total of all the name scores in the file?
 	
 	
 	@Override
-	public void problem(){
+	public String problem(){
 		java.util.Collections.sort(names);
 		
 		int runningTotal = 0;
 		for(int i=0; i<names.size(); i++){
 			runningTotal+=getNameValue(i,names.get(i));
 		}
-		System.out.println("Found: " + runningTotal);
+		//System.out.println("Found: " + runningTotal);
+		return "" + runningTotal;
 	}
 	
 	public static int getNameValue(int index, String name){

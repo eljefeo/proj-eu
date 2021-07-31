@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class Problem50 extends ProblemImpl {
+public class Problem50 implements Problem {
 
 	/*
 	The prime 41, can be written as the sum of six consecutive primes:
@@ -20,7 +20,7 @@ public class Problem50 extends ProblemImpl {
 		
 	}
 	
-	public void problem(){
+	public String problem(){
 		int end1 = 1000000;
 		int bestPCount = 0;
 		int bestPrime = 0;
@@ -53,7 +53,8 @@ public class Problem50 extends ProblemImpl {
 				}
 			}
 		}
-		System.out.println("\n*******\nFinal Answer ::: longest consecutive primes that also sum to a prime is " + bestPrime + " with a prime count of: " + bestPCount);
+		//System.out.println("\n*******\nFinal Answer ::: longest consecutive primes that also sum to a prime is " + bestPrime + " with a prime count of: " + bestPCount);
+		return "" + bestPrime;
 	}
 	
 	public void problemOtherTriedAndTooSlowCouldntFinish(){

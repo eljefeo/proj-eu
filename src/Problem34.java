@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem34 extends ProblemImpl {
+public class Problem34 implements Problem  {
 		/*
 		 
 		 
@@ -37,7 +37,7 @@ public class Problem34 extends ProblemImpl {
 		
 	}
 	
-	public void problem(){
+	public String problem(){
 		List<Long> sols = new ArrayList<Long>();
 		int max = 9999999;
 		for(long i=3; i<max; i++){
@@ -53,8 +53,8 @@ public class Problem34 extends ProblemImpl {
 			System.out.println("sol : " + l);
 			total += l;
 		}
-		System.out.println("Sum of all : " + total);
-		
+		//System.out.println("Sum of all : " + total);
+		return "" + total;
 	}
 
 }

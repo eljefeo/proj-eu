@@ -3,7 +3,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Problem3 extends ProblemImpl{
+public class Problem3 implements Problem {
 	
 /*	The prime factors of 13195 are 5, 7, 13 and 29.
 
@@ -18,7 +18,7 @@ public class Problem3 extends ProblemImpl{
 	}
 	
 	@Override
-	public void problem(){
+	public String problem(){
 		// if a number is not prime, it is a composite number.
 		// all composite numbers have at least 1 prime factor that is less than or equal to the number's square root
 		//if a number has a prime factor less than or equal to its square root, it is not prime.
@@ -62,11 +62,14 @@ public class Problem3 extends ProblemImpl{
 		}
 		
 		System.out.println("Prime Factors: ");
+		long largest = 0;
 		for(Long lon : factors){
-			System.out.print(lon + " ");
+			if(lon > largest)
+				largest = lon;
+			//System.out.print(lon + " ");
 		}
 		
-		
+		return "" + largest;
 		
 	}
 	

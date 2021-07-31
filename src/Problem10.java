@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class Problem10 extends ProblemImpl { //Took 0.110249 seconds
+public class Problem10 implements Problem{ //Took 0.110249 seconds
 
 /*	
 	The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
@@ -11,19 +11,17 @@ public class Problem10 extends ProblemImpl { //Took 0.110249 seconds
 		new Problem10().runProblem();
 	}
 	
-	public void problem(){
+	public String problem(){
 		int max = 2000000;
 		long runningTotal = 0;
 		List<Integer> primes = Util.getPrimesUnder(max);
 		for(int i : primes)
 			runningTotal += i;
-		System.out.println("Found: " + runningTotal);
+		//System.out.println("Found: " + runningTotal);
+		return "" + runningTotal;
 	}
 	
 	public void problemOld(){
-		
-		//Found: 142913828922
-
 		//Took 0.640592 seconds
 		int max = 2000000;
 		long runningTotal = 2;

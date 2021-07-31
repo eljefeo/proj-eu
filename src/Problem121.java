@@ -2,7 +2,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem121 extends ProblemImpl { //Took 0.048192 seconds
+public class Problem121 implements Problem { //Took 0.048192 seconds
 
 	
 	/*
@@ -21,11 +21,12 @@ Find the maximum prize fund that should be allocated to a single game in which f
 	}
 	
 	@Override
-	public void problem() {
+	public String problem() {
 		int turnCount = 15; // breaks at 2 need to fix?
 		
 		BigInteger howMuchToGive = howMuchShouldBankerGive(turnCount);
-		System.out.println("Banker should give : " + howMuchToGive);
+		//System.out.println("Banker should give : " + howMuchToGive);
+		return howMuchToGive.toString();
 	}
 	
 	private static int howManyCanYouMiss(int turns){
@@ -43,11 +44,11 @@ Find the maximum prize fund that should be allocated to a single game in which f
 		
 		//double ratio = totalPaths/winPaths;
 		
-		System.out.println("Turn count: " + turns);
-		System.out.println("How many paths win: " + winPaths);
-		System.out.println("How many total paths: " + totalPaths);
+		//System.out.println("Turn count: " + turns);
+		//System.out.println("How many paths win: " + winPaths);
+		//System.out.println("How many total paths: " + totalPaths);
 		BigInteger ratio =  totalPaths.divide(winPaths);
-		System.out.println("ratio win to total count: " + ratio);
+		//System.out.println("ratio win to total count: " + ratio);
 		
 		return ratio;
 		

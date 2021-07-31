@@ -1,7 +1,7 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class Problem125 extends ProblemImpl { //Took 0.025168 seconds
+public class Problem125 implements Problem { //Took 0.025168 seconds
 	/*
 	 * 
 	 * 
@@ -22,7 +22,7 @@ Find the sum of all the numbers less than 10^8 that are both palindromic and can
 	}
 
 	@Override
-	public void problem() {
+	public String problem() {
 
 		int power = 8;
 		int maxSum = (int) Math.pow(10, power);
@@ -51,7 +51,8 @@ Find the sum of all the numbers less than 10^8 that are both palindromic and can
 			sum = 0;
 		}
 		
-		System.out.println("Final Sum from " + palSums.size() + " nums ::: " + finalSum);
+		//System.out.println("Final Sum from " + palSums.size() + " nums ::: " + finalSum);
+		return "" + finalSum;
 	}
 	
 	

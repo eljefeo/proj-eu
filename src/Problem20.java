@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class Problem20 extends ProblemImpl { //Took 0.001608 seconds
+public class Problem20 implements Problem { //Took 0.001608 seconds
 
 	public static void main(String[] args) {
 		Problem p = new Problem20();
@@ -8,7 +8,7 @@ public class Problem20 extends ProblemImpl { //Took 0.001608 seconds
 	}
 	
 	@Override
-	public void problem(){
+	public String problem(){
 		int factorial = 100;
 		BigInteger inte = new BigInteger("1");
 		
@@ -22,7 +22,8 @@ public class Problem20 extends ProblemImpl { //Took 0.001608 seconds
 			runningTotal += Integer.parseInt(str.charAt(i)+"");
 		}
 		
-		System.out.println("found: " + inte.toString() + " --- \n" + runningTotal);
+		//System.out.println("found: " + inte.toString() + " --- \n" + runningTotal);
+		return "" + runningTotal;
 	}
 
 }

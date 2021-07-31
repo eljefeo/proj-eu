@@ -2,7 +2,7 @@
 public class ProblemImpl implements Problem{
 
 	@Override
-	public void problem() {}
+	public String problem() { return "sdf";}
 	// can implement this class so that all problems will have a timer
 	/*
 	 // Example:

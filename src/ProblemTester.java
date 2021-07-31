@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ProblemTester {
 
@@ -79,6 +80,32 @@ public class ProblemTester {
 		problems.add(new Problem71());
 		problems.add(new Problem72());
 
+		
+		System.out.println("Have this many problems : " + problems.size());
+		Map<Integer, String> answers = AnswersDontCheckMeIn.getAnswers();
+		
+		//Problem p = problems.get(3);
+		//p.runProblem();
+		List<Integer> longProblems = new ArrayList<Integer>();
+		
+		for(int i = 0; i < problems.size(); i++) {
+			
+			long startT = System.nanoTime();
+			Problem p = problems.get(i);
+			p.runProblem();
+			long endT = System.nanoTime();
+			double time = (double) (endT - startT) / 1000000000;
+			
+			if(time > 1) {
+				longProblems.add(i+1);
+			}
+		}
+		
+		
+		for(Integer i : longProblems) {
+			System.out.println("Problem " + i + " took over 1 second ");
+		}
+		
 	}
 
 }

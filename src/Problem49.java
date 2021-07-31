@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Problem49 extends ProblemImpl{
+public class Problem49 implements Problem {
 
 	/*
 	 The arithmetic sequence, 1487, 4817, 8147, in which each of the terms increases by 3330, is unusual in two ways: (i) each of the three terms are prime, and, (ii) each of the 4-digit numbers are permutations of one another.
@@ -17,7 +17,7 @@ public class Problem49 extends ProblemImpl{
 		p.runProblem();
 	}
 	
-	public void problem(){
+	public String problem(){
 		int start = 1000;
 		int end = 9999;
 		for(int i = start; i < end; i++){
@@ -34,19 +34,20 @@ public class Problem49 extends ProblemImpl{
 				}
 				
 			}
-			if(find3Nums(lsp)){
-				return;
+			String res = find3Nums(lsp);
+			if(res != ""){
+				return "" + res;
 			}
 		}
-		
+		return null;
 	}
 	
 	
-	private static boolean find3Nums(List<Integer> lsp){
+	private static String find3Nums(List<Integer> lsp){
 		for(int i = 0; i < lsp.size()-1; i++){
 			Integer a = lsp.get(i);
 			if(a == 1487)
-				return false; // skip the previously known one...
+				return ""; // skip the previously known one...
 			
 			for(int j = i+1; j < lsp.size(); j++){	
 				Integer b = lsp.get(j);
@@ -58,11 +59,11 @@ public class Problem49 extends ProblemImpl{
 				if(lsp.contains(c)){
 					String answer = a+""+b+""+c;
 					System.out.println("Found a: "+a+" b:"+b+" c:" + c + " answer:"+answer);
-					return true;
+					return "" + answer;
 				}
 			}
 		} 
-		return false;
+		return "";
 	}
 
 }

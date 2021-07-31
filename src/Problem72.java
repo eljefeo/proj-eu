@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem72 extends ProblemImpl { //Took 0.217028 seconds
+public class Problem72 implements Problem { //Took 0.217028 seconds
 
 	/*
 	 * Consider the fraction, n/d, where n and d are positive integers. If n<d and
@@ -39,7 +39,7 @@ public class Problem72 extends ProblemImpl { //Took 0.217028 seconds
 		p.runProblem();
 	}
 
-	public void problem() {
+	public String problem() {
 
 		int max =  1000000 + 1;
 		long totalCounter = 0;
@@ -78,7 +78,8 @@ public class Problem72 extends ProblemImpl { //Took 0.217028 seconds
 			totalCounter += phi;
 		}
 		
-		System.out.println("Total: " + totalCounter);
+		//System.out.println("Total: " + totalCounter);
+		return "" + totalCounter;
 		
 	}
 

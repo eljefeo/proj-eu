@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem26 extends ProblemImpl{
+public class Problem26 implements Problem { //Took 0.017057 seconds
 /*	
 	A unit fraction contains 1 in the numerator. The decimal representation of the unit fractions with denominators 2 to 10 are given:
 
@@ -25,7 +25,7 @@ public class Problem26 extends ProblemImpl{
 	}
 	
 	@Override
-	public void problem(){
+	public String problem(){
 		int biggestRemainderSet = 0;
 		int biggestD = 0; // ;)
 		for(int i=1; i<1000; i++){
@@ -36,7 +36,8 @@ public class Problem26 extends ProblemImpl{
 				System.out.println("New biggest set of remainders is size " + biggestRemainderSet + " for d=" + i);
 			}
 		}
-		System.out.println("Biggest set of remainders " + biggestRemainderSet + " for d=" + biggestD);
+		//System.out.println("Biggest set of remainders " + biggestRemainderSet + " for d=" + biggestD);
+		return "" + biggestD;
 	}
 	private static int getRepeatingDecimal(int numerator, int denom){
 		List<Integer> numerators = new ArrayList<Integer>();

@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class Problem70 extends ProblemImpl { //Took 1.977199 seconds - probably because doing 10,000,000 not much we can do ...
+public class Problem70 implements Problem{ //Took 1.977199 seconds - probably because doing 10,000,000 not much we can do ...
 
 	/*
 	 * Euler's Totient function, phi(n) [sometimes called the phi function], is used
@@ -71,7 +71,7 @@ public class Problem70 extends ProblemImpl { //Took 1.977199 seconds - probably 
 	}
 	
 	
-	public void problem() {
+	public String problem() {
 		int max = (int) Math.pow(10, 7), step = max/10;
 		double smalD = 10;
 		int smalN = 0;
@@ -139,7 +139,7 @@ public class Problem70 extends ProblemImpl { //Took 1.977199 seconds - probably 
 		}
 
 		System.out.println("Smallest nOverPhi = " + smalD + " for num = " + smalN + " with phi=" + smalPhi + " with prime count : " + primes.size() + " under " + max);
-
+		return "" + smalN;
 	}
 	
 	

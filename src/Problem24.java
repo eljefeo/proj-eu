@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Problem24 extends ProblemImpl { //Took 0.330024 seconds
+public class Problem24 implements Problem { //Took 0.330024 seconds
 	
 /*	A permutation is an ordered arrangement of objects. For example, 3124 is one possible permutation of the digits 1, 2, 3 and 4. 
  * If all of the permutations are listed numerically or alphabetically, we call it lexicographic order. 
@@ -20,7 +20,7 @@ public class Problem24 extends ProblemImpl { //Took 0.330024 seconds
 	
 
 	@Override
-	public void problem(){
+	public String problem(){
 		// what if we dont even use the List<String>
 		// since we are only looking for the millionth perm
 		// and we know each next perm is in the right order...
@@ -34,8 +34,8 @@ public class Problem24 extends ProblemImpl { //Took 0.330024 seconds
 		//String res = permutation("", "0123456789", perms, max); 
 		permutation("", "0123456789", perms, max); 
 		
-		System.out.println("Found: "  + perms.get(perms.size()-1) + " of " + perms.size() + " total permutations");
-		
+		//System.out.println("Found: "  + perms.get(perms.size()-1) + " of " + perms.size() + " total permutations");
+		return "" + perms.get(perms.size()-1);
 		
 	}
 

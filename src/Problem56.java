@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class Problem56 extends ProblemImpl { //Took 0.092728 seconds
+public class Problem56 implements Problem { //Took 0.092728 seconds
 
 	
 	/*
@@ -18,7 +18,7 @@ Considering natural numbers of the form, a^b, where a, b < 100, what is the maxi
 	}
 
 	
-	public void problem() {
+	public String problem() {
 		
 		int max = 100;
 		int largestSum = 0;
@@ -39,7 +39,7 @@ Considering natural numbers of the form, a^b, where a, b < 100, what is the maxi
 		}
 		
 		System.out.println("Largest sum: " + largestSum + " from " + largestI + " to the power " + largestJ);
-		
+		return "" + largestSum;
 	}
 	
 

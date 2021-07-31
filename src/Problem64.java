@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem64 extends ProblemImpl { //Took 0.067875 seconds
+public class Problem64 implements Problem { //Took 0.067875 seconds
 
 	
 	//Odd period square roots
@@ -11,7 +11,7 @@ public class Problem64 extends ProblemImpl { //Took 0.067875 seconds
 		p.runProblem();
 	}
 	
-	public void problem() {
+	public String problem() {
 		
 		int max = 10000;
 		int oddPerCounter = 0;
@@ -42,7 +42,7 @@ public class Problem64 extends ProblemImpl { //Took 0.067875 seconds
 				// check if numer and denom can be simplified down to 1 on the numerator (like 7/14 or 5/20 ... error if something like 9/12)
 				if(firstBottomD - (int)firstBottomD != 0) {
 					System.out.println("ERROR .... with " + firstBottomD + "  for first " +  firstWholeNum + " first numer " + firstNumer);
-					return;
+					return "-1";
 				}
 				
 				firstBottom = (int) firstBottomD;
@@ -69,8 +69,8 @@ public class Problem64 extends ProblemImpl { //Took 0.067875 seconds
 			}
 		}
 		
-		System.out.println("Odd period count under " + max + " :: " + oddPerCounter);
-		
+		//System.out.println("Odd period count under " + max + " :: " + oddPerCounter);
+		return "" + oddPerCounter;
 	}
 
 	/*	

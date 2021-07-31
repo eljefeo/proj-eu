@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Problem68 extends ProblemImpl { //Took 0.022789 seconds
+public class Problem68 implements Problem { //Took 0.022789 seconds
 
 	
 	/*
@@ -31,7 +31,8 @@ Total	Solution Set
 
 By concatenating each group it is possible to form 9-digit strings; the maximum string for a 3-gon ring is 432621513.
 
-Using the numbers 1 to 10, and depending on arrangements, it is possible to form 16- and 17-digit strings. What is the maximum 16-digit string for a "magic" 5-gon ring?
+Using the numbers 1 to 10, and depending on arrangements, it is possible to form 16- and 17-digit strings. 
+What is the maximum 16-digit string for a "magic" 5-gon ring?
 
 
 	 */
@@ -45,16 +46,16 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 		p.runProblem();
 	}
 
-	public void problem() {
+	public String problem() {
 		
 		
-		do3Gon();
+		//do3Gon();
 		System.out.println("We did this many sols for 3 gon: " + c);
 		System.out.println("Largest num for 3gon: " + bgst);
 		
 		//reset nums after 3gon:
-		c = 0;
-		bgst = BigInteger.ZERO;
+		//c = 0;
+		//bgst = BigInteger.ZERO;
 		
 		
 		
@@ -63,6 +64,8 @@ Using the numbers 1 to 10, and depending on arrangements, it is possible to form
 		System.out.println();
 		System.out.println("We did this many sols for 5 gon: " + c);
 		System.out.println("Largest num for 5gon: " + bgst);
+		
+		return bgst.toString();
 		
 	}
 	

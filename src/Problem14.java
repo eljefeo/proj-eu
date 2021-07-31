@@ -1,5 +1,5 @@
 
-public class Problem14 extends ProblemImpl { // Took 0.208588 seconds
+public class Problem14 implements Problem { // Took 0.208588 seconds
 
 	public static void main(String[] args) {
 		Problem p = new Problem14();
@@ -21,7 +21,7 @@ NOTE: Once the chain starts the terms are allowed to go above one million.
 	 */
 	
 	@Override
-	public void problem(){
+	public String problem(){
 		
 		int biggestNumOfSteps = 0;
 		int finalNum = 0;
@@ -39,8 +39,9 @@ NOTE: Once the chain starts the terms are allowed to go above one million.
 				//System.out.println("new biggest: " + i + " with "  + steps  + " steps");
 			}
 		}
-		System.out.println("Found " + finalNum + " with " + biggestNumOfSteps + " steps");
 		
+		//System.out.println("Found " + finalNum + " with " + biggestNumOfSteps + " steps");
+		return "" + finalNum;
 	}
 	
 	

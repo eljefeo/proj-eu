@@ -1,5 +1,5 @@
 
-public class Problem19 extends ProblemImpl { //Took 0.001820 seconds
+public class Problem19 implements Problem { //Took 0.001820 seconds
 
 	
 	/*
@@ -24,7 +24,7 @@ How many Sundays fell on the first of the month during the twentieth century (1 
 	}
 	
 	@Override
-	public void problem(){
+	public String problem(){
 		
 		int numOfSundaysOnFirstOfMonth = 0;
 		int dayOfWeek = 2;
@@ -46,8 +46,8 @@ How many Sundays fell on the first of the month during the twentieth century (1 
 			}
 		}
 		
-		System.out.println("Found: " + numOfSundaysOnFirstOfMonth);
-			
+		//System.out.println("Found: " + numOfSundaysOnFirstOfMonth);
+		return "" + numOfSundaysOnFirstOfMonth;
 	}
 	
 

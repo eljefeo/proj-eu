@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class Problem25 extends ProblemImpl{
+public class Problem25 implements Problem { //Took 0.103798 seconds
 
 	public static void main(String[] args) {
 		Problem p = new Problem25();
@@ -8,7 +8,7 @@ public class Problem25 extends ProblemImpl{
 	}
 	
 	@Override
-	public void problem(){
+	public String problem(){
 		BigInteger num1= new BigInteger("1");
 		BigInteger num2 = new BigInteger("1");
 		
@@ -20,10 +20,11 @@ public class Problem25 extends ProblemImpl{
 			
 			ind++;
 			if(num2.toString().length() == 1000){
-				System.out.println("Found: " + ind);
+				//System.out.println("Found: " + ind);
 				break;
 			}
 		}
+		return "" + ind;
 	}
 
 }

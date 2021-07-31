@@ -1,5 +1,5 @@
 
-public class Problem37 extends ProblemImpl{
+public class Problem37 implements Problem {
 	/*
 	 * The number 3797 has an interesting property. Being prime itself, it is
 	 * possible to continuously remove digits from left to right, and remain
@@ -17,7 +17,7 @@ public class Problem37 extends ProblemImpl{
 		p.runProblem();
 	}
 
-	public void problem() {
+	public String problem() {
 		int max = 1000000, sum = 0, count = 0, expectedPrimeCount = 11;
 		
 		for (int i = expectedPrimeCount; i < max; i++) {
@@ -28,13 +28,15 @@ public class Problem37 extends ProblemImpl{
 			}
 		}
 		if (count == 11) {
-			System.out.println("Found all " + count + " primes! :: Sum : " + sum);// not
-																				// 833554
+			System.out.println("Found all " + count + " primes! :: Sum : " + sum);
+																				 
 		} else {
 			System.out.println(
 					"There should only be 11 truncatable primes that are truncatable left to right and right to left, how the hell did you find "
 							+ count);
 		}
+		
+		return "" + sum;
 	}
 
 

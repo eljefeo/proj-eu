@@ -1,5 +1,5 @@
 
-public class Problem28 extends ProblemImpl{
+public class Problem28 implements Problem {
 	/*
 	 * Starting with the number 1 and moving to the right in a clockwise
 	 * direction a 5 by 5 spiral is formed as follows:
@@ -24,12 +24,13 @@ public class Problem28 extends ProblemImpl{
 	}
 
 	@Override
-	public void problem() {
+	public String problem() {
 		int side = 1001;
 		int sum = addCorners(side);
 		if(sum != -1){
 			System.out.println("Total sum of all spiral corners for a square of size " + side + " = " + sum);
 		}
+		return "" + sum;
 	}
 	
 	private static int addCorners(int side){

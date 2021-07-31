@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Problem7 extends ProblemImpl { //Took 0.014207 seconds
+public class Problem7 implements Problem { //Took 0.014207 seconds
 
 	public static void main(String[] args) {
 		Problem p = new Problem7();
@@ -18,7 +18,13 @@ public class Problem7 extends ProblemImpl { //Took 0.014207 seconds
 		What is the 10 001st prime number?
 	 */
 	
-	public void problem(){
+	public String problem(){
+		int prime = Util.getNthPrimeNumber(10001);
+		System.out.println(prime);
+		return "" + prime;
+	}
+	
+	public String problemOrig(){
 		
 		
 		List<Long> primes = new ArrayList<Long>();
@@ -34,11 +40,9 @@ public class Problem7 extends ProblemImpl { //Took 0.014207 seconds
 			}
 		}
 		
-		System.out.print("Found " + primes.get(primes.size()-1));
+		//System.out.print("Found " + primes.get(primes.size()-1));
 		
-		
+		return "" + primes.get(primes.size()-1);
 	}
-	
-
 
 }

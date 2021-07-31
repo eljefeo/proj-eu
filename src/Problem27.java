@@ -1,5 +1,5 @@
 
-public class Problem27 extends ProblemImpl{
+public class Problem27 implements Problem {
 	
 	/*
 	 Euler discovered the remarkable quadratic formula: n^2 + n + 41
@@ -39,7 +39,7 @@ public class Problem27 extends ProblemImpl{
 	}
 	 
 	@Override
-	public void problem(){
+	public String problem(){
 		int a = -1000;
 		int b = -1000;
 		int oldb = -1000;
@@ -75,9 +75,9 @@ public class Problem27 extends ProblemImpl{
 		}
 		
 		
-		System.out.println("Best PCount : " + bestPCount + " with product of a*b : " + (winningA*winningB));
+		//System.out.println("Best PCount : " + bestPCount + " with product of a*b : " + (winningA*winningB));
 		
-		
+		return "" + (winningA*winningB);
 	}
 	private static void primes1to39(int n){
 		long val = (long)Math.pow(n, 2) + n + 41;

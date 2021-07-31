@@ -3,7 +3,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Problem62 extends ProblemImpl{
+public class Problem62 implements Problem {
 	
 	 /*
 	 
@@ -35,7 +35,7 @@ anything?
 		//System.out.println("anything?");
 	}
 	
-	public void problem() {
+	public String problem() {
 		int min = 200;
 		int max = 10000;
 		int targetNumberOfCubes = 5;
@@ -57,7 +57,7 @@ anything?
 				
 				if(newCount == targetNumberOfCubes) {
 					System.out.println("Found : " + res);
-					return;
+					return "" + res;
 				} else {
 					alln.put(res, newCount);
 				}
@@ -65,6 +65,9 @@ anything?
 				alln.put(cb, 1);
 			}
 		}
+		
+		return null;
+		
 	}
 	
 	public static long alreadyHas2(long n, Map<Long, Integer> alln) {

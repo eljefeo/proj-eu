@@ -1,5 +1,5 @@
 
-public class Problem58 extends ProblemImpl { //Took 0.384939 seconds
+public class Problem58 implements Problem { //Took 0.384939 seconds
 
 	
 	/*
@@ -29,7 +29,7 @@ If this process is continued, what is the side length of the square spiral for w
 	}
 
 	
-	public void problem() {
+	public String problem() {
 		
 		int currNum = 1, sideLength = 2, totalCornerCount = 1, primeCornerCount = 0;
 		double cutoffPercent = 0.1, ratio = 0;
@@ -44,8 +44,8 @@ If this process is continued, what is the side length of the square spiral for w
 			
 			ratio = (double)primeCornerCount / (double)totalCornerCount;
 			if(ratio < cutoffPercent) {
-				System.out.println("Dropped below " + cutoffPercent + "  with side length: " + (sideLength+1));
-				return;
+				//System.out.println("Dropped below " + cutoffPercent + "  with side length: " + (sideLength+1));
+				return "" + (sideLength+1);
 			}
 			sideLength+=2;
 		}

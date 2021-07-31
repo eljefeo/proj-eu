@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class Problem48 extends ProblemImpl{
+public class Problem48 implements Problem{
 
 	/*
 	 The series, 1^1 + 2^2 + 3^3 + ... + 10^10 = 10405071317.
@@ -15,7 +15,7 @@ public class Problem48 extends ProblemImpl{
 		p.runProblem();
 	}
 	
-	public void problem(){
+	public String problem(){
 		int max = 1001;
 		long tenDigits = 10000000000L;
 		BigInteger b = new BigInteger("0");
@@ -23,8 +23,9 @@ public class Problem48 extends ProblemImpl{
 			BigInteger c = new BigInteger(""+i).pow(i);
 			b = b.add(c);
 		}
-		System.out.println("Last ten digits: " + b.mod(new BigInteger(""+tenDigits)));
+		//System.out.println("Last ten digits: " + b.mod(new BigInteger(""+tenDigits)));
 		// sorry we cheated with BigInteger again...
+		return "" + b.mod(new BigInteger(""+tenDigits));
 	}
 
 }

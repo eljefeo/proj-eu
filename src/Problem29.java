@@ -2,7 +2,7 @@ import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Problem29 extends ProblemImpl{
+public class Problem29 implements Problem {
 
 	
 	/*
@@ -27,7 +27,7 @@ public class Problem29 extends ProblemImpl{
 	}
 	
 	@Override
-	public void problem(){
+	public String problem(){
 		int lowerBound = 2;
 		int higherBound = 100;
 		Set<BigInteger> nums = new HashSet<BigInteger>();
@@ -38,6 +38,7 @@ public class Problem29 extends ProblemImpl{
 				nums.add(n.pow(j));
 			}
 		}
-		System.out.println("Total number of unique numbers : " + nums.size());
+		//System.out.println("Total number of unique numbers : " + nums.size());
+		return "" + nums.size();
 	} 
 }

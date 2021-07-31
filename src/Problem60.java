@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class Problem60 extends ProblemImpl { //Took 3.267360 seconds
+public class Problem60 implements Problem { //Took 3.267360 seconds
 
 	
 	/*
@@ -28,7 +28,7 @@ Find the lowest sum for a set of five primes for which any two primes concatenat
 		System.out.println("helllllllo");
 	}
 	
-	public void problem() {
+	public String problem() {
 		
 		int end = 10000;
 		int start = 3;
@@ -51,14 +51,14 @@ Find the lowest sum for a set of five primes for which any two primes concatenat
 			}
 		}
 		System.out.println("Pcount : " + pCount);
-		findCombinationsOfSizeRecurCheckPrimesi(nums, new int[comboSize], 0, nums.length, comboSize, 0);
-		
+		int res = findCombinationsOfSizeRecurCheckPrimesi(nums, new int[comboSize], 0, nums.length, comboSize, 0);
+		return "" + res;
 	}
 	
-	public static boolean findCombinationsOfSizeRecurCheckPrimesi(int[] A, int[] track, int index, int lengthOfThing, int sampleSize, int ti) {
+	public static int findCombinationsOfSizeRecurCheckPrimesi(int[] A, int[] track, int index, int lengthOfThing, int sampleSize, int ti) {
         // invalid input
         if (sampleSize > lengthOfThing) {
-            return false;
+            return 0;
         }
         
         //check so far first - if these primes make primes together
@@ -69,7 +69,7 @@ Find the lowest sum for a set of five primes for which any two primes concatenat
              		temp[i] = track[i];
              
              if(!checkIntCombinationsForPrimes(temp)) 
-             	return false;
+             	return 0;
         }
         
         // base case: combination size is k
@@ -83,7 +83,7 @@ Find the lowest sum for a set of five primes for which any two primes concatenat
         		}
         		System.out.println("\n sum " + sum);
         		//System.exit(0);
-        		return true;
+        		return sum;
         	//}
         	//return false;
         }
@@ -91,10 +91,11 @@ Find the lowest sum for a set of five primes for which any two primes concatenat
         // start from the next index till the last index
         for (int j = index; j < lengthOfThing; j++) {
         	track[ti] = A[j];
-        	if(findCombinationsOfSizeRecurCheckPrimesi(A, track , j + 1, lengthOfThing, sampleSize - 1, ti + 1))
-        		return true;
+        	int possibleSum = findCombinationsOfSizeRecurCheckPrimesi(A, track , j + 1, lengthOfThing, sampleSize - 1, ti + 1);
+        	if(possibleSum != 0)
+        		return possibleSum;
         }
-        return false;
+        return 0;
     }
 	
 	public static int[] splitStringToNums(String s ) {

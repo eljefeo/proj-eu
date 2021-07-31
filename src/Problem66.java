@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class Problem66 extends ProblemImpl { //Took 0.041852 seconds
+public class Problem66 implements Problem { //Took 0.041852 seconds
 	
 	/*
 	 
@@ -51,7 +51,7 @@ Find the value of D <= 1000 in minimal solutions of x for which the largest valu
 }
 	
 	
-	public void problem() {
+	public String problem() {
 		int max = 1000;
 		BigInteger maxX = BigInteger.ZERO;
 		int maxD = 0;
@@ -67,7 +67,7 @@ Find the value of D <= 1000 in minimal solutions of x for which the largest valu
 		}
 		
 		System.out.println("Max d = " + maxD + ", with x = " + maxX);
-		
+		return "" + maxD;
 		
 	}
 	

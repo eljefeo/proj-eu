@@ -1,6 +1,6 @@
 
 
-public class Problem41 extends ProblemImpl{
+public class Problem41 implements Problem{
 
 	/*
 	 We shall say that an n-digit number is pandigital if it makes use of all the digits 1 to n exactly once. For example, 2143 is a 4-digit pandigital and is also prime.
@@ -20,7 +20,7 @@ What is the largest n-digit pandigital prime that exists?
 		
 	}
 	
-	public void problem(){
+	public String problem(){
 		
 		int solution = 0;
 		// can we just do all pandigital numbers...
@@ -29,10 +29,11 @@ What is the largest n-digit pandigital prime that exists?
 				if(Util.isPrime(s) && s > solution) 
 					solution = s;
 		
-		System.out.println("Max: " + solution);
+		//System.out.println("Max: " + solution);
+		return "" + solution;
 	}  
 
-	public void problem2(){ //old slow way
+	public String problem2(){ //old slow way
 		int test  = 6582143;
 		/*boolean isNthDigitPandigital = isNthDigitPandigitalNumber(test);
 		boolean isPrime = Util.isPrime(test);
@@ -53,6 +54,7 @@ What is the largest n-digit pandigital prime that exists?
 					solution = i;
 		}
 		System.out.println("Max? " + solution);
+		return "" + solution;
 	}
 	
 

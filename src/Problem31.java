@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Problem31 extends ProblemImpl {
+public class Problem31 implements Problem  {
 
 	/*
 	 * In the United Kingdom the currency is made up of pound ($) and pence (p).
@@ -28,30 +28,30 @@ public class Problem31 extends ProblemImpl {
 
 	static List<List<Integer>> all;
 
-	public void problem() {
+	public String problem() {
 		all = new ArrayList<List<Integer>>();
 		int[] UKcoins = {1,2,5,10,20,50,100,200} ;
 		int agoal = 200;
 		
 		int[] nums = new int[] { 1, 2, 3};
-		int goal = 6;
+		//int goal = 6;
 		
-		long startT = System.nanoTime();
+		//long startT = System.nanoTime();
 		
 		//findAllNumsThatAddToNumWithResults(nums, goal);
-		findAllNumsThatAddToNumJustCount(UKcoins, agoal);
+		int res = findAllNumsThatAddToNumJustCount(UKcoins, agoal);
 		
-		long endT = System.nanoTime();
+		//long endT = System.nanoTime();
 		
-		double time = (double) (endT - startT)/1000000000;
+		//double time = (double) (endT - startT)/1000000000;
 		  
-		
+		return "" + res;
 		
 	}
 	
-	private static void findAllNumsThatAddToNumJustCount(int[] nums, int goal){
-		int count = recurLoopJustCount(nums, goal, 0, 0);
-		System.out.println("Found " + count + " solutions ");
+	private static int findAllNumsThatAddToNumJustCount(int[] nums, int goal){
+		return recurLoopJustCount(nums, goal, 0, 0);
+		//System.out.println("Found " + count + " solutions ");
 	}
 	
 	private static void findAllNumsThatAddToNumWithResults(int[] nums, int goal){

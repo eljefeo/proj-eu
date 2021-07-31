@@ -1,6 +1,7 @@
+import java.util.ArrayList;
 import java.util.List;
 
-public class Problem43 extends ProblemImpl{
+public class Problem43 implements Problem{
 	/*
 	 * The number, 1406357289, is a 0 to 9 pandigital number because it is made
 	 * up of each of the digits 0 to 9 in some order, but it also has a rather
@@ -19,29 +20,50 @@ public class Problem43 extends ProblemImpl{
 		p.runProblem();
 	}
 
-	public void problem() {
+	public String problem() {
 
 		long end = 9;
-		List<Long> alln = Util.makeAllPandigitalNumsFromZeroTo(end);
-
 		int[] primes = new int[] { 2, 3, 5, 7, 11, 13, 17 };
+		List<Long> alln = makeAllPanditalNumsFromTo(0, end, primes);
+
 		long sum = 0;
 		for (int i = 0; i < alln.size(); i++) {
-			Long num = alln.get(i);
-			boolean isDivisibleByAll = true;
-			for (int j = 1; j <= 7; j++) { // only go to 7 since we get j+2 which ends up being index 7,8,9 with 9 as the final number
-				long sub1 = Util.getSubIntFromIndexToIndex(j, j + 3, alln.get(i));
-				if (sub1 % (primes[j - 1]) != 0) {
-					isDivisibleByAll = false;
-					break;
-				}
-			}
-			if (isDivisibleByAll) {
-				sum += num;
-			}
-
+				sum += alln.get(i);
 		}
-		System.out.println("Sum : " + sum );
+
+		return "" + sum;
+	}
+	
+	public static List<Long> makeAllPanditalNumsFromTo(long start, long end, int[] primes){
+		List<Long> all = new ArrayList<Long>();
+		String s = "";
+		for(long i=start; i<=end; i++){
+			s += i;
+		}
+		makeAllPermutationsRecur("", s, all, primes);
+		return all;
+	}
+	
+	public static void makeAllPermutationsRecur(String s, String r, List<Long> all, int[] primes){
+		
+		// lets check as we go... if the primes even work so far...
+		if(s.length() > 2) 
+			for (int j = 1; j < s.length()-2; j++)  // only go to 7 since we get j+2 which ends up being index 7,8,9 with 9 as the final number
+				if (Long.parseLong(s.substring(j, j + 3)) % (primes[j - 1]) != 0) 
+					return; //if primes dont work just quit here, go do the next set
+				
+		if(r.length() == 0){
+			all.add(Long.parseLong(s));
+		} else {
+			for(int i=0; i<r.length(); i++){
+				if(s.startsWith("0"))
+					return; //zero disappears if a num starts with zero, doesnt count
+				
+				String newS = s + r.charAt(i);
+				String newR = r.substring(0,i) + r.substring(i+1);
+				makeAllPermutationsRecur(newS, newR, all, primes);
+			}
+		}
 	}
 
 

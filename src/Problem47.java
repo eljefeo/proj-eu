@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class Problem47 extends ProblemImpl {
+public class Problem47 implements Problem {
 
 	/*
 	 The first two consecutive numbers to have two distinct prime factors are:
@@ -22,7 +22,7 @@ public class Problem47 extends ProblemImpl {
 		p.runProblem();
 	}
 	
-	public void problem(){
+	public String problem(){
 		
 		int howManyFactors = 4, howManyConsecutive = 4, i = 20;
 		List<Integer> primes = Util.getPrimesUnder(i);
@@ -63,7 +63,7 @@ public class Problem47 extends ProblemImpl {
 			}
 			
 			System.out.println("First prime (of " + howManyConsecutive + " consecutive) to have " + howManyFactors + " factors: " + (i-howManyConsecutive));
-
+			return "" + (i-howManyConsecutive);
 	}
 
 

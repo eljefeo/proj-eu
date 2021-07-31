@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem38 extends ProblemImpl{
+public class Problem38 implements Problem {
 	/*
 	 * Take the number 192 and multiply it by each of 1, 2, and 3:
 	 * 
@@ -23,7 +23,7 @@ public class Problem38 extends ProblemImpl{
 		p.runProblem();
 	}
 
-	public void problem() { // TODO when do we stop...why do we just go to 999999
+	public String problem() { // TODO when do we stop...why do we just go to 999999
 		int maxSol = 0;
 		int min = 1;
 		int max = 9999; // if we start doing 5 digit numbers we will at least end up with 10 digits in the result, too many
@@ -54,7 +54,8 @@ public class Problem38 extends ProblemImpl{
 		for(int[] arr : numsAndN){
 			System.out.println("Found sol : " + arr[0]  + " :: 1..." +arr[1] + " = " + arr[2] );
 		}
-		System.out.println("Max : " + maxSol);
+		//System.out.println("Max : " + maxSol);
+		return "" + maxSol;
 	}
 	
 /*	private static int[] appendIntArrayToIntArray(int[] someNums, int[]allNums){

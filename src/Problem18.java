@@ -1,4 +1,4 @@
-public class Problem18 extends ProblemImpl { //Took 0.001747 seconds
+public class Problem18 implements Problem { //Took 0.001747 seconds
 
 	
 	/*
@@ -47,7 +47,7 @@ NOTE: As there are only 16384 routes, it is possible to solve this problem by tr
 	}
 	
 	@Override
-	public void problem(){
+	public String problem(){
 		int allnums2[][] = {
 				{75},
 				{95, 64},
@@ -74,7 +74,8 @@ NOTE: As there are only 16384 routes, it is possible to solve this problem by tr
 				{6, 9, 3, 2, 7}
 			};
 		
-		System.out.println("Greatest Sum = " + Util.findGreatestSumPath(allnums2));
+		//System.out.println("Greatest Sum = " + Util.findGreatestSumPath(allnums2));
+		return "" + Util.findGreatestSumPath(allnums2);
 	
 		
 	}

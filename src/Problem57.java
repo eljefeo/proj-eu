@@ -1,6 +1,6 @@
 
 
-public class Problem57 extends ProblemImpl { //Took 0.029620 seconds
+public class Problem57 implements Problem { //Took 0.029620 seconds
 	
 	/*
 	 
@@ -29,7 +29,7 @@ In the first one-thousand expansions, how many fractions contain a numerator wit
 		p.runProblem();
 	}
 
-	public void problem() {
+	public String problem() {
 		//1 + 3/2	     7/5      17/12		41/29 
 		
 		//forget the one for now
@@ -60,8 +60,8 @@ In the first one-thousand expansions, how many fractions contain a numerator wit
 		 */
 		
 		int howManyIterations = 1000;
-		Util.calcSquareRootOfTwoCheckIfNumerMoreDigitsThanDenom(howManyIterations);
-		
+		int res = Util.calcSquareRootOfTwoCheckIfNumerMoreDigitsThanDenom(howManyIterations);
+		return "" + res;
 	}
 	
 

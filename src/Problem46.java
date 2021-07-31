@@ -1,5 +1,5 @@
 
-public class Problem46 extends ProblemImpl{
+public class Problem46 implements Problem {
 	
 	/*
 	 It was proposed by Christian Goldbach that every odd composite number can be written as the sum of a prime and twice a square.
@@ -22,7 +22,7 @@ public class Problem46 extends ProblemImpl{
 		p.runProblem();
 	}
 	
-	public void problem() {
+	public String problem() {
 		long max = 1000000;
 		for(long i = 9; i < max; i+=2){
 			
@@ -44,10 +44,13 @@ public class Problem46 extends ProblemImpl{
 			}
 			if(isMatch) { // if we dont 'break' in the loop above then we have the answer;
 				System.out.println("Yay : " + i );
-				return;
+				return "" + i;
 			}
 			
 		}
+		
+		return null;
+		
 	}
 
 }

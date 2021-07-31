@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class Problem65 extends ProblemImpl { //Took 0.002743 seconds
+public class Problem65 implements Problem { //Took 0.002743 seconds
 
 	
 	/*
@@ -27,7 +27,7 @@ public class Problem65 extends ProblemImpl { //Took 0.002743 seconds
 		p.runProblem();
 	}
 
-	public void problem() {
+	public String problem() {
 		int t = 100;
 		BigInteger num = BigInteger.ONE;
 		BigInteger den = new BigInteger("" + Util.getEPeriod(t));
@@ -43,8 +43,8 @@ public class Problem65 extends ProblemImpl { //Took 0.002743 seconds
 			
 		}
 		System.out.println(num + " / " + den);
-		System.out.println("Digits sum : " + Util.addUpAllDigits(num));
-		
+		//System.out.println("Digits sum : " + Util.addUpAllDigits(num));
+		return "" + Util.addUpAllDigits(num);
 	}
 		
 	/*

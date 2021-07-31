@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class Problem5 extends ProblemImpl { //Took 0.001478 seconds
+public class Problem5 implements Problem { //Took 0.001478 seconds
 
 	
 	/*
@@ -17,7 +17,7 @@ public class Problem5 extends ProblemImpl { //Took 0.001478 seconds
 		
 	}
 
-	public void problem(){
+	public String problem(){
 
 		/*
 		 to get the num that is divisible by all numbers below 20
@@ -67,7 +67,8 @@ public class Problem5 extends ProblemImpl { //Took 0.001478 seconds
 			if(primeCounts[i] > 0)
 				tot *= Math.pow(i, primeCounts[i]);
 		
-		System.out.println("Found : " + tot);
+		//System.out.println("Found : " + tot);
+		return "" + tot;
 	}
 	
 	

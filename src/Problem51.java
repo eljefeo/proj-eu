@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem51 extends ProblemImpl{
+public class Problem51 implements Problem{
 
 	
 	/*
@@ -22,8 +22,8 @@ Find the smallest prime which, by replacing part of the number (not necessarily 
 	
 	public static void main(String[] args) { //takes 15 sec, need to speed up
 		Problem p = new Problem51();
-		//p.runProblem();
-		problem2();
+		p.runProblem();
+		//problem2(); -- Work from here to optimize maybe
 		
 		/*
 		List<String> differentCombinationsOfIndexes = new ArrayList<String>();
@@ -130,7 +130,7 @@ Find the smallest prime which, by replacing part of the number (not necessarily 
 		}
 	}
 	
-	public void problem(){
+	public String problem(){
 		int maxPCount = 0;
 		int smallpr = 0;
 		int i = 9;
@@ -151,6 +151,9 @@ Find the smallest prime which, by replacing part of the number (not necessarily 
 				System.out.println("!!3 p count : " + newPCount + " for number : " + smallestPrime);
 			}
 		}
+		
+		return "" + smallpr;
+		
 	}
 	
 	private static int[] replaceDigitsCheckForPrimes(int num, int maxPCount){
