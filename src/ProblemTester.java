@@ -89,7 +89,7 @@ public class ProblemTester {
 		List<Integer> longProblems = new ArrayList<Integer>();
 		
 		for(int i = 0; i < problems.size(); i++) {
-			
+			System.out.println("\n\n*****----... Problem " + (i+1) + " ...----*****\n");
 			long startT = System.nanoTime();
 			Problem p = problems.get(i);
 			p.runProblem();

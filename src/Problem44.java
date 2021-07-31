@@ -18,11 +18,18 @@ Find the pair of pentagonal numbers, Pj and Pk, for which their sum and differen
 		p.runProblem();
 	} 
 	
+	
+	//this one I optimized by reducing the things we have to check (from a million to 10,000)
+	//but thats kinda like magic knowledge, how did I know
+	// I need to set it in a way where I dont know that smaller max (10,000)
+	//we should start small, work our way up with higher max's until we get the answer
+	// trying to skip things we already checked along the way maybe?
+	//TODO
 	public String problem(){// cant find 2 pents that are nex to eachother that work... trying to find pents that are 2 away, then 3 away etc..
 		//1, 5, 12, 22, 35, 51, 70, 92, 117, 145, ...
 		int max = 10000; // we will just keep upping the number until we get it?. If we cant we just keep upping it until we find it, we will eventually. we could just do a while I guess..
 		
-		for(int howFarApart=1; howFarApart < 10000; howFarApart++){
+		for(int howFarApart=1; howFarApart < max; howFarApart++){
 			long dif = Util.getPentagonalNumber(howFarApart);
 			for(int i=1; i < max; i++){
 				dif += (3*howFarApart); // --- I forget why I put this here.....

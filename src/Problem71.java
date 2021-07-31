@@ -26,6 +26,11 @@ By listing the set of reduced proper fractions for d <= 1,000,000 in ascending o
 	}
 	
 	/*
+	 * 
+	so I found this actually doesnt work like I thought it would...
+	1/2, to the left is 3/7
+	if you put 1/2 in here, you get 3/8... which is wrong.. my logic is incorrect
+	but I got lucky and got the right answer... but why...I need to figure this out for prob73 (maybe)
 	 
 	 so after looking at these fractions for a while here's what Im thinking
 	 3/7 is next to 2/5 because:
@@ -64,17 +69,20 @@ By listing the set of reduced proper fractions for d <= 1,000,000 in ascending o
 	@Override
 	public String problem() {
 
-		int max = 1000000;
-		int numerGoal = 3, denomGoal = 7;
+		int max = 8;
+		int numerGoal = 2, denomGoal = 5;
 		
 		for(int i=max; i > 1; i--) { 	// denom
 			
-			if(i == denomGoal) // lets assume there are other numbers in between...like 3/7 and 4/7 have some numbers in between lets just assume
+			//if(i == denomGoal) // lets assume there are other numbers in between...like 3/7 and 4/7 have some numbers in between lets just assume
+			if(denomGoal % i == 0)	
 				continue;
 			
 			long[] lcm  = Util.lcmWithMult(i, denomGoal);
 			
 			long w = denomGoal < i ? lcm[0] / denomGoal : lcm[1];
+			
+			System.out.println("w = " + w + " l0 = " + lcm[0] + " l1 = " + lcm[1]);
 			 // the second thing in the array
 				// is how many to mult the HIGHER num to to get the lcm
 				// but we dont know if the i we are testing is higher / lower than dGoal
@@ -82,6 +90,10 @@ By listing the set of reduced proper fractions for d <= 1,000,000 in ascending o
 				
 			long newNumerator = (numerGoal * w) - 1;
 			long[] red = Util.reduceFraction(newNumerator, lcm[0]);
+			System.out.println("wwwFraction is " + red[0] + "/" + red[1]);
+			
+			if(red[1] % denomGoal == 0)
+				continue;
 			if(red[1] <= max) {
 				System.out.println("Fraction is " + red[0] + "/" + red[1]);
 				System.out.println("Answer: " + red[0]);

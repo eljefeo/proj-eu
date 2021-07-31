@@ -15,6 +15,9 @@ public class Problem43 implements Problem{
 	 * d7d8d9=728 is divisible by 13 d8d9d10=289 is divisible by 17 Find the sum
 	 * of all 0 to 9 pandigital numbers with this property.
 	 */
+	
+	
+	//this one I optimized legitimately - no assumptions or magic knowledge
 	public static void main(String[] args) {
 		Problem p = new Problem43();
 		p.runProblem();

@@ -73,7 +73,39 @@ public class Util {
 		
 		return lcm;
 	}
+
+
 	
+	
+	public static long[] lcmWithMult(long a, long b) { //assuming both nums are positive
+		
+		long h, l;
+		if(a == b) 
+			return new long[] { a, 1 };
+		
+		// we get the higher number
+		// since we are looking for multiples that agree with both a and b
+		// less iterations if we do multiples of the bigger num
+		
+		if(a < b) {
+			l = a;
+			h = b;
+		} else {
+			h = a;
+			l = b;
+		}
+		int i = 2;
+		long lcm = h;
+		while(lcm % l != 0) {
+			//System.out.println("lcm is " + lcm + " i="+ i + " h=" + h + " l=" + l);
+			lcm = h * i++;
+			//System.out.println("new lcm is " + lcm + " i="+ i + " h=" + h + " l=" + l);
+		}
+		
+		// the second thing in the array is how much to multiple the HIGHER number to to get the lcm
+		return new long[] { lcm, i-1 };
+	}
+
 
 	public static int getAPolygonalNumber(int which, int ind) {
 		
@@ -310,6 +342,27 @@ public class Util {
 		}
 		//factors.add(num);
 		return factors;
+	}
+	
+	public static void getNextPrime2(List<Integer> primes, int n) {
+		int pr = n;
+		while(true) {
+			pr++;
+			boolean foundPrime = true;
+			for(int p = 0; p < primes.size(); p++) {
+				int prime = primes.get(p);
+				if(pr % prime == 0) {
+					foundPrime = false;
+					break;
+				}
+			}
+			if(foundPrime) {
+				primes.add(pr);
+				return;
+			}
+			
+		}
+		
 	}
 	
 	public static int getNextPrime(List<Integer> primes, int n) {
@@ -702,7 +755,9 @@ public static boolean isPalindromeIntSlower(int num) {
 	
 
 	public static int[] splitIntNumsToArray(int num) {
-
+		if(num == 0)
+			return new int[] {0};
+		
 		int digitCount = countDigits(num);
 		int[] digits = new int[digitCount];
 		for (int i = digitCount - 1; i >= 0; i--) {
@@ -1013,8 +1068,7 @@ public static boolean isPalindromeIntSlower(int num) {
 		return newArr;
 	}
 
-	public static boolean intHasAZeroInIt(int num) {
-
+	public static boolean intHasAZeroInItMaybeSlower(int num) {
 		int[] digits = Util.splitIntNumsToArray(num);
 		for (int i : digits) {
 			if (i == 0) {
@@ -1023,21 +1077,55 @@ public static boolean isPalindromeIntSlower(int num) {
 		}
 		return false;
 	}
-
-	public static long gcd(long a, long b) {
-		return b == 0 ? a : gcd(b, a % b);
+	
+	public static boolean intHasAZeroInIt(int n) {
+		while(n > 0) {
+			if(n % 10 == 0) 
+				return true;
+			n /= 10;
+		}
+		return false;
 	}
 
-	public static String reduceFraction(long a, long b) {
-		long gcd = gcd(a, b);
-		return (a / gcd) + "/" + (b / gcd);
+	public static long gcd(long numer, long denom) {
+		return denom == 0 ? numer : gcd(denom, numer % denom);
 	}
 	
-	public static int[] reduceFractionNumerDenom(long a, long b) {
-		long gcd = gcd(a, b);
-		return new int[] {(int) (a / gcd), (int) (b / gcd)};
+	public static int gcd(int numer, int denom) {
+		return denom == 0 ? numer : gcd(denom, numer % denom);
 	}
+	
 
+	public static String reduceFractionString(long numer, long denom) {
+		long gcd = gcd(numer, denom);
+		return (numer / gcd) + "/" + (denom / gcd);
+	}
+	
+	public static int[] reduceFractionSlow(int numer, int denom) {// this can probably be optimized
+		int na = numer, da = denom;
+		for(int i=2; i < denom/2; i++) {
+			if(na % i == 0 && da % i == 0) {
+				while (na % i == 0 && da % i == 0) {
+					na /= i;
+					da /= i;	
+				}
+			}
+		}
+		
+		return new int[] {na, da};
+	}
+	
+	
+	public static long[] reduceFraction(long numer, long denom) {
+		long gcd = gcd(numer, denom);
+		return new long[] {(long) (numer / gcd), (long) (denom / gcd)};
+	}
+	
+	
+	public static int[] reduceFraction(int numer, int denom) {
+		int gcd = gcd(numer, denom);
+		return new int[] {(int) (numer / gcd), (int) (denom / gcd)};
+	}
 	public static int sumOfDigitFactorial(int num) {
 		int[] digits = splitIntNumsToArray(num);
 		int total = 0;
@@ -1530,7 +1618,7 @@ public static boolean hasSameUniqueDigits(int a, int b){
 	}
 	
 	
-	public static void calcSquareRootOfTwoCheckIfNumerMoreDigitsThanDenom(int howManyIterations){
+	public static int calcSquareRootOfTwoCheckIfNumerMoreDigitsThanDenom(int howManyIterations){
 		
 		BigInteger numer = BigInteger.ONE, denom = BigInteger.TWO;
 		int counter = 0;
@@ -1558,7 +1646,7 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		numer = numer.add(denom);
 		System.out.println("Finally:\nNumer :" + numer + " \ndenom: " + denom);
 		System.out.println("Finally count of numerators having more digits than denominators : " + counter);
-		
+		return counter;
 	}
 	
 	
@@ -1775,5 +1863,45 @@ public static boolean hasSameUniqueDigits(int a, int b){
 	}
 	
 	
+	public static int getNthPrimeNumber(int max) {
+		// this method does not have to calculate the square root of the number to find the limit
+		// we use some pattern I noticed to know what the square root is
+		// a little faster because we dont have to do Math.sqrt(num)
+		int n = 1;
+		List<Integer> primes = new ArrayList<Integer>();
+		
+		int sqrtCounter = 1;
+		int sqrtNext = 3;
+		int sqrt = 1;
+		
+		primes.add(2);
+		
+		while (primes.size() < max) {
+			n+=2;
+			sqrtCounter+=2;
+			
+			for (int p = 0; p < primes.size(); p++) {
+				int prime = primes.get(p);
+				if(prime > sqrt) {
+					primes.add(n);
+					break;
+				}
+				
+				if (n % prime == 0)
+					break;
+				
+			}
+			
+			if(sqrtCounter > sqrtNext-2) { // here is where we calculate the next square root
+				sqrtNext += 2;
+				sqrtCounter = sqrtNext-sqrtCounter;
+				sqrt++;
+			}  	
+				
+		}
+		
+		return primes.get(primes.size()-1);
+		
+	}
 	
 }
