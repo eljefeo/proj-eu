@@ -1904,4 +1904,36 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		
 	}
 	
+	/*
+	public boolean areCoPrime(int a, int b) {
+		didnt really do this yet..
+		int na = a, nb = b;
+		
+		if(a % b == 0 || b % a == 0) {
+			return false;
+		}
+        
+        List<Integer> factors = new ArrayList<Integer>();
+        
+        
+        
+        while (n % 2 == 0) {
+            //factors.add(2);
+            n /= 2;
+        }
+        
+        for (int i = 3; i <= Math.sqrt(n); i += 2) {
+        	while (n % i == 0) {
+                factors.add(i);
+                n /= i;
+            }
+        }
+        if (n > 2) {
+            factors.add(n);
+        }
+        return factors;
+		
+		return true;
+	}
+	*/
 }

@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Problem73 implements Problem { 
 
@@ -74,18 +78,30 @@ public class Problem73 implements Problem {
 			System.out.println("diff sizes arrs: " + numers.length + " vs " + denoms.length);
 			return "blah";
 		}
-		for(int i=0; i<numers.length; i++) {
+		
+		int gc = 0;
+		
+		for(int i=1; i<numers.length; i++) {
 			double dec = (double)numers[i] / denoms[i];
 			System.out.println(numers[i] + "/" + denoms[i] + " = " + dec + " -- Looking for....");
 			long[] left = getFractionToTheLeft(maxDenom, numers[i], denoms[i]);
-			System.out.println("To the left of " +numers[i] + "/" + denoms[i] + " = " + dec  + " = " + left[0] + "/" + left[1]);
+			
+			
+			if(left[0] != numers[i-1] || left[1] != denoms[i-1]) {
+				System.out.println("*************ERRORRRRRRR --- wrong answer...for " + numers[i] + "/" + denoms[i] + " ..we got " + left[0] + "/" + left[1] + " instead of " + numers[i-1] + "/" + denoms[i-1]);
+			} else {
+				gc++;
+				System.out.println("YESSSSSS To the left of " +numers[i] + "/" + denoms[i] + " = " + dec  + " = " + left[0] + "/" + left[1]);
+			}
 		}
 		
 		
 		
+		System.out.println("Done with " + gc + " =?= " + (numers.length-1) + " = " + (gc == numers.length-1) );
 		return "doneskies";
 		
 	}
+
 	
 	public long[] getFractionToTheLeft(int max, long rightNumerGoal, long rightDenomGoal) {
 		if(rightDenomGoal == max && rightNumerGoal == 1) {
@@ -97,23 +113,34 @@ public class Problem73 implements Problem {
 
 		int counter = 0;
 		
-		for(int i=2; i <= max; i++) {
-			System.out.println("doing rN=" + rightNumerGoal + "/ rD=" + rightDenomGoal + " with i = " + i);
+		//for(int i=2; i <= max; i++) {
+		
+		boolean isDEven = rightDenomGoal % 2 == 0;
+		//if(isDEven && max % 2 == 0)
+		//	max--;
+		
+		for(int i=max; i > 0; i--) {
+			
+			if(isDEven && i % 2 == 0) {
+				continue;
+			}
+			
+			//System.out.println("doing rN=" + rightNumerGoal + "/ rD=" + rightDenomGoal + " with i = " + i);
 			if(i == rightDenomGoal) {
-				System.out.println("Skipping " + i + " because " + i + " == " + rightDenomGoal);// lets assume there are other numbers in between...like 3/7 and 4/7 have some numbers in between lets just assume
+				//System.out.println("Skipping " + i + " because " + i + " == " + rightDenomGoal);// lets assume there are other numbers in between...like 3/7 and 4/7 have some numbers in between lets just assume
 				continue;
 			}
 			
 			if(i > rightDenomGoal ) {
 				
 				if(i % rightDenomGoal == 0) {
-					System.out.println("Skipping " + i + " because " + i + " % " + rightDenomGoal + " == " + (i % rightDenomGoal) + " ::: skipped fraction: " );
+					//System.out.println("Skipping " + i + " because " + i + " % " + rightDenomGoal + " == " + (i % rightDenomGoal) + " ::: skipped fraction: " );
 					continue;
 				}
 				
 				
 			} else if(rightDenomGoal % i == 0) {
-				System.out.println("qSkipping " + i + " because " + rightDenomGoal + " % " + i + " == " + (rightDenomGoal % i) + " ::: skipped fraction: " );
+				//System.out.println("qSkipping " + i + " because " + rightDenomGoal + " % " + i + " == " + (rightDenomGoal % i) + " ::: skipped fraction: " );
 				continue;
 			}
 			
@@ -130,13 +157,13 @@ public class Problem73 implements Problem {
 			long newNumerator = (rightNumerGoal * w) - 1;
 			//System.out.println("finding new numerator : " + rightNumerGoal + "*" + w +" - 1 ==" + newNumerator);
 			long[] red = Util.reduceFraction(newNumerator, lcm[0]);
-			System.out.println("ooFraction is " + red[0] + "/" + red[1] + " from " + newNumerator + "/" + lcm[0]);
+			//System.out.println("ooFraction is " + red[0] + "/" + red[1] + " from " + newNumerator + "/" + lcm[0]);
 			
 //			1/8, 1/7, 1/6, 1/5, 1/4, 2/7, 1/3, 3/8, 2/5, 3/7, 1/2, 4/7, 3/5, 5/8, 2/3, 5/7, 3/4, 4/5, 5/6, 6/7, 7/8
 
 			if(red[1] <= max) {
 				counter++;
-				System.out.println("LEFT OF " + rightNumerGoal + "/" + rightDenomGoal + " is " + red[0] + "/" + red[1]);
+				//System.out.println("LEFT OF " + rightNumerGoal + "/" + rightDenomGoal + " is " + red[0] + "/" + red[1]);
 				//System.out.println("Answer: " + red[0]);
 				//rightNumerGoal = red[0];
 				//rightDenomGoal = red[1];
@@ -146,7 +173,7 @@ public class Problem73 implements Problem {
 				//break;
 				//return "" + red[0];
 			} else {
-				System.out.println("couldnt find it " + rightNumerGoal + "/" + rightDenomGoal + " with " + red[0] + "/" + red[1] + " with i = " + i);
+				//System.out.println("couldnt find it " + rightNumerGoal + "/" + rightDenomGoal + " with " + red[0] + "/" + red[1] + " with i = " + i);
 			}
 			
 		}
