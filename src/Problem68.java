@@ -57,9 +57,11 @@ What is the maximum 16-digit string for a "magic" 5-gon ring?
 		//c = 0;
 		//bgst = BigInteger.ZERO;
 		
+		doThisManyGon(3, 0);
 		
 		
-		do5Gon();
+		doThisManyGon(5, 16);
+		//do5Gon();
 		
 		System.out.println();
 		System.out.println("We did this many sols for 5 gon: " + c);
@@ -69,22 +71,30 @@ What is the maximum 16-digit string for a "magic" 5-gon ring?
 		
 	}
 	
-	private static void do3Gon() {
-		//for 3 gon in the project euler example
-		int[] r = new int[] {1,2,3,4,5,6};
-		int[][] s = new int[][] { {0,0,0}, {0,0,0}, {0,0,0} }; // this will hold the 3gon numbers - filled with 0 for now to indicate there is no number there yet
-		doRecurGon(s, r, 0);
+	private void doThisManyGon(int numberAGon, int maxNumDigits) {
+		int[] r = new int[numberAGon * 2];
+		int[][] s = new int[numberAGon][]; 
+		for(int i=0; i<s.length; i++) {
+			
+			//setup the sides 2d array. e.g.:
+			// for 3gon : new int[][] { {0,0,0}, {0,0,0}, {0,0,0} };
+			// for 5gon : new int[][] { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} };
+			int[] one = new int[3];// is it always 3? like even for 7 or 12gon? idk..it is 3 for both 3gon and 5gon for now
+			for(int j=0; j<3; j++) {
+				one[j] = 0;
+			}
+			s[i] = one;
+			
+			// setup r e.g.:
+			// 3gon :  new int[] {1,2,3,4,5,6};
+			// 5gon : new int[] {1,2,3,4,5,6,7,8,9,10};
+			r[i*2] = i*2 + 1;
+			r[i*2 + 1] = i*2 + 2;
+		}
+		
+		doRecurGon(s, r, maxNumDigits);
 	}
-	
-	private static void do5Gon() {
-		//for 5 gon in the project euler example
-		int[] r = new int[] {1,2,3,4,5,6,7,8,9,10};
-		int[][] s = new int[][] { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} }; // this will hold the 5gon numbers - filled with 0 for now to indicate there is no number there yet
-		doRecurGon(s, r, 16);
-	}
-	
 
-	
 	public static void doRecurGon(int[][] s, int[] r, int maxNumDigits){
 		
 		if(!shouldContinueCheckingGon(s)) {
