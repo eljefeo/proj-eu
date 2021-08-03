@@ -28,6 +28,39 @@ public class Problem73 implements Problem {
 
 	}
 
+	
+	
+	/*
+	 
+	 --- its almost like it would also be helpful to check if we are doing a fraction
+	 on which side of 1/2
+	 since it seems to be a mirror of eachother from one end to the middle (from end to 1/2 and from 1/2 to other end)
+	 its almost like if you are above 1/2 you are working backwards
+	 and if you are < 1/2 you are working fowards with seemingly the same algorithm....
+	 hmmm interesting, something to keep in mind.
+	 
+	 
+	 ok so lets think about this....
+	 lets say we want the next smallest (to the left of) to 1/4
+	 Ideally the first place to look would be what, what is our best guess if we had to do one
+	 I guess it would be the next fraction up...like next denom up or down?
+	 like for 1/7 best choice to start with would be 1/8 (which happens to be the correct answer)
+	 
+	 but sometimes its not the correct answer like in :
+	2/3 *5/7* 3/4 4/5
+	(in the above example we are working above 1/2 - kinda like we are working backwards)
+	
+	
+	when we go from 4/5 we do 3/4 - this does seem to follow our first instinct
+	but then we would think we should do 3/4 -> 2/3...
+	buuuuuttttttt there appears to be a fraction that fits in between that ::: 5/7
+	... so what we could do is get the next fraction (in this case 2/3)... 
+	... bt then somehow come up with a way to identify anything that could fit in between?
+	
+	 ....hmmmmmmmmmmmmmmm
+	 
+	 */
+	
 	@Override
 	public String problem() {
 		
@@ -43,7 +76,7 @@ public class Problem73 implements Problem {
 		}
 		for(int i=0; i<numers.length; i++) {
 			double dec = (double)numers[i] / denoms[i];
-			//System.out.println(numers[i] + "/" + denoms[i] + " = " + dec);
+			System.out.println(numers[i] + "/" + denoms[i] + " = " + dec + " -- Looking for....");
 			long[] left = getFractionToTheLeft(maxDenom, numers[i], denoms[i]);
 			System.out.println("To the left of " +numers[i] + "/" + denoms[i] + " = " + dec  + " = " + left[0] + "/" + left[1]);
 		}
@@ -56,6 +89,7 @@ public class Problem73 implements Problem {
 	
 	public long[] getFractionToTheLeft(int max, long rightNumerGoal, long rightDenomGoal) {
 		if(rightDenomGoal == max && rightNumerGoal == 1) {
+			System.out.println("ERROR - asking for left of leftmost fraction... what the heck are you doing???");
 			return new long[] {0,0};
 			// error - there is no fraction to the left of the leftmost fraction lol..
 		}
@@ -63,7 +97,7 @@ public class Problem73 implements Problem {
 
 		int counter = 0;
 		
-		for(int i=2; i < max; i++) {
+		for(int i=2; i <= max; i++) {
 			System.out.println("doing rN=" + rightNumerGoal + "/ rD=" + rightDenomGoal + " with i = " + i);
 			if(i == rightDenomGoal) {
 				System.out.println("Skipping " + i + " because " + i + " == " + rightDenomGoal);// lets assume there are other numbers in between...like 3/7 and 4/7 have some numbers in between lets just assume
