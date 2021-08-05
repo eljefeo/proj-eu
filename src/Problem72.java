@@ -41,6 +41,11 @@ public class Problem72 implements Problem { //Took 0.217028 seconds
 
 	public String problem() {
 
+		// so I figured we could use the totient function here...
+		// since we are concerned with fractions that cannot be reduced
+		// this translates to fractions with numerator / denominator that are coprime
+		// we essentially get the totient function for all denominators and that is how many fractions there are
+		
 		int max =  1000000 + 1;
 		long totalCounter = 0;
 		
@@ -63,7 +68,6 @@ public class Problem72 implements Problem { //Took 0.217028 seconds
 						tempI /= prime;
 						phi *= prime;
 					}
-					
 					sqrt = (int)Math.sqrt(tempI);
 				}
 			}

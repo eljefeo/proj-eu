@@ -30,7 +30,7 @@ By listing the set of reduced proper fractions for d <= 1,000,000 in ascending o
 	so I found this actually doesnt work like I thought it would...
 	1/2, to the left is 3/7
 	if you put 1/2 in here, you get 3/8... which is wrong.. my logic is incorrect
-	but I got lucky and got the right answer... but why...I need to figure this out for prob73 (maybe)
+	but I got lucky and got the right answer... but why..
 	 
 	 so after looking at these fractions for a while here's what Im thinking
 	 3/7 is next to 2/5 because:

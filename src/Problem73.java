@@ -36,113 +36,37 @@ public class Problem73 implements Problem {
 
 	}
 
-	
-	
-	/*
-	 ---- so it dawned on me that we dont really need to know the order of these fractions
-	 we just need to know how many are between 1/3 and 1/2...
-	 I know it sayysss that we are doing it in an ordered list, but I dont think that needs to be part of it
-	 we could just look through the different denominators, skip the reduceable fractions
-	  and count how many are less than 1/2 but greater than 1/3...
-	  lets try that, hopefully that is pretty quick ...
-	  so we go through all the denoms, 12000 11999 11998 11997...... 4 3 2
-	  if that denom is prime, then we need to check all the fractions with that denom
-	  if that denom is not prime, we only want to check the fractions that are not reduceable
-	   iow we only check the numerators that are coprime with the denom...
-	   we could do that by getting the factors of the denom
-	   then going through the numerators and checking if the numer is divisible by any of those factors
-	   if not, then we check it..
-	 
-	 
-	 --- its almost like it would also be helpful to check if we are doing a fraction
-	 on which side of 1/2
-	 since it seems to be a mirror of eachother from one end to the middle (from end to 1/2 and from 1/2 to other end)
-	 its almost like if you are above 1/2 you are working backwards
-	 and if you are < 1/2 you are working fowards with seemingly the same algorithm....
-	 hmmm interesting, something to keep in mind.
-	 
-	 
-	 ok so lets think about this....
-	 lets say we want the next smallest (to the left of) to 1/4
-	 Ideally the first place to look would be what, what is our best guess if we had to do one
-	 I guess it would be the next fraction up...like next denom up or down?
-	 like for 1/7 best choice to start with would be 1/8 (which happens to be the correct answer)
-	 
-	 but sometimes its not the correct answer like in :
-	2/3 *5/7* 3/4 4/5
-	(in the above example we are working above 1/2 - kinda like we are working backwards)
-	
-	
-	when we go from 4/5 we do 3/4 - this does seem to follow our first instinct
-	but then we would think we should do 3/4 -> 2/3...
-	buuuuuttttttt there appears to be a fraction that fits in between that ::: 5/7
-	... so what we could do is get the next fraction (in this case 2/3)... 
-	... bt then somehow come up with a way to identify anything that could fit in between?
-	
-	 ....hmmmmmmmmmmmmmmm
-	 
-	 */
+
 	
 	@Override
 	public String problem() {
-		
+		//we go through all fractions for each denom
+		// we count the fractions that are > 1/3 and < 1/2 and also that are not reduceable
 		List<Integer> primes = new ArrayList<Integer>();
 		primes.add(2);
-		
 		
 		int max = 12000, counter = 0;
 		int rightNumerGoal = 1, rightDenomGoal = 2;
 		int leftNumerGoal = 1, leftDenomGoal = 3;
 		
-		int inc = 1;
-		//max++; // so we can do < instead of <= in our loops
-		
-		
-		for(int i=max; i > 2; i-=inc) {
-			for(int j=1; j < i; j++) {
-				// j = numer
-				// i = denom
-				//System.out.println(j + "/" + i);
-				
-			}
-		}
-		
-		
+		double leftDoub =  (double)leftNumerGoal / leftDenomGoal;
+		double rightDoub = (double)rightNumerGoal / rightDenomGoal;
 		
 		int num = 2;
 		
-		//int sqrtCounter = 1;
-		//int sqrtNext = 3;
-		//int sqrt = 1;
-		
-		
-		
 		while (num++ < max) {
-			
-			//System.out.println("Doing denom: " + num);
-			
-			//sqrtCounter+=2;
 			List<Integer> facts  = new ArrayList<Integer>();
 			int n = num;
 			for (int p = 0; p < primes.size(); p++) {
 				int prime = primes.get(p);
 				//if(prime > sqrt) {
 				if(prime > Math.sqrt(n)) {
-					
-					
-					if(n == num) {
+					if(n == num) 
 						primes.add(num); // n was never divided, had no divosors - prime
-					} else {
-						if(n > 1) {
+					 else if(n > 1) 
 							facts.add(n);
-						} //else { 
-							//System.out.println("****ending " + num + " num but n is small??? " + n);
-						//}
-						//System.out.println("ending with num " + num + " and n=" + n);
-					}
-					
+						
 					break;
-					
 				}
 				
 				if (n % prime == 0) {
@@ -150,80 +74,38 @@ public class Problem73 implements Problem {
 					while(n % prime == 0)
 						n /= prime;
 				}
-				
 			}
-			
-		
-			
-			// so now that we have the factors of num...
-			// we go through the fractions for the num being the denominator
-			
-			
-			double leftDoub =  (double)leftNumerGoal / leftDenomGoal;
-			double rightDoub = (double)rightNumerGoal / rightDenomGoal;
-			
 			
 			int minFraction = (int) (num * leftDoub); // like 8/3
-			double minD = (double)num * leftDoub;
-			
-			
 			int maxFraction = num / rightDenomGoal; // like 8/2
-			double maxD = (double)num/rightDenomGoal;
 			
-			//System.out.println("For num = " + num + " :: LeftDoub = " + leftDoub + ", rightDoub = " + rightDoub + ", minFraction = " + minFraction + ", maxFraction = " + maxFraction + ", minD = " + minD + ", maxD = " + maxD);
-			
-			if((double)minFraction/num <= leftDoub) {
+			if((double)minFraction/num <= leftDoub) 
 				minFraction++;
-				//System.out.println("for num = " + num + " changing min to " + minFraction);
-			}
 			
-			if((double)maxFraction/num < rightDoub) {
-				
+			if((double)maxFraction/num < rightDoub) 
 				maxFraction++;
-				//System.out.println("for num = " + num + " changing max to " + maxFraction);
-			}
 			
 			if(facts.size() > 0) {
 				
 				for (int i = minFraction; i < maxFraction; i++) {
 					boolean shouldSkip = false;
-					for(Integer f : facts) {
+					for(Integer f : facts) 
 						if(i % f == 0) {
-							shouldSkip = true;
+							shouldSkip = true; // skip fractions where numerator is no coprime with denom. In other words, fractions that can be reduced, we skip sincve we will count those later when we get to the reduced version
 							break;
 						}
-					}
 					
-					if(!shouldSkip) {
-						//System.out.println("Counting : " + i + "/" + num + " == " + ((double)i/num));
+					if(!shouldSkip) 
 						counter++;
-					}
-					
 				}
-				
 			} else {
-				
-				for (int i = minFraction; i < maxFraction; i++) {
-						//System.out.println("Counting : " + i + "/" + num + " == " + ((double)i/num));
-						counter++;
-				}
+				counter += maxFraction - minFraction; // we just count them all since denom is prime and nothing is not coprime with prime 
 			}
-			
-			
-			//if(sqrtCounter > sqrtNext-2) { 
-				// here is where we calculate the next square root
-				// without using Math.sqrt - isnt me so damn smart?
-			//	sqrtNext += 2;
-			//	sqrtCounter = sqrtNext-sqrtCounter;
-			//	sqrt++;
-			//}  	
-				
 		}
 
-		
 		System.out.println("Counter = " + counter);
 		
-		return "";
+		return "" + counter;
 	}
 	public String problemBestChanceStillSucks() {
 		int max = 12000, counter = 0;
@@ -439,51 +321,52 @@ public class Problem73 implements Problem {
 		return null;
 	}
 	
-	public static String problemGHFirstMaybe() {
 
-		int counter = 0;
-
-		System.out.println("start");
-		int max = 9;
-		long rightNumerGoal = 1, rightDenomGoal = 2;
-		long leftNumerGoal = 1, leftDenomGoal = 3;
-		System.out.println("iseq " + (rightNumerGoal != leftNumerGoal && rightDenomGoal != leftDenomGoal));
-		//while(rightNumerGoal != leftNumerGoal || rightDenomGoal != leftDenomGoal) {
-			System.out.println("doing rN=" + rightNumerGoal + "/ rD=" + rightDenomGoal);
-			for(int i=max; i > 1; i--) { 	// denom
-
-				if(i == rightDenomGoal) // lets assume there are other numbers in between...like 3/7 and 4/7 have some numbers in between lets just assume
-					continue;
-
-				long[] lcm  = Util.lcmWithMult(i, rightDenomGoal);
-
-				long w = rightDenomGoal < i ? lcm[0] / rightDenomGoal : lcm[1];
-				 // the second thing in the array
-					// is how many to mult the HIGHER num to to get the lcm
-					// but we dont know if the i we are testing is higher / lower than dGoal
-					// so we need to do this only if dGoal is less than i
-
-				long newNumerator = (rightNumerGoal * w) - 1;
-				long[] red = Util.reduceFraction(newNumerator, lcm[0]);
-				//System.out.println("ooFraction is " + red[0] + "/" + red[1]);
-				if(red[1] % rightDenomGoal == 0)
-					continue;
-
-				if(red[1] <= max) {
-					counter++;
-					System.out.println("Fraction is " + red[0] + "/" + red[1] + " == " + ((double)red[0]/red[1]));
-					//System.out.println("Answer: " + red[0]);
-					rightNumerGoal = red[0];
-					rightDenomGoal = red[1];
-					//break;
-					//return "" + red[0];
-				}
-
-			}
-		//}
-		System.out.println("done "+counter);
-		return null;
-	}
-
+	
+	
+	/*
+	 ---- so it dawned on me that we dont really need to know the order of these fractions
+	 we just need to know how many are between 1/3 and 1/2...
+	 I know it sayysss that we are doing it in an ordered list, but I dont think that needs to be part of it
+	 we could just look through the different denominators, skip the reduceable fractions
+	  and count how many are less than 1/2 but greater than 1/3...
+	  lets try that, hopefully that is pretty quick ...
+	  so we go through all the denoms, 12000 11999 11998 11997...... 4 3 2
+	  if that denom is prime, then we need to check all the fractions with that denom
+	  if that denom is not prime, we only want to check the fractions that are not reduceable
+	   iow we only check the numerators that are coprime with the denom...
+	   we could do that by getting the factors of the denom
+	   then going through the numerators and checking if the numer is divisible by any of those factors
+	   if not, then we check it..
+	 
+	 
+	 --- its almost like it would also be helpful to check if we are doing a fraction
+	 on which side of 1/2
+	 since it seems to be a mirror of eachother from one end to the middle (from end to 1/2 and from 1/2 to other end)
+	 its almost like if you are above 1/2 you are working backwards
+	 and if you are < 1/2 you are working fowards with seemingly the same algorithm....
+	 hmmm interesting, something to keep in mind.
+	 
+	 
+	 ok so lets think about this....
+	 lets say we want the next smallest (to the left of) to 1/4
+	 Ideally the first place to look would be what, what is our best guess if we had to do one
+	 I guess it would be the next fraction up...like next denom up or down?
+	 like for 1/7 best choice to start with would be 1/8 (which happens to be the correct answer)
+	 
+	 but sometimes its not the correct answer like in :
+	2/3 *5/7* 3/4 4/5
+	(in the above example we are working above 1/2 - kinda like we are working backwards)
+	
+	
+	when we go from 4/5 we do 3/4 - this does seem to follow our first instinct
+	but then we would think we should do 3/4 -> 2/3...
+	buuuuuttttttt there appears to be a fraction that fits in between that ::: 5/7
+	... so what we could do is get the next fraction (in this case 2/3)... 
+	... bt then somehow come up with a way to identify anything that could fit in between?
+	
+	 ....hmmmmmmmmmmmmmmm
+	 
+	 */
 	
 }
