@@ -87,12 +87,17 @@ public class ProblemTester {
 		//Problem p = problems.get(3);
 		//p.runProblem();
 		List<Integer> longProblems = new ArrayList<Integer>();
-		
+		List<Integer> incorrectAnswers = new ArrayList<Integer>();
 		for(int i = 0; i < problems.size(); i++) {
 			System.out.println("\n\n*****----... Problem " + (i+1) + " ...----*****\n");
 			long startT = System.nanoTime();
 			Problem p = problems.get(i);
-			p.runProblem();
+			String res = p.runProblem();
+			//System.out.println("\ngot answer from the thing : " + res);
+			String expectedAnswer = answers.get(i+1);
+			if(!res.equals(expectedAnswer)) {
+				incorrectAnswers.add(i+1);
+			} 
 			long endT = System.nanoTime();
 			double time = (double) (endT - startT) / 1000000000;
 			
@@ -104,6 +109,10 @@ public class ProblemTester {
 		
 		for(Integer i : longProblems) {
 			System.out.println("Problem " + i + " took over 1 second ");
+		}
+		
+		for(Integer i : incorrectAnswers) {
+			System.out.println("Problem " + i + " had an incorrect answer ");
 		}
 		
 	}

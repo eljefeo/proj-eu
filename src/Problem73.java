@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem73 implements Problem { 
+public class Problem73 implements Problem { //Took 0.111773 seconds
 
 	
 	//
