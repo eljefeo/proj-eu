@@ -1,7 +1,5 @@
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Problem73 implements Problem { 
 
@@ -29,12 +27,32 @@ public class Problem73 implements Problem {
 	public static void main(String[] args) {
 		Problem p = new Problem73();
 		p.runProblem();
+		//problemGHFirstMaybe();
+		
+		//Counted this many: 44749 --- wrrrrronngggggg
+		//1364054 wrroronnnnggggg
+		// 1364818 wrrronngngggggg
+		//Took 2570.929337 seconds
 
 	}
 
 	
 	
 	/*
+	 ---- so it dawned on me that we dont really need to know the order of these fractions
+	 we just need to know how many are between 1/3 and 1/2...
+	 I know it sayysss that we are doing it in an ordered list, but I dont think that needs to be part of it
+	 we could just look through the different denominators, skip the reduceable fractions
+	  and count how many are less than 1/2 but greater than 1/3...
+	  lets try that, hopefully that is pretty quick ...
+	  so we go through all the denoms, 12000 11999 11998 11997...... 4 3 2
+	  if that denom is prime, then we need to check all the fractions with that denom
+	  if that denom is not prime, we only want to check the fractions that are not reduceable
+	   iow we only check the numerators that are coprime with the denom...
+	   we could do that by getting the factors of the denom
+	   then going through the numerators and checking if the numer is divisible by any of those factors
+	   if not, then we check it..
+	 
 	 
 	 --- its almost like it would also be helpful to check if we are doing a fraction
 	 on which side of 1/2
@@ -67,6 +85,183 @@ public class Problem73 implements Problem {
 	
 	@Override
 	public String problem() {
+		
+		List<Integer> primes = new ArrayList<Integer>();
+		primes.add(2);
+		
+		
+		int max = 12000, counter = 0;
+		int rightNumerGoal = 1, rightDenomGoal = 2;
+		int leftNumerGoal = 1, leftDenomGoal = 3;
+		
+		int inc = 1;
+		//max++; // so we can do < instead of <= in our loops
+		
+		
+		for(int i=max; i > 2; i-=inc) {
+			for(int j=1; j < i; j++) {
+				// j = numer
+				// i = denom
+				//System.out.println(j + "/" + i);
+				
+			}
+		}
+		
+		
+		
+		int num = 2;
+		
+		//int sqrtCounter = 1;
+		//int sqrtNext = 3;
+		//int sqrt = 1;
+		
+		
+		
+		while (num++ < max) {
+			
+			//System.out.println("Doing denom: " + num);
+			
+			//sqrtCounter+=2;
+			List<Integer> facts  = new ArrayList<Integer>();
+			int n = num;
+			for (int p = 0; p < primes.size(); p++) {
+				int prime = primes.get(p);
+				//if(prime > sqrt) {
+				if(prime > Math.sqrt(n)) {
+					
+					
+					if(n == num) {
+						primes.add(num); // n was never divided, had no divosors - prime
+					} else {
+						if(n > 1) {
+							facts.add(n);
+						} //else { 
+							//System.out.println("****ending " + num + " num but n is small??? " + n);
+						//}
+						//System.out.println("ending with num " + num + " and n=" + n);
+					}
+					
+					break;
+					
+				}
+				
+				if (n % prime == 0) {
+					facts.add(prime);
+					while(n % prime == 0)
+						n /= prime;
+				}
+				
+			}
+			
+		
+			
+			// so now that we have the factors of num...
+			// we go through the fractions for the num being the denominator
+			
+			
+			double leftDoub =  (double)leftNumerGoal / leftDenomGoal;
+			double rightDoub = (double)rightNumerGoal / rightDenomGoal;
+			
+			
+			int minFraction = (int) (num * leftDoub); // like 8/3
+			double minD = (double)num * leftDoub;
+			
+			
+			int maxFraction = num / rightDenomGoal; // like 8/2
+			double maxD = (double)num/rightDenomGoal;
+			
+			//System.out.println("For num = " + num + " :: LeftDoub = " + leftDoub + ", rightDoub = " + rightDoub + ", minFraction = " + minFraction + ", maxFraction = " + maxFraction + ", minD = " + minD + ", maxD = " + maxD);
+			
+			if((double)minFraction/num <= leftDoub) {
+				minFraction++;
+				//System.out.println("for num = " + num + " changing min to " + minFraction);
+			}
+			
+			if((double)maxFraction/num < rightDoub) {
+				
+				maxFraction++;
+				//System.out.println("for num = " + num + " changing max to " + maxFraction);
+			}
+			
+			if(facts.size() > 0) {
+				
+				for (int i = minFraction; i < maxFraction; i++) {
+					boolean shouldSkip = false;
+					for(Integer f : facts) {
+						if(i % f == 0) {
+							shouldSkip = true;
+							break;
+						}
+					}
+					
+					if(!shouldSkip) {
+						//System.out.println("Counting : " + i + "/" + num + " == " + ((double)i/num));
+						counter++;
+					}
+					
+				}
+				
+			} else {
+				
+				for (int i = minFraction; i < maxFraction; i++) {
+						//System.out.println("Counting : " + i + "/" + num + " == " + ((double)i/num));
+						counter++;
+				}
+			}
+			
+			
+			//if(sqrtCounter > sqrtNext-2) { 
+				// here is where we calculate the next square root
+				// without using Math.sqrt - isnt me so damn smart?
+			//	sqrtNext += 2;
+			//	sqrtCounter = sqrtNext-sqrtCounter;
+			//	sqrt++;
+			//}  	
+				
+		}
+
+		
+		System.out.println("Counter = " + counter);
+		
+		return "";
+	}
+	public String problemBestChanceStillSucks() {
+		int max = 12000, counter = 0;
+		long rightNumerGoal = 1, rightDenomGoal = 2;
+		long leftNumerGoal = 1, leftDenomGoal = 3;
+		//long rightNumerGoal = 9, rightDenomGoal = 10;
+		//long leftNumerGoal = 1, leftDenomGoal = 10;
+		
+		
+		
+		int cc = 0;
+		while(rightNumerGoal != leftNumerGoal || rightDenomGoal != leftDenomGoal) {
+			//break;
+			
+			long[] res = getFractionToTheLeft(max, rightNumerGoal, rightDenomGoal);
+			
+			if(res[0] == 0 || res[1] == 0) {
+				System.out.println("Broken at " + rightNumerGoal + "/" + rightDenomGoal + " == " + res[0] + "/" + res[1]);
+				break;
+			}
+			
+			if(cc++ % 100 == 0) {
+				System.out.println("at cc = " + cc  +" -- trying " + rightNumerGoal + "/" + rightDenomGoal + " == " + res[0] + "/" + res[1] + " == " + ((double) res[0] / res[1]));
+				
+				//System.out.println("at num " + cc + " :: " + rightNumerGoal + "/" + rightDenomGoal + " == " + ((double)rightNumerGoal / rightDenomGoal)); 
+			}
+			
+			rightNumerGoal = res[0];
+			rightDenomGoal = res[1];
+			
+			counter++;
+		}
+		counter--;
+		System.out.println("Counted this many: " + counter);
+		
+		return "";
+	}
+	public String problemTest() {
 		
 		int maxDenom = 8;
 		
@@ -104,65 +299,62 @@ public class Problem73 implements Problem {
 
 	
 	public long[] getFractionToTheLeft(int max, long rightNumerGoal, long rightDenomGoal) {
-		if(rightDenomGoal == max && rightNumerGoal == 1) {
-			System.out.println("ERROR - asking for left of leftmost fraction... what the heck are you doing???");
-			return new long[] {0,0};
+		
+		//System.out.println("Doing here " + rightNumerGoal + "/" + rightDenomGoal);
+		
+		//if(rightDenomGoal == max && rightNumerGoal == 1) {
+			//System.out.println("ERROR - asking for left of leftmost fraction... what the heck are you doing???");
+			//return new long[] {0,0};
 			// error - there is no fraction to the left of the leftmost fraction lol..
-		}
+		//}
 		long[] ret = new long[2];
 
-		int counter = 0;
+		//int counter = 0;
 		
 		//for(int i=2; i <= max; i++) {
 		
 		boolean isDEven = rightDenomGoal % 2 == 0;
-		//if(isDEven && max % 2 == 0)
-		//	max--;
+		int inc = isDEven ? 2 : 1;
+		//int start = 
+		if(isDEven && max % 2 == 0)
+			max--;
 		
-		for(int i=max; i > 0; i--) {
-			
+		
+		
+		for(int i=max; i > 2; i-=inc) {
+		//for(int i=2; i < max; i++) {
 			if(isDEven && i % 2 == 0) {
+				//System.out.println("continuing because isdevn and " + i + " % 2 == 0");
 				continue;
 			}
 			
-			//System.out.println("doing rN=" + rightNumerGoal + "/ rD=" + rightDenomGoal + " with i = " + i);
 			if(i == rightDenomGoal) {
-				//System.out.println("Skipping " + i + " because " + i + " == " + rightDenomGoal);// lets assume there are other numbers in between...like 3/7 and 4/7 have some numbers in between lets just assume
+				//System.out.println("continuing because " + i + " == " + rightDenomGoal);
 				continue;
 			}
 			
 			if(i > rightDenomGoal ) {
-				
 				if(i % rightDenomGoal == 0) {
-					//System.out.println("Skipping " + i + " because " + i + " % " + rightDenomGoal + " == " + (i % rightDenomGoal) + " ::: skipped fraction: " );
+					//System.out.println("continuing because " + i + " % " + rightDenomGoal + " == 0");
 					continue;
 				}
 				
-				
 			} else if(rightDenomGoal % i == 0) {
-				//System.out.println("qSkipping " + i + " because " + rightDenomGoal + " % " + i + " == " + (rightDenomGoal % i) + " ::: skipped fraction: " );
+				//System.out.println("continuing because " + rightDenomGoal + " % " + i + " == 0");
 				continue;
 			}
 			
 			long[] lcm  = Util.lcmWithMult(i, rightDenomGoal);
 			
 			long w = rightDenomGoal < i ? lcm[0] / rightDenomGoal : lcm[1];
-			//System.out.println("found w = " + w + " from lcm = " + lcm[0] + " with multiple = " + lcm[1]);
-			 // the second thing in the array
-				// is how many to mult the HIGHER num to to get the lcm
-				// but we dont know if the i we are testing is higher / lower than dGoal
-				// so we need to do this only if dGoal is less than i
-				
 			
 			long newNumerator = (rightNumerGoal * w) - 1;
-			//System.out.println("finding new numerator : " + rightNumerGoal + "*" + w +" - 1 ==" + newNumerator);
 			long[] red = Util.reduceFraction(newNumerator, lcm[0]);
-			//System.out.println("ooFraction is " + red[0] + "/" + red[1] + " from " + newNumerator + "/" + lcm[0]);
-			
+			//System.out.println(newNumerator + "/" + lcm[0] + " Reduced to " + red[0] + "/" + red[1]);
 //			1/8, 1/7, 1/6, 1/5, 1/4, 2/7, 1/3, 3/8, 2/5, 3/7, 1/2, 4/7, 3/5, 5/8, 2/3, 5/7, 3/4, 4/5, 5/6, 6/7, 7/8
 
 			if(red[1] <= max) {
-				counter++;
+				//counter++;
 				//System.out.println("LEFT OF " + rightNumerGoal + "/" + rightDenomGoal + " is " + red[0] + "/" + red[1]);
 				//System.out.println("Answer: " + red[0]);
 				//rightNumerGoal = red[0];
@@ -241,6 +433,52 @@ public class Problem73 implements Problem {
 					System.out.println("couldnt find it " + rightNumerGoal + "/" + rightDenomGoal + " with " + red[0] + "/" + red[1] + " with i = " + i);
 				}
 				
+			}
+		//}
+		System.out.println("done "+counter);
+		return null;
+	}
+	
+	public static String problemGHFirstMaybe() {
+
+		int counter = 0;
+
+		System.out.println("start");
+		int max = 9;
+		long rightNumerGoal = 1, rightDenomGoal = 2;
+		long leftNumerGoal = 1, leftDenomGoal = 3;
+		System.out.println("iseq " + (rightNumerGoal != leftNumerGoal && rightDenomGoal != leftDenomGoal));
+		//while(rightNumerGoal != leftNumerGoal || rightDenomGoal != leftDenomGoal) {
+			System.out.println("doing rN=" + rightNumerGoal + "/ rD=" + rightDenomGoal);
+			for(int i=max; i > 1; i--) { 	// denom
+
+				if(i == rightDenomGoal) // lets assume there are other numbers in between...like 3/7 and 4/7 have some numbers in between lets just assume
+					continue;
+
+				long[] lcm  = Util.lcmWithMult(i, rightDenomGoal);
+
+				long w = rightDenomGoal < i ? lcm[0] / rightDenomGoal : lcm[1];
+				 // the second thing in the array
+					// is how many to mult the HIGHER num to to get the lcm
+					// but we dont know if the i we are testing is higher / lower than dGoal
+					// so we need to do this only if dGoal is less than i
+
+				long newNumerator = (rightNumerGoal * w) - 1;
+				long[] red = Util.reduceFraction(newNumerator, lcm[0]);
+				//System.out.println("ooFraction is " + red[0] + "/" + red[1]);
+				if(red[1] % rightDenomGoal == 0)
+					continue;
+
+				if(red[1] <= max) {
+					counter++;
+					System.out.println("Fraction is " + red[0] + "/" + red[1] + " == " + ((double)red[0]/red[1]));
+					//System.out.println("Answer: " + red[0]);
+					rightNumerGoal = red[0];
+					rightDenomGoal = red[1];
+					//break;
+					//return "" + red[0];
+				}
+
 			}
 		//}
 		System.out.println("done "+counter);
