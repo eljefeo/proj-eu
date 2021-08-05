@@ -317,6 +317,7 @@ public class Util {
 		return factors;
 	}
 
+	//TODO we can optimize this without isPrime...I think...
 	public static Set<Integer> getDistinctPrimeFactors(int num) {
 
 		Set<Integer> factors = new HashSet<Integer>();
