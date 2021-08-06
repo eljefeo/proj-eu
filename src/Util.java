@@ -1905,6 +1905,54 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		
 	}
 	
+	public static int doFactorialChainUntilLoop(int n) {
+		int num = n;
+		int count = 0;
+		int[] hist = new int[60];
+		while(!arrContainsInt(hist, num)) {
+			count++;
+			System.out.println("" + num);
+			
+			if(addToNextOpenInd(hist, num) == 60 - 1) {
+				count++;
+				break;
+			}
+			int[] arr = Util.splitIntNumsToArray(num);
+			num = 0;
+			for(int j : arr) {
+				num += Util.factorial(j);
+			}
+		}
+		System.out.println("looped at " + num);
+		System.out.println("Count " + count);
+		return count;
+	}
+	
+	public static int addToNextOpenInd(int[] arr, int test) {
+		for(int i=0; i<arr.length; i++) {
+			if(arr[i] == 0) {
+				arr[i] = test;
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	public static boolean arrContainsInt(int[] arr, int num) {
+		// we will assume we are putting values in the array from lower index to higher index
+		// and all unused indexes will have value 0
+		for(int i=0; i<arr.length; i++) {
+			int val = arr[i];
+			if(val == 0)
+				break;
+			
+			if(val == num)
+				return true;
+		}
+		
+		return false;
+	}
+	
 	/*
 	public boolean areCoPrime(int a, int b) {
 		didnt really do this yet..
