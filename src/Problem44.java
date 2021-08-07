@@ -16,6 +16,12 @@ Find the pair of pentagonal numbers, Pj and Pk, for which their sum and differen
 	public static void main(String[] args) {
 		Problem p = new Problem44();
 		p.runProblem();
+		
+		
+		//Found 2 pents that add and sub to other pents : p1:136884937 p2:171088260 diff:34212876 sum:307973197 howfarapart:1127 i:9553
+		 //Found 2 pents that add and sub to other pents : p1:1560090 p2:7042750 diff:5482660 sum:8602840 howfarapart:1147 i:1020
+		
+		System.out.println("is pent " + (171088260 - 136884937) + " = " + Util.isPentagonalNumber(171088260 - 136884937) + ", is pent 171088260 = " + Util.isPentagonalNumber(171088260));
 	} 
 	
 	
@@ -26,16 +32,87 @@ Find the pair of pentagonal numbers, Pj and Pk, for which their sum and differen
 	// trying to skip things we already checked along the way maybe?
 	//TODO
 	public String problem(){// cant find 2 pents that are nex to eachother that work... trying to find pents that are 2 away, then 3 away etc..
-		//1, 5, 12, 22, 35, 51, 70, 92, 117, 145, ...
-		int max = 10000; // we will just keep upping the number until we get it?. If we cant we just keep upping it until we find it, we will eventually. we could just do a while I guess..
+		//1, 5, 12, 22, 35, 51, 70, 92, 117, 145, 176, 210 ...
 		
-		for(int howFarApart=1; howFarApart < max; howFarApart++){
+		
+		//I feel like we could have shortcutted our way with a little math...there has to be a nice formula to shoot us straight to an answer..
+		/*
+		 so like 22(4) and 70(7) add to be 92(8)
+		 and 92(8) and 70(7) subtract to be 22(4)
+		 a = a * (3*a - 1) /2 = n  
+		 b = b * (3*b - 1) /2
+		 c = c * (3*c - 1) /2
+		 d = d * (3*d - 1) /2
+		 
+		 a = 1 + 3n
+		 
+		 a + b = c ------ plus 
+		 a - b = d ------ minus
+		 
+		 a = c - b
+		 a = d + b
+		 
+		 c - b - b = d ... c - 2b = d
+		 d + b + b = c ... d + 2b = c
+		 
+		d + 2b = c
+		2b = c - d
+		b = (c - d) / 2
+		
+		a - d = (c - d) / 2
+		2a - 2d = c - d
+		 
+		 
+		 
+		 */
+		
+		
+		//a * (3*a - 1) /2 + b * (3*b - 1) /2 = c * (3*c - 1) /2;
+		
+		
+		
+		//a * (3*a - 1) /2 - b * (3*b - 1) /2 = d * (3*d - 1) /2;
+		//a * (3*a - 1) = d * (3*d - 1) + b * (3*b - 1)
+		
+		int max = 10; // we will just keep upping the number until we get it?. If we cant we just keep upping it until we find it, we will eventually. we could just do a while I guess..
+		
+		for(int howFarApart=1; howFarApart < max; howFarApart++){ 
+			//this determines how far of a gap between the pentagonals we want
+			// we start by checking pents closer together, then farther and farther apart
+		
+			// we try to find pentagonal numbers that are less than 100 pents apart...
+			// if that dont work, we up it to less than 1,000 then start again...then try 10,000 then 100,000 etc.. until we find one
+			if(howFarApart == max-1) {
+				//max = max*10;
+				System.out.println("Changing max to " + max);
+			}
+			
+			/*
+			 so a multiple of 3 then add 1
+			 if we can force this to be pentagonal... we have the diff done...
+			  a = a * (3*a - 1) /2 == 
+			 
+			 */
+			
 			long dif = Util.getPentagonalNumber(howFarApart);
 			for(int i=1; i < max; i++){
-				dif += (3*howFarApart); // --- I forget why I put this here.....
+				//System.out.println("before dif == " + dif);
+				dif += (3*howFarApart) ; // --- I forget why I put this here.....
+				//System.out.println("dif == " + dif + " howfarapart=" + howFarApart + " i="+i);
+				// oh yea I remember : 1, 5, 12, 22, 35, 51, 70, 92, 117, 145, 176, 210
+				// all the pents are 4 apart, then 7, 10, 13, 16, 19, etc.. its +3 evertime
+				// this way we are generating differences, then checking if we have a diff that is pentagonal
+				// if we find one, that means now we know 2 pentagonals that diff to another pent. Then we just have to check if they add to one too
+			
+				// what about the sums....: 1, 5, 12, 22, 35, 51, 70, 92, 117, 145, 176, 210
+				//6 17 34 57 86 121 162 (1 away)
+				// 11 17 23 29 35 41 - for 1 away the next one is +6
 				if(Util.isPentagonalNumber(dif)){
 					long p1 = Util.getPentagonalNumber(i);
 					long p2 = Util.getPentagonalNumber(i+howFarApart);
+					
+					System.out.println("dif " + dif + " is pentagonal at i=" + i + " howFarApart=" + howFarApart + " i+howFarApart=" + (i+howFarApart) + " p1=" + p1 + " p2="+p2);
+					
 					if(Util.isPentagonalNumber(p1+p2)){
 						System.out.println("Found 2 pents that add and sub to other pents : p1:" + p1 + " p2:" + p2 + " diff:" +dif + " sum:"  + (p1+p2) +  " howfarapart:"+howFarApart + " i:"+i);
 						// we start with the smallest distance we can between the pentagonal numbers.
@@ -45,6 +122,9 @@ Find the pair of pentagonal numbers, Pj and Pk, for which their sum and differen
 						System.out.println("Answer : " + dif);
 						return "" + dif;
 					}
+				} else {
+					System.out.println("dif " + dif + " is NOT pentagonal at i=" + i + " howFarApart=" + howFarApart + " i+howFarApart=" + (i+howFarApart) );
+					
 				}
 				
 			}

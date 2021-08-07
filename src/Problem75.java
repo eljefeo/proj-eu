@@ -38,13 +38,37 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		int[] tests = new int[] { 12, 24, 30, 36, 40, 48 };
 		
 		List<Integer> sqrs = getSquaresBelow(100);
-		for(int i : sqrs) {
-			System.out.println("sqr = " + i);
+		System.out.print("squares: " + sqrs.get(0) + " issquare " + (isSquare(sqrs.get(0))!=0));
+		for(int i=1; i < sqrs.size(); i++) {
+			System.out.print(", " + sqrs.get(i) + " issquare " + (isSquare(sqrs.get(0))!=0));
 		}
+		System.out.println();
 		for(int i=0; i < tests.length; i++) {
+			
 			int t = tests[i];
-			System.out.println(i + " = " + t);
+			System.out.println("at i=" + i + " t = " + t);
+			
+			for(int sq : sqrs) {
+				int newt = t - sq;
+				
+			}
+			
+			/*
+			for(int j=t; j > 0; j--) {
+				System.out.println("doing j=" + j);
+				int sq = isSquare(j);
+				if(sq != 0) {
+					System.out.println(j + " issqr " + sq);
+				}
+			}
+			
+			*/
+			
+			//System.out.println(i + " = " + t + " isqr? " + isSquare(t));
 		}
+		
+		
+		System.out.println("testttt " + isSquare(4));
 		
 		return "";
 	}
@@ -60,7 +84,8 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 
 	public int isSquare(int n) {
 		double d = Math.sqrt(n);
-		return d - n == 0 ? (int)d : 0;
+		//System.out.println("checking if " + n + " is square : " + d + " ==== " + (d-(int)d));
+		return d - (int)d == 0 ? (int)d : 0;
 	}
 
 }
