@@ -22,6 +22,9 @@ Find the pair of pentagonal numbers, Pj and Pk, for which their sum and differen
 		 //Found 2 pents that add and sub to other pents : p1:1560090 p2:7042750 diff:5482660 sum:8602840 howfarapart:1147 i:1020
 		
 		System.out.println("is pent " + (171088260 - 136884937) + " = " + Util.isPentagonalNumber(171088260 - 136884937) + ", is pent 171088260 = " + Util.isPentagonalNumber(171088260));
+		System.out.println("pent ind of 171088260 = " + Util.getIndexOfPentagonalNumber(171088260));//10680
+		System.out.println("pent ind of 136884937 = " + Util.getIndexOfPentagonalNumber(136884937));//9553
+		// (long)(Math.sqrt(n*6) + 1) / 3;
 	} 
 	
 	
@@ -30,15 +33,26 @@ Find the pair of pentagonal numbers, Pj and Pk, for which their sum and differen
 	// I need to set it in a way where I dont know that smaller max (10,000)
 	//we should start small, work our way up with higher max's until we get the answer
 	// trying to skip things we already checked along the way maybe?
-	//TODO
+	//TODO - do some math stuff and figure out a damn nice formula to just pop out the stupid answers...duhh how hard can it be....???
 	public String problem(){// cant find 2 pents that are nex to eachother that work... trying to find pents that are 2 away, then 3 away etc..
 		//1, 5, 12, 22, 35, 51, 70, 92, 117, 145, 176, 210 ...
+		//sums
+		// 1away = 6 17 34 57 86 121
+		// 2away = 13 27 37 73 
+		// 3away 23 40 73 92 127
 		
-		
+		//for any pent is there an easy way to get to the next one?
+		// so like 22..next one is 35 , I guess we can get the index of 22 and just add n and do it again
+		// or ... if the next pent is 13 away : // all the pents are 4 apart, then 7, 10, 13, 16, 19, etc.. its +3 evertime
+		 // so its 1 + someMultipleOf3
 		//I feel like we could have shortcutted our way with a little math...there has to be a nice formula to shoot us straight to an answer..
 		/*
-		 so like 22(4) and 70(7) add to be 92(8)
-		 and 92(8) and 70(7) subtract to be 22(4)
+		 so like 22(p4) and 70(p7) add to be 92(p8)
+		 and 92(p8) and 70(p7) subtract to be 22(p4)
+		 and p8 =  8 * (3*8 - 1) /2 = 92
+		 
+		 p9553 = 136884937 & 10680 = 171088260
+		 
 		 a = a * (3*a - 1) /2 = n  
 		 b = b * (3*b - 1) /2
 		 c = c * (3*c - 1) /2
@@ -46,11 +60,22 @@ Find the pair of pentagonal numbers, Pj and Pk, for which their sum and differen
 		 
 		 a = 1 + 3n
 		 
-		 a + b = c ------ plus 
-		 a - b = d ------ minus
+		 a * (3*a - 1) /2 +  b * (3*b - 1) /2  = c * (3*c - 1) /2 (mult 2 each side?)
+		 a * (3*a - 1) +  b * (3*b - 1)   = c * (3*c - 1) === 3a^2 - a   + 3b^2 - b = 3c^2 - c
+		 3a^2 - a   +  3b^2 - b = 3c^2 - c
+		 = 3a^2 + 3b^2 -a -b = 3c^2 - c
+		 3a^2 + 3b^2 - 3c^2 = a + b - c
+		 3(a^2 + b^2 - c^2) = a + b - c
 		 
-		 a = c - b
-		 a = d + b
+		 
+		 
+		 
+		 a + b = c ------ plus ======  	a * (3*a - 1) /2 +  b * (3*b - 1) /2  = c * (3*c - 1) /2
+		 a - b = d ------ minus======	a * (3*a - 1) /2 - (b * (3*b - 1) /2) = d * (3*d - 1) /2
+		 
+		 a = c - b ====== a * (3*a - 1) /2 = c * (3*c - 1) /2    -    b * (3*b - 1) /2
+		 a = d + b ====== a * (3*a - 1) /2 = d * (3*d - 1) /2    +    b * (3*b - 1) /2
+		 
 		 
 		 c - b - b = d ... c - 2b = d
 		 d + b + b = c ... d + 2b = c
@@ -59,11 +84,22 @@ Find the pair of pentagonal numbers, Pj and Pk, for which their sum and differen
 		2b = c - d
 		b = (c - d) / 2
 		
+		
+		
 		a - d = (c - d) / 2
 		2a - 2d = c - d
 		 
+		 does that mean...
+		 2a = c - d - 2d
+		 2a = c - 3d
 		 
-		 
+		 ?????
+		 2a + 3d = c?
+		 a + b = c
+		 a - b = d
+		 ...
+		 a + b = 2a + 3d
+		 b = a + 3d? hmm doesnt seem right
 		 */
 		
 		
@@ -105,8 +141,18 @@ Find the pair of pentagonal numbers, Pj and Pk, for which their sum and differen
 				// if we find one, that means now we know 2 pentagonals that diff to another pent. Then we just have to check if they add to one too
 			
 				// what about the sums....: 1, 5, 12, 22, 35, 51, 70, 92, 117, 145, 176, 210
-				//6 17 34 57 86 121 162 (1 away)
-				// 11 17 23 29 35 41 - for 1 away the next one is +6
+				//6 17 34 57 86 121 162 (1 away) 
+				// 11 17 23 29 35 41 - for 1 away the next one is +6 everytime
+				// seems to be 6*n - 1
+				//6*2 -1 = 11, 6*3 - 1 = 17, 
+				// what does this mean, this means 11 is the distance between sums of 3 pents next to eachother?
+				// like 11 is 1+5(6) and 5+12(17) == 11 I guess ::: this is for pents 1, 2, 3 so p2+p3 - p1+p2 = 11
+				// so p3 - p1 + 2p2 = 11 :: p3 - p1 + p2 = 11/2
+				// then 11+6 = 17
+				// so 17 is diff for 5,12,22 : 5+12(17) , 12+22(34) : those sums are 17 apart ::: this is for pents 2, 3, 4
+				// so if we know the next one will be 23 apart... what pents can we find from this?
+				// 2 nums that diff to be 23? those are the 2 sums of the 3 touching pents?
+				// so something + 23 = next sum? do we know what pent we are at? like index?
 				if(Util.isPentagonalNumber(dif)){
 					long p1 = Util.getPentagonalNumber(i);
 					long p2 = Util.getPentagonalNumber(i+howFarApart);
