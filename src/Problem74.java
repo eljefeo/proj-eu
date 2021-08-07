@@ -35,7 +35,6 @@ How many chains, with a starting number below one million, contain exactly sixty
 	
 	public static void main(String[] args) {
 		Problem p = new Problem74();
-		
 		p.runProblem();
 		//doChainUntilLoop(10200);
 	}
