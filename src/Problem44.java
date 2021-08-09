@@ -95,7 +95,9 @@ Find the pair of pentagonal numbers, Pj and Pk, for which their sum and differen
 			 */
 			
 			//long dif = Util.getPentagonalNumber(howFarApart);
-			long sum = 1;
+			long sum = 1 + Util.getPentagonalNumber(howFarApart+1); // need to start with the first sum depending on how far apart we are doing 
+			System.out.println("First sum: " + sum);
+			long nextSumAdd =  8 + 3*howFarApart;
 			for(int i=1; i < max; i++){
 				//System.out.println("before dif == " + dif);
 				//: 1, 5, 12, 22, 35, 51, 70, 92, 117, 145, 176, 210
@@ -104,11 +106,18 @@ Find the pair of pentagonal numbers, Pj and Pk, for which their sum and differen
 				
 				//: 1, 5, 12, 22, 35, 51, 70, 92, 117, 145, 176, 210
 				//    13, 27, 47  73  105 143 ( 2 away)
-				//      +14 20 26   35
+				//      +14 20 26 32
+				
+				//: 1, 5, 12, 22, 35, 51, 70, 92, 117, 145, 176, 210
+				//    23, 40, 63  92  127 168 ( 3 away)
+				//      +17 23 29 35
+				
+				//: 1, 5, 12, 22, 35, 51, 70, 92, 117, 145, 176, 210
+				//    36, 56, 82  114 152 ( 4 away)
+				//      +20 26 32 38
 				
 				
-				sum += 6*i - 1 + (3*howFarApart); // --- I forget why I put this here.....
-				System.out.println("sum == " + sum + " howfarapart=" + howFarApart + " i="+i + "::: " + (6*i - 1));
+				System.out.println("sum == " + sum + " howfarapart=" + howFarApart + " i="+i + "::: nextSumAdd " + nextSumAdd);
 				
 				if(Util.isPentagonalNumber(sum)){
 					long p1 = Util.getPentagonalNumber(i);
@@ -127,6 +136,9 @@ Find the pair of pentagonal numbers, Pj and Pk, for which their sum and differen
 					
 				}
 				
+				
+				sum += nextSumAdd; //
+				nextSumAdd += 6;
 			}
 	
 		}
