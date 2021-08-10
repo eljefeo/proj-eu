@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Problem75 implements Problem{
 	
@@ -36,8 +38,10 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 	public String problem() {
 		
 		int[] tests = new int[] { 12, 24, 30, 36, 40, 48 };
-		
-		List<Integer> sqrs = getSquaresBelow(100);
+		int totalMax = 1500000;
+		int maxx = 3800000;
+		int max = maxx/3;
+		List<Integer> sqrs = getSquaresBelow(max);
 		System.out.print("squares: " + sqrs.get(0) + " issquare " + (isSquare(sqrs.get(0))!=0));
 		for(int i=1; i < sqrs.size(); i++) {
 			System.out.print(", " + sqrs.get(i) + " issquare " + (isSquare(sqrs.get(0))!=0));
@@ -52,7 +56,39 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 				int newt = t - sq;
 				
 			}
-			
+		}
+		
+		Set<Integer> sols = new HashSet<Integer>();
+		Set<Integer> solsdup = new HashSet<Integer>();
+		int sqm = sqrs.size()-1;
+		for(int i=0; i < sqm; i++) {
+			int s1 = sqrs.get(i);
+			for(int j=i+1; j < sqm; j++) {
+				int s2 = sqrs.get(j);
+				int h = s1+s2;
+				if(sqrs.contains(h)) {
+					double r1 = (double)s1/h;
+					double r2 = (double)s2/h;
+					int ss1 = (int) Math.sqrt(s1), ss2 = (int)Math.sqrt(s2), hh1 = (int)Math.sqrt(h);
+					int ssum = ss1 + ss2 + hh1;
+					System.out.println(ss1+ " " + ss2 +  " " + hh1 + " sum = " + ssum);
+					
+					if(ssum > totalMax)
+						System.out.println("Woh too big: " + ss1+ " " + ss2 +  " " + hh1 + " with ratio: " + r1 + ", " + r2);
+					
+					if(!sols.add(ssum)) {
+						solsdup.add(ssum);
+					}
+					
+				}
+			}
+		}
+		
+		for(int i : solsdup) {
+			sols.remove(i);
+		}
+		
+		System.out.println("found: " + sols.size());
 			/*
 			for(int j=t; j > 0; j--) {
 				System.out.println("doing j=" + j);
@@ -65,7 +101,7 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 			*/
 			
 			//System.out.println(i + " = " + t + " isqr? " + isSquare(t));
-		}
+		//}
 		
 		
 		System.out.println("testttt " + isSquare(4));
