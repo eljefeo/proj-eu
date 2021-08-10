@@ -16,208 +16,71 @@ Find the pair of pentagonal numbers, Pj and Pk, for which their sum and differen
 	public static void main(String[] args) {
 		Problem p = new Problem44();
 		p.runProblem();
-		
-		
-		//Found 2 pents that add and sub to other pents : p1:136884937 p2:171088260 diff:34212876 sum:307973197 howfarapart:1127 i:9553
-		 //Found 2 pents that add and sub to other pents : p1:1560090 p2:7042750 diff:5482660 sum:8602840 howfarapart:1147 i:1020
-		
-		System.out.println("is pent " + (171088260 - 136884937) + " = " + Util.isPentagonalNumber(171088260 - 136884937) + ", is pent 171088260 = " + Util.isPentagonalNumber(171088260));
-		System.out.println("pent ind of 171088260 = " + Util.getIndexOfPentagonalNumber(171088260));//10680
-		System.out.println("pent ind of 136884937 = " + Util.getIndexOfPentagonalNumber(136884937));//9553
-		// (long)(Math.sqrt(n*6) + 1) / 3;
 	
 	} 
 	
 	
-	public void problem0() {
-		int max = 50;
-		for(int i=1; i < max; i++) {
-			for(int j=i+1; j < max; j++) {
-				long p1 = Util.getPentagonalNumber(i);
-				long p2 = Util.getPentagonalNumber(j);
-				long diff = p2 - p1;
-				long sum = p2 + p1;
-				if(Util.isPentagonalNumber(diff)) {
-					System.out.println("YES diff  " + j + " - " + i + " = " +(j - i)   + ", p2-p1 = " +  " : " + p2 + " - " + p1 + " = " + diff + "  ind=" + Util.getIndexOfPentagonalNumber(diff));
-					
-					
-					/*
-					 YES diff  49 - 48 = 1, p2-p1 =  : 3577 - 3432 = 145  ind=10
-					1192 * 3 (+1) = 3577
-					1144 * 3 = 3432
-					48  * 3 (+1) = 145
-					 
-					 
-					 YES diff  49 - 47 = 2, p2-p1 =  : 3577 - 3290 = 287  ind=14
-					 1192 * 3 (+1) = 3577
-					 548 * 6 (+2) = 3290
-					 47  * 6 (+5) = 287
-					 */
-					
-					
-				} else {
-					//System.out.println("no  i = " + i + " , j = " + j + ", p1 = " + p1 + ", p2 = " + p2 + " diff = " + (j - i) + " , " + (p2 - p1));
-				}
-				
-				if(Util.isPentagonalNumber(sum)) {
-					System.out.println("YES sum  " + i + " + " + j + " = " +(j + i)   + ", p2+p1 = " +  " : " + p2 + " + " + p1 + " = " + sum + "  ind=" + Util.getIndexOfPentagonalNumber(sum));
-				}
-				
-			}
-		}
-	}
-	
 	public String problem(){// cant find 2 pents that are nex to eachother that work... trying to find pents that are 2 away, then 3 away etc..
 
-		
-		int max = 10; // we will just keep upping the number until we get it?. If we cant we just keep upping it until we find it, we will eventually. we could just do a while I guess..
-		
+		//so we are doing this without ever finding any pentagonal numbers
+		// I simply calculate the sums and difs of certain pents until we find an answer
+		// we dont actually need to find any pentagonal numbers, just the sum and difference
+		int max = 100; 
 		for(int howFarApart=1; howFarApart < max; howFarApart++){ 
 			//this determines how far of a gap between the pentagonals we want
 			// we start by checking pents closer together, then farther and farther apart
 		
-			// we try to find pentagonal numbers that are less than 100 pents apart...
-			// if that dont work, we up it to less than 1,000 then start again...then try 10,000 then 100,000 etc.. until we find one
+			// we start with the smallest distance we can between the pentagonal numbers.
+			// so we check all numbers next to each other (1 away) under max
+			// if we dont find anything, we start checking numbers that are 2 away, 3 away etc.. until we find a pair..
+			// that way we keep the difference as small as possible until we find an answer
 			if(howFarApart == max-1) {
-				// we start with the smallest distance we can between the pentagonal numbers.
-				// so we check all numbers next to each other (1 away) under max
-				// if we dont find anything, we start checking numbers that are 2 away, 3 away etc.. until we find a pair..
-				// that way we keep the difference as small as possible until we find an answer
-				//max = max*10;
+				max = max*10;
+				howFarApart = 1;
 				System.out.println("Changing max to " + max);
 			}
 			
-			/*
-			 so a multiple of 3 then add 1
-			 if we can force this to be pentagonal... we have the diff done...
-			  a = a * (3*a - 1) /2 == 
-			 
-			 */
-			
-			//long dif = Util.getPentagonalNumber(howFarApart);
 			long sum = 1 + Util.getPentagonalNumber(howFarApart+1); // need to start with the first sum depending on how far apart we are doing 
-			System.out.println("First sum: " + sum);
 			long nextSumAdd =  8 + 3*howFarApart;
+			long dif = Util.getPentagonalNumber(howFarApart) ;
 			for(int i=1; i < max; i++){
-				//System.out.println("before dif == " + dif);
-				//: 1, 5, 12, 22, 35, 51, 70, 92, 117, 145, 176, 210
-				//    6, 17, 34  57  86 121 ( 1 away) - we need to generate these
-				//      +11 17 23  29  35 - add these evertime ( these go up by 6 each)
-				
-				//: 1, 5, 12, 22, 35, 51, 70, 92, 117, 145, 176, 210
-				//    13, 27, 47  73  105 143 ( 2 away)
-				//      +14 20 26 32
-				
-				//: 1, 5, 12, 22, 35, 51, 70, 92, 117, 145, 176, 210
-				//    23, 40, 63  92  127 168 ( 3 away)
-				//      +17 23 29 35
-				
-				//: 1, 5, 12, 22, 35, 51, 70, 92, 117, 145, 176, 210
-				//    36, 56, 82  114 152 ( 4 away)
-				//      +20 26 32 38
-				
-				
-				System.out.println("sum == " + sum + " howfarapart=" + howFarApart + " i="+i + "::: nextSumAdd " + nextSumAdd);
-				
-				if(Util.isPentagonalNumber(sum)){
-					long p1 = Util.getPentagonalNumber(i);
-					long p2 = Util.getPentagonalNumber(i+howFarApart);
-					
-					System.out.println("sum " + sum + " is pentagonal at i=" + i + " howFarApart=" + howFarApart + " i+howFarApart=" + (i+howFarApart) + " p1=" + p1 + " p2="+p2  + " sum=" + (p1 + p2) + " is correct = " + (sum == (p1+p2)));
-					
-					if(Util.isPentagonalNumber(p1+p2)){
-						System.out.println("Found 2 pents that add and sub to other pents : p1:" + p1 + " p2:" + p2 + " diff:" +(p2-p1) + " sum:"  + sum +  " howfarapart:"+howFarApart + " i:"+i);
-						
-						System.out.println("Answer : " + sum);
-						return "" + sum;
-					}
-				} else {
-					System.out.println("sum " + sum + " is NOT pentagonal at i=" + i + " howFarApart=" + howFarApart + " i+howFarApart=" + (i+howFarApart) );
-					
+				dif += (3*howFarApart) ; // we know the next difference will be this
+				if(Util.isPentagonalNumber(sum) && Util.isPentagonalNumber(dif)){
+					//These are the 2 pents we are currently at in this loop, in case you were curious
+					//long p1 = Util.getPentagonalNumber(i);
+					//long p2 = Util.getPentagonalNumber(i+howFarApart);
+					return "" + dif;
 				}
-				
-				
-				sum += nextSumAdd; //
-				nextSumAdd += 6;
+				sum += nextSumAdd; // we know the next sum will be this
+				nextSumAdd += 6; //and this
 			}
-	
 		}
-		
-		
 		return null;
 	}
-	
-	//this one I optimized by reducing the things we have to check (from a million by default - to starting small and working up until we find it)
-	//we should start small, work our way up with higher max's until we get the answer
-	// trying to skip things we already checked along the way maybe? - are there any?
-	//TODO - do some math stuff and figure out a damn nice formula to just pop out the stupid answers...duhh how hard can it be....???
-	public String problemWithDiffs(){// cant find 2 pents that are nex to eachother that work... trying to find pents that are 2 away, then 3 away etc..
 
-		
-		int max = 10; // we will just keep upping the number until we get it?. If we cant we just keep upping it until we find it, we will eventually. we could just do a while I guess..
-		
-		for(int howFarApart=1; howFarApart < max; howFarApart++){ 
-			//this determines how far of a gap between the pentagonals we want
-			// we start by checking pents closer together, then farther and farther apart
-		
-			// we try to find pentagonal numbers that are less than 100 pents apart...
-			// if that dont work, we up it to less than 1,000 then start again...then try 10,000 then 100,000 etc.. until we find one
-			if(howFarApart == max-1) {
-				// we start with the smallest distance we can between the pentagonal numbers.
-				// so we check all numbers next to each other (1 away) under max
-				// if we dont find anything, we start checking numbers that are 2 away, 3 away etc.. until we find a pair..
-				// that way we keep the difference as small as possible until we find an answer
-				//max = max*10;
-				System.out.println("Changing max to " + max);
-			}
-			
-			/*
-			 so a multiple of 3 then add 1
-			 if we can force this to be pentagonal... we have the diff done...
-			  a = a * (3*a - 1) /2 == 
-			 
-			 */
-			
-			long dif = Util.getPentagonalNumber(howFarApart);
-			for(int i=1; i < max; i++){
-				//System.out.println("before dif == " + dif);
-				dif += (3*howFarApart) ; // --- I forget why I put this here.....
-				System.out.println("dif == " + dif + " howfarapart=" + howFarApart + " i="+i);
-				// oh yea I remember : 1, 5, 12, 22, 35, 51, 70, 92, 117, 145, 176, 210
-				// all the pents are 4 apart, then 7, 10, 13, 16, 19, etc.. its +3 evertime
-				// this way we are generating differences, then checking if we have a diff that is pentagonal
-				// if we find one, that means now we know 2 pentagonals that diff to another pent. Then we just have to check if they add to one too
-			
-				
-				if(Util.isPentagonalNumber(dif)){
-					long p1 = Util.getPentagonalNumber(i);
-					long p2 = Util.getPentagonalNumber(i+howFarApart);
-					
-					System.out.println("dif " + dif + " is pentagonal at i=" + i + " howFarApart=" + howFarApart + " i+howFarApart=" + (i+howFarApart) + " p1=" + p1 + " p2="+p2);
-					
-					if(Util.isPentagonalNumber(p1+p2)){
-						System.out.println("Found 2 pents that add and sub to other pents : p1:" + p1 + " p2:" + p2 + " diff:" +dif + " sum:"  + (p1+p2) +  " howfarapart:"+howFarApart + " i:"+i);
-						
-						System.out.println("Answer : " + dif);
-						return "" + dif;
-					}
-				} else {
-					System.out.println("dif " + dif + " is NOT pentagonal at i=" + i + " howFarApart=" + howFarApart + " i+howFarApart=" + (i+howFarApart) );
-					
-				}
-				
-			}
-	
-		}
-		
-		
-		return null;
-	}
+//Notes:
 	//1, 5, 12, 22, 35, 51, 70, 92, 117, 145, 176, 210 ...
 	//sums
 	// 1away = 6 17 34 57 86 121
 	// 2away = 13 27 37 73 
 	// 3away 23 40 73 92 127
+
+	//: 1, 5, 12, 22, 35, 51, 70, 92, 117, 145, 176, 210
+	//    6, 17, 34  57  86 121 ( 1 away) - we need to generate these
+	//      +11 17 23  29  35 - add these evertime ( these go up by 6 each)
+	
+	//: 1, 5, 12, 22, 35, 51, 70, 92, 117, 145, 176, 210
+	//    13, 27, 47  73  105 143 ( 2 away)
+	//      +14 20 26 32
+	
+	//: 1, 5, 12, 22, 35, 51, 70, 92, 117, 145, 176, 210
+	//    23, 40, 63  92  127 168 ( 3 away)
+	//      +17 23 29 35
+	
+	//: 1, 5, 12, 22, 35, 51, 70, 92, 117, 145, 176, 210
+	//    36, 56, 82  114 152 ( 4 away)
+	//      +20 26 32 38
+	
 	
 	//for any pent is there an easy way to get to the next one?
 	// so like 22..next one is 35 , I guess we can get the index of 22 and just add n and do it again
