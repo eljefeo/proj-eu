@@ -1,7 +1,8 @@
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public class Problem33 extends ProblemImpl {
+public class Problem33 implements Problem  { //Took 0.002508 seconds
 	/*
 	 * The fraction 49/98 is a curious fraction, as an inexperienced
 	 * mathematician in attempting to simplify it may incorrectly believe that
@@ -21,17 +22,17 @@ public class Problem33 extends ProblemImpl {
 		Problem p = new Problem33();
 		p.runProblem();
 	}
-
-	public void problem() {
+	
+	public String problem() {
 
 		double a = 4;
 		double b = 8;
 		System.out.println("here " + (a / b));
 
-		List<int[]> sols = new ArrayList<int[]>();
+		Set<int[]> sols = new HashSet<int[]>();
 
-		for (double n = 11; n < 100; n += 1) {
-			for (double d = 11; d < 100; d += 1) {
+		for (double n = 11; n < 100; n++) {
+			for (double d = n; d < 100; d++) {
 				if (n % 10 == 0 || n == d) {
 					continue;
 				}
@@ -44,9 +45,7 @@ public class Problem33 extends ProblemImpl {
 					continue;
 				} else {
 					if (((n1 == d2) && n2 / d1 == (n / d)) || ((n2 == d1) && n1 / d2 == (n / d))) { 
-						if (!hasAlready(sols, (int) n, (int) d)) {
-							sols.add(new int[] { (int) n, (int) d });
-						}
+						sols.add(new int[] { (int) n, (int) d });
 					}
 				}
 
@@ -61,24 +60,11 @@ public class Problem33 extends ProblemImpl {
 		}
 		System.out.println("sol tot : " + numTot + " / " + denTot);
 		
-		int[] reduced = Util.reduceFractionNumerDenom(numTot, denTot);
+		int[] reduced = Util.reduceFraction(numTot, denTot);
 		
 		System.out.println("sol reduced tot : " + reduced[0] + " / " + reduced[1]);
 		
-		System.out.println("Answer -- found denominator : " + reduced[1]);
+		return "" + reduced[1];
 	}
-
-	private static boolean hasAlready(List<int[]> sols, int a, int b) {
-		for (int[] arr : sols) {
-			if ((arr[0] == a && arr[1] == b) || (arr[1] == a && arr[0] == b)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-
-	
-	
 
 }
