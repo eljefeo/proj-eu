@@ -36,15 +36,60 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 	}
 	
 	public String problem() {
+		int totalMax = 25;
+		
+		List<Long> sqrs = new ArrayList<Long>();
+		long s = 1, track = 3;
+		for(long i=2; i < totalMax; i++) {
+			
+			//squares go up by odd numbers ...
+			// 1 4 9 16 25 36
+			//  3 5 7  9  11  13  15....
+			/*
+			 12 cm: (3,4,5)  -- 5 7 9 = 25 49 81  81-49=32  7 more than 25, mid number sqrt more than lowest num?
+			24 cm: (6,8,10)  -- 11 15 19 = 121 225 361  361-225=136 = 15 more than 121, mid number sqrt more than lowest num?
+			30 cm: (5,12,13) -- 9 23 25  = 81 529 625   625 - 529 = 96  15 away..dang (104 instead)
+			36 cm: (9,12,15) -- 17 23 29 = 289 529 841  841 - 529= 312 - 289 = 23..this works too, 
+			40 cm: (8,15,17) -- 15 29 33 = 225 841 1089   1089-841-225 = 23...nope...
+			48 cm: (12,16,20)-- 23 31 39 = 441 961 1521  1521-961-441 = 119
+			 */
+			sqrs.add(s);
+			
+			//System.out.println("adding " + s);
+			//i = sq;
+			long t = s;
+			
+			
+			for(int j=sqrs.size()-1; j > -1; j--) {
+				long asqr = sqrs.get(j);
+				
+				long neww = t - asqr;
+				//System.out.println("neww is now " + neww + " with t = " + t + " and asqr " + asqr);
+				
+			}
+			
+			
+			s+=track;
+			System.out.println("next s = "+ s  + " i=" + i + " track=" + track);
+			track += 2;
+		}
+		
+		
+		return "";
+				
+	}
+	
+	public String problem4() {
 		
 		int[] tests = new int[] { 12, 24, 30, 36, 40, 48 };
 		int totalMax = 1500000;
-		int maxx = 3800000;
+		int maxx = 1500000;
 		int max = maxx/3;
-		List<Integer> sqrs = getSquaresBelow(max);
-		System.out.print("squares: " + sqrs.get(0) + " issquare " + (isSquare(sqrs.get(0))!=0));
-		for(int i=1; i < sqrs.size(); i++) {
-			System.out.print(", " + sqrs.get(i) + " issquare " + (isSquare(sqrs.get(0))!=0));
+		List<Long> sqrs = getSquaresForRootsBelow(max);
+		System.out.println("Squares: " + sqrs.size());
+		//System.out.print("squares: " + sqrs.get(0) + " issquare " + (isSquare(sqrs.get(0))!=0));
+		for(int i=1; i < 20; i++) {
+			System.out.print(", " + sqrs.get(i));
 		}
 		System.out.println();
 		for(int i=0; i < tests.length; i++) {
@@ -52,25 +97,39 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 			int t = tests[i];
 			System.out.println("at i=" + i + " t = " + t);
 			
-			for(int sq : sqrs) {
-				int newt = t - sq;
+			for(long sq : sqrs) {
+				long newt = t - sq;
 				
 			}
 		}
 		
-		Set<Integer> sols = new HashSet<Integer>();
-		Set<Integer> solsdup = new HashSet<Integer>();
+		Set<Long> sols = new HashSet<Long>();
+		Set<Long> solsdup = new HashSet<Long>();
 		int sqm = sqrs.size()-1;
 		for(int i=0; i < sqm; i++) {
-			int s1 = sqrs.get(i);
+			long s1 = sqrs.get(i);
+			
+			if(s1 == 1)
+				continue;
+			
+			if(i % 1000 == 0)
+				System.out.println("i at " + i + " = " + s1);
+			
+			
 			for(int j=i+1; j < sqm; j++) {
-				int s2 = sqrs.get(j);
-				int h = s1+s2;
+				
+				long s2 = sqrs.get(j);
+				
+				if(j % 1000 == 0)
+					System.out.println("j at " + j + " = " + s2);
+				
+				
+				long h = s1+s2;
 				if(sqrs.contains(h)) {
 					double r1 = (double)s1/h;
 					double r2 = (double)s2/h;
-					int ss1 = (int) Math.sqrt(s1), ss2 = (int)Math.sqrt(s2), hh1 = (int)Math.sqrt(h);
-					int ssum = ss1 + ss2 + hh1;
+					long ss1 = (long) Math.sqrt(s1), ss2 = (long)Math.sqrt(s2), hh1 = (long)Math.sqrt(h);
+					long ssum = ss1 + ss2 + hh1;
 					System.out.println(ss1+ " " + ss2 +  " " + hh1 + " sum = " + ssum);
 					
 					if(ssum > totalMax)
@@ -84,7 +143,7 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 			}
 		}
 		
-		for(int i : solsdup) {
+		for(long i : solsdup) {
 			sols.remove(i);
 		}
 		
@@ -109,6 +168,14 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		return "";
 	}
 	
+	private List<Long> getSquaresForRootsBelow(int max) {
+		long n = 0L;
+		List<Long> sqrs = new ArrayList<Long>();
+		while(++n < max) 
+			sqrs.add(n*n);
+		
+		return sqrs;
+	}
 	private List<Integer> getSquaresBelow(int max) {
 		int n = 1, s = 0;
 		List<Integer> sqrs = new ArrayList<Integer>();
