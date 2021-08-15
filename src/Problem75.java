@@ -36,9 +36,92 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 	}
 	
 	public String problem() {
-		int totalMax = 25;
+		
+		/*
+		 so a2 + b2 = c2....
+		 c is bigger than a and b
+		 
+		 so some number N + b = c
+		 N cant just be anything, there is some limit right?
+		 like for b to become some larger square number, you have to add at least a certin amount to get to at the very least, the next square above b
+		 
+		 
+		 so like 6, 8, 10 = 36, 64, 100
+		 lets say we didnt know a, 36
+		 N + 64 = ...?
+		 well the next square above 8^2 (64) is 9^2 (81)
+		 so something plus 64, that something has to at the very least be 17 so you have to find a square LARGER than 17
+		 you need to at least go up to, or past, the next square above b..
+		 SO ---- if we were trying to find pythagorum triples and we were testing with 64 as B..
+		 then A cant be 1, 2, 3, 4.. since those are < 17 when squared
+		 its sqrt(64) + 1 = 9
+		 9^2 = 81
+		 81 - 64 = 17
+		 do all squares so that 17 <= N <= 64
+		 which only leaves 5, 6, 7 ... 
+		 I wonder how many will fit in the gap for higher numbers...
+		 
+		 
+		 
+		 */
+		int totalMax = 10;
 		
 		List<Long> sqrs = new ArrayList<Long>();
+		List<Long> sqrrts = new ArrayList<Long>();
+		int count = 0, track = 3;
+		//so what if this number i is the B
+		long sq = 1;
+		for(long b=2; b < totalMax; b++) {
+			
+			
+			
+			
+			// starts with 2 ..
+			// if 2 is b, then c is something larger than 2.. obviously
+			// and a is something less than 2
+			// the next square above 2 (4) is 3^2 = 9
+			// so 9 - 4 = 5
+			//for a to be able to add to b to form a square c, a has to be at least sqrt(5) or larger
+			
+			//long sqr = i * i;// i squared
+			//System.out.println("i=" + i + " sqr=" + sqr);
+			sq += track;
+			//System.out.println("i=" + i + " sqr=" + sqr);
+			track += 2;
+			long nextSquare = sq + track;
+			long diff = nextSquare - sq; // 9 - 4 = 5
+			long difsrt = (long) Math.sqrt(diff);// + 1L; // if this is a perfect square than we dont want to add 1.. might save processing just to not add 1 and do the extra step sometimes.. rather than check if perfect square
+			
+			//if(i%1000 == 0) {
+				//System.out.println("\ndoing b at " + i);
+				System.out.println("b=" + b + " sqr=" + sq + " nextSquare=" + nextSquare + " diff=" + diff +  " difsrt=" + difsrt + "::: how many squares to check between = " + (b - difsrt));
+			//}
+
+			// now srt is where a should start, then go until i
+				long tracka = 0;
+			for(long a = difsrt; a < b; a++) {
+				long sum = (a*a) + sq;
+				double c = (double)Math.sqrt(sum);
+				
+				System.out.println("Trying : " + a + "  " + b + "  " + c);
+				if(c - (long)c == 0) {
+					long tots = (long) (a + b + c); 
+					if(tots > 1500000 || tots < 0) {
+						System.out.println("hmm wierd total " + tots + " a=" + a + " b=" + b + " c=" + c);
+					} else {
+						count++;
+					}
+					
+					
+					System.out.println("found a triple : " + a + " + " + b + " = " + c);
+				}
+			}
+			
+		}
+		
+		System.out.println("Found " + count + " under " + totalMax);
+		
+		/*
 		long s = 1, track = 3;
 		for(long i=2; i < totalMax; i++) {
 			
@@ -53,6 +136,7 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 			40 cm: (8,15,17) -- 15 29 33 = 225 841 1089   1089-841-225 = 23...nope...
 			48 cm: (12,16,20)-- 23 31 39 = 441 961 1521  1521-961-441 = 119
 			 */
+		/*
 			sqrs.add(s);
 			
 			//System.out.println("adding " + s);
@@ -73,7 +157,7 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 			System.out.println("next s = "+ s  + " i=" + i + " track=" + track);
 			track += 2;
 		}
-		
+		*/
 		
 		return "";
 				
