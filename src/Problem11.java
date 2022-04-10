@@ -60,64 +60,46 @@ What is the greatest product of four adjacent numbers in the same direction (up,
 										 
 										 
 	int biggest = 0;
-	
-										 
+ 
 	for(int i = 0; i < allnums.length; i++){
 		for(int j = 0; j < allnums[i].length; j++){
 			
 			// check down
 			if((i + 4) <= allnums.length-1){
-				int a = allnums[i][j];
-				int b = allnums[i+1][j];
-				int c = allnums[i+2][j];
-				int d = allnums[i+3][j];
-				int prod = a*b*c*d;
-				if(prod > biggest){
-					biggest = prod;
-				}
+				int product = 1;
+				for(int offset = 0; offset < 4; offset++)
+					product *= allnums[i + offset][j];
+				if(product > biggest)
+					biggest = product;
 			}
 			
 			// check right
 			if((j + 4) <= allnums[i].length-1){
-				int a = allnums[i][j];
-				int b = allnums[i][j+1];
-				int c = allnums[i][j+2];
-				int d = allnums[i][j+3];
-				int prod = a*b*c*d;
-				if(prod > biggest){
-					biggest = prod;
-				}
+				int product = 1;
+				for(int offset = 0; offset < 4; offset++)
+					product *= allnums[i][j + offset];
+				if(product > biggest)
+					biggest = product;
 			}
-			
 			
 			//check diagonal down right
 			if((j + 4) <= allnums[i].length-1 && (i + 4) <= allnums.length-1){
-				int a = allnums[i][j];
-				int b = allnums[i+1][j+1];
-				int c = allnums[i+2][j+2];
-				int d = allnums[i+3][j+3];
-				int prod = a*b*c*d;
-				if(prod > biggest){
-					biggest = prod;
-				}
+				int product = 1;
+				for(int offset = 0; offset < 4; offset++)
+					product *= allnums[i + offset][j + offset];
+				if(product > biggest)
+					biggest = product;
 			}
-			
 			
 			//check diagonal down left
 			if((j - 4) >= 0 && (i + 4) <= allnums.length-1){
-				int a = allnums[i][j];
-				int b = allnums[i+1][j-1];
-				int c = allnums[i+2][j-2];
-				int d = allnums[i+3][j-3];
-				int prod = a*b*c*d;
-				if(prod > biggest){
-					biggest = prod;
-				}
+				int product = 1;
+				for(int offset = 0; offset < 4; offset++)
+					product *= allnums[i + offset][j - offset];
+				if(product > biggest)
+					biggest = product;
 			}
 		}
-		
-		
-		
 	}
 	//System.out.println("Found: " + biggest);
 	return "" + biggest;

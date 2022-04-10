@@ -31,7 +31,7 @@ NOTE: Once the chain starts the terms are allowed to go above one million.
 			int steps = 0;
 			while(test!=1){
 				steps++;
-				test = updateNum(test);
+				test = Util.collatzConjectureNextNum(test);
 			}
 			if(steps > biggestNumOfSteps){
 				biggestNumOfSteps = steps;
@@ -40,18 +40,9 @@ NOTE: Once the chain starts the terms are allowed to go above one million.
 			}
 		}
 		
-		//System.out.println("Found " + finalNum + " with " + biggestNumOfSteps + " steps");
+		System.out.println("Found " + finalNum + " with " + biggestNumOfSteps + " steps");
 		return "" + finalNum;
 	}
-	
-	
-	public static long updateNum(long num){
-		if(num % 2 == 0){
-			return num / 2;
-		} else { 
-			return 3*num + 1;
-		}
-		
-	}
+
 
 }

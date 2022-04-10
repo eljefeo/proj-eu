@@ -61,7 +61,7 @@ By listing the set of reduced proper fractions for d <= 1,000,000 in ascending o
 	
 	@Override
 	public String problem() {
-		long[] leftFraction = Util.getFractionToTheLeft(8, 1, 2);
+		long[] leftFraction = Util.getFractionToTheLeft(1000000, 3, 7);
 		//System.out.println("Found " + leftFraction[0] + "/" + leftFraction[1]);
 		
 		return leftFraction[0] + "";

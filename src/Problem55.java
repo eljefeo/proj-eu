@@ -44,7 +44,7 @@ public class Problem55 implements Problem { //Took 0.082786 seconds
 		int maxNum = 10000;
 		int counter = 0;
 		for(int i = 1; i < maxNum; i++) {
-			if(isLychrelNumber(i, maxIterations)) {
+			if(Util.isLychrelNumber(i, maxIterations)) {
 				counter++;
 			}
 		}
@@ -52,16 +52,7 @@ public class Problem55 implements Problem { //Took 0.082786 seconds
 		return "" + counter;
 	}
 
-	private static boolean isLychrelNumber(int n, int howManyIterationsToCheck) {
-		BigInteger bn = new BigInteger("" + n);
-		for (int i = 1; i < howManyIterationsToCheck; i++) { // this will be 50 instead of 10, just starting with 10 to test size of these things
-			bn = Util.reverseDigitsThenAdd(bn);
-			if (Util.isPalindromeString(bn.toString())) {
-				return false;
-			}
-		}
-		return true;
-	}
+
 
 	
 

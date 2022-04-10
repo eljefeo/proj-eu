@@ -2052,8 +2052,24 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		return ( d - (long)d ) == 0;
 	}
 
+	public static boolean isLychrelNumber(int n, int howManyIterationsToCheck) {
+		BigInteger bn = new BigInteger("" + n);
+		for (int i = 1; i < howManyIterationsToCheck; i++) { // this will be 50 instead of 10, just starting with 10 to test size of these things
+			bn = Util.reverseDigitsThenAdd(bn);
+			if (Util.isPalindromeString(bn.toString())) {
+				return false;
+			}
+		}
+		return true;
+	}
 	
-	
+	public static long collatzConjectureNextNum(long num){
+		if(num % 2 == 0){
+			return num / 2;
+		} else { 
+			return 3*num + 1;
+		}
+	}
 	
 	/*
 	public boolean areCoPrime(int a, int b) {
