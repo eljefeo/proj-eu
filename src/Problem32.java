@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem32 extends ProblemImpl{
+public class Problem32 implements Problem  { //Took 0.890304 seconds - can probably be optimized, just stopped when < 1sec
 
 	/*
 	 * We shall say that an n-digit number is pandigital if it makes use of all
@@ -18,12 +18,17 @@ public class Problem32 extends ProblemImpl{
 	 * only include it once in your sum.
 	 * 
 	 */
-	public static void main(String[] args) {
+	
+	
+	// I think we could optimize this, but it is just under 1 second. 
+	//Barely though, might need to speed it up a bit just in case
+	
+	public static void main(String[] args) { 
 		Problem p = new Problem32();
 		p.runProblem();
 	}
 
-	public void problem() {
+	public String problem() {
 		List<Integer> foundNums = new ArrayList<Integer>();
 		int max = 10000;
 		int step = 1000; // just used for logging
@@ -55,8 +60,8 @@ public class Problem32 extends ProblemImpl{
 		for(Integer i : foundNums){
 			total += i;
 		}
-		System.out.println("Total: " + total);
-
+		//System.out.println("Total: " + total);
+		return "" + total;
 	}
 
 

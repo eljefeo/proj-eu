@@ -1,5 +1,10 @@
 
-public class Problem71 implements Problem { //Took 0.001484 seconds
+
+// THIS IS THE CURRENT CODE CHECKED INTO GITHUB, BUT THERE IS SOMETHING WRONG WITH THE LOGIC
+// USE Problem71_2 to try and test new stuff to figure out the issue.
+
+
+public class Problem71 implements Problem{
 
 	
 	/*
@@ -19,18 +24,8 @@ By listing the set of reduced proper fractions for d <= 1,000,000 in ascending o
 	
 	public static void main(String[] args) { //Took 0.029194 seconds
 		new Problem71().runProblem();
-		
-		//int a = 30, b = 5;
-		//System.out.println("gcd of " + a + " " + b + " = " + Util.gcd(a,b) + " :: reduced " + Util.reduceFractionString(a, b));
-		
 	}
-	
 	/*
-	 * 
-	so I found this actually doesnt work like I thought it would...
-	1/2, to the left is 3/7
-	if you put 1/2 in here, you get 3/8... which is wrong.. my logic is incorrect
-	but I got lucky and got the right answer... but why..
 	 
 	 so after looking at these fractions for a while here's what Im thinking
 	 3/7 is next to 2/5 because:
@@ -64,36 +59,38 @@ By listing the set of reduced proper fractions for d <= 1,000,000 in ascending o
 	
 
 	
-
-	
 	@Override
 	public String problem() {
-
-		int max = 8;
-		int numerGoal = 2, denomGoal = 5;
+		long[] leftFraction = Util.getFractionToTheLeft(8, 1, 2);
+		//System.out.println("Found " + leftFraction[0] + "/" + leftFraction[1]);
 		
-		for(int i=max; i > 1; i--) { 	// denom
+		return leftFraction[0] + "";
+	}
+	
+	public String problem5() { // So this was the first solution but I worked on but it has issues with some numbers
+		// like 1/2 should have 3/7 to the left, but this returns 3/8...
+		// I found another way to do it above anyways, and it works correctly.
+
+		int max = 1000000;
+		int nGoal = 3, dGoal = 7;
+		
+		for(int i=max; i > 0; i--) { 	// denom
 			
-			//if(i == denomGoal) // lets assume there are other numbers in between...like 3/7 and 4/7 have some numbers in between lets just assume
-			if(denomGoal % i == 0)	
+			if(i == dGoal)
 				continue;
 			
-			long[] lcm  = Util.lcmWithMult(i, denomGoal);
+			long[] dets  = Util.lcmWithMult(i, dGoal);
 			
-			long w = denomGoal < i ? lcm[0] / denomGoal : lcm[1];
-			
-			System.out.println("w = " + w + " l0 = " + lcm[0] + " l1 = " + lcm[1]);
-			 // the second thing in the array
+			long w = dets[1];
+			if(dGoal < i) // the second thing in the array
 				// is how many to mult the HIGHER num to to get the lcm
 				// but we dont know if the i we are testing is higher / lower than dGoal
 				// so we need to do this only if dGoal is less than i
-				
-			long newNumerator = (numerGoal * w) - 1;
-			long[] red = Util.reduceFraction(newNumerator, lcm[0]);
-			System.out.println("wwwFraction is " + red[0] + "/" + red[1]);
+				w = dets[0] / dGoal;
 			
-			if(red[1] % denomGoal == 0)
-				continue;
+
+			long newN = (nGoal * w) - 1;
+			long[] red = Util.reduceFraction(newN, dets[0]);
 			if(red[1] <= max) {
 				System.out.println("Fraction is " + red[0] + "/" + red[1]);
 				System.out.println("Answer: " + red[0]);
@@ -102,6 +99,7 @@ By listing the set of reduced proper fractions for d <= 1,000,000 in ascending o
 			
 		}
 		return null;
+		
 	}
 
 }

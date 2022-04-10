@@ -39,6 +39,7 @@ How many chains, with a starting number below one million, contain exactly sixty
 		//doChainUntilLoop(10200);
 	}
 	
+	@Override
 	public String problem() {
 		
 		int maxChain = 60, count = 0;
@@ -122,7 +123,7 @@ How many chains, with a starting number below one million, contain exactly sixty
 	
 
 	
-	public static String problemWithPrimitiveArr() {
+	public String problemOldSlow() {
 	
 		int maxChain = 60, count = 0;
 		
@@ -157,7 +158,7 @@ How many chains, with a starting number below one million, contain exactly sixty
 			78 -> 45360 -> 871 -> 45361 (-> 871)
 			540 -> 145 (-> 145)
 		   
-		   so we can put all those numbers in a list? or set better yet? ..... (we did this in the new function above, much better)
+		   so we can put all those numbers in a list? or set better yet? ..... (update: we did this in the new function above, much better)
 		   
 		 */
 		

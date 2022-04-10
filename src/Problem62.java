@@ -31,7 +31,8 @@ anything?
 		p.runProblem();
 		
 		/// WHAT IF instead of this super slow way (didnt know it would be that slow)
-		// we just get all (a bunch?) of cubes, then check if any have the same digits? Would that take even longer - no this was super fast...solved this way
+		// we just get all (a bunch?) of cubes, then check if any have the same digits? Would that take even longer - 
+		//Update: no this was super fast...solved this way. Still longer than 1 second to run though, need to optimize somehow
 		//System.out.println("anything?");
 	}
 	
@@ -72,7 +73,7 @@ anything?
 	
 	public static long alreadyHas2(long n, Map<Long, Integer> alln) {
 		for(Long l : alln.keySet()) {
-			if(isPermutationOf(n, l)) {
+			if(Util.isPermutationOf(n, l)) {
 				return l;
 			}
 		}
@@ -128,7 +129,7 @@ anything?
 			return;
 		
 		if(r.length() == 0){
-			if(isCube(Long.parseLong(s))){
+			if(Util.isCube(Long.parseLong(s))){
 				all.add(s);
 			}
 			
@@ -147,7 +148,7 @@ anything?
 	
 	public static boolean alreadyHas(long n) {
 		for(Long l : allNums) {
-			if(isPermutationOf(n, l)) {
+			if(Util.isPermutationOf(n, l)) {
 				return true;
 			}
 		}
@@ -155,39 +156,7 @@ anything?
 		return false;
 	}
 	
-	public static boolean isPermutationOf(long n1, long n2) {
-		
-		int[] d1 = new int[] {0,0,0,0,0,0,0,0,0,0};
-		int[] d2 = new int[] {0,0,0,0,0,0,0,0,0,0};
-		
-		int r = 0;	
-		
-		while (n1 != 0) {
-			r = (int) (n1 % 10);
-			d1[r]++;
-			n1 /= 10;
-		}
-		
-		while (n2 != 0) {
-			r = (int) (n2 % 10);
-			d2[r]++;
-			n2 /= 10;
-		}
-		
-		for(int i=0; i<d1.length; i++) {
-			if(d1[i] != d2[i]) {
-				return false;
-			}
-		}
-		
-		return true;
-	}
 	
-	
-	public static boolean isCube(long c) {
-		double d = Math.cbrt(c);
-		return ( d - (long)d ) == 0;
-	}
 	
 
 }

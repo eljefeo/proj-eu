@@ -46,7 +46,7 @@ public class Problem70 implements Problem{ //Took 1.977199 seconds - probably be
 		
 		
 		//screw it lets see if we can do it with just 2 primes...
-		// I guess it makes sense...since the more primes we have, the larger the number gets, and since we want a ratio as small as possible, then we want the number and phi(n) to be as close to each other as possible
+		// I guess it makes sense...since the more primes we have, the larger the number gets, and since we want a ratio as small as possible ( as close to 1 as possible, dont go over too much), then we want the number and phi(n) to be as close to each other as possible
 		// but we cant do primes, since that has a lot of numbers in phji
 		
 		

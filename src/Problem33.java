@@ -1,5 +1,4 @@
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class Problem33 implements Problem  { //Took 0.002508 seconds

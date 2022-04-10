@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -43,17 +44,17 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		 
 		 so some number N + b = c
 		 N cant just be anything, there is some limit right?
-		 like for b to become some larger square number, you have to add at least a certin amount to get to at the very least, the next square above b
+		 like for b to become some larger square number, you have to add at least a certain amount to get to, at the very least, the next square above b
 		 
 		 
 		 so like 6, 8, 10 = 36, 64, 100
 		 lets say we didnt know a, 36
 		 N + 64 = ...?
 		 well the next square above 8^2 (64) is 9^2 (81)
-		 so something plus 64, that something has to at the very least be 17 so you have to find a square LARGER than 17
+		 so something plus 64.... that something has to at the very least be 17 so you have to find a square >= than 17
 		 you need to at least go up to, or past, the next square above b..
 		 SO ---- if we were trying to find pythagorum triples and we were testing with 64 as B..
-		 then A cant be 1, 2, 3, 4.. since those are < 17 when squared
+		 then A cant be 1, 2, 3, 4 since those are < 17 when squared
 		 its sqrt(64) + 1 = 9
 		 9^2 = 81
 		 81 - 64 = 17
@@ -61,20 +62,25 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		 which only leaves 5, 6, 7 ... 
 		 I wonder how many will fit in the gap for higher numbers...
 		 
-		 
+		 looks like that gap widens as numbers get higher...meaning this formula is quick when numbers are small, but gets slower and slower as we go higher
 		 
 		 */
-		int totalMax = 10;
-		
+		int totalMax = 100;
+		//int maxx = 1500000;
+		int maxx = 1800;
 		List<Long> sqrs = new ArrayList<Long>();
 		List<Long> sqrrts = new ArrayList<Long>();
+		
+		List<Long> dupsList = new ArrayList<Long>();
+		List<Long> totsList = new ArrayList<Long>();
+		
 		int count = 0, track = 3;
 		//so what if this number i is the B
 		long sq = 1;
 		for(long b=2; b < totalMax; b++) {
 			
 			
-			
+			//We are essentially looking for 2 squares that are a square number away from each other...hmmm 
 			
 			// starts with 2 ..
 			// if 2 is b, then c is something larger than 2.. obviously
@@ -94,33 +100,51 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 			
 			//if(i%1000 == 0) {
 				//System.out.println("\ndoing b at " + i);
-				System.out.println("b=" + b + " sqr=" + sq + " nextSquare=" + nextSquare + " diff=" + diff +  " difsrt=" + difsrt + "::: how many squares to check between = " + (b - difsrt));
+				//System.out.println("b=" + b + " sqr=" + sq + " nextSquare=" + nextSquare + " diff=" + diff +  " difsrt=" + difsrt + "::: how many squares to check between = " + (b - difsrt));
 			//}
 
 			// now srt is where a should start, then go until i
-				long tracka = 0;
+			long tracka = 0;
 			for(long a = difsrt; a < b; a++) {
-				long sum = (a*a) + sq;
-				double c = (double)Math.sqrt(sum);
+				//long sum = (a*a) + sq;
+				double c = (double)Math.sqrt((a*a) + sq);
 				
-				System.out.println("Trying : " + a + "  " + b + "  " + c);
+				//System.out.println("Trying : " + a + "  " + b + "  " + c);
 				if(c - (long)c == 0) {
 					long tots = (long) (a + b + c); 
-					if(tots > 1500000 || tots < 0) {
+					if(tots > maxx || tots < 0) {
 						System.out.println("hmm wierd total " + tots + " a=" + a + " b=" + b + " c=" + c);
 					} else {
 						count++;
 					}
 					
+					double a2 = a*a, b2 = b*b, c2 = c*c;
+					//System.out.println("Did it work? " + a2 + " : " + b2 + " : " + c2 + " ========= " + ((a2 + b2) == c2));
+					//System.out.println("Did it work1? " + Math.sqrt(a2) + " : " + Math.sqrt(b2) + " : " + Math.sqrt(c2));
+					if(((double)a*a) + ((double)b*b) == ((double)c*c)) {
+						
+					}
 					
-					System.out.println("found a triple : " + a + " + " + b + " = " + c);
+					if(totsList.contains(tots)) {
+						System.out.println("Duplicate: " + tots);
+						totsList.remove(tots);
+						dupsList.add(tots);
+					} else {
+						totsList.add(tots);
+						System.out.println(tots + ": (" + a + "," + b + "," + c + ") (" + a2 + "," + b2 + "," + c2 + ")" + " " + (b-a) + "," + (c-b) + " :: " + (b2-a2) + "," + (c2-b2));
+					}
 				}
 			}
 			
 		}
 		
+		long lastLong = 0;
 		System.out.println("Found " + count + " under " + totalMax);
-		
+		Collections.sort(totsList);
+		for(long l : totsList) {
+			System.out.println(l + " :: " + (l-lastLong));
+			lastLong = l;
+		}
 		/*
 		long s = 1, track = 3;
 		for(long i=2; i < totalMax; i++) {

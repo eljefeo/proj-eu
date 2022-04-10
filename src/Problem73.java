@@ -4,6 +4,21 @@ import java.util.List;
 public class Problem73 implements Problem { //Took 0.111773 seconds
 
 	
+	
+	/*
+	 
+	 Consider the fraction, n/d, where n and d are positive integers. If n<d and HCF(n,d)=1, it is called a reduced proper fraction.
+
+If we list the set of reduced proper fractions for d <= 8 in ascending order of size, we get:
+
+1/8, 1/7, 1/6, 1/5, 1/4, 2/7, 1/3, 3/8, 2/5, 3/7, 1/2, 4/7, 3/5, 5/8, 2/3, 5/7, 3/4, 4/5, 5/6, 6/7, 7/8
+
+It can be seen that there are 3 fractions between 1/3 and 1/2.
+
+How many fractions lie between 1/3 and 1/2 in the sorted set of reduced proper fractions for d <= 12,000?
+	 
+	 */
+	
 	//
 //	1/8, 1/7, 1/6, 1/5, 1/4, 2/7, 1/3, 3/8, 2/5, 3/7, 1/2, 4/7, 3/5, 5/8, 2/3, 5/7, 3/4, 4/5, 5/6, 6/7, 7/8
 
@@ -27,20 +42,13 @@ public class Problem73 implements Problem { //Took 0.111773 seconds
 	public static void main(String[] args) {
 		Problem p = new Problem73();
 		p.runProblem();
-		//problemGHFirstMaybe();
-		
-		//Counted this many: 44749 --- wrrrrronngggggg
-		//1364054 wrroronnnnggggg
-		// 1364818 wrrronngngggggg
-		//Took 2570.929337 seconds
-
 	}
 
 
 	
 	@Override
 	public String problem() {
-		//we go through all fractions for each denom
+		// we go through all fractions for each denom
 		// we count the fractions that are > 1/3 and < 1/2 and also that are not reduceable
 		List<Integer> primes = new ArrayList<Integer>();
 		primes.add(2);
@@ -62,10 +70,10 @@ public class Problem73 implements Problem { //Took 0.111773 seconds
 				//if(prime > sqrt) {
 				if(prime > Math.sqrt(n)) {
 					if(n == num) 
-						primes.add(num); // n was never divided, had no divosors - prime
+						primes.add(num); // n was never divided, had no divisors - means its prime
 					 else if(n > 1) 
 							facts.add(n);
-						
+					
 					break;
 				}
 				
@@ -86,12 +94,11 @@ public class Problem73 implements Problem { //Took 0.111773 seconds
 				maxFraction++;
 			
 			if(facts.size() > 0) {
-				
 				for (int i = minFraction; i < maxFraction; i++) {
 					boolean shouldSkip = false;
 					for(Integer f : facts) 
 						if(i % f == 0) {
-							shouldSkip = true; // skip fractions where numerator is no coprime with denom. In other words, fractions that can be reduced, we skip sincve we will count those later when we get to the reduced version
+							shouldSkip = true; // skip fractions where numerator is not coprime with denom. In other words, fractions that can be reduced, we skip since we will count those later when we get to the reduced version
 							break;
 						}
 					
@@ -99,7 +106,7 @@ public class Problem73 implements Problem { //Took 0.111773 seconds
 						counter++;
 				}
 			} else {
-				counter += maxFraction - minFraction; // we just count them all since denom is prime and nothing is not coprime with prime 
+				counter += maxFraction - minFraction; // we just count them all since denom is prime and nothing is not coprime with prime .. did I say that right?
 			}
 		}
 
@@ -120,7 +127,7 @@ public class Problem73 implements Problem { //Took 0.111773 seconds
 		while(rightNumerGoal != leftNumerGoal || rightDenomGoal != leftDenomGoal) {
 			//break;
 			
-			long[] res = getFractionToTheLeft(max, rightNumerGoal, rightDenomGoal);
+			long[] res = Util.getFractionToTheLeft(max, rightNumerGoal, rightDenomGoal);
 			
 			if(res[0] == 0 || res[1] == 0) {
 				System.out.println("Broken at " + rightNumerGoal + "/" + rightDenomGoal + " == " + res[0] + "/" + res[1]);
@@ -161,7 +168,7 @@ public class Problem73 implements Problem { //Took 0.111773 seconds
 		for(int i=1; i<numers.length; i++) {
 			double dec = (double)numers[i] / denoms[i];
 			System.out.println(numers[i] + "/" + denoms[i] + " = " + dec + " -- Looking for....");
-			long[] left = getFractionToTheLeft(maxDenom, numers[i], denoms[i]);
+			long[] left = Util.getFractionToTheLeft(maxDenom, numers[i], denoms[i]);
 			
 			
 			if(left[0] != numers[i-1] || left[1] != denoms[i-1]) {
@@ -175,85 +182,11 @@ public class Problem73 implements Problem { //Took 0.111773 seconds
 		
 		
 		System.out.println("Done with " + gc + " =?= " + (numers.length-1) + " = " + (gc == numers.length-1) );
-		return "doneskies";
+		return "doneskeez";
 		
 	}
 
-	
-	public long[] getFractionToTheLeft(int max, long rightNumerGoal, long rightDenomGoal) {
-		
-		//System.out.println("Doing here " + rightNumerGoal + "/" + rightDenomGoal);
-		
-		//if(rightDenomGoal == max && rightNumerGoal == 1) {
-			//System.out.println("ERROR - asking for left of leftmost fraction... what the heck are you doing???");
-			//return new long[] {0,0};
-			// error - there is no fraction to the left of the leftmost fraction lol..
-		//}
-		long[] ret = new long[2];
 
-		//int counter = 0;
-		
-		//for(int i=2; i <= max; i++) {
-		
-		boolean isDEven = rightDenomGoal % 2 == 0;
-		int inc = isDEven ? 2 : 1;
-		//int start = 
-		if(isDEven && max % 2 == 0)
-			max--;
-		
-		
-		
-		for(int i=max; i > 2; i-=inc) {
-		//for(int i=2; i < max; i++) {
-			if(isDEven && i % 2 == 0) {
-				//System.out.println("continuing because isdevn and " + i + " % 2 == 0");
-				continue;
-			}
-			
-			if(i == rightDenomGoal) {
-				//System.out.println("continuing because " + i + " == " + rightDenomGoal);
-				continue;
-			}
-			
-			if(i > rightDenomGoal ) {
-				if(i % rightDenomGoal == 0) {
-					//System.out.println("continuing because " + i + " % " + rightDenomGoal + " == 0");
-					continue;
-				}
-				
-			} else if(rightDenomGoal % i == 0) {
-				//System.out.println("continuing because " + rightDenomGoal + " % " + i + " == 0");
-				continue;
-			}
-			
-			long[] lcm  = Util.lcmWithMult(i, rightDenomGoal);
-			
-			long w = rightDenomGoal < i ? lcm[0] / rightDenomGoal : lcm[1];
-			
-			long newNumerator = (rightNumerGoal * w) - 1;
-			long[] red = Util.reduceFraction(newNumerator, lcm[0]);
-			//System.out.println(newNumerator + "/" + lcm[0] + " Reduced to " + red[0] + "/" + red[1]);
-//			1/8, 1/7, 1/6, 1/5, 1/4, 2/7, 1/3, 3/8, 2/5, 3/7, 1/2, 4/7, 3/5, 5/8, 2/3, 5/7, 3/4, 4/5, 5/6, 6/7, 7/8
-
-			if(red[1] <= max) {
-				//counter++;
-				//System.out.println("LEFT OF " + rightNumerGoal + "/" + rightDenomGoal + " is " + red[0] + "/" + red[1]);
-				//System.out.println("Answer: " + red[0]);
-				//rightNumerGoal = red[0];
-				//rightDenomGoal = red[1];
-				
-				return red;
-				
-				//break;
-				//return "" + red[0];
-			} else {
-				//System.out.println("couldnt find it " + rightNumerGoal + "/" + rightDenomGoal + " with " + red[0] + "/" + red[1] + " with i = " + i);
-			}
-			
-		}
-		
-		return ret;
-	}
 	public String problemo() {
 		
 		int counter = 0;

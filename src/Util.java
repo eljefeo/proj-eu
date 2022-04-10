@@ -1116,6 +1116,22 @@ public static boolean isPalindromeIntSlower(int num) {
 		return new int[] {na, da};
 	}
 	
+	public static long[] reduceFractionSlow(long n, long d) {
+		//int i = 2;
+		long na = n, da = d;
+		for(long i=2; i < d/2; i++) {
+			if(na % i == 0 && da % i == 0) {
+				while (na % i == 0 && da % i == 0) {
+					na /= i;
+					da /= i;	
+				}
+				i++;
+			}
+		}
+		
+		return new long[] {na, da};
+	}
+	
 	
 	public static long[] reduceFraction(long numer, long denom) {
 		long gcd = gcd(numer, denom);
@@ -1360,6 +1376,27 @@ public static boolean isPalindromeIntSlower(int num) {
 				makeAllPermutationsRecurNoDupesSet(newS, newR, all);
 			}
 		}
+	}
+	
+	public static boolean isPermutationOf(long n1, long n2) {
+		int[] d1 = new int[] {0,0,0,0,0,0,0,0,0,0};
+		int[] d2 = new int[] {0,0,0,0,0,0,0,0,0,0};
+		int r = 0;	
+		while (n1 != 0) {
+			r = (int) (n1 % 10);
+			d1[r]++;
+			n1 /= 10;
+		}
+		while (n2 != 0) {
+			r = (int) (n2 % 10);
+			d2[r]++;
+			n2 /= 10;
+		}
+		for(int i=0; i<d1.length; i++)
+			if(d1[i] != d2[i])
+				return false;
+		
+		return true;
 	}
 	
 	public static void findCombinationsOfSizeRecur(int[] A, String out, int index, int lengthOfThing, int sampleSize) {
@@ -1817,7 +1854,7 @@ public static boolean hasSameUniqueDigits(int a, int b){
 				if (n % prime == 0)
 					break;
 				
-			}
+			} //1, 4, 9, 16, 25
 			
 			if(sqrtCounter > sqrtNext-2) { // here is where we calculate the next square root
 				sqrtNext += 2;
@@ -1952,6 +1989,71 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		
 		return false;
 	}
+	
+	
+	public static long[] getFractionToTheLeft(int max, long rightNumerGoal, long rightDenomGoal) {
+		
+		//System.out.println("Doing here " + rightNumerGoal + "/" + rightDenomGoal);
+		
+		if(rightDenomGoal == max && rightNumerGoal == 1) {
+			System.out.println("ERROR - asking for left of leftmost fraction... what the hell are you doing??llollol?");
+			return new long[] {0,0};
+			// error - there is no fraction to the left of the leftmost fraction lollloll..
+		}
+		long[] ret = new long[2];
+		boolean isDEven = rightDenomGoal % 2 == 0;
+		int inc = isDEven ? 2 : 1;
+		if(isDEven && max % 2 == 0)
+			max--;
+		
+		for(int i=max; i > 2; i-=inc) {
+			if(isDEven && i % 2 == 0) {
+				//System.out.println("continuing because isdevn and " + i + " % 2 == 0");
+				continue;
+			}
+			
+			if(i == rightDenomGoal) {
+				//System.out.println("continuing because " + i + " == " + rightDenomGoal);
+				continue;
+			}
+			
+			if(i > rightDenomGoal ) {
+				if(i % rightDenomGoal == 0) {
+					//System.out.println("continuing because " + i + " % " + rightDenomGoal + " == 0");
+					continue;
+				}
+				
+			} else if(rightDenomGoal % i == 0) {
+				//System.out.println("continuing because " + rightDenomGoal + " % " + i + " == 0");
+				continue;
+			}
+			
+			long[] lcm  = Util.lcmWithMult(i, rightDenomGoal); // returns lcm and how many to multiply the higher num to get there
+			
+			long w = rightDenomGoal < i ? lcm[0] / rightDenomGoal : lcm[1];
+			
+			long newNumerator = (rightNumerGoal * w) - 1;
+			long[] red = Util.reduceFraction(newNumerator, lcm[0]);
+			//System.out.println(newNumerator + "/" + lcm[0] + " Reduced to " + red[0] + "/" + red[1]);
+//			1/8, 1/7, 1/6, 1/5, 1/4, 2/7, 1/3, 3/8, 2/5, 3/7, 1/2, 4/7, 3/5, 5/8, 2/3, 5/7, 3/4, 4/5, 5/6, 6/7, 7/8
+
+			if(red[1] <= max) {
+				return red;
+			} else {
+				//System.out.println("couldnt find it " + rightNumerGoal + "/" + rightDenomGoal + " with " + red[0] + "/" + red[1] + " with i = " + i);
+			}
+		}
+		
+		return ret;
+	}
+	
+	public static boolean isCube(long c) {
+		double d = Math.cbrt(c);
+		return ( d - (long)d ) == 0;
+	}
+
+	
+	
 	
 	/*
 	public boolean areCoPrime(int a, int b) {

@@ -34,12 +34,7 @@ Find the smallest prime which, by replacing part of the number (not necessarily 
         	System.out.println("comb : " + s);
         }
         
-        !!New max p count : 4 for number : 11
-!!New max p count : 5 for number : 11
-!!New max p count : 6 for number : 13
-!!New max p count : 7 for number : 56003
-!!New max p count : 8 for number : 121313
-        
+
         */
 	}
 	

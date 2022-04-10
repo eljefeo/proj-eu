@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestAnything extends ProblemImpl{
+public class TestAnything implements Problem{
 
 	public static void main(String[] args) {
 		//int test = 9, max = 1000000;
@@ -12,16 +12,38 @@ public class TestAnything extends ProblemImpl{
 		//testPrimeAccuracy();
 	}
 	
-	public void problem() {
-		int max = 10000000;
-		List<Integer> primesB = Util.getPrimesUnder(max);
-		System.out.println("Got this many primes : " + primesB.size() + " under " + max);
+	//public String problem() {
+	public String problemFacts() {	
+		int n = 24;
+		List<Integer> facts = Util.getPrimeFactors(n);
+		
+		for(int i : facts) {
+			System.out.println("Factor : " + i);
+		}
+		
+		return "";
+		
 	}
 	
-	public void problem4() {
+	public String problem() {
+	//public String problem() {
+		int max = 70000;
+		List<Integer> primesB = Util.getPrimesUnder(max);
+		System.out.println("Got this many primes : " + primesB.size() + " under " + max);
+		for(Integer p : primesB) {
+			if(p > 40000) {
+				System.out.println("Prime : " + p);
+			}
+		}
+		return "";
+	}
+	
+	//public String problemTestPrimesUnder2() {
+	public String problemSqrtPrimes() {
 		int max = 10000000;
 		List<Integer> primesB = Util.getPrimesUnderWithSqrt(max);
 		System.out.println("Got this many primes : " + primesB.size() + " under " + max);
+		return "";
 	}
 	
 	public void problem2() {

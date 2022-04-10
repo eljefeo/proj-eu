@@ -44,7 +44,7 @@ What is the largest n-digit pandigital prime that exists?
 		int step = 10000000;
 		for(int i=0; i<max; i++){
 			
-			if(i > step && i%step==0) System.out.println("At step " + i);
+			if(i > step && i%step==0) System.out.println("At step " + i); // just to log progress as this thing runs
 			
 			if(!Util.isNthDigitPandigitalNumber(i) || !Util.isPrime(i)) {
 				continue;

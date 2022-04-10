@@ -38,7 +38,8 @@ public class Problem45 implements Problem{
 				System.out.println("Found one that is all 3 : " + tri);
 				System.out.println("for i=" + i + " Triangle:" + Util.getIndexOfTriangleNumber(tri) + " Pentagonal:"
 						+ Util.getIndexOfPentagonalNumber(tri) + " Hexagonal:" + Util.getIndexOfHexagonal(tri));
-				return "" + i;
+				
+				return "" + tri;
 			}
 		}
 		
