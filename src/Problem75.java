@@ -220,6 +220,31 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 	89, 3960, 3961
 	97, 4704, 4705
 	
+	im curious about the jumps from b and c between the primes being a
+	...printLotsOfTriplesJustPrimes() wrote this to help check
+	5,12,13 ||| diff from last: 2, 8, 8
+7,24,25 ||| diff from last: 2, 12, 12
+11,60,61 ||| diff from last: 4, 36, 36
+13,84,85 ||| diff from last: 2, 24, 24
+17,144,145 ||| diff from last: 4, 60, 60
+19,180,181 ||| diff from last: 2, 36, 36
+23,264,265 ||| diff from last: 4, 84, 84
+29,420,421 ||| diff from last: 6, 156, 156
+31,480,481 ||| diff from last: 2, 60, 60
+37,684,685 ||| diff from last: 6, 204, 204
+41,840,841 ||| diff from last: 4, 156, 156
+43,924,925 ||| diff from last: 2, 84, 84
+47,1104,1105 ||| diff from last: 4, 180, 180
+53,1404,1405 ||| diff from last: 6, 300, 300
+59,1740,1741 ||| diff from last: 6, 336, 336
+61,1860,1861 ||| diff from last: 2, 120, 120
+67,2244,2245 ||| diff from last: 6, 384, 384
+71,2520,2521 ||| diff from last: 4, 276, 276
+73,2664,2665 ||| diff from last: 2, 144, 144
+79,3120,3121 ||| diff from last: 6, 456, 456
+83,3444,3445 ||| diff from last: 4, 324, 324
+89,3960,3961 ||| diff from last: 6, 516, 516
+97,4704,4705 ||| diff from last: 8, 744, 744
 	 */
 public String problem() {
 		
