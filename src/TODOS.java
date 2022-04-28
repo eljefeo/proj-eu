@@ -10,7 +10,7 @@ public class TODOS {
 	
 	/*
 	 
-	 
+	 Problem24 - NO NEED TO KEEP TRACK
 	 problem 34 - when to stop?
 	 Problem 37 - when to stop?
 	 problem 41 - I just brute forced it using existing functions for pandigital and isPrime, but very slow obviously, checking unnecessary numbers 

@@ -1768,7 +1768,7 @@ public static boolean hasSameUniqueDigits(int a, int b){
 	 */
 	
 	public static int getEPeriod(int n) {
-		//2; 1, 2, 1, 1, 4, 1, 1, 6, 1, 1, 8?
+		//2; 1, 2, 1, 1, 4, 1, 1, 6, 1, 1, 8...
 		
 		if(n == 1) {
 			return 2;

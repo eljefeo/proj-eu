@@ -36,7 +36,164 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		
 	}
 	
-	public String problem() {
+	
+	//04/27/2022
+	/*
+	 so...
+	 first one is 3,4,5
+	 and I found that multiples also work..
+	 3n, 4n, 5n
+	 so 
+	 6 8 10 work
+	 9 12 15
+	 12 16 20 etc..
+	 
+	 then Im thinking... 
+	 we know the smallest number can be 3 (in 3,4,5)
+	 can all numbers be the smallest number of the 3 numbers?...
+	 like can a pythagorean triple start with 4? 5? 6? 7? etc...
+	 
+	 well we can try it..
+	 because if the smallest number is 4, then the other two numbers are 4^2 away, they are 16 away..
+	 as numbers get bigger, they all get more than 16 away, so there are not that many we have to try
+	 
+	 if smallest number is 4, then next number can be 5 and 6
+	 25 and 36.... are 11 away. Close but not 16
+	 what about 5 and 7
+	 25 and 49
+	 24 away, too much..
+	 so 5 is not the next number of the 3, because the third number will just get larger and farther from 16
+	 so what about 6 and 7
+	 they are 36 and 49
+	 13 away, closer but not it
+	 6 and 8?
+	 36 and 64 - nope way to big
+	 what about 7 and 8
+	 49 and 64 - they are 15 away, closer still but not 16
+	 and that means 7 and 9 is too big (49 and 81) cause 81 - 49 = 32, way too big
+	 
+	 ... we can see that as we make the second number higher, the smallest difference goes up by 2..
+	 like we did 5 and 6, they were 11 away (25 and 36). then 5 and 7 (25 and 49) were 24 away
+	 6 and 7 (36 and 49) were 13 away, and then 6 and 8 ( 36 and 64) were 28 away..
+	 7 and 8 (49 and 64) are 15 away, and then 7 and 9 (49 and 81) are 32 away
+	 8 and 9 (64 and 81) are 17 away, and now its too big, all higher numbers will just be larger apart
+	 
+	 so nums that are 1 away are 11 apart, 13 apart, 15 apart, 17 apart, etc.. (they go up by previous number plus 2)
+	 and nums that are 2 away are 24 apart, 28 apart, 32, 36, 40 (they go up by previous number plus 4)
+	 
+	 
+	 that means if we wanted a pyth triple where 4 is the smallest number, we need the other 2 nums to different to 16
+	 but since they only go up by odd nums 11,13,15,17 etc.. we skipped 16. 
+	 Meaning no----- 4 cannot be the smallest number of a pyth triple
+	 
+	 
+	 ------
+	 so 3 yes, 4 no
+	 interesting, what about 5?
+	 5^2 = 25
+	 what other two square nums are 25 apart.
+	 
+	 lets just make a function to find if there is one...lol
+	 .. ok done now we have getPythagoreanTripleFromThisA()
+	 
+	 and we see that 3 yes, 4 no, 5 yes, 6 yes (because multiple of 3)
+	 7 yes (seems like all odd numbers are a yes...)
+	 8 yes
+	 9 yes (because multiple of 3)
+	 10
+	 
+	 ..
+	 ok so we used that new function to test a bunch of numbers
+	 we found that only 1,2,4 are NOT able to be the smallest number of a pyth triple...
+	 well, we only tested up to 6000
+	 
+	 I feel like at that point all other numbers are going to be multiples of those numbers
+	 EXCEPT primes... primes will not be multiples of any number ...
+	 
+	 but... all primes are odd... and it seems like all odd numbers can be the smalles number of a triple?
+	 I dont know that for sure....
+	 
+	 */
+public String problem() {
+		
+		//testThing();
+		int min = 3000, max = 4000;
+		for(int i = min; i < max; i++) {
+			String ans = getPythagoreanTripleFromThisA(i);
+			if(ans == null) {
+				System.out.println("No solution for " + i);
+			}
+		}
+		System.out.println("Done..");
+		return "";
+	}
+	public String getPythagoreanTripleFromThisA(int a) {
+		
+		// so we will start with a as smallest
+		// and the next b and c are next two nums up
+		int b = a+1, c = a+2;
+		//System.out.println("Starting with a=" + a + " b=" + b + " c=" + c + " ||| ");
+		while (true) {
+		
+			int a2 = a*a, b2 = b*b, c2 = c*c;
+			int diff = c2 - b2;
+			
+			//System.out.println("Now with a=" + a + " b=" + b + " c=" + c + " ||| " + "a2=" + a2 + " b2=" + b2 + " c2=" + c2 + " .. diff=" + diff);
+			if(diff == a2) {
+				//System.out.println("Yay we found it");
+				return a + ", " + b + ", " + c + " ||| " + a2 + ", " + b2 + ", " + c2 + " ||||| " + a2 + "+" + b2 + "=" + (a2+b2);
+			}
+			
+			if(diff < a2) { //like 9 is less than 16 at the beginning if a=3
+				//then what, we increment c, leave b alone
+				
+				c++;
+				//System.out.println("incrementing c to " + c);
+			} else {
+				// else diff is bigger. then we went too far
+				//so put c back
+				if(c-b == 1) {
+					//return "no solution... with smallest number being " + a;
+					return null;
+				}
+				b++;
+				c = b+1;
+				//System.out.println("incrementing b to " + b + ", and putting c to " + c);
+			}
+			
+		}
+	}
+	
+	
+	public void testThing(){
+		int a = 3, b = 4, c = 5;
+		int max = 15;
+		System.out.print( " ----");
+		for(int i = 1; i < max; i++) {
+			long ai = (a*i), bi = (b*i), ci = (c*i);
+			long a2 = ai*ai, b2 =  bi*bi, c2 = ci*ci;
+			System.out.println(ai + " " + bi + " " + ci );
+			
+			System.out.print( " ----" + a2 + " " + b2 + " " + c2 + " ::: " + (a2 + b2) + " = " + c2 );
+			if((a2 + b2) != c2) {
+				//System.out.println("--Yes--");
+			//} else  {
+				System.out.println("--No--");
+				return;
+			}
+			//System.out.println("----");
+			 
+		}
+		
+		System.out.println("\nYay all worked");
+	}
+	
+	
+	
+	
+	/////////////////////////From last time I tried to think about it:
+	
+	public String problem1() {
 		
 		/*
 		 so a2 + b2 = c2....

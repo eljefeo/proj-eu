@@ -128,7 +128,7 @@ Find the value of D <= 1000 in minimal solutions of x for which the largest valu
 			}
 	}
 	
-private static void period(int i) { // pretty much same function above but for int instead of bigInteger
+private static void pellsEquationPeriodInt(int i) { // pretty much same function above but for int instead of bigInteger
 			double sn = Math.sqrt(i);
 			int firstWholeNum = (int) sn;
 			
