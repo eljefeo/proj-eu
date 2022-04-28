@@ -112,11 +112,101 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 	 
 	 but... all primes are odd... and it seems like all odd numbers can be the smalles number of a triple?
 	 I dont know that for sure....
+	 ------------
 	 
+	 
+	 
+	 so what does that mean, what if we assume thats true, that all numbers except 1,2,4 can be the start of a triple..
+	 can a smalles number be in 2 triples? I want to say no.. but I dont know for sure
+	 
+	 We may be wrong, but just to start somewhere:
+	 lets assume no, every number is only the smallest num of 1 triple
+	 lets also assume all nums after 4 are the smallest num of a triple..
+	 
+	 
+	 ----
+	 
+	 hmm after looking at a bunch of triples thanks to that function...
+	 it seems like primes are key here.
+	 so a prime starting A like 3, seems to have the b and c being 1 away from each other.
+	 like 3,4,5 : the 4 and 5 are 1 away
+	 5, 12, 13
+	 6, 8, 10 ( b and c are 2 away, because 6 is 3*2 )
+	 7, 24, 25
+	 8, 15, 17 ( this was interesting because there is no A=4, but we have A=4*2 (I guess because 2 is prime and 1 is not, wow thats honestly so cool) )
+	 9, 12, 15 ( 3 away because 3*3 = 9)
+	 10, 24, 26 ( 2 away because 5*2)
+	 11, 60, 61 ( 1 away because 11 is prime)
+	 12, 16, 20 ( 3*4)
+	 13, 84, 85 ( prime )
+	 14, 48, 50 ( 7*2 )
+	 15, 20, 25
+	 
+	 ...
+	 105, 140, 175 ( 35 away I guess cause 105 = 3*5*7 and 5*7 = 35... )
+	 
+	 why is the number 3 so damn important, the diff from b and c is like the multiple of 3... even if there are other factors.
+	 if 3 is a factor..
+	 
+	 anyways...can we figure out how to figure out the b and c? if we know the factors maybe?
+	 Or just calculate all pyth triples from 1 to N?
+	 
+	 I think we can... its like we have the info here, we just need to figure out the relationship..
+	 -----
+	 
+	 
+	 
+	3,4,5
+	 5, 12, 13 : 5 is prime, and b and c are both 8 more than previous 3 prime
+	 6, 8, 10 ( b and c are 2 away, because 6 is 3*2 )
+	 7, 24, 25 : 7 is prime, b and c are now 12 away from previous prime... first it was 8 then now 12
+	 8, 15, 17 ( this was interesting because there is no A=4, but we have A=4*2 (I guess because 2 is prime and 1 is not, wow thats honestly so cool) )
+	 9, 12, 15 ( 3 away because 3*3 = 9)
+	 10, 24, 26 ( 2 away because 5*2)
+	 11, 60, 61 : 11 is prime, b and c are 36 away
+	 12, 16, 20 ( 3*4)
+	 13, 84, 85 ( prime, b and c are 24 away...)
+	 14, 48, 50 ( 7*2 )
+	 15, 20, 25
+	16, 30, 34
+	17, 144, 145
+	18, 24, 30
+	19, 180, 181
+	20, 21, 29
+	21, 28, 35
+	22, 120, 122
+	23, 264, 265
+	24, 32, 40
+	25, 60, 65
+	26, 168, 170
+	27, 36, 45
+	28, 45, 53
+	29, 420, 421
+	30, 40, 50
+	31, 480, 481
+	32, 60, 68
+	33, 44, 55
+	34, 288, 290
+	35, 84, 91
+	36, 48, 60
+	37, 684, 685
+	38, 360, 362
+	39, 52, 65
+	40, 42, 58
 	 */
 public String problem() {
 		
+	//testSomeStartingATriples();
 		//testThing();
+	int min = 3, max = 40;
+	//String ans = getPythagoreanTripleFromThisA(19);
+	for(int i = min; i <= max; i++) {
+		System.out.println(getPythagoreanTripleFromThisA(i));
+	}
+		return "";
+	}
+
+	public void testSomeStartingATriples() {
 		int min = 3000, max = 4000;
 		for(int i = min; i < max; i++) {
 			String ans = getPythagoreanTripleFromThisA(i);
@@ -125,8 +215,8 @@ public String problem() {
 			}
 		}
 		System.out.println("Done..");
-		return "";
 	}
+
 	public String getPythagoreanTripleFromThisA(int a) {
 		
 		// so we will start with a as smallest
@@ -141,7 +231,8 @@ public String problem() {
 			//System.out.println("Now with a=" + a + " b=" + b + " c=" + c + " ||| " + "a2=" + a2 + " b2=" + b2 + " c2=" + c2 + " .. diff=" + diff);
 			if(diff == a2) {
 				//System.out.println("Yay we found it");
-				return a + ", " + b + ", " + c + " ||| " + a2 + ", " + b2 + ", " + c2 + " ||||| " + a2 + "+" + b2 + "=" + (a2+b2);
+				return a + ", " + b + ", " + c;
+				//return a + ", " + b + ", " + c + " ||| " + a2 + ", " + b2 + ", " + c2 + " ||||| " + a2 + "+" + b2 + "=" + (a2+b2);
 			}
 			
 			if(diff < a2) { //like 9 is less than 16 at the beginning if a=3
