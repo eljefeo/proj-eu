@@ -193,31 +193,92 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 	38, 360, 362
 	39, 52, 65
 	40, 42, 58
+	
+	---- just primes:
+	3, 4, 5
+	5, 12, 13
+	7, 24, 25
+	11, 60, 61
+	13, 84, 85
+	17, 144, 145
+	19, 180, 181
+	23, 264, 265
+	29, 420, 421
+	31, 480, 481
+	37, 684, 685
+	41, 840, 841
+	43, 924, 925
+	47, 1104, 1105
+	53, 1404, 1405
+	59, 1740, 1741
+	61, 1860, 1861
+	67, 2244, 2245
+	71, 2520, 2521
+	73, 2664, 2665
+	79, 3120, 3121
+	83, 3444, 3445
+	89, 3960, 3961
+	97, 4704, 4705
+	
 	 */
 public String problem() {
 		
 	//testSomeStartingATriples();
 		//testThing();
+	//printLotsOfTriples();
+	printLotsOfTriplesJustPrimes();
+		return "";
+}
+
+public void printLotsOfTriplesJustPrimes() {
+	
+	List<Integer> primes = Util.getPrimesUnderWithSqrt(100);
+	//int min = 3, max = 40;
+	//String ans = getPythagoreanTripleFromThisA(19);
+	int la = 3, lb = 4, lc = 5;
+	for(Integer i : primes) {
+		if(i == 2 || i == 3)continue;
+		
+		int[] ans = getPythagoreanTripleFromThisA(i);
+		
+		if(ans == null) 
+			System.out.println("no sol for " + i);
+		else {
+			
+		
+			int ta = ans[0] - la; // temp a - last a
+			int tb = ans[1] - lb; // temp b - last b
+			int tc = ans[2] - lc; // temp c - last c
+			
+			la = ans[0];
+			lb = ans[1];
+			lc = ans[2];
+			System.out.println(ans[0] + "," + ans[1] + "," + ans[2] + " ||| diff from last: " + ta + ", " + tb + ", " + tc);
+		}
+	}
+}
+
+public void printLotsOfTriples() {
 	int min = 3, max = 40;
 	//String ans = getPythagoreanTripleFromThisA(19);
 	for(int i = min; i <= max; i++) {
 		System.out.println(getPythagoreanTripleFromThisA(i));
 	}
-		return "";
-	}
+}
+
 
 	public void testSomeStartingATriples() {
 		int min = 3000, max = 4000;
 		for(int i = min; i < max; i++) {
-			String ans = getPythagoreanTripleFromThisA(i);
+			int[] ans = getPythagoreanTripleFromThisA(i);
 			if(ans == null) {
 				System.out.println("No solution for " + i);
 			}
 		}
 		System.out.println("Done..");
 	}
-
-	public String getPythagoreanTripleFromThisA(int a) {
+	
+	public int[] getPythagoreanTripleFromThisA(int a) {
 		
 		// so we will start with a as smallest
 		// and the next b and c are next two nums up
@@ -231,7 +292,8 @@ public String problem() {
 			//System.out.println("Now with a=" + a + " b=" + b + " c=" + c + " ||| " + "a2=" + a2 + " b2=" + b2 + " c2=" + c2 + " .. diff=" + diff);
 			if(diff == a2) {
 				//System.out.println("Yay we found it");
-				return a + ", " + b + ", " + c;
+				//return a + ", " + b + ", " + c;
+				return new int[] {a,b,c};
 				//return a + ", " + b + ", " + c + " ||| " + a2 + ", " + b2 + ", " + c2 + " ||||| " + a2 + "+" + b2 + "=" + (a2+b2);
 			}
 			
