@@ -53,7 +53,7 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 	 after a certain point the numbers just keep getting farther from each other and will never be 4^2 away..
 	 
 	 but how do we know that all other integers can be a, except 1,2,4...?
-	 
+	 We can just run with these assumptions and see if we can code something up...
 	 
 	 */
 	
