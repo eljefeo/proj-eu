@@ -44,6 +44,17 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 	 	meaning if 3,4,5 is a triple, there are no other triples where a=3
 	 	
 	 if these 2 points are true, we may be on our way to understanding how to find this answer...These 2 things feel very important
+	 
+	 if 3,4,5 is a triple, and 3 has another triple, that means there are 2 other squares who are also 3^2 (9) away from each other,
+	 	because 3,4,5 = 5^2 - 4^2 = 3^2
+	 	but I thought all squares go up consistently incrementing by every odd number... so 2 squares are 9 apart, but no others are..
+	 	
+	 and we know that 1,2,4 are not a...because we can test all possibilities for squares that are less than 4^2 away from each other, 
+	 after a certain point the numbers just keep getting farther from each other and will never be 4^2 away..
+	 
+	 but how do we know that all other integers can be a, except 1,2,4...?
+	 
+	 
 	 */
 	
 	
