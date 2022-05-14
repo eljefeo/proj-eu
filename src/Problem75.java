@@ -36,6 +36,16 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		
 	}
 	
+	//05/14/2022
+	/*
+	 it seems to me after looking at these numbers that we can make pyth triple where A = any number except 1,2,4...
+	 so far it seems every other number can be A
+	 and furthermore, I cant prove either of these yet, but it also seems that only 1 pyth triple exists for each A
+	 	meaning if 3,4,5 is a triple, there are no other triples where a=3
+	 	
+	 if these 2 points are true, we may be on our way to understanding how to find this answer...These 2 things feel very important
+	 */
+	
 	
 	//04/27/2022
 	/*
