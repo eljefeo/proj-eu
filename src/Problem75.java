@@ -35,6 +35,91 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		
 		
 	}
+	public String problem() {
+		
+		//testSomeStartingATriples();
+			//testThing();
+		//printLotsOfTriples();
+		
+		//int a = 3, b = 4;
+		//if((double)b/a - (b/a) != 0) 
+		//	System.out.println("ERROR:::::::::: " + (double)b/a + " " + (b/a));
+		
+		//printLotsOfTriplesJustPrimes();
+		////////printLotsOfTriplesJustPrimesAndActuallyDoProblem();
+		
+		List<Integer[]> tr = getPythagoreanTriplesFromThisA(22);
+		
+		for(Integer[] ii : tr) {
+			System.out.println("trip: " + ii[0] + "," + ii[1] + "," + ii[2] );
+		}
+		
+		//testAs();
+			return "";
+	}
+	//05/14/2022 
+		/*
+		 Alright, so turns out that primes are only a in 1 triple, and b and c are 1 away from each other 
+		 3,4,5
+		 5,12,13
+		 7,24,25
+		 11,60,61
+		 ...
+		 19,180,181
+		 ...
+		 
+		 
+		 but what about this pattern that I am seeing...
+		 3,4,5 = 3 * 1 + 1
+		 5,12,13 5 * 2 + 2
+		 7,24,25 7 * 3 + 3
+		 its like the number of odd num you are on... 3 = use the first odd number (1)
+		 5 = 2
+		 7 = 3
+		 9 = 4
+		 11 = 5
+		 13 = 6
+		 15 = 7
+		 17 = 8
+		 19 = 9
+		 21 = 10
+		 primes you will only have 1 triple where a = that prime
+		 
+		 but what about something like 9
+		 9,12,15 - this is a multiple of 3,4,5
+		 9,40,41 - this is 9 * 4 + 4
+		 
+		 then lets look at ones that have more than 1
+		 : 21,28,35 (7 away) - not sure, I guess they are just multiples of smaller triples.. we can just find them that way
+		 21,72,75 - (3 away) - not sure, I guess they are just multiples of smaller triples.. we can just find them that way
+		 21,220,221 - 21 = 10th odd number... so 21 * 10 + 10 ( and this one is 1 away)
+
+
+so thats how to find triples of odd numbers ^
+
+what about evens...
+looks like evens are all 2 away instead of 1 away
+6,8,10
+8,15,17
+10,24,26
+		//12,16,20
+12,35,37
+ 14,48,50
+ 16,63,65
+ 18,80,82
+ 20,99,101
+ 22,120,122
+24,143,145
+
+looks like if you start with 6,8,10
+8,15,17 - then the next even num (8) has b = +7 from previous b (8 + 7
+10,24,26 - then the next b is +9
+12,35,37 - b is +11
+... just keep adding the next odd number to get the next b
+
+		 
+		 
+		 */
 	
 	//05/14/2022
 	/*
@@ -320,28 +405,7 @@ so far.... no...
 
 
 	 */
-public String problem() {
-		
-	//testSomeStartingATriples();
-		//testThing();
-	//printLotsOfTriples();
-	
-	//int a = 3, b = 4;
-	//if((double)b/a - (b/a) != 0) 
-	//	System.out.println("ERROR:::::::::: " + (double)b/a + " " + (b/a));
-	
-	//printLotsOfTriplesJustPrimes();
-	printLotsOfTriplesJustPrimesAndActuallyDoProblem();
-	
-	List<Integer[]> tr = getPythagoreanTriplesFromThisA(15);
-	
-	for(Integer[] ii : tr) {
-		System.out.println("trip: " + ii[0] + "," + ii[1] + "," + ii[2] );
-	}
-	
-	//testAs();
-		return "";
-}
+
 public void testAs() {
 	
 	int max = 100000;
