@@ -375,7 +375,7 @@ public void printLotsOfTriplesJustPrimes() {
 
 public void printLotsOfTriplesJustPrimesAndActuallyDoProblem() {
 	
-	List<Integer> primes = Util.getPrimesUnderWithSqrt(1300); //1300
+	List<Integer> primes = Util.getPrimesUnderWithSqrt(130000); //1300
 	//int min = 3, max = 40;
 	//String ans = getPythagoreanTripleFromThisA(19);
 	int la = 3, lb = 4, lc = 5, ld = 5; // I just start with 5 because it makes it say -1, since there is no answer as this is the first one... 5 means nothing here just dummy data
@@ -402,19 +402,22 @@ public void printLotsOfTriplesJustPrimesAndActuallyDoProblem() {
 			System.out.println("and all multiples will be bigger, and the next triple will be bigger, there is no more to do under " + max);
 			break;
 		}
-			while(sum < max) {
-				
-				ans[0] = ans[0] + la;
-				ans[1] = ans[1] + lb;
-				ans[2] = ans[2] + lc;
-				sum = ans[0] + ans[1] + ans[2];
-				if(max > sum) {
-					sums.add(sum);
-				}
-				//System.out.println(sum + " \tanother trip " + ans[0] + "," + ans[1] + "," + ans[2]);
-				
+		
+		sums.add(sum);
+		
+		while(sum <= max) {
+			
+			ans[0] = ans[0] + la;
+			ans[1] = ans[1] + lb;
+			ans[2] = ans[2] + lc;
+			sum = ans[0] + ans[1] + ans[2];
+			if(max > sum) {
+				sums.add(sum);
 			}
-			sum = 0;
+			//System.out.println(sum + " \tanother trip " + ans[0] + "," + ans[1] + "," + ans[2]);
+			
+		}
+		sum = 0;
 		//}
 	}
 	System.out.println("Sum count: " + sums.size());
