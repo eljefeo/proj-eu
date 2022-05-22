@@ -88,7 +88,7 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 	 they are 36 and 49
 	 13 away, closer but not it
 	 6 and 8?
-	 36 and 64 - nope way to big
+	 36 and 64 - 28 away nope too big
 	 what about 7 and 8
 	 49 and 64 - they are 15 away, closer still but not 16
 	 and that means 7 and 9 is too big (49 and 81) cause 81 - 49 = 32, way too big
@@ -99,13 +99,13 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 	 7 and 8 (49 and 64) are 15 away, and then 7 and 9 (49 and 81) are 32 away
 	 8 and 9 (64 and 81) are 17 away, and now its too big, all higher numbers will just be larger apart
 	 
-	 so nums that are 1 away are 11 apart, 13 apart, 15 apart, 17 apart, etc.. (they go up by previous number plus 2)
+	 so nums that are 1 away are 11 apart, 13 apart, 15 apart, 17 apart, etc.. (they go up by previous number plus 2, essentially all the odd numbers)
 	 and nums that are 2 away are 24 apart, 28 apart, 32, 36, 40 (they go up by previous number plus 4)
-	 
+	 and nums that are 3 away are 27 apart, 33 apart, 39, 45, 51 (they go up by previous number plus 6)
 	 
 	 that means if we wanted a pyth triple where 4 is the smallest number, we need the other 2 nums to different to 16
 	 but since they only go up by odd nums 11,13,15,17 etc.. we skipped 16. 
-	 Meaning no----- 4 cannot be the smallest number of a pyth triple
+	 in fact, checking any combo of squares, turns out no, there are no triples that start with 4...interesting... 
 	 
 	 
 	 ------
@@ -115,7 +115,7 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 	 what other two square nums are 25 apart.
 	 
 	 lets just make a function to find if there is one...lol
-	 .. ok done now we have getPythagoreanTripleFromThisA()
+	 .. ok did that, now we have getPythagoreanTripleFromThisA()
 	 
 	 and we see that 3 yes, 4 no, 5 yes, 6 yes (because multiple of 3)
 	 7 yes (seems like all odd numbers are a yes...)
@@ -138,10 +138,10 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 	 
 	 
 	 so what does that mean, what if we assume thats true, that all numbers except 1,2,4 can be the start of a triple..
-	 can a smalles number be in 2 triples? I want to say no.. but I dont know for sure
+	 can a smallest number be in 2 triples? I want to say no.. but I dont know for sure
 	 
 	 We may be wrong, but just to start somewhere:
-	 lets assume no, every number is only the smallest num of 1 triple
+	 lets assume every number is only the smallest num of 1 triple
 	 lets also assume all nums after 4 are the smallest num of a triple..
 	 
 	 
@@ -154,14 +154,14 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 	 5, 12, 13
 	 6, 8, 10 ( b and c are 2 away, because 6 is 3*2 )
 	 7, 24, 25
-	 8, 15, 17 ( this was interesting because there is no A=4, but we have A=4*2 (I guess because 2 is prime and 1 is not, wow thats honestly so cool) )
+	 8, 15, 17 ( this was interesting because there is no A=4, but we have A=4*2 (I guess because 2 is prime and 1 is not? Does that have anything to do with it? )
 	 9, 12, 15 ( 3 away because 3*3 = 9)
 	 10, 24, 26 ( 2 away because 5*2)
 	 11, 60, 61 ( 1 away because 11 is prime)
 	 12, 16, 20 ( 3*4)
 	 13, 84, 85 ( prime )
 	 14, 48, 50 ( 7*2 )
-	 15, 20, 25
+	 15, 20, 25 (5*3 ? .... 5 away? hmm)
 	 
 	 ...
 	 105, 140, 175 ( 35 away I guess cause 105 = 3*5*7 and 5*7 = 35... )
@@ -243,45 +243,104 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 	
 	im curious about the jumps from b and c between the primes being a
 	...printLotsOfTriplesJustPrimes() wrote this to help check
-	5,12,13 ||| diff from last: 2, 8, 8
-7,24,25 ||| diff from last: 2, 12, 12
-11,60,61 ||| diff from last: 4, 36, 36
-13,84,85 ||| diff from last: 2, 24, 24
-17,144,145 ||| diff from last: 4, 60, 60
-19,180,181 ||| diff from last: 2, 36, 36
-23,264,265 ||| diff from last: 4, 84, 84
-29,420,421 ||| diff from last: 6, 156, 156
-31,480,481 ||| diff from last: 2, 60, 60
-37,684,685 ||| diff from last: 6, 204, 204
-41,840,841 ||| diff from last: 4, 156, 156
-43,924,925 ||| diff from last: 2, 84, 84
-47,1104,1105 ||| diff from last: 4, 180, 180
-53,1404,1405 ||| diff from last: 6, 300, 300
-59,1740,1741 ||| diff from last: 6, 336, 336
-61,1860,1861 ||| diff from last: 2, 120, 120
-67,2244,2245 ||| diff from last: 6, 384, 384
-71,2520,2521 ||| diff from last: 4, 276, 276
-73,2664,2665 ||| diff from last: 2, 144, 144
-79,3120,3121 ||| diff from last: 6, 456, 456
-83,3444,3445 ||| diff from last: 4, 324, 324
-89,3960,3961 ||| diff from last: 6, 516, 516
-97,4704,4705 ||| diff from last: 8, 744, 744
+	
+	
+	
+...3,4,5
+5,12,13 ||| diff from last: 2, 8, 8 |||  b or c / a = 4, diff of last diff: -1
+7,24,25 ||| diff from last: 2, 12, 12 |||  b or c / a = 6, diff of last diff: 2
+11,60,61 ||| diff from last: 4, 36, 36 |||  b or c / a = 9, diff of last diff: 3
+13,84,85 ||| diff from last: 2, 24, 24 |||  b or c / a = 12, diff of last diff: 3
+17,144,145 ||| diff from last: 4, 60, 60 |||  b or c / a = 15, diff of last diff: 3
+19,180,181 ||| diff from last: 2, 36, 36 |||  b or c / a = 18, diff of last diff: 3
+23,264,265 ||| diff from last: 4, 84, 84 |||  b or c / a = 21, diff of last diff: 3
+29,420,421 ||| diff from last: 6, 156, 156 |||  b or c / a = 26, diff of last diff: 5
+31,480,481 ||| diff from last: 2, 60, 60 |||  b or c / a = 30, diff of last diff: 4
+37,684,685 ||| diff from last: 6, 204, 204 |||  b or c / a = 34, diff of last diff: 4
+41,840,841 ||| diff from last: 4, 156, 156 |||  b or c / a = 39, diff of last diff: 5
+43,924,925 ||| diff from last: 2, 84, 84 |||  b or c / a = 42, diff of last diff: 3
+47,1104,1105 ||| diff from last: 4, 180, 180 |||  b or c / a = 45, diff of last diff: 3
+53,1404,1405 ||| diff from last: 6, 300, 300 |||  b or c / a = 50, diff of last diff: 5
+59,1740,1741 ||| diff from last: 6, 336, 336 |||  b or c / a = 56, diff of last diff: 6
+61,1860,1861 ||| diff from last: 2, 120, 120 |||  b or c / a = 60, diff of last diff: 4
+67,2244,2245 ||| diff from last: 6, 384, 384 |||  b or c / a = 64, diff of last diff: 4
+71,2520,2521 ||| diff from last: 4, 276, 276 |||  b or c / a = 69, diff of last diff: 5
+73,2664,2665 ||| diff from last: 2, 144, 144 |||  b or c / a = 72, diff of last diff: 3
+79,3120,3121 ||| diff from last: 6, 456, 456 |||  b or c / a = 76, diff of last diff: 4
+83,3444,3445 ||| diff from last: 4, 324, 324 |||  b or c / a = 81, diff of last diff: 5
+89,3960,3961 ||| diff from last: 6, 516, 516 |||  b or c / a = 86, diff of last diff: 5
+97,4704,4705 ||| diff from last: 8, 744, 744 |||  b or c / a = 93, diff of last diff: 7
+101,5100,5101 ||| diff from last: 4, 396, 396 |||  b or c / a = 99, diff of last diff: 6
+103,5304,5305 ||| diff from last: 2, 204, 204 |||  b or c / a = 102, diff of last diff: 3
+107,5724,5725 ||| diff from last: 4, 420, 420 |||  b or c / a = 105, diff of last diff: 3
+109,5940,5941 ||| diff from last: 2, 216, 216 |||  b or c / a = 108, diff of last diff: 3
+113,6384,6385 ||| diff from last: 4, 444, 444 |||  b or c / a = 111, diff of last diff: 3
+127,8064,8065 ||| diff from last: 14, 1680, 1680 |||  b or c / a = 120, diff of last diff: 9
+131,8580,8581 ||| diff from last: 4, 516, 516 |||  b or c / a = 129, diff of last diff: 9
+137,9384,9385 ||| diff from last: 6, 804, 804 |||  b or c / a = 134, diff of last diff: 5
+139,9660,9661 ||| diff from last: 2, 276, 276 |||  b or c / a = 138, diff of last diff: 4
+149,11100,11101 ||| diff from last: 10, 1440, 1440 |||  b or c / a = 144, diff of last diff: 6
+151,11400,11401 ||| diff from last: 2, 300, 300 |||  b or c / a = 150, diff of last diff: 6
+157,12324,12325 ||| diff from last: 6, 924, 924 |||  b or c / a = 154, diff of last diff: 4
+163,13284,13285 ||| diff from last: 6, 960, 960 |||  b or c / a = 160, diff of last diff: 6
+167,13944,13945 ||| diff from last: 4, 660, 660 |||  b or c / a = 165, diff of last diff: 5
+173,14964,14965 ||| diff from last: 6, 1020, 1020 |||  b or c / a = 170, diff of last diff: 5
+179,16020,16021 ||| diff from last: 6, 1056, 1056 |||  b or c / a = 176, diff of last diff: 6
+181,16380,16381 ||| diff from last: 2, 360, 360 |||  b or c / a = 180, diff of last diff: 4
+191,18240,18241 ||| diff from last: 10, 1860, 1860 |||  b or c / a = 186, diff of last diff: 6
+193,18624,18625 ||| diff from last: 2, 384, 384 |||  b or c / a = 192, diff of last diff: 6
+197,19404,19405 ||| diff from last: 4, 780, 780 |||  b or c / a = 195, diff of last diff: 3
+199,19800,19801 ||| diff from last: 2, 396, 396 |||  b or c / a = 198, diff of last diff: 3
+211,22260,22261 ||| diff from last: 12, 2460, 2460 |||  b or c / a = 205, diff of last diff: 7
+223,24864,24865 ||| diff from last: 12, 2604, 2604 |||  b or c / a = 217, diff of last diff: 12
+227,25764,25765 ||| diff from last: 4, 900, 900 |||  b or c / a = 225, diff of last diff: 8
+229,26220,26221 ||| diff from last: 2, 456, 456 |||  b or c / a = 228, diff of last diff: 3
+233,27144,27145 ||| diff from last: 4, 924, 924 |||  b or c / a = 231, diff of last diff: 3
+239,28560,28561 ||| diff from last: 6, 1416, 1416 |||  b or c / a = 236, diff of last diff: 5
+241,29040,29041 ||| diff from last: 2, 480, 480 |||  b or c / a = 240, diff of last diff: 4
+251,31500,31501 ||| diff from last: 10, 2460, 2460 |||  b or c / a = 246, diff of last diff: 6
+257,33024,33025 ||| diff from last: 6, 1524, 1524 |||  b or c / a = 254, diff of last diff: 8
+263,34584,34585 ||| diff from last: 6, 1560, 1560 |||  b or c / a = 260, diff of last diff: 6
+269,36180,36181 ||| diff from last: 6, 1596, 1596 |||  b or c / a = 266, diff of last diff: 6
+271,36720,36721 ||| diff from last: 2, 540, 540 |||  b or c / a = 270, diff of last diff: 4
+277,38364,38365 ||| diff from last: 6, 1644, 1644 |||  b or c / a = 274, diff of last diff: 4
+281,39480,39481 ||| diff from last: 4, 1116, 1116 |||  b or c / a = 279, diff of last diff: 5
+283,40044,40045 ||| diff from last: 2, 564, 564 |||  b or c / a = 282, diff of last diff: 3
+293,42924,42925 ||| diff from last: 10, 2880, 2880 |||  b or c / a = 288, diff of last diff: 6
+
+...ahh interesting... so the b or c divided by a = 6, 9, 12, 15, 18, 21.... now we are talking..
+They all go up by 3,
+but then we get to 29,420,421 and that one went up by 5. In fact the next ones seems to be random, just like prime numbers... damn sucks
+so does that mean we can find all triples now?
+
+I was hoping if we find primes, then could we know what b and c are?
+
+so far.... no...
+
+
+
 	 */
 public String problem() {
 		
 	//testSomeStartingATriples();
 		//testThing();
 	//printLotsOfTriples();
-	printLotsOfTriplesJustPrimes();
+	
+	//int a = 3, b = 4;
+	//if((double)b/a - (b/a) != 0) 
+	//	System.out.println("ERROR:::::::::: " + (double)b/a + " " + (b/a));
+	
+	//printLotsOfTriplesJustPrimes();
+	printLotsOfTriplesJustPrimesAndActuallyDoProblem();
 		return "";
 }
 
 public void printLotsOfTriplesJustPrimes() {
 	
-	List<Integer> primes = Util.getPrimesUnderWithSqrt(100);
+	List<Integer> primes = Util.getPrimesUnderWithSqrt(1300);
 	//int min = 3, max = 40;
 	//String ans = getPythagoreanTripleFromThisA(19);
-	int la = 3, lb = 4, lc = 5;
+	int la = 3, lb = 4, lc = 5, ld = 5; // I just start with 5 because it makes it say -1, since there is no answer as this is the first one... 5 means nothing here just dummy data
 	for(Integer i : primes) {
 		if(i == 2 || i == 3)continue;
 		
@@ -299,9 +358,66 @@ public void printLotsOfTriplesJustPrimes() {
 			la = ans[0];
 			lb = ans[1];
 			lc = ans[2];
-			System.out.println(ans[0] + "," + ans[1] + "," + ans[2] + " ||| diff from last: " + ta + ", " + tb + ", " + tc);
+			
+			if((double)tb/ta - (tb/ta) != 0) {
+				System.out.println("ERROR:::::::::: " + (double)tb/ta);
+			}
+			int nd = (tb/ta);
+			int testlast = (nd - ld);
+			
+			int sum = ans[0] + ans[1] + ans[2];
+			System.out.println(sum + " :: " + ans[0] + "," + ans[1] + "," + ans[2] + " ||| diff from last: " + ta + ", " + tb + ", " + tc + " ||| " + " b or c / a = " + nd + ", diff of last diff: \t" + testlast + " , " + (testlast-ta) );
+			
+			ld = nd;
 		}
 	}
+}
+
+public void printLotsOfTriplesJustPrimesAndActuallyDoProblem() {
+	
+	List<Integer> primes = Util.getPrimesUnderWithSqrt(1300); //1300
+	//int min = 3, max = 40;
+	//String ans = getPythagoreanTripleFromThisA(19);
+	int la = 3, lb = 4, lc = 5, ld = 5; // I just start with 5 because it makes it say -1, since there is no answer as this is the first one... 5 means nothing here just dummy data
+	int max = 1500000;
+	Set<Integer> sums = new HashSet<Integer>();
+	for(Integer i : primes) {
+
+		
+		if(i == 2 )continue;
+		
+		int[] ans = getPythagoreanTripleFromThisA(i);
+		int sum = ans[0] + ans[1] + ans[2];
+		la = ans[0];
+		lb = ans[1];
+		lc = ans[2];
+		//System.out.println(sum + " \tfound a trip: " + ans[0] + "," + ans[1] + "," + ans[2]);
+		//if(ans == null) {
+		//	System.out.println("no sol for " + i);
+		//}
+		//else {
+		if(sum > max) {
+			
+			System.out.println("Stopppping here because sum = " + sum + " for " + ans[0] + "," + ans[1] + "," + ans[2]);
+			System.out.println("and all multiples will be bigger, and the next triple will be bigger, there is no more to do under " + max);
+			break;
+		}
+			while(sum < max) {
+				
+				ans[0] = ans[0] + la;
+				ans[1] = ans[1] + lb;
+				ans[2] = ans[2] + lc;
+				sum = ans[0] + ans[1] + ans[2];
+				if(max > sum) {
+					sums.add(sum);
+				}
+				//System.out.println(sum + " \tanother trip " + ans[0] + "," + ans[1] + "," + ans[2]);
+				
+			}
+			sum = 0;
+		//}
+	}
+	System.out.println("Sum count: " + sums.size());
 }
 
 public void printLotsOfTriples() {
