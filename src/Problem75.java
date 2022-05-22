@@ -141,8 +141,8 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 	 can a smallest number be in 2 triples? I want to say no.. but I dont know for sure
 	 
 	 We may be wrong, but just to start somewhere:
-	 lets assume every number is only the smallest num of 1 triple
-	 lets also assume all nums after 4 are the smallest num of a triple..
+	 lets assume every number is only the smallest num of 1 triple **** 05/22/2022 - this is not true... like a=15 has at least 2 triples...
+	 lets also assume all nums after 4 can be the smallest num of a triple..
 	 
 	 
 	 ----
@@ -324,7 +324,7 @@ public String problem() {
 		
 	//testSomeStartingATriples();
 		//testThing();
-	printLotsOfTriples();
+	//printLotsOfTriples();
 	
 	//int a = 3, b = 4;
 	//if((double)b/a - (b/a) != 0) 
@@ -332,9 +332,27 @@ public String problem() {
 	
 	//printLotsOfTriplesJustPrimes();
 	printLotsOfTriplesJustPrimesAndActuallyDoProblem();
+	
+	List<Integer[]> tr = getPythagoreanTriplesFromThisA(15);
+	
+	for(Integer[] ii : tr) {
+		System.out.println("trip: " + ii[0] + "," + ii[1] + "," + ii[2] );
+	}
+	
+	//testAs();
 		return "";
 }
-
+public void testAs() {
+	
+	int max = 100000;
+	
+	for(int i=1; i < max; i++) {
+		if(i % 1000 == 0)System.out.println("Doing " + i);
+		if(getPythagoreanTripleFromThisA(i) == null) {
+			System.out.println("no sol for " + i);
+		}
+	}
+}
 public void printLotsOfTriplesJustPrimes() {
 	
 	List<Integer> primes = Util.getPrimesUnderWithSqrt(1300);
@@ -384,6 +402,7 @@ public void printLotsOfTriplesJustPrimesAndActuallyDoProblem() {
 	Set<Integer> sums = new HashSet<Integer>();
 	//List<Integer> primesWithDups = new ArrayList<Integer>();
 	Set<Integer> dups = new HashSet<Integer>();
+	//Map<Integer, boolean> dups = new HashSet<Integer>();
 	System.out.println("Removing " + primes.get(0));
 	primes.remove(0);
 	primes.add(0,8);
@@ -391,56 +410,83 @@ public void printLotsOfTriplesJustPrimesAndActuallyDoProblem() {
 
 		
 		//if(i == 2 )continue;
+		List<Integer[]> trips = getPythagoreanTriplesFromThisA(i);
+		//int[] ans = getPythagoreanTripleFromThisA(i);
 		
-		int[] ans = getPythagoreanTripleFromThisA(i);
-		if(ans == null) continue;
-		int sum = ans[0] + ans[1] + ans[2];
-		
-		la = ans[0];
-		lb = ans[1];
-		lc = ans[2];
-		//System.out.println(sum + " \tfound a trip: " + ans[0] + "," + ans[1] + "," + ans[2]);
-		//if(ans == null) {
-		//	System.out.println("no sol for " + i);
+		for(Integer[] ans : trips) {
+			//System.out.println("trip: " + ii[0] + "," + ii[1] + "," + ii[2] );
 		//}
-		//else {
-		if(sum > max) {
+		
+			if(ans == null) {
+				System.out.println("skipping : " + ans[0] + " " + ans[1] + " " + ans[2]); 
+				continue;
+			} //else if(i == 8) {
+			//	System.out.println("here with 8 : " +  ans[0] + " " + ans[1] + " " + ans[2]); 
+			//}
+			int sum = ans[0] + ans[1] + ans[2];
 			
-			System.out.println("Stopppping here because sum = " + sum + " for " + ans[0] + "," + ans[1] + "," + ans[2]);
-			System.out.println("and all multiples will be bigger, and the next triple will be bigger, there is no more to do under " + max);
-			break;
-		}
-		
-		if(sums.add(sum)) {
-			counter++;
-		} else {
-			dups.add(sum);
-		}
-		
-		
-		while(sum <= max) {
+			la = ans[0];
+			lb = ans[1];
+			lc = ans[2];
+			//System.out.println(sum + " \tfound a trip: " + ans[0] + "," + ans[1] + "," + ans[2]);
+			//if(ans == null) {
+			//	System.out.println("no sol for " + i);
+			//}
+			//else {
+			if(sum > max) {
+				
+				System.out.println("Stopppping here because sum = " + sum + " for " + ans[0] + "," + ans[1] + "," + ans[2]);
+				System.out.println("and all multiples will be bigger, and the next triple will be bigger, there is no more to do under " + max);
+				break;
+			}
 			
-			ans[0] = ans[0] + la;
-			ans[1] = ans[1] + lb;
-			ans[2] = ans[2] + lc;
-			sum = ans[0] + ans[1] + ans[2];
-			if(max > sum) {
-				//System.out.println(sum + " \tanother trip " + ans[0] + "," + ans[1] + "," + ans[2]);
+			/*if(sums.add(sum)) {
+				counter++;
+			} else {
+				dups.add(sum);
+			}*/
+			
+			int multiple = 1;
+			while(sum <= max) {
 				if(sums.add(sum)) {
 					counter++;
+					System.out.println(sum + " \tanother trip " + ans[0] + "," + ans[1] + "," + ans[2]);
 				} else {
 					dups.add(sum);
 				}
-			} else { 
-				//break;
+				multiple++;
+				ans[0] = la * multiple;
+				ans[1] = lb * multiple;
+				ans[2] = lc * multiple;
+				sum = ans[0] + ans[1] + ans[2];
+				
 			}
 			
 			
+			/*while(sum <= max) {
+				
+				ans[0] = ans[0] + la;
+				ans[1] = ans[1] + lb;
+				ans[2] = ans[2] + lc;
+				sum = ans[0] + ans[1] + ans[2];
+				if(max > sum) {
+					//System.out.println(sum + " \tanother trip " + ans[0] + "," + ans[1] + "," + ans[2]);
+					if(sums.add(sum)) {
+						counter++;
+					} else {
+						dups.add(sum);
+					}
+				} else { 
+					//break;
+				}
+				
+				
+			} */
+			sum = 0;
+			//}
 		}
-		sum = 0;
-		//}
 	}
-	System.out.println("Sum count: " + sums.size() + ", dup count: " + dups.size() + ", diff = " + (sums.size() - dups.size()));
+	System.out.println("Sum count: " + sums.size() + ", dup count: " + dups.size() + ", diff = " + (sums.size() - dups.size()) + " counter:" + counter);
 	for(Integer i : dups) {
 		sums.remove(i);
 	}
@@ -468,6 +514,50 @@ public void printLotsOfTriples() {
 			}
 		}
 		System.out.println("Done..");
+	}
+	
+public List<Integer[]> getPythagoreanTriplesFromThisA(int a) {
+	// similar to below function, but this will find all triples where a=...
+	List<Integer[]> trips = new ArrayList<Integer[]>();
+		
+		// so we will start with a as smallest
+		// and the next b and c are next two nums up
+		int b = a+1, c = a+2;
+		//System.out.println("Starting with a=" + a + " b=" + b + " c=" + c + " ||| ");
+		while (true) {
+		
+			int a2 = a*a, b2 = b*b, c2 = c*c;
+			int diff = c2 - b2;
+			
+			//System.out.println("Now with a=" + a + " b=" + b + " c=" + c + " ||| " + "a2=" + a2 + " b2=" + b2 + " c2=" + c2 + " .. diff=" + diff);
+			if(diff == a2) {
+				//System.out.println("Yay we found it");
+				//return a + ", " + b + ", " + c;
+				trips.add(new Integer[] {a,b,c});
+				//return a + ", " + b + ", " + c + " ||| " + a2 + ", " + b2 + ", " + c2 + " ||||| " + a2 + "+" + b2 + "=" + (a2+b2);
+			}
+			
+			if(diff < a2) { //like 9 is less than 16 at the beginning if a=3
+				//then what, we increment c, leave b alone
+				
+				c++;
+				//System.out.println("incrementing c to " + c);
+			} else {
+				// else diff is bigger. then we went too far
+				//so put c back
+				if(c-b == 1) {
+					//return "no solution... with smallest number being " + a;
+					//return null;
+					break;
+				}
+				b++;
+				c = b+1;
+				//System.out.println("incrementing b to " + b + ", and putting c to " + c);
+			}
+			
+		}
+		
+		return trips;
 	}
 	
 	public int[] getPythagoreanTripleFromThisA(int a) {
