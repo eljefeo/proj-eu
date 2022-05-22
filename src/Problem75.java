@@ -324,7 +324,7 @@ public String problem() {
 		
 	//testSomeStartingATriples();
 		//testThing();
-	//printLotsOfTriples();
+	printLotsOfTriples();
 	
 	//int a = 3, b = 4;
 	//if((double)b/a - (b/a) != 0) 
@@ -375,19 +375,27 @@ public void printLotsOfTriplesJustPrimes() {
 
 public void printLotsOfTriplesJustPrimesAndActuallyDoProblem() {
 	
-	List<Integer> primes = Util.getPrimesUnderWithSqrt(130000); //1300
+	List<Integer> primes = Util.getPrimesUnderWithSqrt(1300); //1300
 	//int min = 3, max = 40;
 	//String ans = getPythagoreanTripleFromThisA(19);
 	int la = 3, lb = 4, lc = 5, ld = 5; // I just start with 5 because it makes it say -1, since there is no answer as this is the first one... 5 means nothing here just dummy data
 	int max = 1500000;
+	int counter = 0;
 	Set<Integer> sums = new HashSet<Integer>();
+	//List<Integer> primesWithDups = new ArrayList<Integer>();
+	Set<Integer> dups = new HashSet<Integer>();
+	System.out.println("Removing " + primes.get(0));
+	primes.remove(0);
+	primes.add(0,8);
 	for(Integer i : primes) {
 
 		
-		if(i == 2 )continue;
+		//if(i == 2 )continue;
 		
 		int[] ans = getPythagoreanTripleFromThisA(i);
+		if(ans == null) continue;
 		int sum = ans[0] + ans[1] + ans[2];
+		
 		la = ans[0];
 		lb = ans[1];
 		lc = ans[2];
@@ -403,7 +411,12 @@ public void printLotsOfTriplesJustPrimesAndActuallyDoProblem() {
 			break;
 		}
 		
-		sums.add(sum);
+		if(sums.add(sum)) {
+			counter++;
+		} else {
+			dups.add(sum);
+		}
+		
 		
 		while(sum <= max) {
 			
@@ -412,22 +425,36 @@ public void printLotsOfTriplesJustPrimesAndActuallyDoProblem() {
 			ans[2] = ans[2] + lc;
 			sum = ans[0] + ans[1] + ans[2];
 			if(max > sum) {
-				sums.add(sum);
+				//System.out.println(sum + " \tanother trip " + ans[0] + "," + ans[1] + "," + ans[2]);
+				if(sums.add(sum)) {
+					counter++;
+				} else {
+					dups.add(sum);
+				}
+			} else { 
+				//break;
 			}
-			//System.out.println(sum + " \tanother trip " + ans[0] + "," + ans[1] + "," + ans[2]);
+			
 			
 		}
 		sum = 0;
 		//}
 	}
+	System.out.println("Sum count: " + sums.size() + ", dup count: " + dups.size() + ", diff = " + (sums.size() - dups.size()));
+	for(Integer i : dups) {
+		sums.remove(i);
+	}
 	System.out.println("Sum count: " + sums.size());
+	
 }
 
 public void printLotsOfTriples() {
 	int min = 3, max = 40;
 	//String ans = getPythagoreanTripleFromThisA(19);
 	for(int i = min; i <= max; i++) {
-		System.out.println(getPythagoreanTripleFromThisA(i));
+		int[] ans = getPythagoreanTripleFromThisA(i);
+		if(ans != null)
+			System.out.println(ans[0] + ", " + ans[1]+ ", " + ans[2]);
 	}
 }
 
