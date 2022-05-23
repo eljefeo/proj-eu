@@ -48,20 +48,26 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		//printLotsOfTriplesJustPrimes();
 		////////printLotsOfTriplesJustPrimesAndActuallyDoProblem();
 		
-		List<Integer[]> tr = getPythagoreanTriplesFromThisA(22);
+		//List<Integer[]> tr = getPythagoreanTriplesFromThisA(22);
 		
-		for(Integer[] ii : tr) {
-			System.out.println("trip: " + ii[0] + "," + ii[1] + "," + ii[2] );
-		}
+		//for(Integer[] ii : tr) {
+		//	System.out.println("trip: " + ii[0] + "," + ii[1] + "," + ii[2] );
+		//}
 		
 		//testAs();
-		
-		int max = 1500, counter = -1, oddStep = 1;
+		Set<Integer> sums = new HashSet<Integer>();
+		//List<Integer> primesWithDups = new ArrayList<Integer>();
+		Set<Integer> dups = new HashSet<Integer>();
+		int max = 1500000, counter = 0, oddStep = 1;
 		int aOdd = 3, bOdd = aOdd + 1, cOdd = bOdd + 1;
+		//int a = 0, b = 0, c = 0;
 		//
 		int sum = aOdd + bOdd + cOdd;
-		while(max > sum) { // sum <= max
+		while(sum < max) { // sum <= max
 			//odds
+			if(!sums.add(sum)) {
+				dups.add(sum);
+			}
 			counter++;
 			oddStep++;
 			
@@ -69,17 +75,37 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 			bOdd = (aOdd * oddStep) + oddStep;
 			cOdd = bOdd + 1;
 			sum = aOdd + bOdd + cOdd;
-			System.out.println("a: " + aOdd + " , b: " + bOdd + " c: " + cOdd + ", oddStep: " + oddStep + " sum: " + sum);
-			
+			//System.out.println("a: " + aOdd + " , b: " + bOdd + " c: " + cOdd + ", oddStep: " + oddStep + " sum: " + sum);
+			int cc = 1;
+			while(sum < max) { // sum <= max
+				if(!sums.add(sum)) {
+					dups.add(sum);
+				}
+				cc++;
+				counter++;
+				sum = (aOdd*cc) + (bOdd*cc) + (cOdd*cc);
+				//System.out.println("ad: " + (aOdd*cc) + " , bd: " + (bOdd*cc) + " cd: " + (cOdd*cc) + " sum: " + sum);
+			}
+			sum = aOdd + bOdd + cOdd;
+			counter--;
 			
 		}
-		int aEv = 6, bEv = aEv + 2, cEv = bEv + 2;
+		counter--;
+		//System.out.println("count: " + counter);
 		
+		
+		
+		int aEv = 6, bEv = aEv + 2, cEv = bEv + 2;
+		//counter = 0;
 		int evStep = 5;
-		System.out.println(aEv + ", " + bEv + ", " + cEv + ", evStep: " + evStep + " sum: " + sum);
-		sum = 0; // reset for evens before we combine the functions for odd and even
-		while(max > sum) { // sum <= max
+		sum = aEv + bEv + cEv; // reset for evens before we combine the functions for odd and even
+		//System.out.println(aEv + ", " + bEv + ", " + cEv + ", evStep: " + evStep + " sum: " + sum);
+		
+		while(sum < max) { // sum <= max
 			//even
+			if(!sums.add(sum)) {
+				dups.add(sum);
+			}
 			counter++;
 			evStep += 2;
 			
@@ -87,12 +113,27 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 			bEv +=  evStep;
 			cEv = bEv + 2;
 			sum = aEv + bEv + cEv;
-			System.out.println(aEv + ", " + bEv + ", " + cEv + ", evStep: " + evStep + " sum: " + sum);
+			
+			int cc = 1;
+			while(sum < max) { // sum <= max
+				if(!sums.add(sum)) {
+					dups.add(sum);
+				}
+				cc++;
+				counter++;
+				sum = (aEv*cc) + (bEv*cc) + (cEv*cc);
+				//System.out.println("ad: " + (aEv*cc) + " , bd: " + (bEv*cc) + " cd: " + (cEv*cc) + " sum: " + sum);
+			}
+			sum = aEv + bEv + cEv;
+			counter--;
+			
+			
+			//System.out.println(aEv + ", " + bEv + ", " + cEv + ", evStep: " + evStep + " sum: " + sum);
 			
 			
 		}
-
-		System.out.println("count: " + counter);
+		counter--;
+		System.out.println("count: " + counter + ", sums size " + sums.size() + ", dups size " + dups.size() + " diff = " + (sums.size() - dups.size()));
 			return "";
 	}
 	//05/14/2022 
