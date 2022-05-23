@@ -29,13 +29,50 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Problem p = new Problem75();
-		p.runProblem();
+		Problem pp = new Problem75();
+		pp.runProblem();
 		
-		
+		int limit = 150;
+		long[] triangles = new long[limit+1];
+		 
+		int result =0;
+		int mlimit = (int)Math.sqrt(limit / 2);
+		 
+		for (long m = 2; m < mlimit; m++) {
+		    for (long n = 1; n < m; n++) {
+		        if (((n + m) % 2) == 1 && Util.gcd(n, m) == 1) {
+		            long a = m * m + n * n;
+		            long b = m * m - n * n;
+		            long c = 2 * m * n;
+		            long p = a + b + c;
+		            while(p <= limit){
+		                triangles[(int) p]++;
+		                if(p == 70) System.out.println("abc: " + a + " "+ b  + " " + c);
+		                if (triangles[(int) p] == 1) {result++;}
+		                if (triangles[(int) p] == 2) { result--;}
+		                p += a+b+c;
+		            }
+		        }
+		    }
+		}
+		for (int i = 0; i < triangles.length; i++) {
+			if( triangles[i] == 1)
+					System.out.println("good Tri " + i + " : " + triangles[i]);
+			else if (triangles[i] > 1)
+				System.out.println("dup Tri " + i + " : " + triangles[i]);
+		}
+		System.out.println(" resssss " + result);
 		
 	}
 	public String problem() {
+		
+		
+		/////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		
+		// WE ARE MISSING SOME !!! THE CODE DOESNT CALCULATE THIS ONE FOR EXAMPLE:::::
+		//29 21 20
+		//sum = 70
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		
 		//testSomeStartingATriples();
 			//testThing();
@@ -56,57 +93,77 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		
 		//testAs();
 		Set<Integer> sums = new HashSet<Integer>();
-		//List<Integer> primesWithDups = new ArrayList<Integer>();
 		Set<Integer> dups = new HashSet<Integer>();
-		int max = 1500000, counter = 0, oddStep = 1;
+		int max = 150, counter = 0, oddStep = 1;
 		int aOdd = 3, bOdd = aOdd + 1, cOdd = bOdd + 1;
 		//int a = 0, b = 0, c = 0;
 		//
 		int sum = aOdd + bOdd + cOdd;
-		while(sum < max) { // sum <= max
+		while(sum <= max) { // sum <= max
 			//odds
-			if(!sums.add(sum)) {
-				dups.add(sum);
+			//if(!sums.add(sum)) {
+			//	dups.add(sum);
+			//}
+			
+			//System.out.println("a: " + aOdd + " , b: " + bOdd + " c: " + cOdd + ", oddStep: " + oddStep + " sum: " + sum);
+			int cc = 1;
+			// do all multiples of this triple, like if its 3,4,5 then do 6,8,10 9,12,15 12,16,20 etc..
+			while(sum <= max) { // sum <= max
+				
+				if(!sums.add(sum)) {
+					dups.add(sum);
+					System.out.println("oDuplicate :: " + (aOdd*cc) + ", " + (bOdd*cc) + ", " + (cOdd*cc) + ", oddStep: " + oddStep + " sum: " + sum);
+				} else {
+					System.out.println("onot dup yet :: " + (aOdd*cc) + ", " + (bOdd*cc) + ", " + (cOdd*cc) + ", oddStep: " + oddStep + " sum: " + sum);
+				}
+				cc++;
+				//counter++;
+				sum = (aOdd*cc) + (bOdd*cc) + (cOdd*cc);
+				
+				
+				//System.out.println("ad: " + (aOdd*cc) + " , bd: " + (bOdd*cc) + " cd: " + (cOdd*cc) + " sum: " + sum);
 			}
-			counter++;
+			
+			//counter++;
 			oddStep++;
 			
 			aOdd += 2;
 			bOdd = (aOdd * oddStep) + oddStep;
 			cOdd = bOdd + 1;
 			sum = aOdd + bOdd + cOdd;
-			//System.out.println("a: " + aOdd + " , b: " + bOdd + " c: " + cOdd + ", oddStep: " + oddStep + " sum: " + sum);
-			int cc = 1;
-			while(sum < max) { // sum <= max
-				if(!sums.add(sum)) {
-					dups.add(sum);
-				}
-				cc++;
-				counter++;
-				sum = (aOdd*cc) + (bOdd*cc) + (cOdd*cc);
-				//System.out.println("ad: " + (aOdd*cc) + " , bd: " + (bOdd*cc) + " cd: " + (cOdd*cc) + " sum: " + sum);
-			}
-			sum = aOdd + bOdd + cOdd;
-			counter--;
+			//counter--;
 			
 		}
-		counter--;
+		//counter--;
 		//System.out.println("count: " + counter);
 		
 		
-		
-		int aEv = 6, bEv = aEv + 2, cEv = bEv + 2;
+		int evStep = 7;
+		int aEv = 8, bEv = aEv + evStep, cEv = bEv + 2;
 		//counter = 0;
-		int evStep = 5;
+		
 		sum = aEv + bEv + cEv; // reset for evens before we combine the functions for odd and even
 		//System.out.println(aEv + ", " + bEv + ", " + cEv + ", evStep: " + evStep + " sum: " + sum);
 		
-		while(sum < max) { // sum <= max
+		while(sum <= max) { // sum <= max
 			//even
-			if(!sums.add(sum)) {
-				dups.add(sum);
+			/*
+			 * if(!sums.add(sum)) { dups.add(sum); }
+			 */
+			
+			int cc = 1;
+			while(sum <= max) { // sum <= max
+				if(!sums.add(sum)) {
+					dups.add(sum);
+					System.out.println("eDuplicate: " + (aEv*cc) + " ," + (bEv*cc) + ", " + (cEv*cc) + " sum: " + sum);
+				} else {
+					System.out.println("enot dup yet: " + (aEv*cc) + " ," + (bEv*cc) + ", " + (cEv*cc) + " sum: " + sum);
+				}
+				cc++;
+				sum = (aEv*cc) + (bEv*cc) + (cEv*cc);
+				
 			}
-			counter++;
+			//counter++;
 			evStep += 2;
 			
 			aEv += 2;
@@ -114,27 +171,30 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 			cEv = bEv + 2;
 			sum = aEv + bEv + cEv;
 			
-			int cc = 1;
-			while(sum < max) { // sum <= max
-				if(!sums.add(sum)) {
-					dups.add(sum);
-				}
-				cc++;
-				counter++;
-				sum = (aEv*cc) + (bEv*cc) + (cEv*cc);
-				//System.out.println("ad: " + (aEv*cc) + " , bd: " + (bEv*cc) + " cd: " + (cEv*cc) + " sum: " + sum);
-			}
-			sum = aEv + bEv + cEv;
-			counter--;
+			//counter--;
 			
 			
 			//System.out.println(aEv + ", " + bEv + ", " + cEv + ", evStep: " + evStep + " sum: " + sum);
 			
 			
 		}
-		counter--;
+		//counter--;
 		System.out.println("count: " + counter + ", sums size " + sums.size() + ", dups size " + dups.size() + " diff = " + (sums.size() - dups.size()));
-			return "";
+			
+		for(Integer i : sums) {
+			System.out.println("Sums : " + i);
+		}
+		System.out.println("");
+		for(Integer i : dups) {
+			System.out.println("dups : " + i);
+			sums.remove(i);
+		}
+		System.out.println("");
+		for(Integer i : sums) {
+			System.out.println("unique Sums : " + i);
+		}
+		System.out.println("unique Sums count: " + sums.size());
+		return "";
 	}
 	//05/14/2022 
 		/*
