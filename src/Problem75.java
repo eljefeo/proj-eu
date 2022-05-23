@@ -55,6 +55,44 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		}
 		
 		//testAs();
+		
+		int max = 1500, counter = -1, oddStep = 1;
+		int aOdd = 3, bOdd = aOdd + 1, cOdd = bOdd + 1;
+		//
+		int sum = aOdd + bOdd + cOdd;
+		while(max > sum) { // sum <= max
+			//odds
+			counter++;
+			oddStep++;
+			
+			aOdd += 2;
+			bOdd = (aOdd * oddStep) + oddStep;
+			cOdd = bOdd + 1;
+			sum = aOdd + bOdd + cOdd;
+			System.out.println("a: " + aOdd + " , b: " + bOdd + " c: " + cOdd + ", oddStep: " + oddStep + " sum: " + sum);
+			
+			
+		}
+		int aEv = 6, bEv = aEv + 2, cEv = bEv + 2;
+		
+		int evStep = 5;
+		System.out.println(aEv + ", " + bEv + ", " + cEv + ", evStep: " + evStep + " sum: " + sum);
+		sum = 0; // reset for evens before we combine the functions for odd and even
+		while(max > sum) { // sum <= max
+			//even
+			counter++;
+			evStep += 2;
+			
+			aEv += 2;
+			bEv +=  evStep;
+			cEv = bEv + 2;
+			sum = aEv + bEv + cEv;
+			System.out.println(aEv + ", " + bEv + ", " + cEv + ", evStep: " + evStep + " sum: " + sum);
+			
+			
+		}
+
+		System.out.println("count: " + counter);
 			return "";
 	}
 	//05/14/2022 
