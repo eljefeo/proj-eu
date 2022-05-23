@@ -47,10 +47,11 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		            long p = a + b + c;
 		            while(p <= limit){
 		                triangles[(int) p]++;
-		                if(p == 70) System.out.println("abc: " + a + " "+ b  + " " + c);
+		                if(p == 144) System.out.println("abc: " + a + " "+ b  + " " + c + " == " + (a + b + c) + " P=" + p);
 		                if (triangles[(int) p] == 1) {result++;}
 		                if (triangles[(int) p] == 2) { result--;}
 		                p += a+b+c;
+		                //if(p == 112) System.out.println("abc: " + a + " "+ b  + " " + c + " == " + (a + b + c) + " P=" + p);
 		            }
 		        }
 		    }
@@ -69,10 +70,17 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		
 		/////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		
-		// WE ARE MISSING SOME !!! THE CODE DOESNT CALCULATE THIS ONE FOR EXAMPLE:::::
-		//29 21 20
-		//sum = 70
+		/* WE ARE MISSING SOME !!! THE CODE DOESNT CALCULATE THESE FOR EXAMPLE:::::
+		20 21 29 = 70
+		40 42 58 = 140
+		
+		28 45 53 = 126
+		
+		14 48 50
+		
 		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		*/
+		
 		
 		//testSomeStartingATriples();
 			//testThing();
