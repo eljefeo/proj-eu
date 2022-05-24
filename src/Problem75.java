@@ -32,45 +32,59 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		Problem pp = new Problem75();
 		//pp.runProblem();
 		//printLotsOfTriples(50);
-		printLotsOfTriplesButOnlyReduced(50);
-		//doOtherGuys(144);
-	}
-	
-	public static void doOtherGuys(int sumToLog) {
-		int limit = 150;
-		long[] triangles = new long[limit+1];
-		 
-		int result =0;
-		int mlimit = (int)Math.sqrt(limit / 2);
-		 
-		for (long m = 2; m < mlimit; m++) {
-		    for (long n = 1; n < m; n++) {
-		        if (((n + m) % 2) == 1 && Util.gcd(n, m) == 1) {
-		            long a = m * m + n * n;
-		            long b = m * m - n * n;
-		            long c = 2 * m * n;
-		            long p = a + b + c;
-		            while(p <= limit){
-		                triangles[(int) p]++;
-		                if(p == sumToLog) System.out.println("abc: " + a + " "+ b  + " " + c + " == " + (a + b + c) + " P=" + p);
-		                if (triangles[(int) p] == 1) {result++;}
-		                if (triangles[(int) p] == 2) { result--;}
-		                p += a+b+c;
-		                //if(p == 112) System.out.println("abc: " + a + " "+ b  + " " + c + " == " + (a + b + c) + " P=" + p);
-		            }
-		        }
-		    }
-		}
-		for (int i = 0; i < triangles.length; i++) {
-			if( triangles[i] == 1)
-					System.out.println("good Tri " + i + " : " + triangles[i]);
-			else if (triangles[i] > 1)
-				System.out.println("dup Tri " + i + " : " + triangles[i]);
-		}
-		System.out.println(" resssss " + result);
 		
+		int max = 150;
+		
+		Set<Integer> sums = new HashSet<Integer>();
+		Set<Integer> dups = new HashSet<Integer>();
+		List<Integer[]> sols = printLotsOfTriplesButOnlyReduced(max);
+		for(Integer[] ii : sols) {
+			System.out.println(ii[0] + ", " + ii[1] + ", " + ii[2]);
+			int sum = 0;
+			int i = 1;
+			while(sum <= max) {
+				sum = (ii[0]*i) + (ii[1]*i) +  (ii[2]*i);
+				System.out.println("mult : " + (ii[0]*i) + ", " + (ii[1]*i) + ", " + (ii[2]*i) + " sum: " + sum);
+				if(sum > max) {
+					System.out.println("**sum is greater than " + max + " :: " + (ii[0]*i) + ", " + (ii[1]*i) + ", " + (ii[2]*i) + " sum: " + sum);
+					continue;
+				} 
+				
+				
+				if(!sums.add(sum)) {
+					dups.add(sum);
+					System.out.println("adding to dups : " + (ii[0]*i) + ", " + (ii[1]*i) + ", " + (ii[2]*i) + " sum: " + sum);
+				} else { 
+					System.out.println("adding to sums : " + (ii[0]*i) + ", " + (ii[1]*i) + ", " + (ii[2]*i) + " sum: " + sum);
+				}
+				i++;
+			}
+		}
+		
+		
+		for(Integer i : sums) {
+			System.out.println("JJ good Tri " + i + " : " + i);
+		}
+		
+		for(Integer i : dups) {
+			System.out.println("JJ dups Tri " + i + " : " + i);
+		}
+		//printPythTriplesOnlyWithMultipleSolutionsForA(100);
+		System.out.println("sums: " + sums.size() + " dups: " + dups.size() + " diff: " + (sums.size() - dups.size()));
+		doOtherGuys(70, max);
 	}
 	
+	public static void printPythTriplesOnlyWithMultipleSolutionsForA(int max) {
+		for(int i=3; i<max; i++) {
+			List<Integer[]> sols = getPythagoreanTriplesFromThisA2(i);
+			if(sols.size() > 1) {
+				for (Integer[] in : sols) {
+					System.out.println("a b c : " + in[0] + ", " + in[1] + ", " + in[2]);
+				}
+			}
+		}
+	}
+
 	public String problem() {
 		
 		/*
@@ -751,48 +765,71 @@ public static void printLotsOfTriples(int max) {
 	}
 }
 
-public static void printLotsOfTriplesButOnlyReduced(int maxSum) {
+public static List<Integer[]> printLotsOfTriplesButOnlyReduced(int maxSum) {
 	int min = 3; //, max = 40;
 	//String ans = getPythagoreanTripleFromThisA(19);
 	int sum = 0, i = min;
+	List<Integer[]> sols = new ArrayList<Integer[]>();
 	//for(int i = min; i <= max; i++) {
 		//int[] ans = getPythagoreanTriplesFromThisA(i);
-	while(sum <= maxSum) {
-		List<Integer[]> tr = getPythagoreanTriplesFromThisA(i);
-		
+	//while(sum <= maxSum) {
+	while(i*3 < maxSum) { //////need to fix this, should be better
+		List<Integer[]> tr = getPythagoreanTriplesFromThisA2(i);
+		System.out.println("tr size for a = " + i + " : " + tr.size());
 		for(int ia = 0; ia < tr.size(); ia++) {
 			Integer[] ii = tr.get(ia);
-			if(ii != null) {
-				int gcd1 = Util.gcd(ii[0], ii[1]);
-				
-				if(gcd1 == 1) {
-					//...trip? 
-					System.out.println("I think trip: " + ii[0] + "," + ii[1] + "," + ii[2] );
-				}
-				
-				
-				int gcd2 = Util.gcd(ii[1], ii[2]);
-				if(gcd1 != 1 && gcd1 == gcd2) {
-					//System.out.println("trip: " + ii[0] + "," + ii[1] + "," + ii[2] + " ::: reduced: " + (ii[0]/gcd1) + "," + (ii[1]/gcd1) + "," + (ii[2]/gcd1) + " gcd: " + gcd1);
-					gcd1 = Util.gcd(ii[0]/gcd1, ii[1]/gcd1);
-					gcd2 = Util.gcd(ii[1]/gcd1, ii[2]/gcd1);
-					if(gcd1 != 1 && gcd1 == gcd2) System.out.println("HAS MORE THAN ONE FACTOR IN COMMON ^^ " + gcd1 + " :: " + ii[0] + "," + ii[1] + "," + ii[2]);
-				} else { 
-					System.out.println("trip: " + ii[0] + "," + ii[1] + "," + ii[2] );
-				}
-			} else {
+			
+			
+			
+			
+			if(ii == null) {
 				System.out.println("no sol for : " + ia );
-				
+				continue;
 			}
 			
-		
-		
+			sum = ii[0] + ii[1] + ii[2];
+			System.out.println("new sum : " + sum);
+			if(sum > maxSum)
+				continue;
+			
+			int gcd1 = Util.gcd(ii[0], ii[1]);
+			
+			if(gcd1 == 1) {
+				//...trip? 
+				//System.out.println("trip in lowest form: " + ii[0] + "," + ii[1] + "," + ii[2] );
+				sols.add(new Integer[] {ii[0], ii[1], ii[2]});
+				continue;
+			}
+			
+			
+			int gcd2 = Util.gcd(ii[1], ii[2]);
+			if(gcd1 != 1 && gcd1 == gcd2) {
+				//System.out.println("trip: " + ii[0] + "," + ii[1] + "," + ii[2] + " ::: reduced: " + (ii[0]/gcd1) + "," + (ii[1]/gcd1) + "," + (ii[2]/gcd1) + " gcd: " + gcd1);
+				int gcd12 = Util.gcd(ii[0]/gcd1, ii[1]/gcd1);
+				int gcd22 = Util.gcd(ii[1]/gcd2, ii[2]/gcd2);
+				if(gcd12 != 1 && gcd12 == gcd22) {
+					System.out.println("HAS MORE THAN ONE FACTOR IN COMMON ^^ " + gcd12 + " :: " + ii[0] + "," + ii[1] + "," + ii[2]);
+				} else {
+					//sols.add(new Integer[] {ii[0]/gcd1, ii[1]/gcd1, ii[2]/gcd1});
+				}
+			} else { 
+				//System.out.println("trip: " + ii[0] + "," + ii[1] + "," + ii[2] );
+				sols.add(new Integer[] {ii[0], ii[1], ii[2]});
+			}
+		//} else {
+			//System.out.println("no sol for : " + ia );
+			//continue;
+			//}
+			
+			
+			
 		}
-		
+		i++;
 		//if(ans != null)
 		//	System.out.println(ans[0] + ", " + ans[1]+ ", " + ans[2]);
 	}
-	System.out.println("Test gcd : " + Util.gcd(6, 8) + " : " + Util.gcd(10, 8));
+	//System.out.println("Test gcd : " + Util.gcd(6, 8) + " : " + Util.gcd(10, 8));
+	return sols;
 }
 
 	public void testSomeStartingATriples() {
@@ -862,18 +899,42 @@ public static void printLotsOfTriplesButOnlyReduced(int maxSum) {
 		
 		
 		... for evens, its easy
-		just a / 2, then ^2
+		just (a / 2) ^2
 		so if a = 12, then 12/2 = 6, 6^2 = 36, and that means b and c are on either side of 36, so 35 and 37..
 		
 		.. then gotta find a way to do all 3 of these for 21
 		21,28,35 (7 away) - not sure, I guess they are just multiples of smaller triples.. we can just find them that way
 		21,72,75 - (3 away) - not sure, I guess they are just multiples of smaller triples.. we can just find them that way
-		21,220,221 - 21 = 10th odd number... so 21 * 10 + 10 ( and this one is 1 away)
+		21,220,221 - ( 1 away) 21 = 10th odd number... so 21 * 10 + 10 ( and this one is 1 away)
 		
+		it is interesting that 7 away, 3 away, 1 away, are the factors of 21.. hmm
 		 
 		 etc...
 		 */
-		
+		int b = a+1, c = a+2;
+		//System.out.println("Starting with a=" + a + " b=" + b + " c=" + c + " ||| ");
+		while (true) {
+			int a2 = a*a, b2 = b*b, c2 = c*c;
+			int diff = c2 - b2;
+			//System.out.println("Now with a=" + a + " b=" + b + " c=" + c + " ||| " + "a2=" + a2 + " b2=" + b2 + " c2=" + c2 + " .. diff=" + diff);
+			if(diff == a2) {
+				//System.out.println("Yay we found one : " + a + ", " + b + ", " + c);
+				trips.add(new Integer[] {a,b,c});
+				b++;
+				c = b+1;
+				//System.out.println("incrementing b to " + b + ", and putting c to " + c + " to check for more sols..");
+				continue;
+			} else if(diff < a2) {
+				c++;
+				//System.out.println("incrementing c to " + c);
+			} else {
+				if(c-b == 1) { // if diff > a^2, and c and b are right net to each other, then we are at the limit, any next nums will be even larger.
+					break;
+				}
+				b++;
+				c = b+1;
+			}
+		}
 		return trips;
 	}
 	
@@ -1251,5 +1312,57 @@ public static List<Integer[]> getPythagoreanTriplesFromThisA(int a) {
 		//System.out.println("checking if " + n + " is square : " + d + " ==== " + (d-(int)d));
 		return d - (int)d == 0 ? (int)d : 0;
 	}
+	
+	
+	
+	public static void doOtherGuys(int sumToLog, int max) {
+		int limit = max;
+		long[] triangles = new long[limit+1];
+		 
+		int result =0;
+		int mlimit = (int)Math.sqrt(limit / 2);
+		 
+		for (long m = 2; m < mlimit; m++) {
+		    for (long n = 1; n < m; n++) {
+		        if (((n + m) % 2) == 1 && Util.gcd(n, m) == 1) {
+		            long a = m * m + n * n;
+		            long b = m * m - n * n;
+		            long c = 2 * m * n;
+		            long p = a + b + c;
+		            while(p <= limit){
+		                triangles[(int) p]++;
+		                if(p == sumToLog) System.out.println("abc: " + a + " "+ b  + " " + c + " == " + (a + b + c) + " P=" + p);
+		                if (triangles[(int) p] == 1) {result++;}
+		                if (triangles[(int) p] == 2) { result--;}
+		                p += a+b+c;
+		                //if(p == 112) System.out.println("abc: " + a + " "+ b  + " " + c + " == " + (a + b + c) + " P=" + p);
+		            }
+		        }
+		    }
+		}
+		List<Integer> good = new ArrayList<Integer>();
+		List<Integer> dups = new ArrayList<Integer>();
+		for (int i = 0; i < triangles.length; i++) {
+			if( triangles[i] == 1) {
+					//System.out.println("good Tri " + i + " : " + triangles[i]);
+				good.add(i);
+			}
+			else if (triangles[i] > 1)
+				dups.add(i);
+				//System.out.println("dup Tri " + i + " : " + triangles[i]);
+		}
+		
+		for(Integer i : good) {
+			System.out.println("good Tri " + i + " : " + i);
+		}
+		
+		for(Integer i : dups) {
+			System.out.println("dups Tri " + i + " : " + i);
+		}
+		
+		System.out.println(" resssss " + result);
+		
+	}
+	
 
 }
