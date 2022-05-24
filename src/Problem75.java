@@ -73,6 +73,9 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 	
 	public String problem() {
 		
+		/*
+		
+		 */
 		
 		/////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		
@@ -96,7 +99,13 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		... what about 9
 		9 40 41 yep
 		
+		what about the difference of squares I remember from highschool days...
+		that is (c-b)(c+b) = c^2 - b^2
+		can we use that at all, is it even helpful
 		
+		if we know A, lets say..
+		then a2 = c2 - b2
+		a2 = (c-b)(c+b) 
 		
 		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		*/
@@ -250,7 +259,7 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		 17 = 8
 		 19 = 9
 		 21 = 10
-		 primes you will only have 1 triple where a = that prime
+		 primes you will only have 1 triple where a = that prime, and b and c are 1 away
 		 
 		 but what about something like 9
 		 9,12,15 - this is a multiple of 3,4,5
@@ -742,17 +751,26 @@ public static void printLotsOfTriples(int max) {
 	}
 }
 
-public static void printLotsOfTriplesButOnlyReduced(int max) {
+public static void printLotsOfTriplesButOnlyReduced(int maxSum) {
 	int min = 3; //, max = 40;
 	//String ans = getPythagoreanTripleFromThisA(19);
-	for(int i = min; i <= max; i++) {
+	int sum = 0, i = min;
+	//for(int i = min; i <= max; i++) {
 		//int[] ans = getPythagoreanTriplesFromThisA(i);
+	while(sum <= maxSum) {
 		List<Integer[]> tr = getPythagoreanTriplesFromThisA(i);
 		
 		for(int ia = 0; ia < tr.size(); ia++) {
 			Integer[] ii = tr.get(ia);
 			if(ii != null) {
 				int gcd1 = Util.gcd(ii[0], ii[1]);
+				
+				if(gcd1 == 1) {
+					//...trip? 
+					System.out.println("I think trip: " + ii[0] + "," + ii[1] + "," + ii[2] );
+				}
+				
+				
 				int gcd2 = Util.gcd(ii[1], ii[2]);
 				if(gcd1 != 1 && gcd1 == gcd2) {
 					//System.out.println("trip: " + ii[0] + "," + ii[1] + "," + ii[2] + " ::: reduced: " + (ii[0]/gcd1) + "," + (ii[1]/gcd1) + "," + (ii[2]/gcd1) + " gcd: " + gcd1);
@@ -786,6 +804,77 @@ public static void printLotsOfTriplesButOnlyReduced(int max) {
 			}
 		}
 		System.out.println("Done..");
+	}
+	
+	public static List<Integer[]> getPythagoreanTriplesFromThisA2(int a) {
+		List<Integer[]> trips = new ArrayList<Integer[]>();
+		/*
+		 05/23/2022
+		//so we have a.. how do we find numbers that are a^2 apart..
+		// can we use the fact that we know some small thing about squares...
+		// that squares go up by all odd numbers.. 
+		// like 2^2 = 4, then the next square is +5
+		0^2 = 0
+		1^2 = 1 (+1)
+		2^2 = 4 (+3)
+		3^2 = 9 (+5)
+		4^2 = 16 (+7)
+		5^2 = 25 (+9)
+		6^2 = 36 (+11)
+		7^2 = 49 (+13)
+		8^2 = 64 (+15)
+		9^2 = 81 (+17)
+		10^2 = 100(+19)
+		11^2 = 121(+21)
+		12^2 = 144(+23)
+		13^2 = 169(+25)
+		14^2 = 196(+27)
+		15^2 = 225(+29)
+		so what if we have 5^2 for example, and we want to find 2 squares that are 5^2 away
+		first can we find the odd number corresponding to 5^2 ? its (+9) === we can do *2 - 1, so 5*2 -1 = 9
+		then we start with b = 5+1 I guess which is 6^2 (+11)
+		
+		...wait ... so we can see since 25 is an odd number, we already know what 2 squares can be b and c.. 
+		we just find the square that is (+25) to the next square...
+		do that by reversing a*2 - 1 = 25
+		25 + 1 = 26 / 2 = 13
+		and the one before is 25 away, so 12 and 13 are b and c... niceeeeeeee
+		thats nice..
+		But are there any others where a = 5? and what about evens?
+		lets figure out how to do more than 1 for this number first (before we do evens.)
+		
+		lets use 20 for the even, since it has more than 1 triple (20 21 29, 20 99 101) and 33 if we want to do another odd (33,56,65 :: 33,544,545)
+		(I guess we have to do evens
+		
+		alright so if we want to find 2 squares that are next to eachother, we just use the odd number trick..
+		But what if they are not right next to eachother... what do we do... do we find a combination of odd numbers that add to the num or something?
+		so 33...
+		(33,56,65 :: 33,544,545)
+		
+		33^2 = 1089
+		we use the odd number trick = 1089 + 1 = 1090, 1090 / 2 = 545. So c = 545, b = 545 - 1 (544) yay we did it guys and gals..
+		but what about the other trip for 33, 33 56 65
+		does that mean 1089 is also the combination of 1 or more consecutive odd numbers? I mean I guess
+		56^2 = 3136
+		65^2 = 4225
+		 
+		so how do we find those 2 that are 1089 away...
+		
+		
+		... for evens, its easy
+		just a / 2, then ^2
+		so if a = 12, then 12/2 = 6, 6^2 = 36, and that means b and c are on either side of 36, so 35 and 37..
+		
+		.. then gotta find a way to do all 3 of these for 21
+		21,28,35 (7 away) - not sure, I guess they are just multiples of smaller triples.. we can just find them that way
+		21,72,75 - (3 away) - not sure, I guess they are just multiples of smaller triples.. we can just find them that way
+		21,220,221 - 21 = 10th odd number... so 21 * 10 + 10 ( and this one is 1 away)
+		
+		 
+		 etc...
+		 */
+		
+		return trips;
 	}
 	
 public static List<Integer[]> getPythagoreanTriplesFromThisA(int a) {
