@@ -30,10 +30,47 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Problem pp = new Problem75();
-		pp.runProblem();
-
+		//pp.runProblem();
+		//printLotsOfTriples(50);
+		printLotsOfTriplesButOnlyReduced(50);
+		//doOtherGuys(144);
+	}
+	
+	public static void doOtherGuys(int sumToLog) {
+		int limit = 150;
+		long[] triangles = new long[limit+1];
+		 
+		int result =0;
+		int mlimit = (int)Math.sqrt(limit / 2);
+		 
+		for (long m = 2; m < mlimit; m++) {
+		    for (long n = 1; n < m; n++) {
+		        if (((n + m) % 2) == 1 && Util.gcd(n, m) == 1) {
+		            long a = m * m + n * n;
+		            long b = m * m - n * n;
+		            long c = 2 * m * n;
+		            long p = a + b + c;
+		            while(p <= limit){
+		                triangles[(int) p]++;
+		                if(p == sumToLog) System.out.println("abc: " + a + " "+ b  + " " + c + " == " + (a + b + c) + " P=" + p);
+		                if (triangles[(int) p] == 1) {result++;}
+		                if (triangles[(int) p] == 2) { result--;}
+		                p += a+b+c;
+		                //if(p == 112) System.out.println("abc: " + a + " "+ b  + " " + c + " == " + (a + b + c) + " P=" + p);
+		            }
+		        }
+		    }
+		}
+		for (int i = 0; i < triangles.length; i++) {
+			if( triangles[i] == 1)
+					System.out.println("good Tri " + i + " : " + triangles[i]);
+			else if (triangles[i] > 1)
+				System.out.println("dup Tri " + i + " : " + triangles[i]);
+		}
+		System.out.println(" resssss " + result);
 		
 	}
+	
 	public String problem() {
 		
 		
@@ -46,6 +83,20 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		28 45 53 = 126
 		
 		14 48 50 = 112
+		
+		so we need to find these...
+		We need to find the triples that are like the primes of pythagorean triples..
+		What is that, is that like triples that have no factors in common? They are reduced?
+		
+		like 3 4 5
+		but not 6 8 10
+		
+		Then 5 12 13
+		then 7 24 25
+		... what about 9
+		9 40 41 yep
+		
+		
 		
 		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		*/
@@ -522,9 +573,9 @@ so far.... no...
 
 	 */
 
-public void testAs() {
+public void testAs(int max) {
 	
-	int max = 100000;
+	// = 100000;
 	
 	for(int i=1; i < max; i++) {
 		if(i % 1000 == 0)System.out.println("Doing " + i);
@@ -674,16 +725,57 @@ public void printLotsOfTriplesJustPrimesAndActuallyDoProblem() {
 	
 }
 
-public void printLotsOfTriples() {
-	int min = 3, max = 40;
+public static void printLotsOfTriples(int max) {
+	int min = 3; //, max = 40;
 	//String ans = getPythagoreanTripleFromThisA(19);
 	for(int i = min; i <= max; i++) {
-		int[] ans = getPythagoreanTripleFromThisA(i);
-		if(ans != null)
-			System.out.println(ans[0] + ", " + ans[1]+ ", " + ans[2]);
+		//int[] ans = getPythagoreanTriplesFromThisA(i);
+		List<Integer[]> tr = getPythagoreanTriplesFromThisA(i);
+		
+		for(int ia = 0; ia < tr.size(); ia++) {
+			Integer[] ii = tr.get(ia);
+			if(ii != null)System.out.println("trip: " + ii[0] + "," + ii[1] + "," + ii[2] );
+			else System.out.println("no sol for : " + ia );
+		}
+		//if(ans != null)
+		//	System.out.println(ans[0] + ", " + ans[1]+ ", " + ans[2]);
 	}
 }
 
+public static void printLotsOfTriplesButOnlyReduced(int max) {
+	int min = 3; //, max = 40;
+	//String ans = getPythagoreanTripleFromThisA(19);
+	for(int i = min; i <= max; i++) {
+		//int[] ans = getPythagoreanTriplesFromThisA(i);
+		List<Integer[]> tr = getPythagoreanTriplesFromThisA(i);
+		
+		for(int ia = 0; ia < tr.size(); ia++) {
+			Integer[] ii = tr.get(ia);
+			if(ii != null) {
+				int gcd1 = Util.gcd(ii[0], ii[1]);
+				int gcd2 = Util.gcd(ii[1], ii[2]);
+				if(gcd1 != 1 && gcd1 == gcd2) {
+					//System.out.println("trip: " + ii[0] + "," + ii[1] + "," + ii[2] + " ::: reduced: " + (ii[0]/gcd1) + "," + (ii[1]/gcd1) + "," + (ii[2]/gcd1) + " gcd: " + gcd1);
+					gcd1 = Util.gcd(ii[0]/gcd1, ii[1]/gcd1);
+					gcd2 = Util.gcd(ii[1]/gcd1, ii[2]/gcd1);
+					if(gcd1 != 1 && gcd1 == gcd2) System.out.println("HAS MORE THAN ONE FACTOR IN COMMON ^^ " + gcd1 + " :: " + ii[0] + "," + ii[1] + "," + ii[2]);
+				} else { 
+					System.out.println("trip: " + ii[0] + "," + ii[1] + "," + ii[2] );
+				}
+			} else {
+				System.out.println("no sol for : " + ia );
+				
+			}
+			
+		
+		
+		}
+		
+		//if(ans != null)
+		//	System.out.println(ans[0] + ", " + ans[1]+ ", " + ans[2]);
+	}
+	System.out.println("Test gcd : " + Util.gcd(6, 8) + " : " + Util.gcd(10, 8));
+}
 
 	public void testSomeStartingATriples() {
 		int min = 3000, max = 4000;
@@ -696,7 +788,7 @@ public void printLotsOfTriples() {
 		System.out.println("Done..");
 	}
 	
-public List<Integer[]> getPythagoreanTriplesFromThisA(int a) {
+public static List<Integer[]> getPythagoreanTriplesFromThisA(int a) {
 	// similar to below function, but this will find all triples where a=...
 	List<Integer[]> trips = new ArrayList<Integer[]>();
 		
