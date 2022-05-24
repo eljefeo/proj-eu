@@ -33,45 +33,45 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		//pp.runProblem();
 		//printLotsOfTriples(50);
 		
-		int max = 150;
+		int max = 1500000;
 		
 		Set<Integer> sums = new HashSet<Integer>();
 		Set<Integer> dups = new HashSet<Integer>();
 		List<Integer[]> sols = printLotsOfTriplesButOnlyReduced(max);
 		for(Integer[] ii : sols) {
-			System.out.println(ii[0] + ", " + ii[1] + ", " + ii[2]);
+			//System.out.println(ii[0] + ", " + ii[1] + ", " + ii[2]);
 			int sum = 0;
 			int i = 1;
 			while(sum <= max) {
 				sum = (ii[0]*i) + (ii[1]*i) +  (ii[2]*i);
-				System.out.println("mult : " + (ii[0]*i) + ", " + (ii[1]*i) + ", " + (ii[2]*i) + " sum: " + sum);
+				//System.out.println("mult : " + (ii[0]*i) + ", " + (ii[1]*i) + ", " + (ii[2]*i) + " sum: " + sum);
 				if(sum > max) {
-					System.out.println("**sum is greater than " + max + " :: " + (ii[0]*i) + ", " + (ii[1]*i) + ", " + (ii[2]*i) + " sum: " + sum);
+					//System.out.println("**sum is greater than " + max + " :: " + (ii[0]*i) + ", " + (ii[1]*i) + ", " + (ii[2]*i) + " sum: " + sum);
 					continue;
 				} 
 				
 				
 				if(!sums.add(sum)) {
 					dups.add(sum);
-					System.out.println("adding to dups : " + (ii[0]*i) + ", " + (ii[1]*i) + ", " + (ii[2]*i) + " sum: " + sum);
+					//System.out.println("adding to dups : " + (ii[0]*i) + ", " + (ii[1]*i) + ", " + (ii[2]*i) + " sum: " + sum);
 				} else { 
-					System.out.println("adding to sums : " + (ii[0]*i) + ", " + (ii[1]*i) + ", " + (ii[2]*i) + " sum: " + sum);
+					//System.out.println("adding to sums : " + (ii[0]*i) + ", " + (ii[1]*i) + ", " + (ii[2]*i) + " sum: " + sum);
 				}
 				i++;
 			}
 		}
 		
 		
-		for(Integer i : sums) {
-			System.out.println("JJ good Tri " + i + " : " + i);
-		}
+		//for(Integer i : sums) {
+		//	System.out.println("JJ good Tri " + i + " : " + i);
+		//}
 		
-		for(Integer i : dups) {
-			System.out.println("JJ dups Tri " + i + " : " + i);
-		}
+		//for(Integer i : dups) {
+		//	System.out.println("JJ dups Tri " + i + " : " + i);
+		//}
 		//printPythTriplesOnlyWithMultipleSolutionsForA(100);
 		System.out.println("sums: " + sums.size() + " dups: " + dups.size() + " diff: " + (sums.size() - dups.size()));
-		doOtherGuys(70, max);
+		doOtherGuys(70, max, false);
 	}
 	
 	public static void printPythTriplesOnlyWithMultipleSolutionsForA(int max) {
@@ -774,8 +774,13 @@ public static List<Integer[]> printLotsOfTriplesButOnlyReduced(int maxSum) {
 		//int[] ans = getPythagoreanTriplesFromThisA(i);
 	//while(sum <= maxSum) {
 	while(i*3 < maxSum) { //////need to fix this, should be better
+		
+		if(i % 1000 == 0) {
+			System.out.println("At i = " + i);
+		}
+		
 		List<Integer[]> tr = getPythagoreanTriplesFromThisA2(i);
-		System.out.println("tr size for a = " + i + " : " + tr.size());
+		//System.out.println("tr size for a = " + i + " : " + tr.size());
 		for(int ia = 0; ia < tr.size(); ia++) {
 			Integer[] ii = tr.get(ia);
 			
@@ -783,12 +788,12 @@ public static List<Integer[]> printLotsOfTriplesButOnlyReduced(int maxSum) {
 			
 			
 			if(ii == null) {
-				System.out.println("no sol for : " + ia );
+				//System.out.println("no sol for : " + ia );
 				continue;
 			}
 			
 			sum = ii[0] + ii[1] + ii[2];
-			System.out.println("new sum : " + sum);
+			//System.out.println("new sum : " + sum);
 			if(sum > maxSum)
 				continue;
 			
@@ -1315,7 +1320,7 @@ public static List<Integer[]> getPythagoreanTriplesFromThisA(int a) {
 	
 	
 	
-	public static void doOtherGuys(int sumToLog, int max) {
+	public static void doOtherGuys(int sumToLog, int max, boolean shouldPrint) {
 		int limit = max;
 		long[] triangles = new long[limit+1];
 		 
@@ -1340,25 +1345,29 @@ public static List<Integer[]> getPythagoreanTriplesFromThisA(int a) {
 		        }
 		    }
 		}
-		List<Integer> good = new ArrayList<Integer>();
-		List<Integer> dups = new ArrayList<Integer>();
-		for (int i = 0; i < triangles.length; i++) {
-			if( triangles[i] == 1) {
-					//System.out.println("good Tri " + i + " : " + triangles[i]);
-				good.add(i);
+		
+		if(shouldPrint) {
+			List<Integer> good = new ArrayList<Integer>();
+			List<Integer> dups = new ArrayList<Integer>();
+			for (int i = 0; i < triangles.length; i++) {
+				if( triangles[i] == 1) {
+						//System.out.println("good Tri " + i + " : " + triangles[i]);
+					good.add(i);
+				}
+				else if (triangles[i] > 1)
+					dups.add(i);
+					//System.out.println("dup Tri " + i + " : " + triangles[i]);
 			}
-			else if (triangles[i] > 1)
-				dups.add(i);
-				//System.out.println("dup Tri " + i + " : " + triangles[i]);
+			
+			for(Integer i : good) {
+				System.out.println("good Tri " + i + " : " + i);
+			}
+			
+			for(Integer i : dups) {
+				System.out.println("dups Tri " + i + " : " + i);
+			}
 		}
 		
-		for(Integer i : good) {
-			System.out.println("good Tri " + i + " : " + i);
-		}
-		
-		for(Integer i : dups) {
-			System.out.println("dups Tri " + i + " : " + i);
-		}
 		
 		System.out.println(" resssss " + result);
 		
