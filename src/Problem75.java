@@ -33,17 +33,26 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		//pp.runProblem();
 		//printLotsOfTriples(50);
 		
-		int max = 1500000;
+		int max = 1500;
 		
 		Set<Integer> sums = new HashSet<Integer>();
 		Set<Integer> dups = new HashSet<Integer>();
 		List<Integer[]> sols = printLotsOfTriplesButOnlyReduced(max);
 		for(Integer[] ii : sols) {
-			//System.out.println(ii[0] + ", " + ii[1] + ", " + ii[2]);
+			int a = ii[0], b = ii[1], c = ii[2], cbDiff = c - b;
+			if((a % 2 == 0 && cbDiff != 2) || (a % 2 != 0 && cbDiff != 1)) {
+				System.out.print(a + ", " + b + ", " + c + " || \t c - b: " + cbDiff + " || facts of a: ");
+				List<Integer> facts = Util.getPrimeFactors(a);
+				for(int jk : facts) {
+					System.out.print(" " + jk);
+				}
+				System.out.println();
+			}
+			
 			int sum = 0;
 			int i = 1;
 			while(sum <= max) {
-				sum = (ii[0]*i) + (ii[1]*i) +  (ii[2]*i);
+				sum = (a*i) + (b*i) +  (c*i);
 				//System.out.println("mult : " + (ii[0]*i) + ", " + (ii[1]*i) + ", " + (ii[2]*i) + " sum: " + sum);
 				if(sum > max) {
 					//System.out.println("**sum is greater than " + max + " :: " + (ii[0]*i) + ", " + (ii[1]*i) + ", " + (ii[2]*i) + " sum: " + sum);
@@ -71,7 +80,7 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		//}
 		//printPythTriplesOnlyWithMultipleSolutionsForA(100);
 		System.out.println("sums: " + sums.size() + " dups: " + dups.size() + " diff: " + (sums.size() - dups.size()));
-		doOtherGuys(70, max, false);
+		//doOtherGuys(70, max, false);
 	}
 	
 	public static void printPythTriplesOnlyWithMultipleSolutionsForA(int max) {
@@ -88,6 +97,106 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 	public String problem() {
 		
 		/*
+		05/26/2022
+		Here is some interesting stuff...
+		So we know how to generate triples from a = odd number (where b and c are always 1 away):
+		(( a^2 ) + 1) / 2 = c, b = c - 1
+		
+		And from even numbers (where b and c are always 2 away):
+		( a / 2 )^2 , then -1 and +1 gives you b and c
+		
+		But there are some triples that are missing...like these..
+		These have an a that is sometimes even, sometimes odd... and b and c are not 1 or 2 away...
+		But the b and c difference to seem to have some correlation with the factors of a
+		like if a has Two 2's as its smallest factors, b and c are 8 away
+		if there is a 3 as its smallest factor, then its 9 away...
+		if the smallest is 5, then its 25 away... 
+		This reminds me of the totient function...
+		
+		here are other interesting things..
+		if b and c are 8 away, since there are Two 2s in the factors, lets divide out the Two 2s
+		so 20 / 2 / 2 = 5
+		if you square 5 you get 25, and that is right in between b and c (21 and 29) and each one is 4 away (2*2)
+		Seems to work for all of these below that  b and c diff = 8
+		
+		what about the 9s... they have 3 as smallest factor. lets divide out the 3
+		33 / 3 = 11... then square = 121... hmm yea same thing, because 121 / 2 = 60.5 which is exactly between b and c (56 and 65)
+		same for 57, / 3 = 19, ^2 = 361, / 2 = 180.5 (between 1176 and 185)
+		
+20, 21, 29 || 	 c - b: 8 || facts of a:  2 2 5
+28, 45, 53 || 	 c - b: 8 || facts of a:  2 2 7
+33, 56, 65 || 	 c - b: 9 || facts of a:  3 11
+36, 77, 85 || 	 c - b: 8 || facts of a:  2 2 3 3
+39, 80, 89 || 	 c - b: 9 || facts of a:  3 13
+44, 117, 125 || 	 c - b: 8 || facts of a:  2 2 11
+48, 55, 73 || 	 c - b: 18 || facts of a:  2 2 2 2 3
+51, 140, 149 || 	 c - b: 9 || facts of a:  3 17
+52, 165, 173 || 	 c - b: 8 || facts of a:  2 2 13
+57, 176, 185 || 	 c - b: 9 || facts of a:  3 19
+60, 91, 109 || 	 c - b: 18 || facts of a:  2 2 3 5
+60, 221, 229 || 	 c - b: 8 || facts of a:  2 2 3 5
+65, 72, 97 || 	 c - b: 25 || facts of a:  5 13
+68, 285, 293 || 	 c - b: 8 || facts of a:  2 2 17
+69, 260, 269 || 	 c - b: 9 || facts of a:  3 23
+75, 308, 317 || 	 c - b: 9 || facts of a:  3 5 5
+76, 357, 365 || 	 c - b: 8 || facts of a:  2 2 19
+84, 187, 205 || 	 c - b: 18 || facts of a:  2 2 3 7
+84, 437, 445 || 	 c - b: 8 || facts of a:  2 2 3 7
+85, 132, 157 || 	 c - b: 25 || facts of a:  5 17
+87, 416, 425 || 	 c - b: 9 || facts of a:  3 29
+88, 105, 137 || 	 c - b: 32 || facts of a:  2 2 2 11
+92, 525, 533 || 	 c - b: 8 || facts of a:  2 2 23
+93, 476, 485 || 	 c - b: 9 || facts of a:  3 31
+95, 168, 193 || 	 c - b: 25 || facts of a:  5 19
+96, 247, 265 || 	 c - b: 18 || facts of a:  2 2 2 2 2 3
+100, 621, 629 || 	 c - b: 8 || facts of a:  2 2 5 5
+104, 153, 185 || 	 c - b: 32 || facts of a:  2 2 2 13
+105, 208, 233 || 	 c - b: 25 || facts of a:  3 5 7
+105, 608, 617 || 	 c - b: 9 || facts of a:  3 5 7
+111, 680, 689 || 	 c - b: 9 || facts of a:  3 37
+115, 252, 277 || 	 c - b: 25 || facts of a:  5 23
+119, 120, 169 || 	 c - b: 49 || facts of a:  7 17
+120, 209, 241 || 	 c - b: 32 || facts of a:  2 2 2 3 5
+120, 391, 409 || 	 c - b: 18 || facts of a:  2 2 2 3 5
+132, 475, 493 || 	 c - b: 18 || facts of a:  2 2 3 11
+133, 156, 205 || 	 c - b: 49 || facts of a:  7 19
+135, 352, 377 || 	 c - b: 25 || facts of a:  3 3 3 5
+136, 273, 305 || 	 c - b: 32 || facts of a:  2 2 2 17
+140, 171, 221 || 	 c - b: 50 || facts of a:  2 2 5 7
+145, 408, 433 || 	 c - b: 25 || facts of a:  5 29
+152, 345, 377 || 	 c - b: 32 || facts of a:  2 2 2 19
+155, 468, 493 || 	 c - b: 25 || facts of a:  5 31
+160, 231, 281 || 	 c - b: 50 || facts of a:  2 2 2 2 2 5
+161, 240, 289 || 	 c - b: 49 || facts of a:  7 23
+165, 532, 557 || 	 c - b: 25 || facts of a:  3 5 11
+168, 425, 457 || 	 c - b: 32 || facts of a:  2 2 2 3 7
+175, 288, 337 || 	 c - b: 49 || facts of a:  5 5 7
+180, 299, 349 || 	 c - b: 50 || facts of a:  2 2 3 3 5
+184, 513, 545 || 	 c - b: 32 || facts of a:  2 2 2 23
+189, 340, 389 || 	 c - b: 49 || facts of a:  3 3 3 7
+200, 609, 641 || 	 c - b: 32 || facts of a:  2 2 2 5 5
+203, 396, 445 || 	 c - b: 49 || facts of a:  7 29
+204, 253, 325 || 	 c - b: 72 || facts of a:  2 2 3 17
+207, 224, 305 || 	 c - b: 81 || facts of a:  3 3 23
+217, 456, 505 || 	 c - b: 49 || facts of a:  7 31
+220, 459, 509 || 	 c - b: 50 || facts of a:  2 2 5 11
+225, 272, 353 || 	 c - b: 81 || facts of a:  3 3 5 5
+228, 325, 397 || 	 c - b: 72 || facts of a:  2 2 3 19
+231, 520, 569 || 	 c - b: 49 || facts of a:  3 7 11
+240, 551, 601 || 	 c - b: 50 || facts of a:  2 2 2 2 3 5
+252, 275, 373 || 	 c - b: 98 || facts of a:  2 2 3 3 7
+261, 380, 461 || 	 c - b: 81 || facts of a:  3 3 29
+276, 493, 565 || 	 c - b: 72 || facts of a:  2 2 3 23
+279, 440, 521 || 	 c - b: 81 || facts of a:  3 3 31
+280, 351, 449 || 	 c - b: 98 || facts of a:  2 2 2 5 7
+297, 304, 425 || 	 c - b: 121 || facts of a:  3 3 3 11
+308, 435, 533 || 	 c - b: 98 || facts of a:  2 2 7 11
+319, 360, 481 || 	 c - b: 121 || facts of a:  11 29
+336, 377, 505 || 	 c - b: 128 || facts of a:  2 2 2 2 3 7
+336, 527, 625 || 	 c - b: 98 || facts of a:  2 2 2 2 3 7
+341, 420, 541 || 	 c - b: 121 || facts of a:  11 31
+368, 465, 593 || 	 c - b: 128 || facts of a:  2 2 2 2 23
+396, 403, 565 || 	 c - b: 162 || facts of a:  2 2 3 3 11
 		
 		 */
 		
@@ -770,7 +879,6 @@ public static List<Integer[]> printLotsOfTriplesButOnlyReduced(int maxSum) {
 	//String ans = getPythagoreanTripleFromThisA(19);
 	int sum = 0, i = min;
 	List<Integer[]> sols = new ArrayList<Integer[]>();
-	//for(int i = min; i <= max; i++) {
 		//int[] ans = getPythagoreanTriplesFromThisA(i);
 	//while(sum <= maxSum) {
 	while(i*3 < maxSum) { //////need to fix this, should be better
@@ -780,7 +888,10 @@ public static List<Integer[]> printLotsOfTriplesButOnlyReduced(int maxSum) {
 		}
 		
 		List<Integer[]> tr = getPythagoreanTriplesFromThisA2(i);
-		//System.out.println("tr size for a = " + i + " : " + tr.size());
+		//System.out.println("tr before size for a = " + i + " : " + tr.size() + ", sols size: " + sols.size());
+		//if(sols.size() > 0) {
+		//	System.out.println("first sol?? " + sols.get(0)[0] + ", " +  sols.get(0)[1] + ", " + sols.get(0)[2]);
+		//}
 		for(int ia = 0; ia < tr.size(); ia++) {
 			Integer[] ii = tr.get(ia);
 			
@@ -798,8 +909,12 @@ public static List<Integer[]> printLotsOfTriplesButOnlyReduced(int maxSum) {
 				continue;
 			
 			int gcd1 = Util.gcd(ii[0], ii[1]);
-			
+			int gcd2 = Util.gcd(ii[1], ii[2]);
+			//System.out.println("gcd1 and 2 : " + gcd1 + " " + gcd2);
 			if(gcd1 == 1) {
+				// this means a and b have no factors in common
+				// this means we dont even check factors for c, because we are only interested in all abc having no common factors
+				// and if a and b already dont have factors, then it doesnt matter what c has...
 				//...trip? 
 				//System.out.println("trip in lowest form: " + ii[0] + "," + ii[1] + "," + ii[2] );
 				sols.add(new Integer[] {ii[0], ii[1], ii[2]});
@@ -807,8 +922,8 @@ public static List<Integer[]> printLotsOfTriplesButOnlyReduced(int maxSum) {
 			}
 			
 			
-			int gcd2 = Util.gcd(ii[1], ii[2]);
-			if(gcd1 != 1 && gcd1 == gcd2) {
+			
+			if(gcd1 == gcd2) {
 				//System.out.println("trip: " + ii[0] + "," + ii[1] + "," + ii[2] + " ::: reduced: " + (ii[0]/gcd1) + "," + (ii[1]/gcd1) + "," + (ii[2]/gcd1) + " gcd: " + gcd1);
 				int gcd12 = Util.gcd(ii[0]/gcd1, ii[1]/gcd1);
 				int gcd22 = Util.gcd(ii[1]/gcd2, ii[2]/gcd2);
@@ -818,8 +933,10 @@ public static List<Integer[]> printLotsOfTriplesButOnlyReduced(int maxSum) {
 					//sols.add(new Integer[] {ii[0]/gcd1, ii[1]/gcd1, ii[2]/gcd1});
 				}
 			} else { 
-				//System.out.println("trip: " + ii[0] + "," + ii[1] + "," + ii[2] );
+				System.out.println("ddtrip: " + ii[0] + "," + ii[1] + "," + ii[2] );
+				
 				sols.add(new Integer[] {ii[0], ii[1], ii[2]});
+				System.exit(0);
 			}
 		//} else {
 			//System.out.println("no sol for : " + ia );
@@ -829,11 +946,14 @@ public static List<Integer[]> printLotsOfTriplesButOnlyReduced(int maxSum) {
 			
 			
 		}
+		//System.out.println("tr after for a = " + i + " : " + sols.size());
 		i++;
 		//if(ans != null)
 		//	System.out.println(ans[0] + ", " + ans[1]+ ", " + ans[2]);
+		
 	}
 	//System.out.println("Test gcd : " + Util.gcd(6, 8) + " : " + Util.gcd(10, 8));
+	
 	return sols;
 }
 
