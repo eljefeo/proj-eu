@@ -41,12 +41,29 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		for(Integer[] ii : sols) {
 			int a = ii[0], b = ii[1], c = ii[2], cbDiff = c - b;
 			if((a % 2 == 0 && cbDiff != 2) || (a % 2 != 0 && cbDiff != 1)) {
-				System.out.print(a + ", " + b + ", " + c + " || \t c - b: " + cbDiff + " || facts of a: ");
+				System.out.println(a + ", " + b + ", " + c + " || \t c - b: " + cbDiff );
 				List<Integer> facts = Util.getPrimeFactors(a);
+				System.out.print("facts of a: ");
 				for(int jk : facts) {
 					System.out.print(" " + jk);
 				}
 				System.out.println();
+				
+				facts = Util.getPrimeFactors(b);
+				System.out.print("facts of b: ");
+				for(int jk : facts) {
+					System.out.print(" " + jk);
+				}
+				System.out.println();
+				
+				facts = Util.getPrimeFactors(c);
+				System.out.print("facts of c: ");
+				for(int jk : facts) {
+					System.out.print(" " + jk);
+				}
+				System.out.println();
+				
+				
 			}
 			
 			int sum = 0;
@@ -122,6 +139,16 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		what about the 9s... they have 3 as smallest factor. lets divide out the 3
 		33 / 3 = 11... then square = 121... hmm yea same thing, because 121 / 2 = 60.5 which is exactly between b and c (56 and 65)
 		same for 57, / 3 = 19, ^2 = 361, / 2 = 180.5 (between 1176 and 185)
+		
+		
+		What about 18... the factors for a where b and c are diff=18 , they all seem to have a 2 and a 3 in the factors...
+		
+		But 60 is weird
+		60, 91, 109 || 	 c - b: 18 || facts of a:  2 2 3 5
+		60, 221, 229 || 	 c - b: 8 || facts of a:  2 2 3 5
+		
+		because it has diff = 18 and diff = 8...
+		
 		
 20, 21, 29 || 	 c - b: 8 || facts of a:  2 2 5
 28, 45, 53 || 	 c - b: 8 || facts of a:  2 2 7
