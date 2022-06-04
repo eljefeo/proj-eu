@@ -31,9 +31,14 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		// TODO Auto-generated method stub
 		Problem pp = new Problem75();
 		//pp.runProblem();
-		//printLotsOfTriples(50);
+		printAllPythagoreanTriplesWithALessThan(75);
 		
-		int max = 1500;
+		
+		//doOtherGuys(70, max, false);
+	}
+	
+	public static void printPythTriplesOnlyReducedButWithFactors(int max) {
+		//int max = 1500;
 		
 		Set<Integer> sums = new HashSet<Integer>();
 		Set<Integer> dups = new HashSet<Integer>();
@@ -97,7 +102,7 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		//}
 		//printPythTriplesOnlyWithMultipleSolutionsForA(100);
 		System.out.println("sums: " + sums.size() + " dups: " + dups.size() + " diff: " + (sums.size() - dups.size()));
-		//doOtherGuys(70, max, false);
+		
 	}
 	
 	public static void printPythTriplesOnlyWithMultipleSolutionsForA(int max) {
@@ -884,7 +889,7 @@ public void printLotsOfTriplesJustPrimesAndActuallyDoProblem() {
 	
 }
 
-public static void printLotsOfTriples(int max) {
+public static void printAllPythagoreanTriplesWithALessThan(int max) {
 	int min = 3; //, max = 40;
 	//String ans = getPythagoreanTripleFromThisA(19);
 	for(int i = min; i <= max; i++) {
@@ -893,7 +898,7 @@ public static void printLotsOfTriples(int max) {
 		
 		for(int ia = 0; ia < tr.size(); ia++) {
 			Integer[] ii = tr.get(ia);
-			if(ii != null)System.out.println("trip: " + ii[0] + "," + ii[1] + "," + ii[2] );
+			if(ii != null)System.out.println(ii[0] + "," + ii[1] + "," + ii[2] );
 			else System.out.println("no sol for : " + ia );
 		}
 		//if(ans != null)
