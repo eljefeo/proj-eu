@@ -46,7 +46,8 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 			boolean isEven = a%2 == 0;
 			
 			//if(( !isEven && b < (c-1) ) || (isEven && b < (c-2))) {
-			if(isEven && b < (c-2)) {
+			//if(isEven && b < (c-2)) {
+			if( !isEven && b < (c-1)) {
 				int a4 = -1;
 				boolean a4b = a%4 == 0; 
 				if(a4b) {
@@ -54,6 +55,26 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 				}
 				System.out.println(a + ", " + b + ", " + c + ", a/4: " + (a4b ? a4 : "no") + ", a/4^2: " + (a4 * a4));
 				ret.add(ii);
+				List<Integer> facts = Util.getPrimeFactors(a);
+				System.out.print("facts of a: ");
+				for(int jk : facts) {
+					System.out.print(" " + jk);
+				}
+				System.out.println();
+				
+				facts = Util.getPrimeFactors(b);
+				System.out.print("facts of b: ");
+				for(int jk : facts) {
+					System.out.print(" " + jk);
+				}
+				System.out.println();
+				
+				facts = Util.getPrimeFactors(c);
+				System.out.print("facts of c: ");
+				for(int jk : facts) {
+					System.out.print(" " + jk);
+				}
+				System.out.println();
 			} else {
 				//System.out.println("Skipping: " + a + ", " + b + ", " + c);
 			}
