@@ -31,10 +31,34 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		// TODO Auto-generated method stub
 		Problem pp = new Problem75();
 		//pp.runProblem();
-		printAllPythagoreanTriplesWithALessThan(75);
-		
+		//printAllPythagoreanTriplesWithALessThan(75);
+		printPythTriplesOnlyReducedNotPredictable(800);
 		
 		//doOtherGuys(70, max, false);
+	}
+	
+	public static void printPythTriplesOnlyReducedNotPredictable(int max) {
+		List<Integer[]> sols = printLotsOfTriplesButOnlyReduced(max);
+		List<Integer[]> ret = new ArrayList<Integer[]>() ;
+		for(Integer[] ii : sols) {
+			int a = ii[0], b = ii[1], c = ii[2], cbDiff = c - b;
+			
+			boolean isEven = a%2 == 0;
+			
+			//if(( !isEven && b < (c-1) ) || (isEven && b < (c-2))) {
+			if(isEven && b < (c-2)) {
+				int a4 = -1;
+				boolean a4b = a%4 == 0; 
+				if(a4b) {
+					a4 = a / 4;
+				}
+				System.out.println(a + ", " + b + ", " + c + ", a/4: " + (a4b ? a4 : "no") + ", a/4^2: " + (a4 * a4));
+				ret.add(ii);
+			} else {
+				//System.out.println("Skipping: " + a + ", " + b + ", " + c);
+			}
+			
+		}
 	}
 	
 	public static void printPythTriplesOnlyReducedButWithFactors(int max) {
