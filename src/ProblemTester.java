@@ -79,7 +79,8 @@ public class ProblemTester {
 		problems.add(new Problem70());
 		problems.add(new Problem71());
 		problems.add(new Problem72());
-
+		problems.add(new Problem73());
+		problems.add(new Problem74());
 		
 		System.out.println("Have this many problems : " + problems.size());
 		Map<Integer, String> answers = AnswersDontCheckMeIn.getAnswers();
@@ -108,7 +109,7 @@ public class ProblemTester {
 		
 		
 		for(Integer i : longProblems) {
-			System.out.println("Problem " + i + " took over 1 second ");
+			System.out.println("\nProblem " + i + " took over 1 second ");
 		}
 		
 		for(Integer i : incorrectAnswers) {
