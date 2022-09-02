@@ -6,6 +6,55 @@ import java.util.Set;
 
 /*
 
+Heres a couple interesting things:
+20,21,29 - middle is 25, which which is 1/2 of the one below (48,52 mid is 50)
+20,48,52 - middle is 50, which is 1/2 of the one below (99,101 mid is 100)
+20,99,101 
+
+odds are weird still
+21,28,35 	- mid is 31.5 which is 3/7 of the one below... and also extra:  28/72 is 14/46 and 7/18,,, and 35/75 is 7/15 || mid is 31.5
+21,72,75 	- mid is 73.5 which is 1/3 of the one below (73.5 * 3 = 220.5)
+21,220,221	- mid is 220.5
+
+
+24,32,40 - mid is 36 	/12 = 3, 3/4 of the one below
+24,45,51 - mid is 48 	/12 = 4, 2/3 of the one below
+24,70,74 - mid is 72 	/12 = 6, 1/2 of the one below
+24,143,145 mid is 144	/12 = 12
+
+
+25,60,65 	- mid is 62.5  = 1/5 of one below
+25,312,313 	- mid is 312.5 
+
+
+27,36,45   - mid is 40.5  /40.5 = 1 - this is 1/3 of the one below (121.5 / 40.5)
+27,120,123 - mid is 121.5 /40.5 = 3 - this is 1/3 of the one below (121.5 / 364.5)
+27,364,365 - mid is 364.5 /40.5 = 9
+
+28,45,53   - mid is 49  /7 = 7  = 1/2 of the one below
+28,96,100  - mid is 98  /7 = 14 = 1/2 of the one below
+28,195,197 - mid is 196 /7 = 28
+
+29,420,421
+
+30,40,50   - mid is 45  /15 = 3 = 3/5 of the one below
+30,72,78   - mid is 75  /15 = 5 = 1/3 of the one below
+30,224,226 - mid is 225 /15 = 15
+
+31,480,481
+
+this ones weird
+32,60,68   - mid is 64  /2 = 32
+32,126,130 - mid is 238 /2 = 119
+32,255,257 - mid is 256 /2 = 128
+
+
+33,44,55
+33,56,65
+33,180,183
+33,544,545
+....
+-----------------------
 20, 21, 29, a/4: 5, a/4^2: 25 :: c-b: 8 c-cmb/2: 25.0
 a2 b2 c2 = 400, 441, 841   abDiff=1, acDiff=9, bcDiff=8, a2b2Diff=41, a2c2Diff=441, b2c2Diff=400
 facts of a:  2 2 5
@@ -247,8 +296,8 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		// TODO Auto-generated method stub
 		//Problem pp = new Problem75();
 		//pp.runProblem();
-		//printAllPythagoreanTriplesWithALessThan(75);
-		printPythTriplesOnlyReducedNotPredictable(800);
+		printAllPythagoreanTriplesWithALessThan(75);
+		//printPythTriplesOnlyReducedNotPredictable(800);
 		
 		//doOtherGuys(70, max, false);
 	}
@@ -261,6 +310,7 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 			
 			boolean isEven = a%2 == 0;
 			
+			//if(true){//
 			if(( !isEven && b < (c-1) ) || (isEven && b < (c-2))) {
 			//if(isEven && b < (c-2)) {
 			//if( !isEven && b < (c-1)) {
@@ -1167,7 +1217,8 @@ public static void printAllPythagoreanTriplesWithALessThan(int max) {
 		
 		for(int ia = 0; ia < tr.size(); ia++) {
 			Integer[] ii = tr.get(ia);
-			if(ii != null)System.out.println(ii[0] + "," + ii[1] + "," + ii[2] );
+			if(ii != null)
+				System.out.println(ii[0] + "," + ii[1] + "," + ii[2] );
 			else System.out.println("no sol for : " + ia );
 		}
 		//if(ans != null)
