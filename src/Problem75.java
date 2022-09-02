@@ -44,9 +44,9 @@ odds are weird still
 31,480,481
 
 this ones weird
-32,60,68   - mid is 64  /2 = 32
-32,126,130 - mid is 238 /2 = 119
-32,255,257 - mid is 256 /2 = 128
+32,60,68   - mid is 64  = 1/2 of the one below
+32,126,130 - mid is 128 = 1/2 of the one below
+32,255,257 - mid is 256 
 
 
 33,44,55
@@ -296,12 +296,26 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		// TODO Auto-generated method stub
 		//Problem pp = new Problem75();
 		//pp.runProblem();
-		printAllPythagoreanTriplesWithALessThan(75);
+		//printAllPythagoreanTriplesWithALessThan(75);
+		printAllPythagoreanTriplesWithALessThanWithDetails(100);
+		//printOddsAndSquaresOrder(1000);
 		//printPythTriplesOnlyReducedNotPredictable(800);
 		
 		//doOtherGuys(70, max, false);
 	}
 	
+	
+	public static void printOddsAndSquaresOrder(int howMany) {
+		
+		int odd = 1;
+		int sq = 1;
+		for(int i=1; i<howMany; i++) {
+			
+			System.out.println("#" + i + " odd: " + odd + " sq: " + sq);
+			odd +=2;
+			sq += odd;
+		}
+	}
 	public static void printPythTriplesOnlyReducedNotPredictable(int max) {
 		List<Integer[]> sols = printLotsOfTriplesButOnlyReduced(max);
 		List<Integer[]> ret = new ArrayList<Integer[]>() ;
@@ -1220,6 +1234,56 @@ public static void printAllPythagoreanTriplesWithALessThan(int max) {
 			if(ii != null)
 				System.out.println(ii[0] + "," + ii[1] + "," + ii[2] );
 			else System.out.println("no sol for : " + ia );
+		}
+		//if(ans != null)
+		//	System.out.println(ans[0] + ", " + ans[1]+ ", " + ans[2]);
+	}
+}
+public static void printAllPythagoreanTriplesWithALessThanWithDetails(int max) {
+	int min = 3; //, max = 40;
+	//String ans = getPythagoreanTripleFromThisA(19);
+	for(int i = min; i <= max; i++) {
+		//int[] ans = getPythagoreanTriplesFromThisA(i);
+		List<Integer[]> tr = getPythagoreanTriplesFromThisA(i);
+		
+		for(int ia = 0; ia < tr.size(); ia++) {
+			Integer[] ii = tr.get(ia);
+			
+			if(ii != null) {
+				int a=ii[0], b=ii[1], c=ii[2], ao=(a*2 -1), bo=(b*2 -1), co=(c*2 -1);
+				int a2 = a*a, b2 = b*b, c2 = c*c;
+				List<Integer> factsa = Util.getPrimeFactors(a);
+				List<Integer> factsb = Util.getPrimeFactors(b);
+				List<Integer> factsc = Util.getPrimeFactors(c);
+				System.out.println("triple:\t" + a + "\t" + b + "\t" + c);
+				System.out.println("sq:\t" + a2 + "\t" + b2 + "\t" + c2);
+				System.out.println("odd:\t" + ao + "\t" + bo + "\t" + co);
+				System.out.print("odds between b and c: ");
+				int t = bo;
+				while(t < co) System.out.print((t+=2) + " ");
+				System.out.println();
+				System.out.println("diff:\tb-a: " + (b-a) + "\tc-a: " + (c-a) + "\tc-b: " + (c-b));
+				System.out.println("diff2:\tb2-a2: " + (b2-a2) + "\tc2-a2: " + (c2-a2) + "\tc2-b2: " + (c2-b2));
+				System.out.print("facts a: ");
+				for(Integer ai : factsa) {
+					System.out.print(ai + " ");
+				}
+				System.out.println();
+				System.out.print("facts b: ");
+				for(Integer bi : factsb) {
+					System.out.print(bi + " ");
+				}
+				System.out.println();
+				System.out.print("facts c: ");
+				for(Integer ci : factsc) {
+					System.out.print(ci + " ");
+				}
+				System.out.println();
+				System.out.println();
+				//System.out.println(ii[0] + " (" + ao + ")," + ii[1] + "(" + bo + ")," + ii[2] + "(" + co + ")");
+			} else {
+				System.out.println("no sol for : " + ia );
+			}
 		}
 		//if(ans != null)
 		//	System.out.println(ans[0] + ", " + ans[1]+ ", " + ans[2]);
