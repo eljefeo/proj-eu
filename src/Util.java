@@ -2063,6 +2063,14 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		return true;
 	}
 	
+	public static int collatzConjectureNextNum(int num){
+		if(num % 2 == 0){
+			return num / 2;
+		} else { 
+			return 3*num + 1;
+		}
+	}
+	
 	public static long collatzConjectureNextNum(long num){
 		if(num % 2 == 0){
 			return num / 2;
