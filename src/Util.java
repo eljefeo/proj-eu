@@ -301,7 +301,33 @@ public class Util {
 	}
 	*/
 	
-	
+	public static long getLargestPrimeFactor(long goal){
+		
+		long largest = 0;
+		if(goal % 2 == 0) {
+			largest = 2;
+			while(goal%2==0){
+				goal /= 2;
+			}
+		}
+		
+		loop:
+		for(long i = 3; i <= Math.sqrt(goal) ; i+=2){
+			while(goal%i==0){
+				goal /= i;
+				largest = i;
+				if(goal == 1) {
+					break loop;
+				}	
+			}	
+		}
+		
+		if(goal > 1){
+			largest = goal;
+		}
+		
+		return largest;
+	}
 	
 	public static Set<Integer> getDistinctFactorsIntOldSlow(int num) {
 
