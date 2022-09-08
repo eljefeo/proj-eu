@@ -318,6 +318,8 @@ public class Util {
 				largest = i;
 				if(goal == 1) {
 					break loop;
+					// can just return here
+					// return largest; ?
 				}	
 			}	
 		}
