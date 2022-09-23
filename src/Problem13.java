@@ -114,8 +114,10 @@ public class Problem13 implements Problem { //Took 0.002628 seconds
 
 	}
 	
+
+	
 	@Override
-	public String problem(){
+	public Object problem(){
 		
 		String allnums[] = {
 				"37107287533902102798797998220837590246510135740250",
@@ -233,7 +235,7 @@ public class Problem13 implements Problem { //Took 0.002628 seconds
 		}
 		
 		//System.out.println("Found: " + solution);
-		return "" + solution;
+		return solution;
 		
 	}
 

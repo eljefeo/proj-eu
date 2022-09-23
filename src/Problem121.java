@@ -21,12 +21,12 @@ Find the maximum prize fund that should be allocated to a single game in which f
 	}
 	
 	@Override
-	public String problem() {
+	public Object problem() {
 		int turnCount = 15; // breaks at 2 need to fix?
 		
 		BigInteger howMuchToGive = howMuchShouldBankerGive(turnCount);
 		//System.out.println("Banker should give : " + howMuchToGive);
-		return howMuchToGive.toString();
+		return howMuchToGive;
 	}
 	
 	private static int howManyCanYouMiss(int turns){

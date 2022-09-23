@@ -11,7 +11,7 @@ public class Problem15 implements Problem { //Took 0.000206 seconds
 	How many such routes are there through a 20×20 grid?*/
 
 	@Override
-	public  String problem() {
+	public  Object problem() {
 		int height = 21;
 		long[][] arr = new long[height][height];
 		
@@ -27,6 +27,6 @@ public class Problem15 implements Problem { //Took 0.000206 seconds
 		}
 		
 		//System.out.println("result: " + arr[height-1][height-1] );
-		return "" + arr[height-1][height-1];
+		return arr[height-1][height-1];
 	}
 }

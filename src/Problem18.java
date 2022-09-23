@@ -47,7 +47,7 @@ NOTE: As there are only 16384 routes, it is possible to solve this problem by tr
 	}
 	
 	@Override
-	public String problem(){
+	public Object problem(){
 		int allnums2[][] = {
 				{75},
 				{95, 64},
@@ -75,7 +75,7 @@ NOTE: As there are only 16384 routes, it is possible to solve this problem by tr
 			};
 		
 		//System.out.println("Greatest Sum = " + Util.findGreatestSumPath(allnums2));
-		return "" + Util.findGreatestSumPath(allnums2);
+		return Util.findGreatestSumPath(allnums2);
 	
 		
 	}

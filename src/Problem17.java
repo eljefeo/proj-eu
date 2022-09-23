@@ -22,7 +22,7 @@ NOTE: Do not count spaces or hyphens. For example, 342 (three hundred and forty-
 	
 	
 	@Override
-	public String problem(){
+	public Object problem(){
 		String zeroTnine[] = {
 				"one", "two", "three","four","five","six","seven","eight","nine"
 		};
@@ -82,7 +82,7 @@ NOTE: Do not count spaces or hyphens. For example, 342 (three hundred and forty-
 		letters+=thousand.length();
 		
 		//System.out.print("Num of letters " + letters);
-		return "" + letters;
+		return letters;
 	}
 
 }

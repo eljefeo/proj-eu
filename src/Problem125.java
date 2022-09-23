@@ -22,7 +22,7 @@ Find the sum of all the numbers less than 10^8 that are both palindromic and can
 	}
 
 	@Override
-	public String problem() {
+	public Object problem() {
 
 		int power = 8;
 		int maxSum = (int) Math.pow(10, power);
@@ -52,7 +52,7 @@ Find the sum of all the numbers less than 10^8 that are both palindromic and can
 		}
 		
 		//System.out.println("Final Sum from " + palSums.size() + " nums ::: " + finalSum);
-		return "" + finalSum;
+		return finalSum;
 	}
 	
 	

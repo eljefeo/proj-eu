@@ -23,7 +23,7 @@ public class Problem21 implements Problem { //Took 0.076784 seconds
 	 */
 
 	@Override
-	public String problem() {
+	public Object problem() {
 		Set<Integer> an = new HashSet<Integer>();
 		int runningTotal = 0;
 		for (int i = 1; i < 10000; i++) {
@@ -44,7 +44,7 @@ public class Problem21 implements Problem { //Took 0.076784 seconds
 		//	runningTotal += sum;
 		//}
 		//System.out.println("Final sum : " + runningTotal);
-		return "" + runningTotal;
+		return runningTotal;
 	}
 
 }

@@ -24,7 +24,7 @@ How many Sundays fell on the first of the month during the twentieth century (1 
 	}
 	
 	@Override
-	public String problem(){
+	public Object problem(){
 		
 		int numOfSundaysOnFirstOfMonth = 0;
 		int dayOfWeek = 2;
@@ -47,7 +47,7 @@ How many Sundays fell on the first of the month during the twentieth century (1 
 		}
 		
 		//System.out.println("Found: " + numOfSundaysOnFirstOfMonth);
-		return "" + numOfSundaysOnFirstOfMonth;
+		return numOfSundaysOnFirstOfMonth;
 	}
 	
 

@@ -24,7 +24,7 @@ NOTE: Once the chain starts the terms are allowed to go above one million.
 	 */
 	
 	@Override
-	public String problem(){
+	public Object problem(){
 		
 		int biggestNumOfSteps = 0;
 		int finalNum = 0;
@@ -51,7 +51,7 @@ NOTE: Once the chain starts the terms are allowed to go above one million.
 		}
 		
 		System.out.println("Found " + finalNum + " with " + biggestNumOfSteps + " steps");
-		return "" + finalNum;
+		return finalNum;
 	}
 	
 	

@@ -8,7 +8,7 @@ public class Problem20 implements Problem { //Took 0.001608 seconds
 	}
 	
 	@Override
-	public String problem(){
+	public Object problem(){
 		int factorial = 100;
 		BigInteger inte = new BigInteger("1");
 		
@@ -23,7 +23,7 @@ public class Problem20 implements Problem { //Took 0.001608 seconds
 		}
 		
 		//System.out.println("found: " + inte.toString() + " --- \n" + runningTotal);
-		return "" + runningTotal;
+		return runningTotal;
 	}
 
 }

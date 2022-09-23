@@ -15,7 +15,7 @@ What is the sum of the digits of the number 2^1000?
 	 */
 	
 	@Override
-	public String problem(){
+	public Object problem(){
 		
 		BigInteger total = new BigInteger("1");
 		for(int i = 1; i <= 1000; i++){
@@ -30,7 +30,7 @@ What is the sum of the digits of the number 2^1000?
 		}
 		
 		//System.out.println("Found : " + digitSum);
-		return "" + digitSum;
+		return digitSum;
 	}
 
 }

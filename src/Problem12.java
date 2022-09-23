@@ -39,7 +39,7 @@ What is the value of the first triangle number to have over five hundred divisor
 	}
 	
 	@Override
-	public String problem(){
+	public Object problem(){
 		
 		int factorLimit = 500;
 		int ind = 1;
@@ -49,7 +49,7 @@ What is the value of the first triangle number to have over five hundred divisor
 			Set<Integer> factors = Util.getDistinctFactorsInt(tri);
 			if(factors.size() > factorLimit){
 				System.out.print("Found: "  + tri + " with " + factors.size() + " factors");
-				return "" + tri;
+				return tri;
 			} 
 			else {
 				if(factors.size() > biggestFactorSize){
