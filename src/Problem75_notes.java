@@ -4,6 +4,172 @@ public class Problem75_notes {
 }
 
 /*
+ * 
+ 09/22/22
+ Just some interesting notes before I forget:
+ Obviously pyth triples are focused around the factors of the numbers, in our case starting with factors of 'a'
+ 
+ so for ood numbers:
+ 
+ 
+  -------
+Here is 9 for example:
+ 
+triple:	9	12	15
+sq:	81	144	225
+odd:	17	23	29
+odds between b and c: 25 27 29 
+diff:	b-a: 3	c-a: 6	c-b: 3
+diff2:	b2-a2: 63	c2-a2: 144	c2-b2: 81
+facts a: 3 3 
+facts b: 2 2 3 
+facts c: 3 5 
+
+triple:	9	40	41
+sq:	81	1600	1681
+odd:	17	79	81
+odds between b and c: 81 
+diff:	b-a: 31	c-a: 32	c-b: 1
+diff2:	b2-a2: 1519	c2-a2: 1600	c2-b2: 81
+facts a: 3 3 
+facts b: 2 2 2 5 
+facts c: 41 
+
+the factors of 9 are 3,3
+
+if we go to the top predictable triple for 9, which the formula again is 
+9^2 / 2 === 81/2 = 40.5
+You can think of this as using the factor of 1 from 9 (which all nums technically have 1 as a factor)
+9,40,41
+
+b and c are 1 away, hence factor 1
+
+but we can divide out the factors of 9 from the middle of b and c
+
+middle of 40 and 41 is 40.5
+divide out the factor of 3
+
+40.5 / 3 = 13.5
+Now this means 13.5 is 3 away from b and c
+so b and c must be 12 and 15, so 9 12 15 is another triple
+
+keep dividing out the factors of A from the middle of the first triple and you will get 
+the rest of the triples. This includes the combinations of the factors...By that we mean look at the 
+next example using 45:
+
+-----
+-----
+here for 45:
+Same rules as above, lets start with with first top triple
+45 ^ 2 / 2 = 1,012.5
+45, 1012, 1013
+now 1012.5 / factors of 45 (3,3,5)
+1012.5 / 3 = 337.5 this means 337.5 is in the middle of b and c and they are 3 away
+so 45, 336, 339
+
+then 1012.5 / 5 = 202.5 this means 202.5 is the middle of b and c and they are 5 away
+so 45, 200, 205
+
+then 1012.5 / 15 (THE COMBINATION OF THE FACTORS 3 AND 5)
+1012.5 / 15 = 67.5 this means 67.5 is middle of b and c and they are 15 away
+so 45, 60, 75
+
+
+Now  you must remember to keep dividing out the factors until we go below the original A
+by that I mean although there are Two 3s as a factor in 45, dont just stop diving out 3 twice
+1012.5 / 3 = 337.5
+then do it again 337.5 / 3 = 112.5 this means since we divided 3 twice, b and c are 3*3 (9) away
+so 112.5 is mid of b and c and they are 9 away
+so 45, 108, 117
+
+We were able to divide 3 out twice, if you divide 3 again you go below the original A = 45
+
+Dont think we just divided 3 twice because there were two 3s as factors. THERE ARE OTHER NUMBERS
+LIKE A=39 WHERE THERE IS ONLY ONE FACTOR OF 3, BUT YOU STILL DIVIDE 3 TWICE.
+Keep going until you go below A
+
+
+
+triple:	45	60	75
+sq:	2025	3600	5625
+odd:	89	119	149
+odds between b and c: 121 123 125 127 129 131 133 135 137 139 141 143 145 147 149 
+diff:	b-a: 15	c-a: 30	c-b: 15
+diff2:	b2-a2: 1575	c2-a2: 3600	c2-b2: 2025
+facts a: 3 3 5 
+facts b: 2 2 3 5 
+facts c: 3 5 5 
+
+triple:	45	108	117
+sq:	2025	11664	13689
+odd:	89	215	233
+odds between b and c: 217 219 221 223 225 227 229 231 233 
+diff:	b-a: 63	c-a: 72	c-b: 9
+diff2:	b2-a2: 9639	c2-a2: 11664	c2-b2: 2025
+facts a: 3 3 5 
+facts b: 2 2 3 3 3 
+facts c: 3 3 13 
+
+triple:	45	200	205
+sq:	2025	40000	42025
+odd:	89	399	409
+odds between b and c: 401 403 405 407 409 
+diff:	b-a: 155	c-a: 160	c-b: 5
+diff2:	b2-a2: 37975	c2-a2: 40000	c2-b2: 2025
+facts a: 3 3 5 
+facts b: 2 2 2 5 5 
+facts c: 5 41 
+
+triple:	45	336	339
+sq:	2025	112896	114921
+odd:	89	671	677
+odds between b and c: 673 675 677 
+diff:	b-a: 291	c-a: 294	c-b: 3
+diff2:	b2-a2: 110871	c2-a2: 112896	c2-b2: 2025
+facts a: 3 3 5 
+facts b: 2 2 2 2 3 7 
+facts c: 3 113 
+
+triple:	45	1012	1013
+sq:	2025	1024144	1026169
+odd:	89	2023	2025
+odds between b and c: 2025 
+diff:	b-a: 967	c-a: 968	c-b: 1
+diff2:	b2-a2: 1022119	c2-a2: 1024144	c2-b2: 2025
+facts a: 3 3 5 
+facts b: 2 2 11 23 
+facts c: 1013 
+
+
+The problem is as go higher for A, and A has more and more factors.. 
+finding them all this way will get harder and harder as we will have more factors combinations to try
+to divide out.. 
+Once we get closer to understanding maybe there is a way we can build them all from the ground up
+I mean we might still be able to find all the 'prime' triples (triples that dont have common factor 
+between the 3 numbers) like 20,21,29 - these are a unique, non-reduceable prime
+we know how to the find the prime triples for evens and odds, but only when b and c are 1 away
+if we can find a way to find these other unique 'prime' triples then we can just 
+do all the multiples of these triples to get the rest of all the possible triples..
+
+like we do 3,4,5 (then do all multiples 6,8,10 ; 9,12,15 ; 12,16,20 etc...
+then do 5,12,13 (then all multiples)
+then 6,8,10 is already a multiple so I guess that doesnt count
+but then 7,24,25
+then 8, 15, 17
+....
+then 20,21,29  +++++ we just dont know how to get this one magically... if we did we 
+	could do all the multiples and continue on our way..
+
+
+Ok thats all I got for now.
+
+-----
+
+ 
+ */
+
+
+/*
 triple:	3	4	5
 sq:	9	16	25
 odd:	5	7	9
