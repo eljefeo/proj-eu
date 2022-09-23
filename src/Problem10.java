@@ -11,14 +11,14 @@ public class Problem10 implements Problem{ //Took 0.110249 seconds
 		new Problem10().runProblem();
 	}
 	
-	public String problem(){
+	public Object problem(){
 		int max = 2000000;
 		long runningTotal = 0;
 		List<Integer> primes = Util.getPrimesUnder(max);
 		for(int i : primes)
 			runningTotal += i;
 		//System.out.println("Found: " + runningTotal);
-		return "" + runningTotal;
+		return runningTotal;
 	}
 	
 	public void problemOld(){

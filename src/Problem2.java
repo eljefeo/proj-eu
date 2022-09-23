@@ -15,29 +15,33 @@ public class Problem2 implements Problem { //Took 0.000200 seconds
 	}
 
 	@Override
-	public String problem(){
+	public Object problem(){
 		int total = 0;
-		int val1 = 1, val2 = 2;
+		int val1 = 1, val2 = 2, newVal;
+		
+		//since we only want evens..
+		// we start with 1 and 2, thats adding an odd and an even
+		// that gives us an odd (3)
+		// then adding an odd and an even (2 and 3) , gives us another odd (5)
+		//but then we add an odd and an odd (3 and 5), which gives us an even (8)
+		// what im trying to say.. is every 3 goes we get an even
+		// so we dont have to check every time if we have an even number to add
+		// we just do the sequence three times, add that number, then 3 more and add, etc..
 		
 		int max = 4000000;
-		while (true){
-			
-			if(val2 % 2 == 0){
+		int counter = 0;
+		while (val2 < max){
+			if(counter == 3) {
+				//System.out.println("1adding even at " + counter + " , " + val1 + " + " + val2);
 				total += val2;
+				counter = 0;	
 			}
-			int newVal = val1 + val2;
+			newVal = val1 + val2;
 			val1 = val2;
 			val2 = newVal;
-			
-			if(val2 > max){
-				break;
-			}
-			
-			
+			counter++;
 		}
-		System.out.println("Val1 : " + val1 + ", val2 : " + val2);
-		//System.out.println("Answer : " + total);
-		return "" + total;
+		return total;
 	}
 	
 }

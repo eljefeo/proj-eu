@@ -94,13 +94,14 @@ public class ProblemTester {
 			long startT = System.nanoTime();
 			Problem p = problems.get(i);
 			String res = p.runProblem();
+			long endT = System.nanoTime();
+			double time = (double) (endT - startT) / 1000000000;
 			//System.out.println("\ngot answer from the thing : " + res);
 			String expectedAnswer = answers.get(i+1);
 			if(!res.equals(expectedAnswer)) {
 				incorrectAnswers.add(i+1);
 			} 
-			long endT = System.nanoTime();
-			double time = (double) (endT - startT) / 1000000000;
+			
 			
 			if(time > 1) {
 				longProblems.add(i+1);
