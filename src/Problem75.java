@@ -297,9 +297,12 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		//Problem pp = new Problem75();
 		//pp.runProblem();
 		//printAllPythagoreanTriplesWithALessThan(75);
-		printAllPythagoreanTriplesWithALessThanWithDetails(100);
+		//printAllPythagoreanTriplesWithALessThanWithDetails(100);
 		//printOddsAndSquaresOrder(1000);
-		//printPythTriplesOnlyReducedNotPredictable(800);
+		
+		doLotsOfDiffsAndSumsOfSquares();
+		
+		printPythTriplesOnlyReducedNotPredictable(800);
 		
 		//doOtherGuys(70, max, false);
 	}
@@ -1325,7 +1328,7 @@ public static List<Integer[]> printLotsOfTriplesButOnlyReduced(int maxSum) {
 				continue;
 			
 			int gcd1 = Util.gcd(ii[0], ii[1]);
-			int gcd2 = Util.gcd(ii[1], ii[2]);
+			
 			//System.out.println("gcd1 and 2 : " + gcd1 + " " + gcd2);
 			if(gcd1 == 1) {
 				// this means a and b have no factors in common
@@ -1337,7 +1340,7 @@ public static List<Integer[]> printLotsOfTriplesButOnlyReduced(int maxSum) {
 				continue;
 			}
 			
-			
+			int gcd2 = Util.gcd(ii[1], ii[2]);
 			
 			if(gcd1 == gcd2) {
 				//System.out.println("trip: " + ii[0] + "," + ii[1] + "," + ii[2] + " ::: reduced: " + (ii[0]/gcd1) + "," + (ii[1]/gcd1) + "," + (ii[2]/gcd1) + " gcd: " + gcd1);
@@ -1586,7 +1589,20 @@ public static List<Integer[]> getPythagoreanTriplesFromThisA(int a) {
 		System.out.println("\nYay all worked");
 	}
 	
-	
+	public static void doLotsOfDiffsAndSumsOfSquares() {
+		int x = 0, y = 0;
+		int max = 10;
+		for(int i =  1; i < max; i++) {
+			for(int j = i+1; j < max; j++) {
+				System.out.print("i: " + i + " j: " + j + " ::: ");
+				int i2 = i*i, j2 = j*j;
+				int diff = j2 - i2;
+				int sum = j2 + i2;
+				System.out.println("Diff: " + diff + " sum: " + sum);
+			}
+			//System.out.println("Diff: " + (i*i) + " sum: " + ())
+		}
+	}
 	
 	
 	/////////////////////////From last time I tried to think about it:

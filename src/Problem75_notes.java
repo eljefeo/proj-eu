@@ -4,6 +4,116 @@ public class Problem75_notes {
 }
 
 /*
+ * Uploding some old notes from a while back
+ * a^2 + b^2 = c^2
+ * 
+ * so a^2 = c^2 - b^2
+ *    b^2 = c^2 - a^2
+ *    c^2 = a^2 + b^2
+ *    
+ *    so a is the diff of 2 squares
+ *    b is also the diff of 2 squres
+ *    and c is the sum of 2 squares
+ *    
+ *    I think we found some interesting things if we mess around with this
+ *    
+ *    lets take 3,4,5
+ *    a is 3
+ *    so what are the 2 squares, if 3 is the difference of 2 squares
+ *    well 4 and 1 = 3
+ *    
+ *    and 4 is also the diff of 2 squares so what squares are those? I guess 
+ *    
+ *    what if we start looking at the differences of squares and the sum of squares
+ *    so what are the first 2 squares
+ *    1,4
+ *    diff of those is 3, sum of those is 5
+ *    
+ *    what about 1, 9
+ *    diff is 8, sum is 10
+ *    
+ *    
+ *    what about 4,9
+ *    diff is 5, sum is 13
+ *    
+ *    
+ *    what about 4, 16
+ *    diff is 12, sum is 20
+ *    
+ *    So this is getting kinda interesting...
+ *    
+ *    3...5
+ *    8...10
+ *    5...13
+ *    12...20
+ *    
+ *    those all look kinda familiar... they look like they show up in some of the triples dont they?
+ *    3,4,5 == 3..5
+ *    maybe 6,8,10 for 8...10?
+ *    maybe 5,12,13 for 5...13
+ 		12,15,20 for 12...20?
+ 		
+ 		what the hell? I was just looking at factoring the difference of squares because I remember that was 
+ 			a thing in highschool but I dont remember anything about it or how to do it, 
+ 			so I figured Ill just start randomly throwing out difference of squares and sum of squares and
+ 			every single one looks like it has something to do with triples?
+ 			IS there something fundamental about pythagorean triples and diff and sum of squres?
+ 			Well I guess duh yea there is obviously, that is the literal pythagorean forumla, diff and sum of squares so 
+ 				of course they are going to show up in there...
+ 				
+ 				so weird. but so awesome
+ 				
+ 		ok so now what... We know if we do diff and sum of squares we get some of the pyth triples.. but we dont get all numbers
+ 		like sometimes it gives us a and c, and sometimes it gives us b and c? is that how it looks?
+ 		
+ 		lets write a little function to just spit out a bunch of diffs and sums of squares:
+ 		...ok done, here are a bunch of diff and sums of squares:
+ 		i: 1 j: 2 ::: Diff: 3 sum: 5
+i: 1 j: 3 ::: Diff: 8 sum: 10
+i: 1 j: 4 ::: Diff: 15 sum: 17
+i: 1 j: 5 ::: Diff: 24 sum: 26
+i: 1 j: 6 ::: Diff: 35 sum: 37
+i: 1 j: 7 ::: Diff: 48 sum: 50
+i: 1 j: 8 ::: Diff: 63 sum: 65
+i: 1 j: 9 ::: Diff: 80 sum: 82
+i: 2 j: 3 ::: Diff: 5 sum: 13
+i: 2 j: 4 ::: Diff: 12 sum: 20
+i: 2 j: 5 ::: Diff: 21 sum: 29
+i: 2 j: 6 ::: Diff: 32 sum: 40
+i: 2 j: 7 ::: Diff: 45 sum: 53
+i: 2 j: 8 ::: Diff: 60 sum: 68
+i: 2 j: 9 ::: Diff: 77 sum: 85
+i: 3 j: 4 ::: Diff: 7 sum: 25
+i: 3 j: 5 ::: Diff: 16 sum: 34
+i: 3 j: 6 ::: Diff: 27 sum: 45
+i: 3 j: 7 ::: Diff: 40 sum: 58
+i: 3 j: 8 ::: Diff: 55 sum: 73
+i: 3 j: 9 ::: Diff: 72 sum: 90
+i: 4 j: 5 ::: Diff: 9 sum: 41
+i: 4 j: 6 ::: Diff: 20 sum: 52
+i: 4 j: 7 ::: Diff: 33 sum: 65
+i: 4 j: 8 ::: Diff: 48 sum: 80
+i: 4 j: 9 ::: Diff: 65 sum: 97
+i: 5 j: 6 ::: Diff: 11 sum: 61
+i: 5 j: 7 ::: Diff: 24 sum: 74
+i: 5 j: 8 ::: Diff: 39 sum: 89
+i: 5 j: 9 ::: Diff: 56 sum: 106
+i: 6 j: 7 ::: Diff: 13 sum: 85
+i: 6 j: 8 ::: Diff: 28 sum: 100
+i: 6 j: 9 ::: Diff: 45 sum: 117
+i: 7 j: 8 ::: Diff: 15 sum: 113
+i: 7 j: 9 ::: Diff: 32 sum: 130
+i: 8 j: 9 ::: Diff: 17 sum: 145
+ 
+ 
+ 
+ 
+ 
+ *
+ */  
+
+
+/*.
  * 
  09/22/22
  Just some interesting notes before I forget:
@@ -87,6 +197,7 @@ We were able to divide 3 out twice, if you divide 3 again you go below the origi
 Dont think we just divided 3 twice because there were two 3s as factors. THERE ARE OTHER NUMBERS
 LIKE A=39 WHERE THERE IS ONLY ONE FACTOR OF 3, BUT YOU STILL DIVIDE 3 TWICE.
 Keep going until you go below A
+^In other words, divide all the factors, not just the prime factors. Since 9 is a factor, divide out 9
 
 
 
@@ -146,7 +257,7 @@ finding them all this way will get harder and harder as we will have more factor
 to divide out.. 
 Once we get closer to understanding maybe there is a way we can build them all from the ground up
 I mean we might still be able to find all the 'prime' triples (triples that dont have common factor 
-between the 3 numbers) like 20,21,29 - these are a unique, non-reduceable prime
+between the 3 numbers) like 20,21,29 - these are a unique, non-reducible prime
 we know how to the find the prime triples for evens and odds, but only when b and c are 1 away
 if we can find a way to find these other unique 'prime' triples then we can just 
 do all the multiples of these triples to get the rest of all the possible triples..
@@ -2930,5 +3041,221 @@ facts a: 2 2 5 5
 facts b: 3 7 7 17 
 facts c: 41 61 
 
+
+*/
+
+
+/*
+not predictable:
+
+20, 21, 29, a/4: 5, a/4^2: 25 :: c-b: 8 c-cmb/2: 25.0
+a2 b2 c2 = 400, 441, 841   abDiff=1, acDiff=9, bcDiff=8, a2b2Diff=41, a2c2Diff=441, b2c2Diff=400
+facts of a:  2 2 5
+facts of b:  3 7
+facts of c:  29
+
+28, 45, 53, a/4: 7, a/4^2: 49 :: c-b: 8 c-cmb/2: 49.0
+a2 b2 c2 = 784, 2025, 2809   abDiff=17, acDiff=25, bcDiff=8, a2b2Diff=1241, a2c2Diff=2025, b2c2Diff=784
+facts of a:  2 2 7
+facts of b:  3 3 5
+facts of c:  53
+
+33, 56, 65, a/4: no, a/4^2: 1 :: c-b: 9 c-cmb/2: 60.5
+a2 b2 c2 = 1089, 3136, 4225   abDiff=23, acDiff=32, bcDiff=9, a2b2Diff=2047, a2c2Diff=3136, b2c2Diff=1089
+facts of a:  3 11
+facts of b:  2 2 2 7
+facts of c:  5 13
+
+36, 77, 85, a/4: 9, a/4^2: 81 :: c-b: 8 c-cmb/2: 81.0
+a2 b2 c2 = 1296, 5929, 7225   abDiff=41, acDiff=49, bcDiff=8, a2b2Diff=4633, a2c2Diff=5929, b2c2Diff=1296
+facts of a:  2 2 3 3
+facts of b:  7 11
+facts of c:  5 17
+
+39, 80, 89, a/4: no, a/4^2: 1 :: c-b: 9 c-cmb/2: 84.5
+a2 b2 c2 = 1521, 6400, 7921   abDiff=41, acDiff=50, bcDiff=9, a2b2Diff=4879, a2c2Diff=6400, b2c2Diff=1521
+facts of a:  3 13
+facts of b:  2 2 2 2 5
+facts of c:  89
+
+44, 117, 125, a/4: 11, a/4^2: 121 :: c-b: 8 c-cmb/2: 121.0
+a2 b2 c2 = 1936, 13689, 15625   abDiff=73, acDiff=81, bcDiff=8, a2b2Diff=11753, a2c2Diff=13689, b2c2Diff=1936
+facts of a:  2 2 11
+facts of b:  3 3 13
+facts of c:  5 5 5
+
+48, 55, 73, a/4: 12, a/4^2: 144 :: c-b: 18 c-cmb/2: 64.0
+a2 b2 c2 = 2304, 3025, 5329   abDiff=7, acDiff=25, bcDiff=18, a2b2Diff=721, a2c2Diff=3025, b2c2Diff=2304
+facts of a:  2 2 2 2 3
+facts of b:  5 11
+facts of c:  73
+
+51, 140, 149, a/4: no, a/4^2: 1 :: c-b: 9 c-cmb/2: 144.5
+a2 b2 c2 = 2601, 19600, 22201   abDiff=89, acDiff=98, bcDiff=9, a2b2Diff=16999, a2c2Diff=19600, b2c2Diff=2601
+facts of a:  3 17
+facts of b:  2 2 5 7
+facts of c:  149
+
+52, 165, 173, a/4: 13, a/4^2: 169 :: c-b: 8 c-cmb/2: 169.0
+a2 b2 c2 = 2704, 27225, 29929   abDiff=113, acDiff=121, bcDiff=8, a2b2Diff=24521, a2c2Diff=27225, b2c2Diff=2704
+facts of a:  2 2 13
+facts of b:  3 5 11
+facts of c:  173
+
+57, 176, 185, a/4: no, a/4^2: 1 :: c-b: 9 c-cmb/2: 180.5
+a2 b2 c2 = 3249, 30976, 34225   abDiff=119, acDiff=128, bcDiff=9, a2b2Diff=27727, a2c2Diff=30976, b2c2Diff=3249
+facts of a:  3 19
+facts of b:  2 2 2 2 11
+facts of c:  5 37
+
+60, 91, 109, a/4: 15, a/4^2: 225 :: c-b: 18 c-cmb/2: 100.0
+a2 b2 c2 = 3600, 8281, 11881   abDiff=31, acDiff=49, bcDiff=18, a2b2Diff=4681, a2c2Diff=8281, b2c2Diff=3600
+facts of a:  2 2 3 5
+facts of b:  7 13
+facts of c:  109
+
+60, 221, 229, a/4: 15, a/4^2: 225 :: c-b: 8 c-cmb/2: 225.0
+a2 b2 c2 = 3600, 48841, 52441   abDiff=161, acDiff=169, bcDiff=8, a2b2Diff=45241, a2c2Diff=48841, b2c2Diff=3600
+facts of a:  2 2 3 5
+facts of b:  13 17
+facts of c:  229
+
+65, 72, 97, a/4: no, a/4^2: 1 :: c-b: 25 c-cmb/2: 84.5
+a2 b2 c2 = 4225, 5184, 9409   abDiff=7, acDiff=32, bcDiff=25, a2b2Diff=959, a2c2Diff=5184, b2c2Diff=4225
+facts of a:  5 13
+facts of b:  2 2 2 3 3
+facts of c:  97
+
+68, 285, 293, a/4: 17, a/4^2: 289 :: c-b: 8 c-cmb/2: 289.0
+a2 b2 c2 = 4624, 81225, 85849   abDiff=217, acDiff=225, bcDiff=8, a2b2Diff=76601, a2c2Diff=81225, b2c2Diff=4624
+facts of a:  2 2 17
+facts of b:  3 5 19
+facts of c:  293
+
+69, 260, 269, a/4: no, a/4^2: 1 :: c-b: 9 c-cmb/2: 264.5
+a2 b2 c2 = 4761, 67600, 72361   abDiff=191, acDiff=200, bcDiff=9, a2b2Diff=62839, a2c2Diff=67600, b2c2Diff=4761
+facts of a:  3 23
+facts of b:  2 2 5 13
+facts of c:  269
+
+75, 308, 317, a/4: no, a/4^2: 1 :: c-b: 9 c-cmb/2: 312.5
+a2 b2 c2 = 5625, 94864, 100489   abDiff=233, acDiff=242, bcDiff=9, a2b2Diff=89239, a2c2Diff=94864, b2c2Diff=5625
+facts of a:  3 5 5
+facts of b:  2 2 7 11
+facts of c:  317
+
+76, 357, 365, a/4: 19, a/4^2: 361 :: c-b: 8 c-cmb/2: 361.0
+a2 b2 c2 = 5776, 127449, 133225   abDiff=281, acDiff=289, bcDiff=8, a2b2Diff=121673, a2c2Diff=127449, b2c2Diff=5776
+facts of a:  2 2 19
+facts of b:  3 7 17
+facts of c:  5 73
+
+84, 187, 205, a/4: 21, a/4^2: 441 :: c-b: 18 c-cmb/2: 196.0
+a2 b2 c2 = 7056, 34969, 42025   abDiff=103, acDiff=121, bcDiff=18, a2b2Diff=27913, a2c2Diff=34969, b2c2Diff=7056
+facts of a:  2 2 3 7
+facts of b:  11 17
+facts of c:  5 41
+
+85, 132, 157, a/4: no, a/4^2: 1 :: c-b: 25 c-cmb/2: 144.5
+a2 b2 c2 = 7225, 17424, 24649   abDiff=47, acDiff=72, bcDiff=25, a2b2Diff=10199, a2c2Diff=17424, b2c2Diff=7225
+facts of a:  5 17
+facts of b:  2 2 3 11
+facts of c:  157
+
+88, 105, 137, a/4: 22, a/4^2: 484 :: c-b: 32 c-cmb/2: 121.0
+a2 b2 c2 = 7744, 11025, 18769   abDiff=17, acDiff=49, bcDiff=32, a2b2Diff=3281, a2c2Diff=11025, b2c2Diff=7744
+facts of a:  2 2 2 11
+facts of b:  3 5 7
+facts of c:  137
+
+95, 168, 193, a/4: no, a/4^2: 1 :: c-b: 25 c-cmb/2: 180.5
+a2 b2 c2 = 9025, 28224, 37249   abDiff=73, acDiff=98, bcDiff=25, a2b2Diff=19199, a2c2Diff=28224, b2c2Diff=9025
+facts of a:  5 19
+facts of b:  2 2 2 3 7
+facts of c:  193
+
+96, 247, 265, a/4: 24, a/4^2: 576 :: c-b: 18 c-cmb/2: 256.0
+a2 b2 c2 = 9216, 61009, 70225   abDiff=151, acDiff=169, bcDiff=18, a2b2Diff=51793, a2c2Diff=61009, b2c2Diff=9216
+facts of a:  2 2 2 2 2 3
+facts of b:  13 19
+facts of c:  5 53
+
+104, 153, 185, a/4: 26, a/4^2: 676 :: c-b: 32 c-cmb/2: 169.0
+a2 b2 c2 = 10816, 23409, 34225   abDiff=49, acDiff=81, bcDiff=32, a2b2Diff=12593, a2c2Diff=23409, b2c2Diff=10816
+facts of a:  2 2 2 13
+facts of b:  3 3 17
+facts of c:  5 37
+
+105, 208, 233, a/4: no, a/4^2: 1 :: c-b: 25 c-cmb/2: 220.5
+a2 b2 c2 = 11025, 43264, 54289   abDiff=103, acDiff=128, bcDiff=25, a2b2Diff=32239, a2c2Diff=43264, b2c2Diff=11025
+facts of a:  3 5 7
+facts of b:  2 2 2 2 13
+facts of c:  233
+
+115, 252, 277, a/4: no, a/4^2: 1 :: c-b: 25 c-cmb/2: 264.5
+a2 b2 c2 = 13225, 63504, 76729   abDiff=137, acDiff=162, bcDiff=25, a2b2Diff=50279, a2c2Diff=63504, b2c2Diff=13225
+facts of a:  5 23
+facts of b:  2 2 3 3 7
+facts of c:  277
+
+119, 120, 169, a/4: no, a/4^2: 1 :: c-b: 49 c-cmb/2: 144.5
+a2 b2 c2 = 14161, 14400, 28561   abDiff=1, acDiff=50, bcDiff=49, a2b2Diff=239, a2c2Diff=14400, b2c2Diff=14161
+facts of a:  7 17
+facts of b:  2 2 2 3 5
+facts of c:  13 13
+
+120, 209, 241, a/4: 30, a/4^2: 900 :: c-b: 32 c-cmb/2: 225.0
+a2 b2 c2 = 14400, 43681, 58081   abDiff=89, acDiff=121, bcDiff=32, a2b2Diff=29281, a2c2Diff=43681, b2c2Diff=14400
+facts of a:  2 2 2 3 5
+facts of b:  11 19
+facts of c:  241
+
+133, 156, 205, a/4: no, a/4^2: 1 :: c-b: 49 c-cmb/2: 180.5
+a2 b2 c2 = 17689, 24336, 42025   abDiff=23, acDiff=72, bcDiff=49, a2b2Diff=6647, a2c2Diff=24336, b2c2Diff=17689
+facts of a:  7 19
+facts of b:  2 2 3 13
+facts of c:  5 41
+
+136, 273, 305, a/4: 34, a/4^2: 1156 :: c-b: 32 c-cmb/2: 289.0
+a2 b2 c2 = 18496, 74529, 93025   abDiff=137, acDiff=169, bcDiff=32, a2b2Diff=56033, a2c2Diff=74529, b2c2Diff=18496
+facts of a:  2 2 2 17
+facts of b:  3 7 13
+facts of c:  5 61
+
+140, 171, 221, a/4: 35, a/4^2: 1225 :: c-b: 50 c-cmb/2: 196.0
+a2 b2 c2 = 19600, 29241, 48841   abDiff=31, acDiff=81, bcDiff=50, a2b2Diff=9641, a2c2Diff=29241, b2c2Diff=19600
+facts of a:  2 2 5 7
+facts of b:  3 3 19
+facts of c:  13 17
+
+160, 231, 281, a/4: 40, a/4^2: 1600 :: c-b: 50 c-cmb/2: 256.0
+a2 b2 c2 = 25600, 53361, 78961   abDiff=71, acDiff=121, bcDiff=50, a2b2Diff=27761, a2c2Diff=53361, b2c2Diff=25600
+facts of a:  2 2 2 2 2 5
+facts of b:  3 7 11
+facts of c:  281
+
+161, 240, 289, a/4: no, a/4^2: 1 :: c-b: 49 c-cmb/2: 264.5
+a2 b2 c2 = 25921, 57600, 83521   abDiff=79, acDiff=128, bcDiff=49, a2b2Diff=31679, a2c2Diff=57600, b2c2Diff=25921
+facts of a:  7 23
+facts of b:  2 2 2 2 3 5
+facts of c:  17 17
+
+175, 288, 337, a/4: no, a/4^2: 1 :: c-b: 49 c-cmb/2: 312.5
+a2 b2 c2 = 30625, 82944, 113569   abDiff=113, acDiff=162, bcDiff=49, a2b2Diff=52319, a2c2Diff=82944, b2c2Diff=30625
+facts of a:  5 5 7
+facts of b:  2 2 2 2 2 3 3
+facts of c:  337
+
+204, 253, 325, a/4: 51, a/4^2: 2601 :: c-b: 72 c-cmb/2: 289.0
+a2 b2 c2 = 41616, 64009, 105625   abDiff=49, acDiff=121, bcDiff=72, a2b2Diff=22393, a2c2Diff=64009, b2c2Diff=41616
+facts of a:  2 2 3 17
+facts of b:  11 23
+facts of c:  5 5 13
+
+207, 224, 305, a/4: no, a/4^2: 1 :: c-b: 81 c-cmb/2: 264.5
+a2 b2 c2 = 42849, 50176, 93025   abDiff=17, acDiff=98, bcDiff=81, a2b2Diff=7327, a2c2Diff=50176, b2c2Diff=42849
+facts of a:  3 3 23
+facts of b:  2 2 2 2 2 7
+facts of c:  5 61
 
 */
