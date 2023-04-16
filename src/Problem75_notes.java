@@ -66,6 +66,10 @@ public class Problem75_notes {
  		ok so now what... We know if we do diff and sum of squares we get some of the pyth triples.. but we dont get all numbers
  		like sometimes it gives us a and c, and sometimes it gives us b and c? is that how it looks?
  		
+ 		So what does this mean,  we just do all the diff and sum of squares, can we get all triples though?
+ 			We have been able to find other triples already with other methods, but it didnt find all. Lets test 
+ 			if we can find all triples with this method...
+ 		
  		lets write a little function to just spit out a bunch of diffs and sums of squares:
  		...ok done, here are a bunch of diff and sums of squares:
  		i: 1 j: 2 ::: Diff: 3 sum: 5
@@ -105,7 +109,87 @@ i: 7 j: 8 ::: Diff: 15 sum: 113
 i: 7 j: 9 ::: Diff: 32 sum: 130
 i: 8 j: 9 ::: Diff: 17 sum: 145
  
+ ok so now what... we can first use our shitty code to get a big list of pyth triples and then maybe do these diffs and sums 
+ and see if we can find corresponding triples I guess?
  
+ ok lets try it.. writing some code now...
+ ok done with some code... here are some comparisons of diffs and sums of squares against actual lists of trips that we just generated:
+ (I went up to 40 I think with the diffs and sums and max for value of 'a' for the trips):
+ Found a match... dif: 3 sum: 5 orig2: 1,2 -- matching trip: 3,4,5
+Found a match... dif: 5 sum: 13 orig2: 2,3 -- matching trip: 5,12,13
+Found a match... dif: 8 sum: 10 orig2: 1,3 -- matching trip: 6,8,10
+Found a match... dif: 7 sum: 25 orig2: 3,4 -- matching trip: 7,24,25
+Found a match... dif: 15 sum: 17 orig2: 1,4 -- matching trip: 8,15,17
+Could not find match for trip: 9,12,15
+Found a match... dif: 9 sum: 41 orig2: 4,5 -- matching trip: 9,40,41
+Found a match... dif: 24 sum: 26 orig2: 1,5 -- matching trip: 10,24,26
+Found a match... dif: 11 sum: 61 orig2: 5,6 -- matching trip: 11,60,61
+Found a match... dif: 12 sum: 20 orig2: 2,4 -- matching trip: 12,16,20
+Found a match... dif: 35 sum: 37 orig2: 1,6 -- matching trip: 12,35,37
+Found a match... dif: 13 sum: 85 orig2: 6,7 -- matching trip: 13,84,85
+Found a match... dif: 48 sum: 50 orig2: 1,7 -- matching trip: 14,48,50
+Could not find match for trip: 15,20,25
+Could not find match for trip: 15,36,39
+Found a match... dif: 15 sum: 113 orig2: 7,8 -- matching trip: 15,112,113
+Found a match... dif: 16 sum: 34 orig2: 3,5 -- matching trip: 16,30,34
+Found a match... dif: 63 sum: 65 orig2: 1,8 -- matching trip: 16,63,65
+Could not find match for trip: 17,144,145
+Could not find match for trip: 18,24,30
+Found a match... dif: 80 sum: 82 orig2: 1,9 -- matching trip: 18,80,82
+Could not find match for trip: 19,180,181
+Found a match... dif: 21 sum: 29 orig2: 2,5 -- matching trip: 20,21,29
+Found a match... dif: 20 sum: 52 orig2: 4,6 -- matching trip: 20,48,52
+Found a match... dif: 99 sum: 101 orig2: 1,10 -- matching trip: 20,99,101
+Could not find match for trip: 21,28,35
+Could not find match for trip: 21,72,75
+Could not find match for trip: 21,220,221
+Found a match... dif: 120 sum: 122 orig2: 1,11 -- matching trip: 22,120,122
+Could not find match for trip: 23,264,265
+Found a match... dif: 32 sum: 40 orig2: 2,6 -- matching trip: 24,32,40
+Could not find match for trip: 24,45,51
+Found a match... dif: 24 sum: 74 orig2: 5,7 -- matching trip: 24,70,74
+Could not find match for trip: 24,143,145
+Could not find match for trip: 25,60,65
+Could not find match for trip: 25,312,313
+Could not find match for trip: 26,168,170
+Found a match... dif: 27 sum: 45 orig2: 3,6 -- matching trip: 27,36,45
+Could not find match for trip: 27,120,123
+Could not find match for trip: 27,364,365
+Found a match... dif: 45 sum: 53 orig2: 2,7 -- matching trip: 28,45,53
+Found a match... dif: 28 sum: 100 orig2: 6,8 -- matching trip: 28,96,100
+Could not find match for trip: 28,195,197
+Could not find match for trip: 29,420,421
+Could not find match for trip: 30,40,50
+Could not find match for trip: 30,72,78
+Could not find match for trip: 30,224,226
+Could not find match for trip: 31,480,481
+Found a match... dif: 60 sum: 68 orig2: 2,8 -- matching trip: 32,60,68
+Could not find match for trip: 32,126,130
+Could not find match for trip: 32,255,257
+Could not find match for trip: 33,44,55
+Found a match... dif: 33 sum: 65 orig2: 4,7 -- matching trip: 33,56,65
+Could not find match for trip: 33,180,183
+Could not find match for trip: 33,544,545
+Could not find match for trip: 34,288,290
+Could not find match for trip: 35,84,91
+Could not find match for trip: 35,120,125
+Could not find match for trip: 35,612,613
+Could not find match for trip: 36,48,60
+Found a match... dif: 77 sum: 85 orig2: 2,9 -- matching trip: 36,77,85
+Could not find match for trip: 36,105,111
+Could not find match for trip: 36,160,164
+Could not find match for trip: 36,323,325
+Could not find match for trip: 37,684,685
+Could not find match for trip: 38,360,362
+Could not find match for trip: 39,52,65
+Found a match... dif: 39 sum: 89 orig2: 5,8 -- matching trip: 39,80,89
+Could not find match for trip: 39,252,255
+Could not find match for trip: 39,760,761
+Found a match... dif: 40 sum: 58 orig2: 3,7 -- matching trip: 40,42,58
+Could not find match for trip: 40,75,85
+Found a match... dif: 96 sum: 104 orig2: 2,10 -- matching trip: 40,96,104
+Could not find match for trip: 40,198,202
+Could not find match for trip: 40,399,401
  
  
  
