@@ -92,7 +92,7 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 				
 				
 				
-				System.out.println("x y = " + i + "," + j + " : " + a + "," + b + "," + c);
+				System.out.print("x y = " + i + "," + j + " : " + a + "," + b + "," + c + " :: ");
 
 				int gcd1 = Util.gcd(a, b);
 				
@@ -100,10 +100,11 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 				if(gcd1 > 1) {
 					int gcd2 = Util.gcd(b, c);
 					if(gcd1 == gcd2) {
-						System.out.println("possible duplicate triple for " + a + "," + b + "," + c + " : gcd in common found: " + gcd1 + " , " + gcd2 + " -- Original triple: " + (a/gcd1) + "," + (b/gcd1) + "," + (c/gcd1));
+						System.out.print("possible multiple: gcd in common found: " + gcd1 + " -- Original triple: " + (a/gcd1) + "," + (b/gcd1) + "," + (c/gcd1));
 					}
 				}
 				
+				System.out.println();
 
 					
 			}

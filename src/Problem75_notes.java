@@ -360,60 +360,42 @@ x y = 8,9 : 17,144,145
  
  
  And heres some notes with triples and gcds and which ones are possibly duplicates using the equations above:
- x y = 1,2 : 3,4,5
-x y = 1,3 : 6,8,10
-possible duplicate triple for 6,8,10 : gcd in common found: 2 , 2 -- Original triple: 3,4,5
-x y = 1,4 : 8,15,17
-x y = 1,5 : 10,24,26
-possible duplicate triple for 10,24,26 : gcd in common found: 2 , 2 -- Original triple: 5,12,13
-x y = 1,6 : 12,35,37
-x y = 1,7 : 14,48,50
-possible duplicate triple for 14,48,50 : gcd in common found: 2 , 2 -- Original triple: 7,24,25
-x y = 1,8 : 16,63,65
-x y = 1,9 : 18,80,82
-possible duplicate triple for 18,80,82 : gcd in common found: 2 , 2 -- Original triple: 9,40,41
-x y = 2,3 : 5,12,13
-x y = 2,4 : 12,16,20
-possible duplicate triple for 12,16,20 : gcd in common found: 4 , 4 -- Original triple: 3,4,5
-x y = 2,5 : 20,21,29
-x y = 2,6 : 24,32,40
-possible duplicate triple for 24,32,40 : gcd in common found: 8 , 8 -- Original triple: 3,4,5
-x y = 2,7 : 28,45,53
-x y = 2,8 : 32,60,68
-possible duplicate triple for 32,60,68 : gcd in common found: 4 , 4 -- Original triple: 8,15,17
-x y = 2,9 : 36,77,85
-x y = 3,4 : 7,24,25
-x y = 3,5 : 16,30,34
-possible duplicate triple for 16,30,34 : gcd in common found: 2 , 2 -- Original triple: 8,15,17
-x y = 3,6 : 27,36,45
-possible duplicate triple for 27,36,45 : gcd in common found: 9 , 9 -- Original triple: 3,4,5
-x y = 3,7 : 40,42,58
-possible duplicate triple for 40,42,58 : gcd in common found: 2 , 2 -- Original triple: 20,21,29
-x y = 3,8 : 48,55,73
-x y = 3,9 : 54,72,90
-possible duplicate triple for 54,72,90 : gcd in common found: 18 , 18 -- Original triple: 3,4,5
-x y = 4,5 : 9,40,41
-x y = 4,6 : 20,48,52
-possible duplicate triple for 20,48,52 : gcd in common found: 4 , 4 -- Original triple: 5,12,13
-x y = 4,7 : 33,56,65
-x y = 4,8 : 48,64,80
-possible duplicate triple for 48,64,80 : gcd in common found: 16 , 16 -- Original triple: 3,4,5
-x y = 4,9 : 65,72,97
-x y = 5,6 : 11,60,61
-x y = 5,7 : 24,70,74
-possible duplicate triple for 24,70,74 : gcd in common found: 2 , 2 -- Original triple: 12,35,37
-x y = 5,8 : 39,80,89
-x y = 5,9 : 56,90,106
-possible duplicate triple for 56,90,106 : gcd in common found: 2 , 2 -- Original triple: 28,45,53
-x y = 6,7 : 13,84,85
-x y = 6,8 : 28,96,100
-possible duplicate triple for 28,96,100 : gcd in common found: 4 , 4 -- Original triple: 7,24,25
-x y = 6,9 : 45,108,117
-possible duplicate triple for 45,108,117 : gcd in common found: 9 , 9 -- Original triple: 5,12,13
-x y = 7,8 : 15,112,113
-x y = 7,9 : 32,126,130
-possible duplicate triple for 32,126,130 : gcd in common found: 2 , 2 -- Original triple: 16,63,65
-x y = 8,9 : 17,144,145
+x y = 1,2 : 3,4,5 :: 
+x y = 1,3 : 6,8,10 :: possible multiple: gcd in common found: 2 -- Original triple: 3,4,5
+x y = 1,4 : 8,15,17 :: 
+x y = 1,5 : 10,24,26 :: possible multiple: gcd in common found: 2 -- Original triple: 5,12,13
+x y = 1,6 : 12,35,37 :: 
+x y = 1,7 : 14,48,50 :: possible multiple: gcd in common found: 2 -- Original triple: 7,24,25
+x y = 1,8 : 16,63,65 :: 
+x y = 1,9 : 18,80,82 :: possible multiple: gcd in common found: 2 -- Original triple: 9,40,41
+x y = 2,3 : 5,12,13 :: 
+x y = 2,4 : 12,16,20 :: possible multiple: gcd in common found: 4 -- Original triple: 3,4,5
+x y = 2,5 : 20,21,29 :: 
+x y = 2,6 : 24,32,40 :: possible multiple: gcd in common found: 8 -- Original triple: 3,4,5
+x y = 2,7 : 28,45,53 :: 
+x y = 2,8 : 32,60,68 :: possible multiple: gcd in common found: 4 -- Original triple: 8,15,17
+x y = 2,9 : 36,77,85 :: 
+x y = 3,4 : 7,24,25 :: 
+x y = 3,5 : 16,30,34 :: possible multiple: gcd in common found: 2 -- Original triple: 8,15,17
+x y = 3,6 : 27,36,45 :: possible multiple: gcd in common found: 9 -- Original triple: 3,4,5
+x y = 3,7 : 40,42,58 :: possible multiple: gcd in common found: 2 -- Original triple: 20,21,29
+x y = 3,8 : 48,55,73 :: 
+x y = 3,9 : 54,72,90 :: possible multiple: gcd in common found: 18 -- Original triple: 3,4,5
+x y = 4,5 : 9,40,41 :: 
+x y = 4,6 : 20,48,52 :: possible multiple: gcd in common found: 4 -- Original triple: 5,12,13
+x y = 4,7 : 33,56,65 :: 
+x y = 4,8 : 48,64,80 :: possible multiple: gcd in common found: 16 -- Original triple: 3,4,5
+x y = 4,9 : 65,72,97 :: 
+x y = 5,6 : 11,60,61 :: 
+x y = 5,7 : 24,70,74 :: possible multiple: gcd in common found: 2 -- Original triple: 12,35,37
+x y = 5,8 : 39,80,89 :: 
+x y = 5,9 : 56,90,106 :: possible multiple: gcd in common found: 2 -- Original triple: 28,45,53
+x y = 6,7 : 13,84,85 :: 
+x y = 6,8 : 28,96,100 :: possible multiple: gcd in common found: 4 -- Original triple: 7,24,25
+x y = 6,9 : 45,108,117 :: possible multiple: gcd in common found: 9 -- Original triple: 5,12,13
+x y = 7,8 : 15,112,113 :: 
+x y = 7,9 : 32,126,130 :: possible multiple: gcd in common found: 2 -- Original triple: 16,63,65
+x y = 8,9 : 17,144,145 :: 
 
  
  
