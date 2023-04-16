@@ -39,24 +39,78 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		//doLotsOfDiffsAndSumsOfSquares(20);
 		
 		
-		//findTripsThenCompareDiffAndSums(40);
+		//findTripsThenCompareDiffAndSums(40, false);
 		System.out.println("===========");
 		System.out.println("===========");
 		System.out.println("===========");
-		findTripsThenCompareDiffAndSumsReduced(70, false);
+		//findTripsThenCompareDiffAndSumsReduced(70, false);
 		
-		printReducedTriples(70);
+		//printReducedTriples(70);
 		//printTripFromThisA2(9);
 		System.out.println("===========");
-		find2NumsForThisTrip(65,2112,2113);
+		//find2NumsForThisTrip(65,2112,2113);
 		//printTripsFromAtoA(1,20);
 		
 		//testGetTripsFromAvsA2(3000);
 		//printPythTriplesOnlyReducedNotPredictable(800);
 		
 		//doOtherGuys(70, max, false);
+		
+		
+		generateSomeTriplesUpToXY(10);
 	}
 
+	
+	public static List<Integer[]> generateSomeTriplesUpToXY(int max){
+		
+		List<Integer[]> sols = new ArrayList<Integer[]>();
+		for(int i =  1; i < max; i++) {
+			for(int j = i+1; j < max; j++) {
+				
+				
+				if(i == j) {
+					System.out.println("THEY ARE THE SAMEEEEEE");
+					System.exit(1);
+				}
+				
+				
+				//TODO if i and j are same!!!!!!!!! 
+				int i2 = i*i, j2 = j*j;
+				int ab = j2 - i2;
+				int c = j2 + i2;
+				int ba = 2 * i * j;
+				int a,b;
+				if(ab > ba) {
+					b = ab;
+					a = ba;
+				} else {
+					a = ab;
+					b = ba;
+				}
+				sols.add(new Integer[] {a, b, c});
+				
+				
+				
+				
+				System.out.println("x y = " + i + "," + j + " : " + a + "," + b + "," + c);
+
+				int gcd1 = Util.gcd(a, b);
+				
+				//System.out.println("gcd1 and 2 : " + gcd1 + " " + gcd2);
+				if(gcd1 > 1) {
+					int gcd2 = Util.gcd(b, c);
+					if(gcd1 == gcd2) {
+						System.out.println("possible duplicate triple for " + a + "," + b + "," + c + " : gcd in common found: " + gcd1 + " , " + gcd2 + " -- Original triple: " + (a/gcd1) + "," + (b/gcd1) + "," + (c/gcd1));
+					}
+				}
+				
+
+					
+			}
+			//System.out.println("Diff: " + (i*i) + " sum: " + ())
+		}
+		return sols;
+	}
 	
 	public static void find2NumsForThisTrip(int a, int b, int c) {
 		
@@ -145,7 +199,7 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		for(Integer[] trip : trips) {
 			boolean f = false;
 			for(Integer[] difSum : ds) {
-				if((trip[0] == difSum[0] || trip[1] == difSum[0]) && trip[2] == difSum[1]) {
+				if((trip[0].compareTo(difSum[0]) == 0 || trip[1].compareTo(difSum[0]) == 0) && trip[2].compareTo(difSum[1]) == 0) {
 					System.out.println("Found a match... dif: " + difSum[0] + " sum: " + difSum[1] + " orig2: " + difSum[2] + "," + difSum[3] +  " -- matching trip: " + trip[0] + "," + trip[1] + "," + trip[2]);
 					f = true;
 					break;

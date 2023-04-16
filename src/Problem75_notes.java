@@ -115,7 +115,133 @@ i: 8 j: 9 ::: Diff: 17 sum: 145
  
  ok lets try it.. writing some code now...
  ok done with some code... here are some comparisons of diffs and sums of squares against actual lists of trips that we just generated:
- (I went up to 40 I think with the diffs and sums and max for value of 'a' for the trips):
+ 
+Found a match... dif: 3 sum: 5 orig2: 1,2 -- matching trip: 3,4,5 --- found 3 and 5 but are missing B 4
+Found a match... dif: 5 sum: 13 orig2: 2,3 -- matching trip: 5,12,13 --- found 5 and 13 but are missing B 12
+Found a match... dif: 7 sum: 25 orig2: 3,4 -- matching trip: 7,24,25 --- found 7 and 25 but are missing B 24
+Found a match... dif: 15 sum: 17 orig2: 1,4 -- matching trip: 8,15,17 --- found 15 and 17 but are missing A 8
+Found a match... dif: 9 sum: 41 orig2: 4,5 -- matching trip: 9,40,41 --- found 9 and 41 but are missing B 40
+Found a match... dif: 11 sum: 61 orig2: 5,6 -- matching trip: 11,60,61 --- found 11 and 61 but are missing B 60
+Found a match... dif: 35 sum: 37 orig2: 1,6 -- matching trip: 12,35,37 --- found 35 and 37 but are missing A 12
+Found a match... dif: 13 sum: 85 orig2: 6,7 -- matching trip: 13,84,85 --- found 13 and 85 but are missing B 84
+Found a match... dif: 15 sum: 113 orig2: 7,8 -- matching trip: 15,112,113 --- found 15 and 113 but are missing B 112
+Found a match... dif: 63 sum: 65 orig2: 1,8 -- matching trip: 16,63,65 --- found 63 and 65 but are missing A 16
+Found a match... dif: 17 sum: 145 orig2: 8,9 -- matching trip: 17,144,145 --- found 17 and 145 but are missing B 144
+Found a match... dif: 19 sum: 181 orig2: 9,10 -- matching trip: 19,180,181 --- found 19 and 181 but are missing B 180
+Found a match... dif: 21 sum: 29 orig2: 2,5 -- matching trip: 20,21,29 --- found 21 and 29 but are missing A 20
+Found a match... dif: 99 sum: 101 orig2: 1,10 -- matching trip: 20,99,101 --- found 99 and 101 but are missing A 20
+Found a match... dif: 21 sum: 221 orig2: 10,11 -- matching trip: 21,220,221 --- found 21 and 221 but are missing B 220
+Found a match... dif: 23 sum: 265 orig2: 11,12 -- matching trip: 23,264,265 --- found 23 and 265 but are missing B 264
+Found a match... dif: 143 sum: 145 orig2: 1,12 -- matching trip: 24,143,145 --- found 143 and 145 but are missing A 24
+Found a match... dif: 25 sum: 313 orig2: 12,13 -- matching trip: 25,312,313 --- found 25 and 313 but are missing B 312
+Found a match... dif: 27 sum: 365 orig2: 13,14 -- matching trip: 27,364,365 --- found 27 and 365 but are missing B 364
+Found a match... dif: 45 sum: 53 orig2: 2,7 -- matching trip: 28,45,53 --- found 45 and 53 but are missing A 28
+Found a match... dif: 195 sum: 197 orig2: 1,14 -- matching trip: 28,195,197 --- found 195 and 197 but are missing A 28
+Found a match... dif: 29 sum: 421 orig2: 14,15 -- matching trip: 29,420,421 --- found 29 and 421 but are missing B 420
+
+ 
+ ok so this could be good. We may be on our way to generating the trips! We can now allllmost generate some good stuff
+ I do see the trips in there that we were not generating before, like 20,21,29. Previously we would miss that one...among others
+ but this method does seem to find that one, even if it is missing a or b...
+ so now we need to find out which a or b we are missing and why, and how to generate it.
+ once we can make all 3 a b and c then we are all set...
+ so what are we missing... lets see why sometimes we get a and sometimes we get b...
+ 
+ lets get a sample
+ 
+ ok so I replaced the log above with more logs. I spit out what number was missing, whether its 'a' or 'b'. 
+ We can see that the even number seems to always be missing.. weird. But ok.
+ so doing the diff and sum gives us the 2 odd numbers of a trip, but sometimes we are missing a or b, whichever one is even, thats what we dont have..
+ so can we get that last number?
+ 
+ lets see...what do we have to work with.. where are we at so far...
+ Well we start with 2 numbers, like 1 and 2
+ we then square both and get the sum and the diff of those squares.
+ 
+ so here are 2 examples where we are missing the b:
+ like 1^2 = 1, and 2^2 = 4
+ so 4-1 = 3, and 4+1 = 5
+ so now we have 3 and 5, and we can already tell that is from the triple 3,4,5
+ but we are missing the b, 4... 
+ 
+ take 5 and 6
+ 5 sqrd = 25 and 6 sqrd = 36
+ 36 + 25 = 61 and 36 - 25 = 11
+ that is from the triple 11, 60, 61
+ we are missing the b, 60
+ 
+ here are 2 examples missing a:
+ 
+ if we have 1 and 4
+ so 1^2 = 1, and 4^2 = 16
+ so we have 1+16 = 17 and 16-1 = 15
+ that is from the triple 8,15,17
+ we are missing the a, 8
+ 
+ take 2 and 5
+ 2 sqrd is 4 and 5 sqrd is 25
+ 25 - 4 = 21
+ 25 + 4 = 29
+ that is from 20, 21, 29
+ we are missing the a, 20
+ 
+ 
+ how do we get that...
+ 
+ so for 2 and 5
+ 2*2 = 4, 5*5 = 25
+ we need to get 20 from all this somehow..
+ we get one num from (call the first num x and second num y, assuming y is bigger than x and they are never the same obviously)
+ y^2 - x^2 = 21
+ and the other num comes from 
+ y^2 + x^2 = 25
+ ..... = 20
+ 
+ wait if you mulitply both those x and y together you get half?
+ lets try some..
+ 1,2 = 1*2 = 2 (looking for 4) yep works out
+ 5,6 = 5*6 = 30(looking for 60) yep works out
+ 1,4 = 1*4 = 4(looking for 8) yep works out
+ 2,5 = 2*5 = 10(looking for 20) yep works out
+ 
+ is that it????
+ 
+ Are the 3 nums:
+  y^2 - x^2
+  y^2 + x^2
+  y*x*2
+ 
+ ???!!!!!?????!!!!???!??
+ Did we figure something out finally?
+ I feel like we have been messing with this for a very long time, off and on.
+ We found so much cool stuff with these triples, different ways to find some, and factors and squares and odd number counting and adding.
+ damn...
+ 
+ Where can we go with this now..
+ so I see that this formula does sometimes find repeats, not repeats like the same triple, but repeats
+ 	like it will find 3,4,5 and then it will also find 6,8,10
+ 	but for some reason it will not find 9,12,15
+ is that a problem?
+ 
+ I guess its not too much of a problem, because we can find 9,12,15 if we wanted, since we can just do all the multiples of any triple
+ and we already have the 3,4,5 and we can multiply that if we wanted..
+ but if we then say we will do multiples of all triples we find, we will kinda get messed up 
+ since the formula will find 3,4,5 and we will do all those multiples, but then the formula will give us 6,8,10 and we will do the multiples
+ 	of that, and we technically have already done those multiples if we did 3,4,5 already
+ 	
+ 	hmm.... so... what...
+ 	do we use the formula to get triples... then check if they are full reduced? Then we can do the multiples.. and be sure we are not really 
+ 	reapeating ourselves? I guess so..
+ 	
+ 	
+ 	is there a way we can use this formula to only get reduced triples and skip the multiples? 
+ 	Lets mess around with it and see what we come up with. Worse case scenario we can use it as is with the extra gcd check..
+ 	
+ 	but lets see if we can really refine this to give us the best output of only reduce, and nothing missing...
+ 
+ 
+ 
+ Here are some logs to look through with things that are found with this forumula
  Found a match... dif: 3 sum: 5 orig2: 1,2 -- matching trip: 3,4,5
 Found a match... dif: 5 sum: 13 orig2: 2,3 -- matching trip: 5,12,13
 Found a match... dif: 8 sum: 10 orig2: 1,3 -- matching trip: 6,8,10
@@ -134,72 +260,162 @@ Could not find match for trip: 15,36,39
 Found a match... dif: 15 sum: 113 orig2: 7,8 -- matching trip: 15,112,113
 Found a match... dif: 16 sum: 34 orig2: 3,5 -- matching trip: 16,30,34
 Found a match... dif: 63 sum: 65 orig2: 1,8 -- matching trip: 16,63,65
-Could not find match for trip: 17,144,145
+Found a match... dif: 17 sum: 145 orig2: 8,9 -- matching trip: 17,144,145
 Could not find match for trip: 18,24,30
 Found a match... dif: 80 sum: 82 orig2: 1,9 -- matching trip: 18,80,82
-Could not find match for trip: 19,180,181
+Found a match... dif: 19 sum: 181 orig2: 9,10 -- matching trip: 19,180,181
 Found a match... dif: 21 sum: 29 orig2: 2,5 -- matching trip: 20,21,29
 Found a match... dif: 20 sum: 52 orig2: 4,6 -- matching trip: 20,48,52
 Found a match... dif: 99 sum: 101 orig2: 1,10 -- matching trip: 20,99,101
 Could not find match for trip: 21,28,35
 Could not find match for trip: 21,72,75
-Could not find match for trip: 21,220,221
+Found a match... dif: 21 sum: 221 orig2: 10,11 -- matching trip: 21,220,221
 Found a match... dif: 120 sum: 122 orig2: 1,11 -- matching trip: 22,120,122
-Could not find match for trip: 23,264,265
+Found a match... dif: 23 sum: 265 orig2: 11,12 -- matching trip: 23,264,265
 Found a match... dif: 32 sum: 40 orig2: 2,6 -- matching trip: 24,32,40
 Could not find match for trip: 24,45,51
 Found a match... dif: 24 sum: 74 orig2: 5,7 -- matching trip: 24,70,74
-Could not find match for trip: 24,143,145
+Found a match... dif: 143 sum: 145 orig2: 1,12 -- matching trip: 24,143,145
 Could not find match for trip: 25,60,65
-Could not find match for trip: 25,312,313
-Could not find match for trip: 26,168,170
+Found a match... dif: 25 sum: 313 orig2: 12,13 -- matching trip: 25,312,313
+Found a match... dif: 168 sum: 170 orig2: 1,13 -- matching trip: 26,168,170
 Found a match... dif: 27 sum: 45 orig2: 3,6 -- matching trip: 27,36,45
 Could not find match for trip: 27,120,123
-Could not find match for trip: 27,364,365
+Found a match... dif: 27 sum: 365 orig2: 13,14 -- matching trip: 27,364,365
 Found a match... dif: 45 sum: 53 orig2: 2,7 -- matching trip: 28,45,53
 Found a match... dif: 28 sum: 100 orig2: 6,8 -- matching trip: 28,96,100
-Could not find match for trip: 28,195,197
-Could not find match for trip: 29,420,421
+Found a match... dif: 195 sum: 197 orig2: 1,14 -- matching trip: 28,195,197
+Found a match... dif: 29 sum: 421 orig2: 14,15 -- matching trip: 29,420,421
 Could not find match for trip: 30,40,50
 Could not find match for trip: 30,72,78
-Could not find match for trip: 30,224,226
-Could not find match for trip: 31,480,481
+Found a match... dif: 224 sum: 226 orig2: 1,15 -- matching trip: 30,224,226
+Found a match... dif: 31 sum: 481 orig2: 15,16 -- matching trip: 31,480,481
 Found a match... dif: 60 sum: 68 orig2: 2,8 -- matching trip: 32,60,68
-Could not find match for trip: 32,126,130
-Could not find match for trip: 32,255,257
+Found a match... dif: 32 sum: 130 orig2: 7,9 -- matching trip: 32,126,130
+Found a match... dif: 255 sum: 257 orig2: 1,16 -- matching trip: 32,255,257
 Could not find match for trip: 33,44,55
 Found a match... dif: 33 sum: 65 orig2: 4,7 -- matching trip: 33,56,65
 Could not find match for trip: 33,180,183
-Could not find match for trip: 33,544,545
-Could not find match for trip: 34,288,290
+Found a match... dif: 33 sum: 545 orig2: 16,17 -- matching trip: 33,544,545
+Found a match... dif: 288 sum: 290 orig2: 1,17 -- matching trip: 34,288,290
 Could not find match for trip: 35,84,91
 Could not find match for trip: 35,120,125
-Could not find match for trip: 35,612,613
+Found a match... dif: 35 sum: 613 orig2: 17,18 -- matching trip: 35,612,613
 Could not find match for trip: 36,48,60
 Found a match... dif: 77 sum: 85 orig2: 2,9 -- matching trip: 36,77,85
 Could not find match for trip: 36,105,111
-Could not find match for trip: 36,160,164
-Could not find match for trip: 36,323,325
-Could not find match for trip: 37,684,685
-Could not find match for trip: 38,360,362
+Found a match... dif: 36 sum: 164 orig2: 8,10 -- matching trip: 36,160,164
+Found a match... dif: 323 sum: 325 orig2: 1,18 -- matching trip: 36,323,325
+Found a match... dif: 37 sum: 685 orig2: 18,19 -- matching trip: 37,684,685
+Found a match... dif: 360 sum: 362 orig2: 1,19 -- matching trip: 38,360,362
 Could not find match for trip: 39,52,65
 Found a match... dif: 39 sum: 89 orig2: 5,8 -- matching trip: 39,80,89
 Could not find match for trip: 39,252,255
-Could not find match for trip: 39,760,761
+Found a match... dif: 39 sum: 761 orig2: 19,20 -- matching trip: 39,760,761
 Found a match... dif: 40 sum: 58 orig2: 3,7 -- matching trip: 40,42,58
 Could not find match for trip: 40,75,85
 Found a match... dif: 96 sum: 104 orig2: 2,10 -- matching trip: 40,96,104
-Could not find match for trip: 40,198,202
-Could not find match for trip: 40,399,401
+Found a match... dif: 40 sum: 202 orig2: 9,11 -- matching trip: 40,198,202
+Found a match... dif: 399 sum: 401 orig2: 1,20 -- matching trip: 40,399,401
  
- ok so this could be good. We may be on our way to generating the trips! We can now allllmost generate some good stuff
- I do see the trips in there that we were not generating before, like 20,21,29. Previously we would miss that one...among others
- but this method does seem to find that one, even if it is missing a or b...
- so now we need to find out which a or b we are missing and why, and how to generate it.
- once we can make all 3 a b and c then we are all set...
- so what are we missing... lets see why sometimes we get a and sometimes we get b...
  
- lets get a sample
+ And here are a bunch of newly generated triples with our new shiny magic forumla!!!!:
+x y = 1,2 : 3,4,5
+x y = 1,3 : 6,8,10
+x y = 1,4 : 8,15,17
+x y = 1,5 : 10,24,26
+x y = 1,6 : 12,35,37
+x y = 1,7 : 14,48,50
+x y = 1,8 : 16,63,65
+x y = 1,9 : 18,80,82
+x y = 2,3 : 5,12,13
+x y = 2,4 : 12,16,20
+x y = 2,5 : 20,21,29
+x y = 2,6 : 24,32,40
+x y = 2,7 : 28,45,53
+x y = 2,8 : 32,60,68
+x y = 2,9 : 36,77,85
+x y = 3,4 : 7,24,25
+x y = 3,5 : 16,30,34
+x y = 3,6 : 27,36,45
+x y = 3,7 : 40,42,58
+x y = 3,8 : 48,55,73
+x y = 3,9 : 54,72,90
+x y = 4,5 : 9,40,41
+x y = 4,6 : 20,48,52
+x y = 4,7 : 33,56,65
+x y = 4,8 : 48,64,80
+x y = 4,9 : 65,72,97
+x y = 5,6 : 11,60,61
+x y = 5,7 : 24,70,74
+x y = 5,8 : 39,80,89
+x y = 5,9 : 56,90,106
+x y = 6,7 : 13,84,85
+x y = 6,8 : 28,96,100
+x y = 6,9 : 45,108,117
+x y = 7,8 : 15,112,113
+x y = 7,9 : 32,126,130
+x y = 8,9 : 17,144,145
+ 
+ 
+ 
+ And heres some notes with triples and gcds and which ones are possibly duplicates using the equations above:
+ x y = 1,2 : 3,4,5
+x y = 1,3 : 6,8,10
+possible duplicate triple for 6,8,10 : gcd in common found: 2 , 2 -- Original triple: 3,4,5
+x y = 1,4 : 8,15,17
+x y = 1,5 : 10,24,26
+possible duplicate triple for 10,24,26 : gcd in common found: 2 , 2 -- Original triple: 5,12,13
+x y = 1,6 : 12,35,37
+x y = 1,7 : 14,48,50
+possible duplicate triple for 14,48,50 : gcd in common found: 2 , 2 -- Original triple: 7,24,25
+x y = 1,8 : 16,63,65
+x y = 1,9 : 18,80,82
+possible duplicate triple for 18,80,82 : gcd in common found: 2 , 2 -- Original triple: 9,40,41
+x y = 2,3 : 5,12,13
+x y = 2,4 : 12,16,20
+possible duplicate triple for 12,16,20 : gcd in common found: 4 , 4 -- Original triple: 3,4,5
+x y = 2,5 : 20,21,29
+x y = 2,6 : 24,32,40
+possible duplicate triple for 24,32,40 : gcd in common found: 8 , 8 -- Original triple: 3,4,5
+x y = 2,7 : 28,45,53
+x y = 2,8 : 32,60,68
+possible duplicate triple for 32,60,68 : gcd in common found: 4 , 4 -- Original triple: 8,15,17
+x y = 2,9 : 36,77,85
+x y = 3,4 : 7,24,25
+x y = 3,5 : 16,30,34
+possible duplicate triple for 16,30,34 : gcd in common found: 2 , 2 -- Original triple: 8,15,17
+x y = 3,6 : 27,36,45
+possible duplicate triple for 27,36,45 : gcd in common found: 9 , 9 -- Original triple: 3,4,5
+x y = 3,7 : 40,42,58
+possible duplicate triple for 40,42,58 : gcd in common found: 2 , 2 -- Original triple: 20,21,29
+x y = 3,8 : 48,55,73
+x y = 3,9 : 54,72,90
+possible duplicate triple for 54,72,90 : gcd in common found: 18 , 18 -- Original triple: 3,4,5
+x y = 4,5 : 9,40,41
+x y = 4,6 : 20,48,52
+possible duplicate triple for 20,48,52 : gcd in common found: 4 , 4 -- Original triple: 5,12,13
+x y = 4,7 : 33,56,65
+x y = 4,8 : 48,64,80
+possible duplicate triple for 48,64,80 : gcd in common found: 16 , 16 -- Original triple: 3,4,5
+x y = 4,9 : 65,72,97
+x y = 5,6 : 11,60,61
+x y = 5,7 : 24,70,74
+possible duplicate triple for 24,70,74 : gcd in common found: 2 , 2 -- Original triple: 12,35,37
+x y = 5,8 : 39,80,89
+x y = 5,9 : 56,90,106
+possible duplicate triple for 56,90,106 : gcd in common found: 2 , 2 -- Original triple: 28,45,53
+x y = 6,7 : 13,84,85
+x y = 6,8 : 28,96,100
+possible duplicate triple for 28,96,100 : gcd in common found: 4 , 4 -- Original triple: 7,24,25
+x y = 6,9 : 45,108,117
+possible duplicate triple for 45,108,117 : gcd in common found: 9 , 9 -- Original triple: 5,12,13
+x y = 7,8 : 15,112,113
+x y = 7,9 : 32,126,130
+possible duplicate triple for 32,126,130 : gcd in common found: 2 , 2 -- Original triple: 16,63,65
+x y = 8,9 : 17,144,145
+
+ 
  
  *
  */  
