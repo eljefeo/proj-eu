@@ -58,7 +58,7 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		
 		
 		//generateSomeTriplesUpToXY(10);
-		maybeTryProblem(200);
+		maybeTryProblem(1500000);
 	}
 
 	public static String maybeTryProblem(int maxPerim){
@@ -67,8 +67,9 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		boolean jJustMaxed = false;
 		int i = 0;
 		int j = 0;
-		List<Integer[]> sols = new ArrayList<Integer[]>();
-		Set<Integer[]> solset = new HashSet<Integer[]>();
+		List<Integer> sols = new ArrayList<Integer>();
+		Set<Integer> solset = new HashSet<Integer>();
+		int[] sums = new int[maxPerim];
 		//for(int i =  1; i < max; i++) { //while(true) i++;
 		while(true) {
 			i++;
@@ -108,9 +109,14 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 					if(jJustMaxed) {
 						System.out.println("Looks like we are at the end.. every other i and j will just go over the max perimeter of " + maxPerim);
 						System.out.println("Count is " + count);
-						return "" + count;
+						int cc = 0;
+						for(Integer k : sums)
+							if(k.compareTo(1) == 0)
+								cc++;
+						System.out.println("cc is " + cc);
+						return "" + cc;
 					}
-					System.out.println("Went over max perim: " + a + "," + b + "," + c + " : " + sum + " : " + i + "," + j);
+					//System.out.println("Went over max perim: " + a + "," + b + "," + c + " : " + sum + " : " + i + "," + j);
 					jJustMaxed = true;
 					break;
 				} else {
@@ -134,12 +140,16 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 					//	System.out.println("NOOOOO this is a valid reduced trip where both i and j are odd/even: x y = " + i + "," + j + " : " + a + "," + b + "," + c + " :: " + sum);
 					//	System.exit(1);
 					//} 
-					if(sum > maxPerim) 
-						System.out.println("Already above max! will skip this one altogether :: " + "x y = " + i + "," + j + " : " + a + "," + b + "," + c + " :: " + sum);
-					else {
-						sols.add(new Integer[] {a, b, c});
-						System.out.println("x y = " + i + "," + j + " : " + a + "," + b + "," + c + " :: " + sum);
-					}
+					//if(sum > maxPerim) 
+						//System.out.println("Already above max! will skip this one altogether :: " + "x y = " + i + "," + j + " : " + a + "," + b + "," + c + " :: " + sum);
+					//else {
+						sols.add(sum);
+						if(!solset.add(sum)) {
+							
+						}
+						
+						//System.out.println("x y = " + i + "," + j + " : " + a + "," + b + "," + c + " :: " + sum);
+					//}
 					///end remove
 					
 					
@@ -150,8 +160,10 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 					while(nSum <= maxPerim) {
 						
 						count++;
-						System.out.println("adding sum = " + nSum + " count is now " + count);
+						sums[sum]++;
+						//System.out.println("adding sum = " + nSum + " count is now " + count);
 						nSum += sum; // * m++;
+						
 					}
 					
 				} else {
