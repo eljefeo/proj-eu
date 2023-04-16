@@ -1362,60 +1362,7 @@ public static List<Integer[]> getPythagoreanTriplesFromThisA(int a) {
 		return d - (int)d == 0 ? (int)d : 0;
 	}
 	
-	
-	
-	public static void doOtherGuys(int sumToLog, int max, boolean shouldPrint) {
-		int limit = max;
-		long[] triangles = new long[limit+1];
-		 
-		int result =0;
-		int mlimit = (int)Math.sqrt(limit / 2);
-		 
-		for (long m = 2; m < mlimit; m++) {
-		    for (long n = 1; n < m; n++) {
-		        if (((n + m) % 2) == 1 && Util.gcd(n, m) == 1) {
-		            long a = m * m + n * n;
-		            long b = m * m - n * n;
-		            long c = 2 * m * n;
-		            long p = a + b + c;
-		            while(p <= limit){
-		                triangles[(int) p]++;
-		                if(p == sumToLog) System.out.println("abc: " + a + " "+ b  + " " + c + " == " + (a + b + c) + " P=" + p);
-		                if (triangles[(int) p] == 1) {result++;}
-		                if (triangles[(int) p] == 2) { result--;}
-		                p += a+b+c;
-		                //if(p == 112) System.out.println("abc: " + a + " "+ b  + " " + c + " == " + (a + b + c) + " P=" + p);
-		            }
-		        }
-		    }
-		}
-		
-		if(shouldPrint) {
-			List<Integer> good = new ArrayList<Integer>();
-			List<Integer> dups = new ArrayList<Integer>();
-			for (int i = 0; i < triangles.length; i++) {
-				if( triangles[i] == 1) {
-						//System.out.println("good Tri " + i + " : " + triangles[i]);
-					good.add(i);
-				}
-				else if (triangles[i] > 1)
-					dups.add(i);
-					//System.out.println("dup Tri " + i + " : " + triangles[i]);
-			}
-			
-			for(Integer i : good) {
-				System.out.println("good Tri " + i + " : " + i);
-			}
-			
-			for(Integer i : dups) {
-				System.out.println("dups Tri " + i + " : " + i);
-			}
-		}
-		
-		
-		System.out.println(" resssss " + result);
-		
-	}
+
 	
 
 }
