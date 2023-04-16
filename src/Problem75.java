@@ -300,12 +300,57 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		//printAllPythagoreanTriplesWithALessThanWithDetails(100);
 		//printOddsAndSquaresOrder(1000);
 		
-		doLotsOfDiffsAndSumsOfSquares();
-		
-		printPythTriplesOnlyReducedNotPredictable(800);
+		//doLotsOfDiffsAndSumsOfSquares(20);
+		findTripsThenCompareDiffAndSums(40);
+		//printPythTriplesOnlyReducedNotPredictable(800);
 		
 		//doOtherGuys(70, max, false);
 	}
+	
+	
+	
+	public static List<Integer[]> doLotsOfDiffsAndSumsOfSquares(int max, boolean shouldPrint) {
+		int x = 0, y = 0;
+		List<Integer[]> l = new ArrayList<Integer[]>();
+		
+		//int max = 10;
+		for(int i =  1; i < max; i++) {
+			for(int j = i+1; j < max; j++) {
+				//TODO if i and j are same!!!!!!!!! 
+				int i2 = i*i, j2 = j*j;
+				int diff = j2 - i2;
+				int sum = j2 + i2;
+				l.add(new Integer[] {diff, sum, i, j});
+				if(shouldPrint) {
+					System.out.print("i: " + i + " j: " + j + " ::: ");
+					System.out.println("Diff: " + diff + " sum: " + sum);
+				}
+					
+			}
+			//System.out.println("Diff: " + (i*i) + " sum: " + ())
+		}
+		return l;
+	}
+	
+	public static void findTripsThenCompareDiffAndSums(int howmany) {
+		int max = 40;
+		List<Integer[]> trips = getAllPythagoreanTriplesWithALessThan(max);
+		List<Integer[]> ds = doLotsOfDiffsAndSumsOfSquares(max, true);
+		for(Integer[] trip : trips) {
+			boolean f = false;
+			for(Integer[] difSum : ds) {
+				if((trip[0] == difSum[0] || trip[1] == difSum[0]) && trip[2] == difSum[1]) {
+					System.out.println("Found a match... dif: " + difSum[0] + " sum: " + difSum[1] + " orig2: " + difSum[2] + "," + difSum[3] +  " -- matching trip: " + trip[0] + "," + trip[1] + "," + trip[2]);
+					f = true;
+					break;
+				}
+			}
+			if(!f) {
+				System.out.println("Could not find match for trip: " + trip[0] + "," + trip[1] + "," + trip[2]);
+			}
+		}
+	}
+	
 	
 	
 	public static void printOddsAndSquaresOrder(int howMany) {
@@ -1225,9 +1270,9 @@ public void printLotsOfTriplesJustPrimesAndActuallyDoProblem() {
 	
 }
 
-public static void printAllPythagoreanTriplesWithALessThan(int max) {
-	int min = 3; //, max = 40;
-	//String ans = getPythagoreanTripleFromThisA(19);
+public static List<Integer[]> getAllPythagoreanTriplesWithALessThan(int max) {
+	List<Integer[]> l = new ArrayList<Integer[]>();
+	int min = 3;
 	for(int i = min; i <= max; i++) {
 		//int[] ans = getPythagoreanTriplesFromThisA(i);
 		List<Integer[]> tr = getPythagoreanTriplesFromThisA(i);
@@ -1235,12 +1280,23 @@ public static void printAllPythagoreanTriplesWithALessThan(int max) {
 		for(int ia = 0; ia < tr.size(); ia++) {
 			Integer[] ii = tr.get(ia);
 			if(ii != null)
-				System.out.println(ii[0] + "," + ii[1] + "," + ii[2] );
-			else System.out.println("no sol for : " + ia );
+				l.add(new Integer[]{ii[0],ii[1],ii[2]});
+			//else System.out.println("no sol for : " + ia );
 		}
+		
+		
 		//if(ans != null)
 		//	System.out.println(ans[0] + ", " + ans[1]+ ", " + ans[2]);
 	}
+	return l;
+}
+
+public static void printAllPythagoreanTriplesWithALessThan(int max) {
+	List<Integer[]> l = getAllPythagoreanTriplesWithALessThan(max);
+	for(Integer[] ii : l) {
+		System.out.println(ii[0] + "," + ii[1] + "," + ii[2] );
+	}
+
 }
 public static void printAllPythagoreanTriplesWithALessThanWithDetails(int max) {
 	int min = 3; //, max = 40;
@@ -1588,23 +1644,7 @@ public static List<Integer[]> getPythagoreanTriplesFromThisA(int a) {
 		
 		System.out.println("\nYay all worked");
 	}
-	
-	public static void doLotsOfDiffsAndSumsOfSquares() {
-		int x = 0, y = 0;
-		int max = 10;
-		for(int i =  1; i < max; i++) {
-			for(int j = i+1; j < max; j++) {
-				System.out.print("i: " + i + " j: " + j + " ::: ");
-				int i2 = i*i, j2 = j*j;
-				int diff = j2 - i2;
-				int sum = j2 + i2;
-				System.out.println("Diff: " + diff + " sum: " + sum);
-			}
-			//System.out.println("Diff: " + (i*i) + " sum: " + ())
-		}
-	}
-	
-	
+
 	/////////////////////////From last time I tried to think about it:
 	
 	public String problem1() {
