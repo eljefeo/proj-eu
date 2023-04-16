@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 
-public class Problem75 implements Problem{
+public class Problem75 implements Problem{ //Took 0.014678 seconds
 	
 	/*
 	 
@@ -29,9 +29,14 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 	 */
 
 	public static void main(String[] args) {
+		
+		
+		Problem p = new Problem75();
+		p.runProblem();
+		
+		
 		// TODO Auto-generated method stub
-		//Problem pp = new Problem75();
-		//pp.runProblem();
+
 		//printAllPythagoreanTriplesWithALessThan(75);
 		//printAllPythagoreanTriplesWithALessThanWithDetails(100);
 		//printOddsAndSquaresOrder(1000);
@@ -40,14 +45,11 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		
 		
 		//findTripsThenCompareDiffAndSums(40, false);
-		System.out.println("===========");
-		System.out.println("===========");
-		System.out.println("===========");
+		
 		//findTripsThenCompareDiffAndSumsReduced(70, false);
 		
 		//printReducedTriples(70);
 		//printTripFromThisA2(9);
-		System.out.println("===========");
 		//find2NumsForThisTrip(65,2112,2113);
 		//printTripsFromAtoA(1,20);
 		
@@ -58,131 +60,57 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		
 		
 		//generateSomeTriplesUpToXY(10);
-		maybeTryProblem(1500000);
+		
 	}
 
-	public static String maybeTryProblem(int maxPerim){
-		//int maxPerim = 100;
-		int count = 0;
+	public String problem(){
+		int maxPerim = 1500000;
+		//jJustMaxed is to help us save time. if i and j are 1,8 (for example) and this combo produces a triple that adds up over the max
+		// then we skip it, obviously. But.. if the next iteration of 2,3 aallllso goes above the max, then we know already there is no point
+		//of continuing the program, all triples from here on out will be above the max.
+		//we do this check because sometimes 1,8 will be above the max, but next iteration of 2,3 will not, so we do 2,3 and 2,5 and 2,7 etc.
+		//until we go above the max again.... saves a lot of processing
 		boolean jJustMaxed = false;
 		int i = 0;
 		int j = 0;
-		List<Integer> sols = new ArrayList<Integer>();
-		Set<Integer> solset = new HashSet<Integer>();
 		int[] sums = new int[maxPerim + 1];
-		//for(int i =  1; i < max; i++) { //while(true) i++;
 		while(true) {
 			i++;
-			
 			j = i;
-			//System.out.println("start i " + i + " j " + j); 
-			//for(int j = i+1; j < max; j++) {
 			while (true) {
 				j++;
-				//System.out.println("start j " + " : x y = " + i + "," + j);
-				//hopefully this is ok to be here, skip this i and j if both are odd or both are even 
-				// (we seem to always get a multiple of a previous trip when both i and j are odd or both are even
-				if((i%2 == 0) == (j%2 == 0)) {
-					//System.out.println("Skipping trip where both i and j are odd/even " + " : x y = " + i + "," + j);
-					continue;
-					//System.out.println("Skipping trip where both i and j are odd/even " + gcd1 + " : x y = " + i + "," + j + " : " + a + "," + b + "," + c + " :: " + sum);
-					//if(gcd1 == 1) {
-					//	System.out.println("Really bad...exiting");
-					//	System.exit(1);
-					//}
-				}
 				
-		
+				// skip this i and j if both are odd or both are even (we seem to always get a multiple of a previous trip when both i and j are odd or both are even
+				if((i%2 == 0) == (j%2 == 0)) 
+					continue;
 				
 				int i2 = i*i, j2 = j*j;
-				//int ab = j2 - i2;
-				int a = j2 - i2;
-				int b = 2 * i * j;
-				int c = j2 + i2;
+				int a = j2-i2, b = 2*i*j, c = j2+i2;
 				int sum = a + b + c;
-				//System.out.println("x y = " + i + "," + j + " : " + a + "," + b + "," + c + " :: " + sum);
-				
-				//TODO if i and j are same!!!!!!!!! 
-				
-				
+
 				if(sum > maxPerim) {
 					if(jJustMaxed) {
-						System.out.println("Looks like we are at the end.. every other i and j will just go over the max perimeter of " + maxPerim);
-						System.out.println("Count is " + count);
 						int cc = 0;
 						for(Integer k : sums)
 							if(k.compareTo(1) == 0)
 								cc++;
-						System.out.println("cc is " + cc);
 						return "" + cc;
 					}
-					//System.out.println("Went over max perim: " + a + "," + b + "," + c + " : " + sum + " : " + i + "," + j);
 					jJustMaxed = true;
 					break;
 				} else {
-					jJustMaxed = false;
+					jJustMaxed = false; 
 				}
 				
-				int gcd1 = Util.gcd(a, b);
-				//boolean ieven = i%2 == 0;
-				//boolean jeven = j%2 == 0;
-				
-				
-				
-				
-				
-				if(gcd1 == 1) {
-					
-					
-					
-					//can remove this little thing later:
-					//if(ieven == jeven) {
-					//	System.out.println("NOOOOO this is a valid reduced trip where both i and j are odd/even: x y = " + i + "," + j + " : " + a + "," + b + "," + c + " :: " + sum);
-					//	System.exit(1);
-					//} 
-					//if(sum > maxPerim) 
-						//System.out.println("Already above max! will skip this one altogether :: " + "x y = " + i + "," + j + " : " + a + "," + b + "," + c + " :: " + sum);
-					//else {
-						sols.add(sum);
-						if(!solset.add(sum)) {
-							
-						}
-						
-						//System.out.println("x y = " + i + "," + j + " : " + a + "," + b + "," + c + " :: " + sum);
-					//}
-					///end remove
-					
-					
-					//count++;
-					
-					//int m = 2;
+				if(Util.gcd(a, b) == 1) {
 					int nSum = sum;
 					while(nSum <= maxPerim) {
-						
-						count++;
 						sums[nSum]++;
-						//System.out.println("adding sum = " + nSum + " count is now " + count);
-						nSum += sum; // * m++;
-						
+						nSum += sum;
 					}
-					
-				} else {
-					
-					
-					//if(ieven == jeven) {
-						//System.out.println("skippiing this multiple trip where both i and j are odd/even: x y = " + i + "," + j + " : " + a + "," + b + "," + c + " :: " + sum);
-					//} else { 
-					//	System.out.println("RARE skippiing this multiple trip where both i and j are NOT odd/even " + gcd1 + " : x y = " + i + "," + j + " : " + a + "," + b + "," + c + " :: " + sum);
-					//}
-				}
-				//System.out.println();
-
-					
+				} 
 			}
 		}
-		//System.out.println("done, found this many triples: " + sols.size());
-		//return "" + count;
-		
 	}
 	
 	public static List<Integer[]> generateSomeTriplesUpToXY(int max){
@@ -587,7 +515,7 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		}
 	}
 
-	public String problem() {
+	public String problemMessingAround() {
 
 		
 		//testSomeStartingATriples();
