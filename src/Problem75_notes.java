@@ -4,6 +4,22 @@ public class Problem75_notes {
 }
 
 /*
+ something I noticed when trying to adjust the formula to only produce reduced/coprime triples..
+ when given x and y for the 2 nums, if they are both odd or both even it seems to give us a triple that is already a multiple of a previous triple..
+ I Dont know if that is always true but I can run with it.. 
+ that may help processing, if we have x is even, then only do the odd y's, and if x is odd then only bother with the even y's
+ now, sometimes even if one is odd and the other is even you still may get a multiple I think (ill double check for any examples) but it still 
+ 	narrows down a whole lot of processing we wont have to do
+ 	
+ 	!!! turns out no, the above statement is not totally true, sometimes there are multiples where x and y are not both odd or even, like if the gcd is 9, then 
+ 	x and y will be opposite odd/even. So seems like we just gotta check everyone cause you never know.
+ 	
+ 	BUT it still saves us time by not processing when x and y are both the same odd/even because so far I have not found an 
+ 		example of a reduced/coprime triple where both x and y are same odd/even. This could help a lot still, we just still have to check 
+ 		for multiples even if x and y are not the same odd/even
+ */
+
+/*
  * Uploding some old notes from a while back
  * 06/01:
  * a^2 + b^2 = c^2

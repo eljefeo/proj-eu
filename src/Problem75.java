@@ -57,9 +57,121 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		//doOtherGuys(70, max, false);
 		
 		
-		generateSomeTriplesUpToXY(10);
+		//generateSomeTriplesUpToXY(10);
+		maybeTryProblem(200);
 	}
 
+	public static String maybeTryProblem(int maxPerim){
+		//int maxPerim = 100;
+		int count = 0;
+		boolean jJustMaxed = false;
+		int i = 0;
+		int j = 0;
+		List<Integer[]> sols = new ArrayList<Integer[]>();
+		Set<Integer[]> solset = new HashSet<Integer[]>();
+		//for(int i =  1; i < max; i++) { //while(true) i++;
+		while(true) {
+			i++;
+			
+			j = i;
+			//System.out.println("start i " + i + " j " + j); 
+			//for(int j = i+1; j < max; j++) {
+			while (true) {
+				j++;
+				//System.out.println("start j " + " : x y = " + i + "," + j);
+				//hopefully this is ok to be here, skip this i and j if both are odd or both are even 
+				// (we seem to always get a multiple of a previous trip when both i and j are odd or both are even
+				if((i%2 == 0) == (j%2 == 0)) {
+					//System.out.println("Skipping trip where both i and j are odd/even " + " : x y = " + i + "," + j);
+					continue;
+					//System.out.println("Skipping trip where both i and j are odd/even " + gcd1 + " : x y = " + i + "," + j + " : " + a + "," + b + "," + c + " :: " + sum);
+					//if(gcd1 == 1) {
+					//	System.out.println("Really bad...exiting");
+					//	System.exit(1);
+					//}
+				}
+				
+		
+				
+				int i2 = i*i, j2 = j*j;
+				//int ab = j2 - i2;
+				int a = j2 - i2;
+				int b = 2 * i * j;
+				int c = j2 + i2;
+				int sum = a + b + c;
+				//System.out.println("x y = " + i + "," + j + " : " + a + "," + b + "," + c + " :: " + sum);
+				
+				//TODO if i and j are same!!!!!!!!! 
+				
+				
+				if(sum > maxPerim) {
+					if(jJustMaxed) {
+						System.out.println("Looks like we are at the end.. every other i and j will just go over the max perimeter of " + maxPerim);
+						System.out.println("Count is " + count);
+						return "" + count;
+					}
+					System.out.println("Went over max perim: " + a + "," + b + "," + c + " : " + sum + " : " + i + "," + j);
+					jJustMaxed = true;
+					break;
+				} else {
+					jJustMaxed = false;
+				}
+				
+				int gcd1 = Util.gcd(a, b);
+				//boolean ieven = i%2 == 0;
+				//boolean jeven = j%2 == 0;
+				
+				
+				
+				
+				
+				if(gcd1 == 1) {
+					
+					
+					
+					//can remove this little thing later:
+					//if(ieven == jeven) {
+					//	System.out.println("NOOOOO this is a valid reduced trip where both i and j are odd/even: x y = " + i + "," + j + " : " + a + "," + b + "," + c + " :: " + sum);
+					//	System.exit(1);
+					//} 
+					if(sum > maxPerim) 
+						System.out.println("Already above max! will skip this one altogether :: " + "x y = " + i + "," + j + " : " + a + "," + b + "," + c + " :: " + sum);
+					else {
+						sols.add(new Integer[] {a, b, c});
+						System.out.println("x y = " + i + "," + j + " : " + a + "," + b + "," + c + " :: " + sum);
+					}
+					///end remove
+					
+					
+					//count++;
+					
+					//int m = 2;
+					int nSum = sum;
+					while(nSum <= maxPerim) {
+						
+						count++;
+						System.out.println("adding sum = " + nSum + " count is now " + count);
+						nSum += sum; // * m++;
+					}
+					
+				} else {
+					
+					
+					//if(ieven == jeven) {
+						//System.out.println("skippiing this multiple trip where both i and j are odd/even: x y = " + i + "," + j + " : " + a + "," + b + "," + c + " :: " + sum);
+					//} else { 
+					//	System.out.println("RARE skippiing this multiple trip where both i and j are NOT odd/even " + gcd1 + " : x y = " + i + "," + j + " : " + a + "," + b + "," + c + " :: " + sum);
+					//}
+				}
+				//System.out.println();
+
+					
+			}
+		}
+		//System.out.println("done, found this many triples: " + sols.size());
+		//return "" + count;
+		
+	}
 	
 	public static List<Integer[]> generateSomeTriplesUpToXY(int max){
 		
