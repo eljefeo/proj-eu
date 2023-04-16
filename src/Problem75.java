@@ -69,7 +69,7 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		int j = 0;
 		List<Integer> sols = new ArrayList<Integer>();
 		Set<Integer> solset = new HashSet<Integer>();
-		int[] sums = new int[maxPerim];
+		int[] sums = new int[maxPerim + 1];
 		//for(int i =  1; i < max; i++) { //while(true) i++;
 		while(true) {
 			i++;
@@ -160,7 +160,7 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 					while(nSum <= maxPerim) {
 						
 						count++;
-						sums[sum]++;
+						sums[nSum]++;
 						//System.out.println("adding sum = " + nSum + " count is now " + count);
 						nSum += sum; // * m++;
 						
