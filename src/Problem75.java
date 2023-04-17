@@ -33,15 +33,16 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		
 		Problem p = new Problem75();
 		p.runProblem();
+		//doOtherGuys(70, max, false);
 	}
 
 	public String problem(){
 		int maxPerimeter = 1500000;
-		//jJustMaxed is to help us save time. if i and j are 1,8 (for example) and this combo produces a triple that adds up over the max
-		// then we skip it, obviously. But.. if the next iteration of 2,3 aallllso goes above the max, then we know already there is no point
-		//of continuing the program, all triples from here on out will be above the max.
-		//we do this check because sometimes 1,8 will be above the max, but next iteration of 2,3 will not, so we do 2,3 and 2,5 and 2,7 etc.
-		//until we go above the max again.... saves a lot of processing
+		//jJustMaxed is to help us save time. if i and j are 1,8 (for example) and this combo produces a triple who's sum is over the max
+		// then we skip it, obviously because we need to stay below the limit. But.. if the next iteration of 2,3 aallllso goes above the max, 
+		// then we know we have hit the end of the problem, all triples from here on out will also be above the max.
+		// we do this check because sometimes 1,8 will be above the max, but next iteration of 2,3 will not, so we do 2,3 and 2,5 and 2,7 etc.
+		// until we go above the max again.... saves a lot of processing
 		boolean jJustMaxed = false;
 		int i = 0;
 		int j = 0;
@@ -52,10 +53,15 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 			while (true) {
 				j++;
 				
-				// skip this i and j if both are odd or both are even (we seem to always get a multiple of a previous trip when both i and j are odd or both are even
+				// skip this i and j if both are odd or both are even 
+				//(we seem to always get a multiple of a previous trip when both i and j are odd or both are even
+				//so if both are odd or both are even, we just skip it altogether and go to the next one
 				if((i%2 == 0) == (j%2 == 0)) 
 					continue;
 				
+				//a^2 + b^2 = c^2 :: these variables below are just finding those a, b, and c using our fancy formula we figured out.
+				// we figured out if you just take 2 nums, like 1 and 2 and put them through those little operations below in a, b, and c
+				// you will get triples out. like 3,4,5. Or 5,12,13. So i and j are just us doing all combos of 2 nums to find all the triples we need
 				int i2 = i*i;
 				int j2 = j*j;
 				int a = j2-i2;
@@ -64,12 +70,17 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 				int sum = a + b + c;
 
 				if(sum > maxPerimeter) {
-					if(jJustMaxed) {
+					if(jJustMaxed) { 
+						// if we get here, this is the end 
+						// we will now count up all the sums that only showed up once and return that count
 						int cc = 0;
 						for(int k : sums)
-							if(k == 1)
+							if(k == 1) 
+								// this just means, if this sum (like the triple 3,4,5 the sum is 12. 12 is the sum)
+								// if this sum only showed up 1 time, then that is what we want and we count that.
+								// some sums showed up more than once, so we dont want those, only the ones where k == 1
 								cc++;
-						return "" + cc;
+						return "" + cc; //return the number of unique sums under 1,500,000
 					}
 					jJustMaxed = true;
 					break;
@@ -78,6 +89,9 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 				}
 				
 				if(Util.gcd(a, b) == 1) {
+					// get the greates common denominator of a and b. This is to check if they have any factors in common
+					// if they do, then we dont even need to check c. For a fully reduced triple there will be no number of the 3 that 
+					//	have any factors in common, or they all will have a factor in common. So if a and b are coprime then we are good to continue
 					int nSum = sum;
 					while(maxPerimeter > nSum) {
 						sums[nSum]++;
