@@ -16,7 +16,7 @@ public class Problem2 implements Problem { //Took 0.000200 seconds
 
 	@Override
 	public Object problem(){
-		int total = 0;
+		int total = 2; //start with the first even, the 2. Since we will start counting every 3 after that.
 		int val1 = 1, val2 = 2, newVal;
 		
 		//since we only want evens..
@@ -43,5 +43,6 @@ public class Problem2 implements Problem { //Took 0.000200 seconds
 		}
 		return total;
 	}
+	
 	
 }
