@@ -16,7 +16,7 @@ public class Problem2 implements Problem { //Took 0.000200 seconds
 
 	@Override
 	public Object problem(){
-		int total = 2; //start with the first even, the 2. Since we will start counting every 3 after that.
+		int total = 0; 
 		int val1 = 1, val2 = 2, newVal;
 		
 		//since we only want evens..
@@ -29,7 +29,7 @@ public class Problem2 implements Problem { //Took 0.000200 seconds
 		// we just do the sequence three times, add that number, then 3 more and add, etc..
 		
 		int max = 4000000;
-		int counter = 0;
+		int counter = 3; // we will start at the 2, so technically the counter is 3 when we begin. Then we'll add every 3 after
 		while (val2 < max){
 			if(counter == 3) {
 				//System.out.println("1adding even at " + counter + " , " + val1 + " + " + val2);
