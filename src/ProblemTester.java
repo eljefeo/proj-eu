@@ -3,10 +3,12 @@ import java.util.List;
 import java.util.Map;
 
 public class ProblemTester {
+	
+	private static final String superSecretPasscode = "PutTheRealPasswordHere_ThisIsNotIt";
 
 	public static void main(String[] args) {
 		List<Problem> problems = new ArrayList<Problem>();
-		
+		EncryptStuff encryptStuff = new EncryptStuff();
 		problems.add(new Problem1());
 		problems.add(new Problem2());
 		problems.add(new Problem3());
@@ -81,9 +83,10 @@ public class ProblemTester {
 		problems.add(new Problem72());
 		problems.add(new Problem73());
 		problems.add(new Problem74());
+		problems.add(new Problem75());
 		
 		System.out.println("Have this many problems : " + problems.size());
-		Map<Integer, String> answers = AnswersDontCheckMeIn.getAnswers();
+		Map<Integer, String> answers = AnswersToProblems.getAnswers();
 		
 		//Problem p = problems.get(3);
 		//p.runProblem();
@@ -97,7 +100,8 @@ public class ProblemTester {
 			long endT = System.nanoTime();
 			double time = (double) (endT - startT) / 1000000000;
 			//System.out.println("\ngot answer from the thing : " + res);
-			String expectedAnswer = answers.get(i+1);
+			String expectedAnswer = encryptStuff.decrypt(answers.get(i+1), superSecretPasscode);
+			System.out.println("\nComparing " + res + " to expected answer: " + expectedAnswer);
 			if(!res.equals(expectedAnswer)) {
 				incorrectAnswers.add(i+1);
 			} 
