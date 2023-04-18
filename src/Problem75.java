@@ -76,7 +76,7 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 						int cc = 0;
 						for(int k : sums)
 							if(k == 1) 
-								// this just means, if this sum (like the triple 3,4,5 the sum is 12. 12 is the sum)
+								// this just means, if this sum (like the triple 3,4,5 the sum is 12)
 								// if this sum only showed up 1 time, then that is what we want and we count that.
 								// some sums showed up more than once, so we dont want those, only the ones where k == 1
 								cc++;
@@ -89,9 +89,10 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 				}
 				
 				if(Util.gcd(a, b) == 1) {
-					// get the greates common denominator of a and b. This is to check if they have any factors in common
-					// if they do, then we dont even need to check c. For a fully reduced triple there will be no number of the 3 that 
-					//	have any factors in common, or they all will have a factor in common. So if a and b are coprime then we are good to continue
+					// get the greatest common denominator of a and b. This is to check if they have any factors in common.
+					// if they do, then we dont even need to check if a or b have any factors in common with c. For a fully reduced triple there will be
+					// no factors in common for a, b, or c. If a and b do have a factor in common, then a, b, and c will have that factor in common in which case
+					// we also dont need to continue since we only want reduced triples.
 					int nSum = sum;
 					while(maxPerimeter > nSum) {
 						sums[nSum]++;
