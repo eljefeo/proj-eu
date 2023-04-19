@@ -14,108 +14,7 @@ public class Problem76 implements Problem{
 	
 	
 	 */
-	
-	/*
-	 * NOTES:
-	 * 
-	 -------- I visualize 5 like this: --------
-	 
-	 1 1 1 1 1 :: 1st way (five 1's)
-	 1 1 1 \ / :: 2nd way (three 1's and a 2)
-	        2
-	 1 \ /  
-	    2   2  :: 3rd way (one 1 and two 2's)
-	    
-	 (cant combine that last 1 with anything, so back to all 1's 1 1 1 1 1)
-	 1 1 \ | /
-	       3  :: 4th way (two 1's and a 3)
-	 \ /   
-	  2    3  :: 5th way (one 2 and one 3)
-	    
-	 (nothing left to combine.. so back to all 1's)
-	 1 \ \ / /
-	      4   :: 6th way (one 1 and one 4)
-	      
-	 (nothing left to combine, and we cant go to the next number, 5, because thats the starting number)
-	 
-	 we are done, we found 6 ways to do it.
-	   
-	 */
-	
-	/*
-	 -------- I visualize 6 it like this: --------
-	 6:
-	 1 1 1 1 1 1 :: 1st way (6 1's)
-	 1 1 1 1 \ / :: 2nd way (four 1's and a 2)
-	          2
-	 1 1 \ /  
-	      2   2  :: 3rd way (two 1 and two 2's)
-	      
-	 \ /   
-	  2   2   2  :: 4rd way (three 2's)
-	    
-	 (cant combine anything else as 2's, so back to all 1's 1 1 1 1 1)
-	 1 1 1 \ | /
-	         3  :: 5th way (three 1's and a 3)
-	 
-	 1 1 1 \ | /
-	 \ | /
-	   3     3  :: 6th way (two 3's)
-	   
-	 (nothing left to combine, but we need to check that 3 on the right again, it can become a 2 and a 1)
-	 1 1 1 \ | /
-	   \ /
-	    2    3  :: 7th way (one 1, one 2, and a 3)
-	    
-	 (cant combine that last 1, and now we are all the way on the left and are doing combos of 2, so we are done with the 3, back to all 1's)
-	 
-	 1 1 \ \ / /
-	        4   :: 8th way (two 1's and one 4)
-	 
-	 
-	 
-	 \ /   
-	  2     4   :: 9th way (one 2 and one 3)
-	    
-	 (nothing left to combine.. so back to all 1's)
-	 
-	 1 \ \ | / /
-	       5    :: 10th way (one 1 and one 5)
-	       
-	 (cant combine that 1 with anything, and we are at 5 which is 1 less than the starting number, so we are complete now) 
-	 10 ways for the number 6
 
-	   
-	 */
-	
-	
-	/*
-	 ways to make 5:
-		2 + 3
-		1 + 4
-		1 + 1 + 3
-		1 + 2 + 2
-		1 + 1 + 1 + 2
-		1 + 1 + 1 + 1 + 1
-		
-	ways to make 4:
-		2 + 2
-		1 + 3
-		1 + 1 + 2
-		1 + 1 + 1 + 1
-		
-	ways to make 3:
-
-		1 + 2
-		1 + 1 + 1
-		
-	ways to make 2: 
-		1 + 1
-		
-		
-		
-		
-	 */
 	public static void main(String[] args) {
 		Problem p = new Problem76();
 		p.runProblem();
@@ -126,8 +25,48 @@ public class Problem76 implements Problem{
 	@Override
 	public Object problem() {
 		entr();
+		
 		return "";
 	}
+	/*
+		6:
+		
+		 1 5						1 5
+		 2 4						2 4s
+		 1 1 4
+		 3 3 
+		 1 2 3 						3 3s
+		 1 1 1 3
+		 2 2 2 
+		 1 1 2 2 					3 2s
+		 1 1 1 1 2					
+		 1 1 1 1 1 1 				1 1
+		 ::: 6 has 10 ways
+	*/
+	
+	/*
+	 if we are at 3 3
+	 recur loop 1 ( the far right 3 )
+	 original num (6) -3
+	 gives us 3
+	 
+	 func(num){
+	 	num is 3
+	 	
+	 }
+	 
+	 sub = 3;
+	 left = sn - sub;
+	 (left is 3)
+	 
+	 send left back into the recur function
+	 woopwAbblyWoopppFlutterWaaahhh (*recurive sounds, like going through a time warp black hole*)
+	 
+	 
+	 
+	 
+	 
+	 */
 	
 	public static void entr() {
 		int test = 6;
@@ -135,11 +74,37 @@ public class Problem76 implements Problem{
 		int sub = test - 1; // 5
 		int left = test - sub; //1
 		
-		recr(test,sub);
+		int result = recr(test);
+		System.out.println("FINAL for " + test + " : " + result);
+	}
+	public static int recr(int sn) {
+		
+		//if(sn == 1) {
+		//	System.out.println("Got 1 .,... going to return 0");
+		//	return 0;
+		//}
+		
+		int count = 0;
+		int sn2 = sn;
+		
+		System.out.println("SSSSS to while loop for sn: " + sn + " sn2: " + sn2 + " starting count: " + count);
+		while(sn2-- > 1) {
+			int left = sn - sn2;
+			count++;
+			System.out.println("In CALL while loop for sn: " + sn + " ... dcrmnt sn2 to: " + sn2 + " left: " + left + " -- count is now: " + count + " calling recr(" + left + ")");
+			int rCount = recr(left);
+			
+			count += rCount;
+			System.out.println("In RETURNED while loop for sn: " + sn + " ... sn2: " + sn2 + " left: " + left + " -- rCount count: " + rCount + " ::: added rCount, count is now: " + count);
+		}
+		
+		System.out.println("OOOOO of while loop for sn: " + sn + " sn2: " + sn2 + " returning count: " + count);
+		return count;
+		
 	}
 	
 	//This code doesnt work or do anything yet, 
-	public static void recr(int sn, int sub) {
+	public static int recr_2(int sn, int count) {
 		//this one will do some stuff, like find out how many ways to make this number
 		//but part of finding that out will be to find how manyways to make the smaller numbers inside
 		//like this will try to find how many ways to make 6, but part of that is finding out how many
@@ -147,11 +112,99 @@ public class Problem76 implements Problem{
 		//so this function will call itself, hence it is a recursive function
 		
 		//... do some stuff
-		int nextNum = sn-sub;
-		sub--;
-		//then
-		recr(nextNum, sub);//
+		//so we get 6 in...
+		//
+		
+		if(sn < 2) {
+			System.out.println("returning 0 for sn: " + sn + ", count: " + count);
+			return 0;
+		}
+		
+		//can this stand for the sn number just being all 1's? any number that passes 
+		//  the check sn < 2 can be all 1's so we give it 1 count already?
+		int newCount = 1; 
+		
+		int sub = sn - 1;
+		while(sub > 1) {
+			int nn;
+			//while((nn = sn - sub) > 1){
+			nn = sn - sub;
+			newCount++;
+			
+			if(nn == 1 || nn == 0) {
+				continue;
+			}
+			
+			int nCount = recr_2(nn, count);
+			System.out.println("got nCount returned: " + nCount + " for nn: " + nn + " sn: " + sn + " sub: " + sub);
+			
+			sub--;
+		}
+		
+		return newCount;
+		
 	}
+	public Object problem2() {
+		
+		
+		int test = 6;
+		int count = 1; //since every number has 1 1 1 1 1... as a way to make that number
+		int sub = test - 1; // 5
+		int left = test - sub; //1
+		//now we check everything for whats left (1)
+		
+		if(left == 1 || left == 0) {
+			//thats the end of the line, cant combine anything else if we are just left with a 1 or 0
+			//this is wher we would break in some loop I assume we would put this code in.
+		}
+		
+		//next iteration:
+		
+		sub--; //sub was 5, now its 4
+		left = test - sub; //test is 6 so now left is 2
+		
+		if(left == 1 || left == 0) {
+			//this is false, because left is 2
+		} else {
+			//we check if we can subtract all numbers from sub to 2. Sub is 4, so we try 4, then 3, then 2
+			int otherLeft = left - sub;
+			if(otherLeft == 1 || otherLeft == 0) {
+				//break;
+			} else if(otherLeft < 0) {
+				//we get here because 2 - 4 is -2
+				//end of the line for this
+			}
+		}
+		
+		
+		for(int i=test-1; i > 1; i--) {
+			
+			int nLeft = left;
+			System.out.println("starting for loop, left = " + left + ", i = " + i);
+			while(true) {
+				nLeft -= i;
+				if(nLeft > 0) {
+					System.out.println("breaking 1 loop, i = " + i + ", nLeft = " + nLeft);
+					break;
+				} else {
+					System.out.println("still in 1 loop, i = " + i + ", nLeft = " + nLeft);
+				}
+			}
+			
+			System.out.println("In loop, i = " + i + ", nLeft = " + nLeft);
+			if(nLeft > 1) {
+				count ++;
+			}
+		}
+		
+		
+		
+		
+		
+		//entr();
+		return "";
+	}
+
 
 	
 	
