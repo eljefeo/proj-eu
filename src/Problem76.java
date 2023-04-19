@@ -28,21 +28,7 @@ public class Problem76 implements Problem{
 		
 		return "";
 	}
-	/*
-		6:
-		
-		 1 5						1 5
-		 2 4						2 4s
-		 1 1 4
-		 3 3 
-		 1 2 3 						3 3s
-		 1 1 1 3
-		 2 2 2 
-		 1 1 2 2 					3 2s
-		 1 1 1 1 2					
-		 1 1 1 1 1 1 				1 1
-		 ::: 6 has 10 ways
-	*/
+	
 	
 	/*
 	 if we are at 3 3
@@ -69,15 +55,317 @@ public class Problem76 implements Problem{
 	 */
 	
 	public static void entr() {
-		int test = 6;
-		int count = 1; //since every number has 1 1 1 1 1... as a way to make that number
+		int test = 5;
+		int count = 1; //start count with the 1 6
 		int sub = test - 1; // 5
 		int left = test - sub; //1
 		
-		int result = recr(test);
+		//int result = recr666(1, test-1, test);
+		int result = recr666(test, "");
+		//int result = recr16(1, test-1);
 		System.out.println("FINAL for " + test + " : " + result);
 	}
-	public static int recr(int sn) {
+
+	public static int recr666(int n, String els) {
+		String fff = "";
+		int count = 0;//for the 1 and 6
+		//int sum = left + right;
+		//if(n == 1) {
+			//return 0;
+			//lower the right
+			
+			//right--; //5
+			//then fill the left with highest you can without going over right number
+			// 2 5
+			//left++ ;//= sum - right; //left is 2
+			
+			//but we dont do the right-- and left++ here.
+			//we need to return and let the previous call do that
+			// or ... do we want to do it here?....................
+			//lets try to do it here, lets see what happens
+			
+			//count++;//for the 2 5 --- do we up the count here? OR cause it will happen at the top when we call it right now..
+			//lets let it happen at the top for now I guess, see what happens
+			//recr25(left, right); //give this call 2 and 5 so it can find the next one, and up the count when it does
+			
+			
+		//} else if(left > 1) {
+			
+			for(int i=n-1; i > 0; i--) {
+				//like if i is 4
+				// then we would send in 4 which would hopefully turn to 3 1, 2 2, 1 1 2, 1 1 1 1 
+				//that should give us 4
+				//then we should send in 3 which would give us 1 2, 1 1 1 
+				//then send in 2, which gives us 1 
+				//then the loop looks for greater than 1 so we exit the loop...
+				int lleft = n - i;
+				els += " " + i;
+				fff += " " + i;
+				if(i == 1) {
+					count++;
+					return count;
+				}
+				
+				
+				//while() //we can subtract a num... like if we are doing 7 while we can subtract 2, it can go 3 times and 1 left over
+				
+				System.out.println("Did we get one >> ? " + lleft + " " + i + " :::: " + els);
+				//i is right
+				System.out.println("in for loop about to call, n: " + n + " i: " + i + " lleft: " + lleft + ", count: " + count);
+				int nC = recr666(lleft, els);
+				
+				count += nC;
+				System.out.println("just returned in for loop, n: " + n + " i: " + i + " lleft: " + lleft + ", count: " + count + " nC: " + nC);
+			}
+			
+			//System.out.println("111 Did we get one >> ? " + fff);
+			
+			//left--;
+			
+			//recr(,9);
+		//} else {
+		//	System.out.println("Should not get here, left: " + left + ", right: " + right);
+		//}
+		
+		return count;
+		
+	}
+	
+	public static int recr0(int left, int right, int og) {
+		/*
+		1 1 1 1 1 1 4
+	 	1 3 3 3 
+	 	2 2 3 3 
+	 	1 1 2 3 3 
+		 */
+		int c = 0;
+		
+		int subC = 0;
+		int ogCopy = og;
+		while(ogCopy > 3) {
+			ogCopy -= 3;
+			subC++;
+		}
+		
+		System.out.println("subc " + subC + " left over: " + ogCopy);
+		//we know there are 2 threes, with 1 left over
+		//1 3 3 
+		
+		return c;
+	}
+	
+	public static int recr16(int left, int right) {
+		
+		int count = 0;//for the 1 and 6
+		int sum = left + right;
+		if(left == 1) {
+			//return 0;
+			//lower the right
+			
+			right--; //5
+			//then fill the left with highest you can without going over right number
+			// 2 5
+			left++ ;//= sum - right; //left is 2
+			
+			//but we dont do the right-- and left++ here.
+			//we need to return and let the previous call do that
+			// or ... do we want to do it here?....................
+			//lets try to do it here, lets see what happens
+			
+			count++;//for the 2 5 --- do we up the count here? OR cause it will happen at the top when we call it right now..
+			//lets let it happen at the top for now I guess, see what happens
+			recr25(left, right); //give this call 2 and 5 so it can find the next one, and up the count when it does
+			
+			
+		} else if(left > 1) {
+			
+			for(int i=left; i > 1; i--) {
+				//like if i is 4
+				// then we would send in 4 which would hopefully turn to 3 1, 2 2, 1 1 2, 1 1 1 1 
+				//that should give us 4
+				//then we should send in 3 which would give us 1 2, 1 1 1 
+				//then send in 2, which gives us 1 
+				//then the loop looks for greater than 1 so we exit the loop...
+				int lleft = left - i;
+				//i is right
+				//recr16(i);
+			}
+			
+			//left--;
+			
+			//recr(,9);
+		} else {
+			System.out.println("Should not get here, left: " + left + ", right: " + right);
+		}
+		
+		return count;
+		
+	}
+	
+	public static int recr25(int left, int right) {
+		//2 5 come in here, our job to find 1 1 5 I guess
+		
+		int count = 1;//for the 2 5
+		int sum = left + right;
+		if(left == 1) {
+			//return 0;
+			//lower the right
+			
+			right--; //5
+			//then fill the left with highest you can without going over right number
+			// 2 5
+			left++ ;//= sum - right; //left is 2
+			count++;//for the 2 5
+			//but we dont do the right-- and left++ here.
+			//we need to return and let the previous call do that
+			// or ... do we want to do it here?....................
+			//lets try to do it here, lets see what happens
+			//recrr(left, right); //2 5
+			return 0;
+			
+		} else if(left > 1) {
+			int oldRight = right;
+			
+			left--; //2 becomes 1
+			right = left; //right becomes 1
+			left = 1;//left becomes 1
+			// 1 1 (5)
+			count++; // for finding 1 1 5 I guess
+			//now what, we just naturally pass in 1, 1 to the next call?
+			int rCount = count + recr11(left, right); //0 is returned here + 1 = 1
+		} else {
+			System.out.println("Should not get here, left: " + left + ", right: " + right);
+		}
+		
+		return count;
+		
+	}
+	
+public static int recr11(int left, int right) {
+		
+		int count = 0;// 1 1 came into this call, our job to find the next one
+		// but there is no next one... so we should detect that and return...
+		int sum = left + right;
+		if(left == 1) {
+			//return 0;
+			//lower the right
+			if(right == 1) {
+				return 0;
+			}
+			
+			right--; //5
+			
+			if(left > right) {
+				//since we had 1 2
+				// and we took 1 from the right,
+				// we want 1 1 1 ...
+				//but if we put that 1 on the left it will be 2 1
+				//we dont want that...
+				//return?
+				return count;//I mean I dont know if this is correct, but lets see...
+			}
+			//then fill the left with highest you can without going over right number
+			// 2 5
+			left++ ;//= sum - right; //left is 2
+			count++;//for the 2 5
+			//but we dont do the right-- and left++ here.
+			//we need to return and let the previous call do that
+			// or ... do we want to do it here?....................
+			//lets try to do it here, lets see what happens
+			//recrr(left, right); //2 5
+			return 0;
+			
+		} else if(left > 1) {
+			
+			left--;
+			
+			recr11(1,left);
+		} else {
+			System.out.println("Should not get here, left: " + left + ", right: " + right);
+		}
+		
+		return count;
+		
+	}
+	
+	
+	
+	public static int recr22(int left, int right) {
+		
+		
+		/*
+		7:
+			 1 6						1 6
+			 2 5						2 5s
+			 1 1 5
+			 3 4 
+			 1 2 4						3 4s
+			 1 1 1 4
+			 1 3 3
+			 2 2 3
+			 1 1 2 3					4 3s
+			 1 1 1 1 3
+			 1 2 2 2
+			 1 1 1 2 2 					3 2s
+			 1 1 1 1 1 2
+			 1 1 1 1 1 1 1 				1 1
+			 ::: 7 has 14 ways
+	*/
+		int sum = left + right;
+		//left = 1, right = 6
+		if(left == 1) {
+			//return 0;
+			//lower the right
+			
+			right--; //5
+			//then fill the left with highest you can without going over right number
+			// 2 5
+			left++ ;//= sum - right; //left is 2
+			
+			if(left > 1) { //true, 2
+				int lleft = 1; //minus 1 from left, and put it to the more left
+				left--;
+				// 1 1 6
+				//lleft = 1, left = 1, right = 6
+				
+				if(lleft == 1) {
+					//lleft is 1, need to go to the right of it
+					if(left == 1) {
+						//left is 1, need to go more to the right
+						right--;
+						left = sum - right;// left = 4, right = 4
+						if(left > 1) {
+							lleft = 1;
+							left--;
+							//left is now 3
+							//1 3 4
+							
+							if(lleft == 1) {
+								//go to the right of lleft, which is left
+								//take left which is 3, down to 2, and move that 1 to the lleft
+								left--;
+								lleft++;
+								//2 2 4
+								
+								if(lleft > 1) {
+									
+								}
+									
+							}
+						}
+					}
+				}
+			}
+			
+		}
+		int count = 0;
+		int sn2 = left;
+		
+		return count;
+	}
+	
+	
+	public static int recr1(int sn) {
 		
 		//if(sn == 1) {
 		//	System.out.println("Got 1 .,... going to return 0");
@@ -92,7 +380,7 @@ public class Problem76 implements Problem{
 			int left = sn - sn2;
 			count++;
 			System.out.println("In CALL while loop for sn: " + sn + " ... dcrmnt sn2 to: " + sn2 + " left: " + left + " -- count is now: " + count + " calling recr(" + left + ")");
-			int rCount = recr(left);
+			int rCount = recr1(left);
 			
 			count += rCount;
 			System.out.println("In RETURNED while loop for sn: " + sn + " ... sn2: " + sn2 + " left: " + left + " -- rCount count: " + rCount + " ::: added rCount, count is now: " + count);
