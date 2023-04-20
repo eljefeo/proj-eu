@@ -51,10 +51,10 @@ public class Problem76 implements Problem{
 	@Override
 	public Object problem() {
 		//entr();
-		return vvv(10);
+		return getHowManyWaysToMake(6);
 	}
 	
-	public int vvv (int og) {
+	public int getHowManyWaysToMake (int num) {
 		/*
 		 so.. if we want to know what N - 2 is gonna be, we need to do 2 first
 	 
@@ -62,42 +62,74 @@ public class Problem76 implements Problem{
 	 so what do we do... do we start with 2, then can that give us 3?
 	 and then we have enough info for 4, and then 5, and 6 and ....N?
 		 */
-		int sub = 1;
-		int two = 1;
-		int[] sols = new int[og + 1];
-		sols[2] = 1;
-		int count = 0;
-		//3.... 3 - 1 = 1, 3 - 2 = (look up above.. 2 = 1) 1 (+1), 
-		//then if N-x where x == N, we just add 1 to the final for the 1+1+1+1+1...
-		while((og - sub) > 1) {
-			//N - 1
-			
-			//dont forget for 4 we have to do N-1, AND N-2, add both those for the answer to 4
-			int miniCount = 0;
-			int subTemp = sub;//lets say test is 4. sub is 1
-			//so n - 1, look up 1 in the sols[1] that will give you 0, then
-			//add 1 so you get 1
-			//
-			System.out.println("Starting subTemp:  " + subTemp);
-			while(subTemp < og) {
-				miniCount += sols[subTemp] + 1;
-				subTemp++;
-				sols[subTemp] = miniCount;
-				System.out.println("minicount = " + miniCount + " subtemp: " + subTemp + " sols[subTemp]: "  + sols[subTemp]);
-			}
-			sub++;
-			/*
-			int sol = sols[sub];
-			count += sol + 1;
-			sub++;
-			sols[sub] = sol + 1;
-			*/
-			//System.out.println("in while loop "  + ", sub = " + sub + " sol = " + sol + ", count = " + count);
+		if(num < 2) { 
+			return 0;
 		}
 		
+		
+		int two = 1;
+		int[] sols = new int[num + 1];
+		// we are starting with N-1 already complete. We set the count to 1 already, and the sub is 2, so we are starting at N-2
+		int count = 1;
+		int sub = 2;
+		//3.... 3 - 1 = 1, 3 - 2 = (look up above.. 2 = 1) 1 (+1), 
+		//then if N-x where x == N, we just add 1 to the final for the 1+1+1+1+1...
+		System.out.println("Starting with num: " + num + ", sub: " + sub + ", count: " + count);
+		while((num - sub) > 0) {
+			//N - 2
+			
+			//dont forget for 4 we have to do N-1, AND N-2, add both those for the answer to 4
+			
+			System.out.println("Doing N" + num + " - " + sub);
+			int sol = sols[sub]; //N - 2, so sols[2] = 0, meaning we need to go find sols[2], (The answer is 1, but need to figure it out)
+			
+			Util.printListInteger(sols);
+			int miniCount = 1;
+			if(sol == 0) { //if we dont have this one yet
+				System.out.println("we dont know how to make " + sub + ", need to figure that out first...calling");
+				int newWays = getHowManyWaysToMake(sub);
+				System.out.println("inner: got this many ways to make " + sub + " : " + newWays);
+				sols[sub] = newWays;
+				/*
+				 System.out.println("Yes sol = " + sol + " meaning we need to figure out how many ways to make " + sub + " first");
+				int subTemp = 2;
+				System.out.println("inner... setting subTemp=" + subTemp + ", sub=" + sub);
+				//so n - 1, look up 1 in the sols[1] that will give you 0, then
+				while((sub - subTemp) > 1) {
+					miniCount += sols[subTemp] + 1;
+					subTemp++;
+				}
+				
+				sols[sub] = miniCount;
+				System.out.println("finished inner minicount = " + miniCount + " sols[" + sub + "]: "  + sols[sub] + " found " + miniCount + " ways to make " + sub);
+				Util.printListInteger(sols);
+				*/
+				
+			}
+			System.out.println("... minicount: " + miniCount);
+			//sols[sub] = miniCount;
+			//so now sols[2] = 1;
+			//sol = sols[sub] + 1; // = 1
+			count += sols[sub] + 1; // = 2
+			System.out.println("after end loop, heres what we have:: sol = sub[" + sub + "] = " + sols[sub] + ", count=" + count + ", sub inreased to " + sub);
+			System.out.println("So that means we can set sols[" + sub + "] = " + sols[sub]);
+			Util.printListInteger(sols); 
+			System.out.println("finished"); 
+			
+			sub++; //sub is now 3
+			//sols[sub] = sol; //sols[3] = 1 + 1
+			
+			
+			
+			//System.out.println("in while loop "  + ", sub = " + sub + " sol = " + sol + ", count = " + count);
+		}
+		//count++;
 		return count;
 		
 	}
+	
+	
+	
 	public void vv (int runTotal, int sub, int og) {
 		/* 5:
 		4 + 1
