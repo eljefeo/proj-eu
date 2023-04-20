@@ -205,7 +205,7 @@ public class Problem76_notes {
 	 13:
 	 100
 	 
-	 1	2	3	4	5	6	7	8	9	10
+	 1	2	3	4	5	6	7	8	9	10	11	12
 	 -------------------------------------
 	 1	6	14	18	18	14	11	7	5	3	2	1
 	 
@@ -215,7 +215,7 @@ public class Problem76_notes {
 	 12:
 	 76 ways
 	 
-	 1	2	3	4	5	6	7	8	9	10
+	 1	2	3	4	5	6	7	8	9	10	11
 	 -------------------------------------
 	 1	6	12	15	13	11	7	5	3	2	1
 	 
@@ -500,9 +500,9 @@ public class Problem76_notes {
 	 
 	 
 	 999:
-	 
-	 									996	997	998	999
-	 -------------------------------------------------
+	 		   N-10	N-9	N-8	N-7	N-6	N-5	N-4	N-3	N-2	N-1
+	 			989	990	991	992	993	994	995	996	997	998
+	 -------------------------------------------------.
 ... ?	?	?	?	30	22	15	11	7	5	3	2	1
 	 
 	 
@@ -692,7 +692,44 @@ public class Problem76_notes {
 	 lets see..
 	 
 	 
+	 next we need to talk about the ideal numbers vs the actual numbers.
+	 I mean.. when we are doing 999
+	 we can see 
+	 N-1 = 1 	(0+1)
+	 N-2 = 2	(1+1)
+	 N-3 = 3	(2+1)
+	 N-4 = 5	(4+1)
+	 N-5 = 7	(6+1)
+	 N-6 = 11	(10+1)
+	 N-7 = 15	(14 + 1) - what does this 14 mean? thats the number before, so 14 ways to make 7
+	 N-8 = 22	(21 + 1) - what does this 21 mean? thats the number before, so 21 ways to make 8
+	 N-9 = 30	(29 + 1) - what does this 29 mean? thats the ways to make N-thisNumber, so 29 ways to make 9
+	 ....
+	 So this all works, it doesnt matter what N is (doesnt matter if you are trying to figure out how many ways to make 5 or how many ways to make 999)
+	 The first N-someNumber will always be the same, 
 	 
+	 That is !!!!
+	 UNTIL YOU GET TO HALF OF THE NUMBER
+	 like lets take 10
+	 10 / 2 = 5
+	 so what happens when you around the halfway mark of N-something for the number 10
+	 N-10	N-9	N-8	N-7	N-6	N-5	N-4	N-3	N-2	N-1
+			 1	2	3	4	5	6	7	8	9
+			 --------------------------------
+			 1	5	8	9	7	5	3	2	1
+			 |	|	|	|	|	|	|	|	|- this is correct
+			 |	|	|	|	|	|	|	|- this is correct
+			 |	|	|	|	|	|	|- this is correct
+			 |	|	|	|	|	| - this is correct
+			 |	|	|	|	| - this is correct
+			 |	|	|	|- !!! oops this is supposed to be 11... what happened? (its 2 less than expected)
+		 	 |	|	|- this is supposed to be 15 (its 7 less)
+		 	 |	|- this is supposed to be 22(its 17 less than expected)
+		 	 |- this is supposed to be 30 (its 29 less than expected
+		 	 
+		 	 N-4 was correct.
+		 	 But once we got to N-5 things got messed up
+		 	 
 	 
 	 */
 	
