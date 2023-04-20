@@ -22,11 +22,205 @@ public class Problem76 implements Problem{
 
 	}
 	
+	/*
+	 8:
+	 1 7						1 7
+	 2 6						2 6s
+	 1 1 6
+	 3 5
+	 1 2 5						3 5s
+	 1 1 1 5
+	 4 4
+	 1 3 4
+	 2 2 4						5 4s
+	 1 1 2 4
+	 1 1 1 1 4
+	 2 3 3
+	 1 1 3 3
+	 1 2 2 3					5 3s
+	 1 1 1 2 3
+	 1 1 1 1 1 3
+	 2 2 2 2
+	 1 1 2 2 2
+	 1 1 1 1 2 2				4 2s
+	 1 1 1 1 1 1 2
+	 1 1 1 1 1 1 1 1			1 1
+	 ::: 8 has 21 ways
+	 */
+	
 	@Override
 	public Object problem() {
-		entr();
+		//entr();
+		return vvv(10);
+	}
+	
+	public int vvv (int og) {
+		/*
+		 so.. if we want to know what N - 2 is gonna be, we need to do 2 first
+	 
+	 and if we want to do N - 3, we need to find the answer for 3...
+	 so what do we do... do we start with 2, then can that give us 3?
+	 and then we have enough info for 4, and then 5, and 6 and ....N?
+		 */
+		int sub = 1;
+		int two = 1;
+		int[] sols = new int[og + 1];
+		sols[2] = 1;
+		int count = 0;
+		//3.... 3 - 1 = 1, 3 - 2 = (look up above.. 2 = 1) 1 (+1), 
+		//then if N-x where x == N, we just add 1 to the final for the 1+1+1+1+1...
+		while((og - sub) > 1) {
+			//N - 1
+			
+			//dont forget for 4 we have to do N-1, AND N-2, add both those for the answer to 4
+			int miniCount = 0;
+			int subTemp = sub;//lets say test is 4. sub is 1
+			//so n - 1, look up 1 in the sols[1] that will give you 0, then
+			//add 1 so you get 1
+			//
+			System.out.println("Starting subTemp:  " + subTemp);
+			while(subTemp < og) {
+				miniCount += sols[subTemp] + 1;
+				subTemp++;
+				sols[subTemp] = miniCount;
+				System.out.println("minicount = " + miniCount + " subtemp: " + subTemp + " sols[subTemp]: "  + sols[subTemp]);
+			}
+			sub++;
+			/*
+			int sol = sols[sub];
+			count += sol + 1;
+			sub++;
+			sols[sub] = sol + 1;
+			*/
+			//System.out.println("in while loop "  + ", sub = " + sub + " sol = " + sol + ", count = " + count);
+		}
 		
-		return "";
+		return count;
+		
+	}
+	public void vv (int runTotal, int sub, int og) {
+		/* 5:
+		4 + 1
+		3 + 2
+		3 + 1 + 1
+		2 + 2 + 1
+		2 + 1 + 1 + 1
+		1 + 1 + 1 + 1 + 1
+		
+		4 - can you add 4 again? no too big
+		can you add 3? no too big
+		can you add 2? no too big
+		can  you add 1?
+		yes
+		did you get to 5?
+		yes
+		is your last number 1?
+		yes (count it?)
+	    then return
+	    back to the 4
+	    minus to 3
+	    can you add 3 again?
+	    no too big
+	    can you add 2? yes we can
+	    are you at 5?
+	    yes - (count it?)
+	    is your last number 1? 
+	    no its 2
+	    minus 1, so 2 is 1 now
+	    ...
+	    is your last number 1
+	    yes
+	    return
+	    is your last number 1
+	    yes
+	    return
+	    is your last number 1
+	    no its 3
+	    minus to 2
+	    can you add 2 again?
+	    yes, makes 4
+	    can  you add 2 again?
+	    no too big
+	    can you add 1?
+	    yes 
+	    is your number 5?
+	    yes
+	    is your last number 1?
+	    yes
+	    return
+	    is your last number 1?
+	    no its 2
+	    minus 1 to make 1
+	    can you add 1 again?
+	    yes
+	    is your number 5?
+	    no its 3
+	    can you add 1 again
+	    yes...........
+		
+		
+		*/
+		int rightNum = sub - 1; //starts at 4 since 5-1
+		int tempRight = rightNum;//where to do this, this num is 4 to start I guess (5 - 1)
+		int count = 0;
+		int runningTotal = 0;
+		/*4 - can you add 4 again? no too big
+				can you add 3? no too big
+				can you add 2? no too big
+				can  you add 1?
+				yes
+				did you get to 5?
+				yes
+				is your last number 1?
+				yes (count it?)
+			    then return
+		*/
+		
+		while(true) {
+
+			int temp = runningTotal + tempRight; // 0 + 4; rightNum starts at 4, starts the highest below og 5;
+												// next step is 4 + 4
+			
+			if(og > temp) {
+				runningTotal = temp;	//+= newnum;
+				continue;
+			} else if(og == temp) {
+				//got to 5
+				//is your last number 1?
+				//		yes (count it?)
+				//	    then return
+				count++;
+				
+				if(tempRight == 1) { // is this like the far left number is 1, so we cant reduce/chop it up anymore, so we found one?
+					//we get here with 1 4... so what do we do.. we need to get to 2 3 next...
+					//so we need to set tempRight to 3 somehow instead of 4
+					
+					 rightNum--; // should be 3 now, from 4
+					 tempRight = rightNum;
+					 runningTotal = 0;
+					 continue;
+					
+				} else if(tempRight > 1) { //we  should be able to take out the if here, if its not eq then we can assume its still gt
+					// so here... this means we are in a situation like making 5 and we have 2 3. tempRight would be 2, and we can continue to chop it up more..
+					//so how do we continue?
+					//I guess we started with 4, 
+					//we get here with 2 3, tempRight = 2, temp is 5, 
+					//so from 2 3, we need to go to 1 1 3... 
+					
+					
+				} else { //tempRight should never be less than 1, either gt or eq
+					System.out.println("Should not get here, with tempRight: " + tempRight + ", and rightNum: " + rightNum);
+				}
+				
+				
+			} else if(temp > og) {
+				// too big
+				System.out.println("target num: " + og + ", temp too big: " + temp + ", runningTotal: " + runningTotal + ", tempRight: " + tempRight + " (newnum getting reduced to " + (tempRight-1) + ")");
+				tempRight--;// turns to 3
+			}
+		}
+		
+		
 	}
 	
 	
@@ -46,7 +240,7 @@ public class Problem76 implements Problem{
 	 (left is 3)
 	 
 	 send left back into the recur function
-	 woopwAbblyWoopppFlutterWaaahhh (*recurive sounds, like going through a time warp black hole*)
+	 woopawAbblyWoopppFlutterWaaawooSHhhh (* sounds of recursion, like going through a black hole time warp *)
 	 
 	 
 	 
@@ -64,6 +258,18 @@ public class Problem76 implements Problem{
 		int result = recr666(test, "");
 		//int result = recr16(1, test-1);
 		System.out.println("FINAL for " + test + " : " + result);
+	}
+	
+	public static int recr6666(int n, int og, String els) {
+		
+		//make 5
+		int add = 1;
+		int num = 0;
+		while (num != n) {
+			num += add; //keep adding 1 until we get 10
+			//
+		}
+		return 0;
 	}
 
 	public static int recr666(int n, String els) {

@@ -18,6 +18,11 @@ public class Problem76_notes {
 	/*
 	 * NOTES:
 	 * 
+	 
+	 
+	 
+	 
+	 
 	 -------- I visualize 5 like this: --------
 	 
 	 1 1 1 1 1 :: 1st way (five 1's)
@@ -167,23 +172,74 @@ public class Problem76_notes {
 	 */
 	
 	/*
+	 
+	 20:
+	 626
+	 
+	 19:
+	 489
+	 
+	 18:
+	 384
+	 
+	 17:
+	 296
+	 
+	 16:
+	 230 
+	 
+	 15:
+	 175
+	 
+	 14:
+	 134
+	 
+	 1	2	3	4	5	6	7	8	9	10	11	12	13	
+	 -------------------------------------------------
+	 1	7	16	23	23	20	15	11	7	5	3	2	1
+	 
+	 
+	 
+	 
+	 
+	 13:
+	 100
+	 
+	 1	2	3	4	5	6	7	8	9	10
+	 -------------------------------------
+	 1	6	14	18	18	14	11	7	5	3	2	1
+	 
+	 
+	 
+	 
+	 12:
+	 76 ways
+	 
+	 1	2	3	4	5	6	7	8	9	10
+	 -------------------------------------
+	 1	6	12	15	13	11	7	5	3	2	1
+	 
+	 
+	 
+	
+	 
 	 11:
 	 
 	 1 10
-	 2 9
+	 2 9				
 	 1 1 9
 	 3 8
-	 1 2 8 
+	 1 2 8 				
 	 1 1 1 8
 	 4 7
 	 1 3 7
-	 2 2 7
+	 2 2 7				
 	 1 1 2 7
 	 1 1 1 1 7
 	 5 6
 	 1 4 6
 	 2 3 6
-	 1 1 3 6
+	 1 1 3 6			
 	 1 2 2 6
 	 1 1 1 2 6
 	 1 1 1 1 1 6
@@ -191,7 +247,7 @@ public class Problem76_notes {
 	 2 4 5
 	 1 1 4 5
 	 3 3 5
-	 1 2 3 5
+	 1 2 3 5			
 	 1 1 1 3 5
 	 2 2 2 5
 	 1 1 2 2 5
@@ -202,7 +258,7 @@ public class Problem76_notes {
 	 1 1 1 4 4 
 	 1 3 3 4
 	 2 2 3 4
-	 1 1 2 3 4
+	 1 1 2 3 4			
 	 1 1 1 1 3 4
 	 1 2 2 2 4
 	 1 1 1 2 2 4
@@ -212,23 +268,23 @@ public class Problem76_notes {
 	 1 1 3 3 3
 	 1 2 2 3 3
 	 1 1 1 2 3 3
-	 1 1 1 1 1 3 3
+	 1 1 1 1 1 3 3			
 	 2 2 2 2 3
-	 1 1 2 2 2 3
+	 1 1 2 2 2 3		
 	 1 1 1 1 2 2 3
 	 1 1 1 1 1 1 2 3
 	 1 1 1 1 1 1 1 1 3
 	 1 2 2 2 2 2
 	 1 1 1 2 2 2 2
-	 1 1 1 1 1 2 2 2
+	 1 1 1 1 1 2 2 2	
 	 1 1 1 1 1 1 1 2 2
 	 1 1 1 1 1 1 1 1 1 2
-	 1 1 1 1 1 1 1 1 1 1 1
+	 1 1 1 1 1 1 1 1 1 1 1	
 	 
 	 55 ways for 11?
 	 
-	 1	2	3	4	5	6	7	8	9
-	 --------------------------------
+	 1	2	3	4	5	6	7	8	9	10
+	 -------------------------------------
 	 1	5	10	11	10	7	5	3	2	1
 	 
 	 
@@ -245,9 +301,10 @@ public class Problem76_notes {
 	 2 2 6						5 6s
 	 1 1 2 6
 	 1 1 1 1 6
+	 5 5
 	 1 4 5
 	 2 3 5
-	 1 1 3 5					6 5s
+	 1 1 3 5					7 5s
 	 1 2 2 5
 	 1 1 1 2 5
 	 1 1 1 1 1 5
@@ -274,12 +331,12 @@ public class Problem76_notes {
 	 1 1 1 1 1 1 2 2
 	 1 1 1 1 1 1 1 1 2
 	 1 1 1 1 1 1 1 1 1 1        1 1
-	 10 has 40 ways
+	 10 has 41 ways
 	 
 	 occurances starting number (far right side) ... (not sure if this helps, just looking for patterns on how to cheese this problem)
 	 1	2	3	4	5	6	7	8	9
 	 --------------------------------
-	 1	5	8	9	6	5	3	2	1
+	 1	5	8	9	7	5	3	2	1
 	 
 	 
 	 
@@ -429,6 +486,212 @@ public class Problem76_notes {
 	 1	2	3	4	5	6	7	8	9
 	 --------------------------------
 	 1
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 999:
+	 
+	 									996	997	998	999
+	 -------------------------------------------------
+... ?	?	?	?	30	22	15	11	7	5	3	2	1
+	 
+	 
+	 ------------------------------------------
+	  14:
+	 134
+	 
+	 1	2	3	4	5	6	7	8	9	10	11	12	13	
+	 -------------------------------------------------
+	 1	7	16	23	23	20	15	11	7	5	3	2	1
+	 
+	 
+	 
+	 
+	 
+	 13:
+	 100
+	 
+	 1	2	3	4	5	6	7	8	9	10
+	 -------------------------------------
+	 1	6	14	18	18	14	11	7	5	3	2	1
+	 
+	 
+	 
+	 
+	 12:
+	 76 ways
+	 
+	 1	2	3	4	5	6	7	8	9	10
+	 -------------------------------------
+	 1	6	12	15	13	11	7	5	3	2	1
+	 
+	 
+	 
+	 11 has 55 ways 
+	 
+	 1	2	3	4	5	6	7	8	9	10
+	 -------------------------------------
+	 1	5	10	11	10	7	5	3	2	1
+	 
+	 
+	 10 has 41 ways
+	 
+	 occurances starting number (far right side) ... (not sure if this helps, just looking for patterns on how to cheese this problem)
+	 1	2	3	4	5	6	7	8	9
+	 --------------------------------
+	 1	5	8	9	7	5	3	2	1
+	 
+	 
+	 ::: 9 has 29 ways
+	 1	2	3	4	5	6	7	8	9
+	 --------------------------------
+	 1	4	7	6	5	3	2	1
+	 
+	 
+	 ::: 8 has 21 ways
+	 1	2	3	4	5	6	7	8	9
+	 --------------------------------
+	 1	4	5	5	3	2	1
+	 
+	 
+	  ::: 7 has 14 ways
+	 1	2	3	4	5	6	7	8	9
+	 --------------------------------
+	 1	3	4	3	2	1
+	 
+	 
+	  ::: 6 has 10 ways
+	 1	2	3	4	5	6	7	8	9
+	 --------------------------------
+	 1	3	3	2	1
+	 
+	 
+	 ::: 5 has 6 ways
+	 1	2	3	4	5	6	7	8	9
+	 --------------------------------
+	 1	2	2	1
+	 
+	 
+	 ::: 4 has 4 ways 
+	 1	2	3	4	5	6	7	8	9
+	 --------------------------------
+	 1	2	1
+	 
+	 ::: 3 has 2 ways 
+	 1	2	3	4	5	6	7	8	9
+	 --------------------------------
+	 1	1
+	 
+	 ::: 2 has 1 way
+	 1	2	3	4	5	6	7	8	9
+	 --------------------------------
+	 1
+	 
+	 
+	 
+	 
+	 ----------------- I think I solved it, lets see if we can code something:
+	 
+	 Ok yep I am starting to see a pattern:
+	 start with N-1
+	 lets say we are doing 11...
+	 N-1 = 10
+	 that leaves a 1... there is no way to break up a 1, so just 1 and 10
+	 whatever... lets move on to the more interesting stuff
+	 
+	 N-2 = 9
+	 so this 2.... 2 has 1 way to make 2, 1+1
+	 now... we see with all these numbers whatever N-2 is
+	 that means you are going to have the same number of chunks as all other nums
+	 like 2 + N, doesnt matter what N is... you can break that 2 up into 1 way (1 1)
+	 
+	 same with N-3
+	 3 can break up 2 ways (1 1 1, 1 2)
+	 so if we start listing out the ways to make a num, lets say 11:
+	 
+	 11:
+	 
+	 1 10
+	 2 9				N - 2, there is 1 way to break up 2.. but we add 1 more because 9 2 need to be listed
+	 1 1 9
+	 3 8
+	 1 2 8 				N - 3, there are 2 ways to break up 3, so add 1 and we get 3
+	 1 1 1 8
+	 4 7
+	 1 3 7
+	 2 2 7				N - 4, there are 4 ways to break up 4, so add 1 = 5
+	 1 1 2 7
+	 1 1 1 1 7
+	 5 6
+	 1 4 6
+	 2 3 6
+	 1 1 3 6			N - 5, 6 ways to break up 5, add 1 = 7
+	 1 2 2 6
+	 1 1 1 2 6
+	 1 1 1 1 1 6
+	 1 5 5
+	 2 4 5
+	 1 1 4 5
+	 3 3 5
+	 1 2 3 5			N - 6, 10 ways to break 6. Add 1 = 11
+	 1 1 1 3 5
+	 2 2 2 5
+	 1 1 2 2 5
+	 1 1 1 1 2 5
+	 1 1 1 1 1 1 5
+	 3 4 4
+	 1 2 4 4 
+	 1 1 1 4 4 
+	 1 3 3 4
+	 2 2 3 4
+	 1 1 2 3 4			N - 7, 14 ways to make 7, + 1 = 15
+	 1 1 1 1 3 4
+	 1 2 2 2 4
+	 1 1 1 2 2 4
+	 1 1 1 1 1 2 4
+	 1 1 1 1 1 1 1 4
+	 2 3 3 3
+	 1 1 3 3 3
+	 1 2 2 3 3
+	 1 1 1 2 3 3
+	 1 1 1 1 1 3 3			
+	 2 2 2 2 3
+	 1 1 2 2 2 3		N - 8, 21 ways for 8 + 1 = 22
+	 1 1 1 1 2 2 3
+	 1 1 1 1 1 1 2 3
+	 1 1 1 1 1 1 1 1 3
+	 1 2 2 2 2 2
+	 1 1 1 2 2 2 2
+	 1 1 1 1 1 2 2 2	N - 9, 29 ways to make 9 + 1 = 30
+	 1 1 1 1 1 1 1 2 2
+	 1 1 1 1 1 1 1 1 1 2
+	 1 1 1 1 1 1 1 1 1 1 1	N - 10, once you get to 1, there is only 1 way...
+	 
+	 55 ways for 11?
+	 
+	 1	2	3	4	5	6	7	8	9	10
+	 -------------------------------------
+	 1	5	10	11	10	7	5	3	2	1
+	 
+	 so.. if we want to know what N - 2 is gonna be, we need to do 2 first
+	 
+	 and if we want to do N - 3, we need to find the answer for 3...
+	 so what do we do... do we start with 2, then can that give us 3?
+	 and then we have enough info for 4, and then 5, and 6 and ....N?
+	 
+	 lets see..
+	 
+	 
 	 
 	 
 	 */
