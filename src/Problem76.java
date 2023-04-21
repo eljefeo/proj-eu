@@ -1,5 +1,10 @@
 
 public class Problem76 implements Problem{
+
+		/*
+		 FINAL for 100 : 
+			Took 31.529430 seconds
+		 *
 	/*
 	 It is possible to write five as a sum in exactly six different ways:
 
@@ -23,6 +28,12 @@ public class Problem76 implements Problem{
 	}
 	
 	/*
+	 * 	 999:
+	 		   N-10	N-9	N-8	N-7	N-6	N-5	N-4	N-3	N-2	N-1
+	 			989	990	991	992	993	994	995	996	997	998
+	 -------------------------------------------------
+... ?	?	?	?	30	22	15	11	7	5	3	2	1
+
 	 8:
 	 1 7						1 7
 	 2 6						2 6s
@@ -50,9 +61,113 @@ public class Problem76 implements Problem{
 	
 	@Override
 	public Object problem() {
-		//entr();
-		return getHowManyWaysToMake(6);
+
+		return entrr();
+		
 	}
+	public static Object entrr() {
+		int test = 100;
+		int count = 1; //start count with the 1 6
+		int sub = test - 1; // 5
+		int left = test - sub; //1
+		
+		//int result = recr666(1, test-1, test);
+		int result = rec666(0, test, 1, 0, test-1, "");
+		//int result = recr16(1, test-1);
+		System.out.println("FINAL for " + test + " : " + result);
+		
+		return result;
+	}
+	
+	public static int rec666(int n, int og, int digit, int count, int end, String sofar) {
+		
+		//System.out.println("b"+digit);
+		if(n == og) {
+			
+			count++;
+			//System.out.println("Counted one, Babay!@ count=" + count + ", at digit: " + digit + " sofar: " + sofar);
+		} else if(n < og) {
+			//need og/something
+			int div = og/digit;
+			//System.out.println("starting loop :: digit " + digit + " 1 - end=" + 1 + "-" + end + ", n: " + n + ", div: " + div + ", count: " + count + " og:" + og + " divd:" + (og/digit) + ", sofar" + sofar);
+			for(int i = 1; i <= end; i++) {
+				//n += i;
+				//System.out.println("inLoop -- digit:" + digit + "  i: " + i + " n: " + n);
+				count = rec666(n + i, og, digit+1, count, i < div  ? i : div, sofar + " " + i);
+			}
+		}
+		
+		//make 5
+		//System.out.println("r"+digit);
+		return count;
+	}
+	
+	private static int findAllNumsThatAddToNumJustCount2(int goal){
+		return recurLoopJustCount2(goal, 0, 0);
+		//System.out.println("Found " + count + " solutions ");
+	}
+	
+	private static int recurLoopJustCount2(int goal,  int current, int counter) {
+			/*
+			 if (goal==0) {
+			 
+				counter++;
+			} else if (goal>0) {
+				for (int i = ind; i < allNums.length; i++) {
+					int newGoal = goal - allNums[i];
+					if(newGoal>=0){
+						counter = recurLoopJustCount(allNums, newGoal, i, counter);
+					} 
+				}
+			} 
+			*/
+			return counter;
+			
+	}
+	
+	private static int recurLoopJustCount23(int goal,  int current, int counter) {
+		if (current==goal) {
+			
+			counter++;
+			System.out.println("goal hit: " + goal + ", current: " + current + ", counter: " + counter);
+		} else if (goal>current) {
+			int dif = goal - current+1;
+			//for (int i = 1; i < dif; i++) {
+			for (int i = 1; i < goal; i++) {
+				
+				current += i;
+				System.out.println("Just added " + i + ", current now " + current + " i=" + i + " counter=" + counter + " diff: " + dif);
+				
+				if (current==goal) {
+					
+					counter++;
+					System.out.println("33goal hit: " + goal + ", current: " + current + ", counter: " + counter + " diff: " + dif);
+					return counter;
+				}
+				
+				if(current < goal){
+					System.out.println("calling again because " + current + " < " + goal + " i=" + i + " diff: " + dif);
+					int newC = recurLoopJustCount2(goal, current, counter);
+					if(newC != counter) {// we hit a goal in this call just above??
+						System.out.println("NewC " + newC + ", counter: " + counter+ ", i=" + i);
+						//counter++;
+						return newC ;
+					}
+					
+				} else if (current > goal) {
+					System.out.println("How did we get here, goal: " + goal + ", current: " + current + ", counter: " + counter + " i=" + i + " diff: " + dif);
+				} else {
+					counter++;
+					
+					System.out.println("hit goal2, will let next call? hmm, goal: " + goal + ", current: " + current + ", counter: " + counter + " i=" + i);
+					return counter;
+				}
+			}
+		} 
+		return counter;
+	}
+	
+	
 	
 	public int getHowManyWaysToMake (int num) {
 		/*
@@ -69,9 +184,13 @@ public class Problem76 implements Problem{
 		
 		int two = 1;
 		int[] sols = new int[num + 1];
+		
 		// we are starting with N-1 already complete. We set the count to 1 already, and the sub is 2, so we are starting at N-2
 		int count = 1;
 		int sub = 2;
+		sols[1] = 1;  //when we are looking up N-1, N-2 etc.. like how to do 5, we look up sols[5], 
+					//and technically you would do 5, 4 1, 3 2, 3 1 1, etc... The key here is we include the 5 itself in our count.. 
+		
 		//3.... 3 - 1 = 1, 3 - 2 = (look up above.. 2 = 1) 1 (+1), 
 		//then if N-x where x == N, we just add 1 to the final for the 1+1+1+1+1...
 		System.out.println("Starting with num: " + num + ", sub: " + sub + ", count: " + count);
@@ -85,7 +204,7 @@ public class Problem76 implements Problem{
 			
 			Util.printListInteger(sols);
 			int miniCount = 1;
-			if(sol == 0) { //if we dont have this one yet
+			if(sol == 0) { //if we dont have this one yet, so lets find it first
 				System.out.println("we dont know how to make " + sub + ", need to figure that out first...calling");
 				int newWays = getHowManyWaysToMake(sub);
 				System.out.println("inner: got this many ways to make " + sub + " : " + newWays);
@@ -110,8 +229,8 @@ public class Problem76 implements Problem{
 			//sols[sub] = miniCount;
 			//so now sols[2] = 1;
 			//sol = sols[sub] + 1; // = 1
-			count += sols[sub] + 1; // = 2
-			System.out.println("after end loop, heres what we have:: sol = sub[" + sub + "] = " + sols[sub] + ", count=" + count + ", sub inreased to " + sub);
+			count += sols[sub]; // = 2
+			System.out.println("after end loop, heres what we have:: sol = sub[" + sub + "] = " + sols[sub] + ", count=" + count);
 			System.out.println("So that means we can set sols[" + sub + "] = " + sols[sub]);
 			Util.printListInteger(sols); 
 			System.out.println("finished"); 

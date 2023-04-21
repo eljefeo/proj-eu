@@ -121,6 +121,162 @@ public class Problem76_notes {
 		
 		
 	 */
+	
+	/*
+		ok different approach
+		lets take 8, and 9 I suppopse so we can have an even and odd number
+		so what if we think of it in terms of recursive calls...
+		the far left column can be thought of as the first digit
+		that far left column goes 1 - 8
+		The next column to the right only goes up to half of 9 round down
+		we see it goes up to 4
+		
+		The column after that goes up to 3
+		next column goes up to 2 (only does that twice)
+		and the rest of the columns only go up to 1
+		many of the final columns are empty and have nothing..
+		
+		so if these were recursive calls
+		the first call would have some loop that goes from 1 to 8 for the first digit
+		
+		The next call inside would only go up to 4
+		the next call up to 3
+		
+		ITs like asking, for the 1st digit, whats the highest num you can fit in 9 once (8)
+		second digit - whats the highest num you can fit in 9 twice (4)
+		third digit- whats the highest num you can fit in 9 three times (3)
+		4th digit - whats the highest num fit in 9 4 times? (2)
+		5th digit - highest num fit in 9 5 times? (1)
+		rest of them are 1
+		
+		func1:
+		9/1  = 9
+			loop 1 through 8 (maybe dont do the actual 9)
+			i = 1;
+			call next function
+		
+		func2:
+			9/2 = 4(round down)
+			loop 1 through 4
+			i = 1
+		
+		func3:
+			9/3 = 3
+			loop 1 - 3
+			
+		func4:
+			9/4 = 2
+			loop 1 - 2
+		
+		func5:
+			9/5
+			loop is only i = 1
+			
+		funcN: 9/N : N > (9/2)
+			this means loop through any func N such that N is greater than 9/2=4. 
+			So any func after the 4th func, i will only be 1
+			
+			
+		
+		9:
+		
+		reversed:
+		8 1
+		7 2
+		7 1 1
+		6 3
+		6 2 1
+		6 1 1 1
+		5 4
+		5 3 1
+		5 2 2
+		5 2 1 1
+		5 1 1 1 1
+		4 4 1
+		4 3 2
+		4 3 1 1
+		4 2 2 1
+		4 2 1 1 1
+		4 1 1 1 1 1
+		3 3 3
+		3 3 2 1
+		3 3 1 1 1
+		3 2 2 2
+		3 2 2 1 1
+		3 2 1 1 1 1
+		3 1 1 1 1 1 1
+		2 2 2 2 1
+		2 2 2 1 1 1
+		2 2 1 1 1 1 1
+		2 1 1 1 1 1 1 1
+		1 1 1 1 1 1 1 1 1
+		
+
+	 1 8						1 8
+	 2 7
+	 1 1 7						2 7s
+	 3 6
+	 1 2 6						3 6s
+	 1 1 1 6
+	 4 5
+	 1 3 5
+	 2 2 5						5 5s
+	 1 1 2 5
+	 1 1 1 1 5
+	 1 4 4
+	 2 3 4
+	 1 1 3 4
+	 1 2 2 4					6 4s
+	 1 1 1 2 4
+	 1 1 1 1 1 4
+	 3 3 3 
+	 1 2 3 3 
+	 1 1 1 3 3 
+	 2 2 2 3
+	 1 1 2 2 3					7 3s
+	 1 1 1 1 2 3
+	 1 1 1 1 1 1 3
+	 1 2 2 2 2 
+	 1 1 1 2 2 2 
+	 1 1 1 1 1 2 2 				4 2s
+	 1 1 1 1 1 1 1 2
+	 1 1 1 1 1 1 1 1 1 			1 1
+	 ::: 9 has 29 ways
+	 
+	 1	2	3	4	5	6	7	8	9
+	 --------------------------------
+	 1	4	7	6	5	3	2	1
+	 
+	 8:
+	 1 7						1 7
+	 2 6						2 6s
+	 1 1 6
+	 3 5
+	 1 2 5						3 5s
+	 1 1 1 5
+	 4 4
+	 1 3 4
+	 2 2 4						5 4s
+	 1 1 2 4
+	 1 1 1 1 4
+	 2 3 3
+	 1 1 3 3
+	 1 2 2 3					5 3s
+	 1 1 1 2 3
+	 1 1 1 1 1 3
+	 2 2 2 2
+	 1 1 2 2 2
+	 1 1 1 1 2 2				4 2s
+	 1 1 1 1 1 1 2
+	 1 1 1 1 1 1 1 1			1 1
+	 ::: 8 has 21 ways
+	 
+	 1	2	3	4	5	6	7	8	9
+	 --------------------------------
+	 1	4	5	5	3	2	1
+	 
+	 
+	*/
 	/*
 		
 	11 reversed:
@@ -142,29 +298,29 @@ public class Problem76_notes {
 		6 2 2 1
 		6 2 1 1 1
 		6 1 1 1 1 1
-		5 5 1
-		5 4 2
+		5 5 1				N - 6 (6 is over half of 11) 6 limit 5 (after 6 1 1 1 1 1, we skip 5 6, go straight to 5 5 1, so we skipped 1 thing)
+		5 4 2				so what do we do... n-6 = 5 (11 - 6 = 5) 6 and 5 are 1 away, so we subtract whatever N-1+1 (1)
 		5 4 1 1
 		5 3 3
 		5 3 2 1
 		5 3 1 1 1
-		5 2 2 2
-		5 2 2 1 1
+		5 2 2 2						
+		5 2 2 1 1					
 		5 2 1 1 1 1
 		5 1 1 1 1 1 1
 		4 4 3
 		4 4 2 1
 		4 4 1 1 1
-		4 3 3 1
-		4 3 2 2
+		4 3 3 1			N - 7... what is this. 7 limit 4? 7 - 4 = 3. so we add up all the n-1, n-2 etc.. up to <n-3
+		4 3 2 2			is that n-1(1) n-2(2) + 1 (add 1 for the 7 itself)... subtract that from what 7 would have been which is 15, so 15 - 4
 		4 3 2 1 1
 		4 3 1 1 1 1
 		4 2 2 2 1
 		4 2 2 1 1 1
 		4 2 1 1 1 1 1
-		4 1 1 1 1 1 1 1
-		3 3 3 2
-		3 3 3 1 1
+		4 1 1 1 1 1 1 1		what about this. after 4 1 1 ... it would have been 3 8, but we need to do instead 3 3 3 2
+		3 3 3 2				so 8 = 21/22 but we instead need to do 8 with a limit of 3. instead of 22 we need to find 10, so we are skipping 12 of them
+		3 3 3 1 1			how... 8 - 3 = 5.. do we do n-1(1) n-2(2) n-3(3) n-4(5) 1 + 2 + 3 + 5 = 11 + 1( add the 8 above 7 1, dont forget to include that)
 		3 3 2 2 1
 		3 3 2 1 1 1
 		3 3 1 1 1 1 1
@@ -173,13 +329,36 @@ public class Problem76_notes {
 		3 2 2 1 1 1 1
 		3 2 1 1 1 1 1 1
 		3 1 1 1 1 1 1 1 1
-		2 2 2 2 2 1
+		2 2 2 2 2 1			what about 
 		2 2 2 2 1 1 1
 		2 2 2 1 1 1 1 1
 		2 2 1 1 1 1 1 1 1
 		2 1 1 1 1 1 1 1 1 1
 		1 1 1 1 1 1 1 1 1 1 1
-				
+				//// special test here. Just to do 8below
+			8
+			7 1
+			6 2
+			6 1 1
+			5 3
+			5 2 1
+			5 1 1 1
+			4 4
+			4 3 1
+			4 2 2 
+			4 2 1 1
+			4 1 1 1 1
+			3 3 2  ***
+			3 3 1 1
+			3 2 2 1
+			3 2 1 1 1 
+			3 1 1 1 1 1
+			2 2 2 2 
+			2 2 2 1 1 
+			2 2 1 1 1 1 
+			2 1 1 1 1 1 1 
+			1 1 1 1 1 1 1 1 
+			
 		10 reversed:
 		
 		9 1
@@ -553,7 +732,7 @@ public class Problem76_notes {
 	 1 2 2 						2 2s
 	 1 1 1 1 2	
 	 1 1 1 1 1 1				1 1
-	 ::: 5 has 6 ways
+	 ::: 5 has 6 ways (7 including the 5 itself)
 	 
 	 1	2	3	4	5	6	7	8	9
 	 --------------------------------
@@ -564,7 +743,7 @@ public class Problem76_notes {
 	  2 2 
 	  1 1 2						2 2s
 	  1 1 1 1 					1 1
-	  ::: 4 has 4 ways
+	  ::: 4 has 4 ways (5 including the 4 itself)
 	  
 	 1	2	3	4	5	6	7	8	9
 	 --------------------------------
@@ -575,7 +754,7 @@ public class Problem76_notes {
 	  3:
 	  1 2						1 2
 	  1 1 1 					1 1
-	  ::: 3 has 2 ways
+	  ::: 3 has 2 ways (3 including the 3 itself)
 	  
 	 1	2	3	4	5	6	7	8	9
 	 --------------------------------
@@ -584,19 +763,192 @@ public class Problem76_notes {
 	 
 	  2:
 	  1 1 						1 1
-	  ::: 2 has 1 way
+	  ::: 2 has 1 way (2 including the 2 itself)
 	 
 	 1	2	3	4	5	6	7	8	9
 	 --------------------------------
 	 1
 	 
 	 
+	 1:
+	 0 ways (1 including the 1 itself)
 	 
 	 
 	 
 	 
+	 --------------------
+	 
+	 do or die:
+	 
+	 ok so we are trying to figure out how many ways to make 7
+	 lets start with the knowledge that n[1] = 1 (how many ways to make 1, its just put the 1 on the screen, thats the only way to make 1)
+	
+	 
+	 so N=7
+	 ...count is 1 because of the 7 on the screen
+	 
+	 N-1:
+	 6 1 --- lookup n[1], n[1] = 1 as stated above (this one will be known and hardcoded in the array)
+	 add to count... count is now 2
+	 then
+	 N-2
+	 5 2 --- lookup n[2] --OHH shit we dont know that one yet...
+	 
+	 gotta go get n[2]
+	 how many ways to make 2:
+	 count = 1 because of the number 2 itself;
+	 N-1
+	 1 1 --- lookup n[1], = 1
+	 add to count, count = 1;
+	 --- Do we stop here because N-2 == 0? maybe..
+	 now we have 2 ways to make 2: 2, 1 1
+	 so n[2] = 2
+	 
+	 back to 7....
+	 N-2
+	 5 2 --- lookup n[2] = 2
+	 add to count: 
+	 count = 4; (it was 2, now its 4)
+	 
+	 N-3 
+	 4 3 --- lookup n[3] --ohhhh shiiittt we dont know n[3]
+	 gotta go get n[3]
+	 
+	 how many ways to make 3:
+	 count 1
+	 N-1
+	 2 1 --- lookup n[1] =1
+	 add to count, count is 2
+	 
+	 N-2
+	 1 1 1 --- go lookup n[2], = 2, that would make count = 4, thats too much (its only supposed to be 3 ways to make 3) 
+	  				we gotta remove something because you can see on the left we dont have all of the n[2]
+	 				n[2] was 2, because 2 and 1 1 - those are the 2 ways to make 2
+	 				but we can see on the left we only have the 1 1
+	 				so we gotta subtract something... 
+	 				what is missing? whats missing is the main number... 2 is missing. We have 1 1, but we skipped 2..
+	 				
+	 				how do we know if we skipped something..
+	 				Maybe its , we are doing N-2, and 2 is more than half of 3.
+	 				so 3 - 2 = 1, we need to subtract n[1] = 1
+	 				so we lookup 2 n[2] = 2, and subtract n[1] = 1.
+	 				
+	 	so only add 1
+	 	count is now 3...
+	 	n[3] = 3
+	 	
 	 
 	 
+	                                         
+	                                         
+	                                         
+	                                         
+N-0	 7:                         0 7		-	for 7 we counted this one N-0 (1)
+N-1	 6 1						1 6          we counted all of N-1 (1)
+N-2	 5 2						2 5s         we counted all of this N-2 (2)
+	 5 1 1                                   we counted all 
+N-3	 4 3                                     
+	 4 2 1						3 4s         we counted all N-3 (3)
+	 4 1 1 1                                
+
+
+	X 4 3	- This one is missing, dont cout it for 7, just showing that its missing from N(4)
+N-4	 3 3 1                                  This one goes over half of 7, so N-4..N(4)=5, but we skipped (4-3) = 1, we skipped N-0 (does 4-3 = 1 mean we skipped 1 thing? like we skipped the first thing? idk
+	 3 2 2                                    so 5 - N(0) = 4 I guess.. still not 100% sure how we got this exactly
+	 3 2 1 1 					4 3s         
+	 31 1 1 1                                
+
+
+	X 5- These x ones are missing, just showing them here to see what we are missing
+	X 4 1
+	X 3 2
+N-5	 2 2 2 1                                 this one is N(5) = 7, but we skipped some also. I so 5-3 = 2. we need to get from 7 to 3
+	 2 2 1 1 1  					3 2s         how to get from 7 to 3. I guess we skipped N(0 of 5) 5, we skipped N(1 of 5) 4 1, skipped N(2 of 5) 3 2, 3 1 1
+	 2 1 1 1 1 1                          so instead of all 7, we skipped 4. That means in this context N0 is 1, N1 is 1, N2 is 2..?
+
+	X	6
+	X 1 5						
+	X 2 4						So here we have N6 which is normally 11 (or 10 ways to make 6) but we only have the last 1. We are missing 10 things
+	X 1 1 4							, but we are missing N0=1, N1=1, N2=2, N3=3, N4=5
+	X 3 3 
+	X 1 2 3 						
+	X 1 1 1 3
+	X 2 2 2 
+	X 1 1 2 2 					
+	X 1 1 1 1 2	
+N-6	 1 1 1 1 1 1 1 				1 1          N6, 6-1 = 5.. so N6=11. but we skipped N0,N1,N2,N3,N4
+	 ::: 7 has 14 ways
+	 AAAHHHH ITS NOT FULLY WORKING, I FEEL LIKE WE ARE SOO CLOSE BUT WE ARE MISSING SOMETHING
+	 I also am pretty much 100% sure we are doing it a much more complicated way than it needs to be
+	 I know we are on the right track by either doing it recursively and/or with multiple while loops...
+	 going to the top to make a different approach
+	 
+	 1	2	3	4	5	6	7	8	9
+	 --------------------------------
+	 1	3	4	3	2	1
+	 
+	 
+	 6:
+	 1 5						1 5
+	 2 4						2 4s
+	 1 1 4
+	 3 3 
+	 1 2 3 						3 3s
+	 1 1 1 3
+	 2 2 2 
+	 1 1 2 2 					3 2s
+	 1 1 1 1 2					
+	 1 1 1 1 1 1 				1 1
+	 ::: 6 has 10 ways
+	 
+	 1	2	3	4	5	6	7	8	9
+	 --------------------------------
+	 1	3	3	2	1
+	 
+	 5:
+	 1 4						1 4
+	 2 3						2 3s
+	 1 1 3
+	 1 2 2 						2 2s
+	 1 1 1 1 2	
+	 1 1 1 1 1 1				1 1
+	 ::: 5 has 6 ways (7 including the 5 itself)
+	 
+	 1	2	3	4	5	6	7	8	9
+	 --------------------------------
+	 1	2	2	1
+	 
+	  4:
+	  1 3 						1 3
+	  2 2 
+	  1 1 2						2 2s
+	  1 1 1 1 					1 1
+	  ::: 4 has 4 ways (5 including the 4 itself)
+	  
+	 1	2	3	4	5	6	7	8	9
+	 --------------------------------
+	 1	2	1
+	  
+	  
+	  
+	  3:
+	  1 2						1 2
+	  1 1 1 					1 1
+	  ::: 3 has 2 ways (3 including the 3 itself)
+	  
+	 1	2	3	4	5	6	7	8	9
+	 --------------------------------
+	 1	1
+	 
+	 
+	  2:
+	  1 1 						1 1
+	  ::: 2 has 1 way (2 including the 2 itself)
+	 
+	 1	2	3	4	5	6	7	8	9
+	 --------------------------------
+	 1
+	 --------------------
 	 
 	 
 	 
