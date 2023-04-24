@@ -39,7 +39,7 @@ public class Problem27 implements Problem {
 	}
 	 
 	@Override
-	public String problem(){
+	public Object problem(){
 		int a = -1000;
 		int b = -1000;
 		int oldb = -1000;
@@ -77,7 +77,7 @@ public class Problem27 implements Problem {
 		
 		//System.out.println("Best PCount : " + bestPCount + " with product of a*b : " + (winningA*winningB));
 		
-		return "" + (winningA*winningB);
+		return (winningA*winningB);
 	}
 	private static void primes1to39(int n){
 		long val = (long)Math.pow(n, 2) + n + 41;

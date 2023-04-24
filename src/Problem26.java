@@ -25,7 +25,7 @@ public class Problem26 implements Problem { //Took 0.017057 seconds
 	}
 	
 	@Override
-	public String problem(){
+	public Object problem(){
 		int biggestRemainderSet = 0;
 		int biggestD = 0; // ;)
 		for(int i=1; i<1000; i++){
@@ -37,7 +37,7 @@ public class Problem26 implements Problem { //Took 0.017057 seconds
 			}
 		}
 		//System.out.println("Biggest set of remainders " + biggestRemainderSet + " for d=" + biggestD);
-		return "" + biggestD;
+		return biggestD;
 	}
 	private static int getRepeatingDecimal(int numerator, int denom){
 		List<Integer> numerators = new ArrayList<Integer>();

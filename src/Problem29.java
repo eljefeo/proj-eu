@@ -27,7 +27,7 @@ public class Problem29 implements Problem {
 	}
 	
 	@Override
-	public String problem(){
+	public Object problem(){
 		int lowerBound = 2;
 		int higherBound = 100;
 		Set<BigInteger> nums = new HashSet<BigInteger>();
@@ -39,6 +39,6 @@ public class Problem29 implements Problem {
 			}
 		}
 		//System.out.println("Total number of unique numbers : " + nums.size());
-		return "" + nums.size();
+		return nums.size();
 	} 
 }

@@ -26,7 +26,7 @@ Find the sum of all the positive integers which cannot be written as the sum of 
 	 */
 	@Override
 	
-	public String problem(){ // Took 0.378610 seconds
+	public Object problem(){ // Took 0.378610 seconds
 
 		
 		//int max = 28123 + 1;
@@ -61,7 +61,7 @@ Find the sum of all the positive integers which cannot be written as the sum of 
 				total+=i;
 		
 		//System.out.println("Found: " + total);
-		return "" + total;
+		return total;
 	}
 	
 }

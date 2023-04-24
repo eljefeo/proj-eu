@@ -8,7 +8,7 @@ public class Problem25 implements Problem { //Took 0.103798 seconds
 	}
 	
 	@Override
-	public String problem(){
+	public Object problem(){
 		BigInteger num1= new BigInteger("1");
 		BigInteger num2 = new BigInteger("1");
 		
@@ -24,7 +24,7 @@ public class Problem25 implements Problem { //Took 0.103798 seconds
 				break;
 			}
 		}
-		return "" + ind;
+		return ind;
 	}
 
 }

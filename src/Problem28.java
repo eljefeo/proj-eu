@@ -24,13 +24,13 @@ public class Problem28 implements Problem {
 	}
 
 	@Override
-	public String problem() {
+	public Object problem() {
 		int side = 1001;
 		int sum = addCorners(side);
 		if(sum != -1){
 			System.out.println("Total sum of all spiral corners for a square of size " + side + " = " + sum);
 		}
-		return "" + sum;
+		return sum;
 	}
 	
 	private static int addCorners(int side){

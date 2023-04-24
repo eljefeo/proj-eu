@@ -56,7 +56,7 @@ What is the total of all the name scores in the file?
 	
 	
 	@Override
-	public String problem(){
+	public Object problem(){
 		java.util.Collections.sort(names);
 		
 		int runningTotal = 0;
@@ -64,7 +64,7 @@ What is the total of all the name scores in the file?
 			runningTotal+=getNameValue(i,names.get(i));
 		}
 		//System.out.println("Found: " + runningTotal);
-		return "" + runningTotal;
+		return runningTotal;
 	}
 	
 	public static int getNameValue(int index, String name){
