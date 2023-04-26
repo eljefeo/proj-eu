@@ -2107,6 +2107,44 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		}
 	}
 	
+	public static int findNumWithThisManyPrimeSums(int limit) {
+		int num = 1;
+		int numWays = 0;
+		List<Integer> primes = Util.getPrimesUnder(limit);
+		
+		while(numWays < limit) {
+			num++;
+			//numWays = howManyWaysToSumToN_print(0, num, 0, primes.size()-1, primes, " ");
+			numWays = howManyWaysToSumPrimesToN_recur(0, num, 0, primes.size()-1, primes);
+			//System.out.println("Ways to make : " + num + " = " + numWays);
+			
+		}
+		return num;
+	}
+	public static int howManyWaysToSumPrimesToN_recur(int num, int goal,  int count, int end, List<Integer> primes) {
+		if(num == goal) {
+			count++;
+		} else if(num < goal) {
+			for(int i = 0; i <= end; i++) {
+				count = howManyWaysToSumPrimesToN_recur(num + primes.get(i), goal, count, i, primes);
+			}
+		}
+		return count;
+	}
+	
+	public static int howManyWaysToSumToN_print(int num, int goal,  int count, int end, List<Integer> primes, String sofar) {
+		if(num == goal) {
+			System.out.println("Found one : " + sofar);
+			count++;
+		} else if(num < goal) {
+			for(int i = 0; i <= end; i++) {
+				//System.out.println("Doing sofar " + sofar + " + " + primes.get(i) + " : num " + num);
+				count = howManyWaysToSumToN_print(num + primes.get(i), goal, count, i, primes, sofar + " " + primes.get(i));
+			}
+		}
+		return count;
+	}
+	
 	/*
 	public boolean areCoPrime(int a, int b) {
 		didnt really do this yet..
