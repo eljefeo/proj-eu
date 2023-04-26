@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class ProblemTester {
 	
-	private static final String superSecretPasscode = "PutTheRealPasswordHere_ThisIsNotIt";
+	private static final String superSecretPasscode = "PutSomeSecreteKeyHere";
 
 	public static void main(String[] args) {
 		List<Problem> problems = new ArrayList<Problem>();
@@ -84,9 +84,11 @@ public class ProblemTester {
 		problems.add(new Problem73());
 		problems.add(new Problem74());
 		problems.add(new Problem75());
+		problems.add(new Problem76());
+		problems.add(new Problem77());
 		
 		System.out.println("Have this many problems : " + problems.size());
-		Map<Integer, String> answers = AnswersToProblems.getAnswers();
+		Map<Integer, String> answers = AnswersToProblems.getAnswersEncrypted();
 		
 		//Problem p = problems.get(3);
 		//p.runProblem();
@@ -94,13 +96,14 @@ public class ProblemTester {
 		List<Integer> incorrectAnswers = new ArrayList<Integer>();
 		for(int i = 0; i < problems.size(); i++) {
 			System.out.println("\n\n*****----... Problem " + (i+1) + " ...----*****\n");
+			String expectedAnswer = encryptStuff.decrypt(answers.get(i+1), superSecretPasscode);
 			long startT = System.nanoTime();
 			Problem p = problems.get(i);
 			String res = p.runProblem();
 			long endT = System.nanoTime();
 			double time = (double) (endT - startT) / 1000000000;
 			//System.out.println("\ngot answer from the thing : " + res);
-			String expectedAnswer = encryptStuff.decrypt(answers.get(i+1), superSecretPasscode);
+			
 			System.out.println("\nComparing " + res + " to expected answer: " + expectedAnswer);
 			if(!res.equals(expectedAnswer)) {
 				incorrectAnswers.add(i+1);

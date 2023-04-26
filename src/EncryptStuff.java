@@ -40,7 +40,7 @@ public class EncryptStuff {
         MessageDigest sha = null;
         try {
             key = myKey.getBytes(StandardCharsets.UTF_8);
-            sha = MessageDigest.getInstance("SHA-1");
+            sha = MessageDigest.getInstance("SHA-512"); 
             key = sha.digest(key);
             key = Arrays.copyOf(key, 16);
             secretKey = new SecretKeySpec(key, ALGORITHM);
@@ -74,7 +74,7 @@ public class EncryptStuff {
     }
 
     public static void main(String[] args) {
-        final String secretKey = "SomeSecretPasswordHere";
+        final String secretKey = "putSecretKeyHere";
 
         String originalString = "SomeTextHereToHide";
 
@@ -85,6 +85,18 @@ public class EncryptStuff {
         System.out.println(originalString);
         System.out.println(encryptedString);
         System.out.println(decryptedString);
+        
+        
+        Map<Integer, String> ans = AnswersToProblems.getAnswersEncrypted();
+        //Map<Integer, String> ans = AnswersToProblems.getAnswersUnencrypted();
+        for(Integer i : ans.keySet()){
+        	//ans.put(1, "e7UcHBk4RgYhszoRF+uqtg==");
+        	//System.out.println("ans: " + ans.get(i));
+        	System.out.println("ans.put(" + i + ", \"" + (encryptStuff.decrypt(ans.get(i), secretKey)) + "\"); ");
+        	//System.out.println("ans.put(" + i + ", \"" + (encryptStuff.encrypt(ans.get(i), secretKey)) + "\"); ");
+        	
+        }
+        
     }
 	
 	
