@@ -1,5 +1,5 @@
 
-public class Problem54 implements Problem { //Took 0.002600 seconds
+public class Problem54 implements Problem { //Took 0.002503 seconds
 	
 	/*
 	 * project euler problem 54 talks about 5 card poker rules in depth here....
@@ -20,7 +20,7 @@ public class Problem54 implements Problem { //Took 0.002600 seconds
 	
 	public static void main(String[] args){
 		Problem p = new Problem54();
-		pokerTest();
+		//pokerTest();
 		p.runProblem();
 	}
 
