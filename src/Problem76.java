@@ -3,7 +3,7 @@ public class Problem76 implements Problem{// Took 1.581191 seconds ---- too SLOW
 
 	/*
 	 It is possible to write five as a sum in exactly six different ways:
-
+		How many ways to make 5:
 		4 + 1
 		3 + 2
 		3 + 1 + 1
@@ -19,13 +19,17 @@ public class Problem76 implements Problem{// Took 1.581191 seconds ---- too SLOW
 		Problem p = new Problem76();
 		p.runProblem();
 	}
-	
+	static int t = 0;
 	@Override
 	public Object problem() {
 		int num = 100;
-		return howManyWaysToSumToN(0, num, 0, num-1);
+		//int ans = howManyWaysToSumToN_printAnswers(0, num, 0, num-1, "");
+		int ans2 = howManyWaysToSumToN(0, num, 0, num-1);
+		//int ans3 = howManyWaysToSumToN_original(0, num, 1, 0, num-1);
+		//System.out.println("t: " + t);
+		return ans2;
 	}
-
+	
 	public static int howManyWaysToSumToN(int num, int goal,  int count, int end) {
 		if(num == goal) {
 			count++;
@@ -37,15 +41,31 @@ public class Problem76 implements Problem{// Took 1.581191 seconds ---- too SLOW
 		return count;
 	}
 	
-	public static int howManyWaysToSumToN_original(int n, int og, int digit, int count, int end) {
-		if(n == og) {
-			count++;
-		} else if(n < og) {
-			int div = og/digit;
+	
+	public static int howManyWaysToSumToN_printAnswers(int num, int goal,  int count, int end, String text) {
+		 //if(num < goal) {
 			for(int i = 1; i <= end; i++) {
-				count = howManyWaysToSumToN_original(n + i, og, digit+1, count, i < div  ? i : div);
+				int ni = num + i;
+				if(ni > goal) {
+					//t++;
+					//System.out.println(" too far " + num + " + " + i);
+					return count;
+				} else if (ni == goal) {
+					text += " " + i;
+					System.out.println("found: " + text);
+					count++;
+					break;
+					//return count;
+				}
+				else {
+					count = howManyWaysToSumToN_printAnswers(ni, goal, count, i, text + " " + i);
+				}
+				
 			}
-		}
+		//}
+		
+		
 		return count;
 	}
+
 }
