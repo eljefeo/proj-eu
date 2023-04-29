@@ -60,7 +60,7 @@ public class Problem76_notes {
 	 since 9 > 4, we skip n0, n1, n2, n3 ,, 1 1 2 3, we skip ?
 	 9-4 = 5, so we skip up to n-5 (we skip n0 n1 n2 n3 n4)
 	 since 9 is normally  30
-	 we skipped 1 1 2 3 5 ? skipped 12
+	 we skipped 1 1 2 3 5 ? skipped 12 ---> notice here we were able to easily just add the normal n0 n1 n2 n3 n4 because n4 is not more than half of 9
 	 so we keep 18?
 	 N-9 = 18
 	 
@@ -148,6 +148,57 @@ public class Problem76_notes {
 	 and since we count the original number 13 itselft
 	 we get 101
 	 
+	 //yep we got the correct answer, 101 for 13
+	  * 
+	  * 
+	 
+	 
+	 
+	 now can go from 1 up?
+	 
+	 like if we start knowing 1=1, 2=2, 3=3
+	 what if we want to do 4, 5, 6 etc..
+	 
+	 4:::
+	 n0 = 1
+	 n1 = 1
+	 n2 = 2
+	 n3 = last one, we can just assume this is 1
+	 so 4 = 5 (including the 4 itself)
+	 
+	 5: 
+	 n0 = 1
+	 n1 = 1
+	 n2 = 2
+	 n3 > half
+	 	this means its not all of the 3, which is normally 3
+	 	5-3 = 2, 3 - 2 = 1 --- this means skip up to n1, so just skip n0=1
+	 	so instead of 3=3, we subtract 1, so 3-1 = 2
+	 n3 = 2
+	 n4 = last one so this is 1
+	 
+	 so 5 = 1 1 2 2 1 = 7
+	 
+	 
+	 
+	 so can we do some analysis on high numbers and when you have
+		to not use the normaly value
+		
+	like 50:
+	you are good from n0 up until n25.
+	when you get to n26 you have to minus 1
+		so even then you dont have to go another level deep 
+			until...lets...if it was n30, it would be to skip 50-30 = 20 and 30-20 = 10, so skip up to n10...nope still good
+			
+			it would be half of half. So half of 50 is 25, more than half of 50 is 26
+				but to have to do that extra level its half of 25, would be I guess when you get to N-13 of 25. 
+				so if you are doing n-13, then you have to do extra steps multiple times?
+				like 50-13=37. So if you are doing n-37...
+				then you are more than half of 50. but to do 37 you would have to do extra steps starting at n-19 for 37
+				then to do n19 you would have to do extra steps at n-10 for 19
+				then extra steps at n-6 for 10
+				then extra steps at n4 for 6
+			
 	 
 	 13
 		12 1
@@ -516,6 +567,37 @@ public class Problem76_notes {
 		2 2 1 1
 		2 1 1 1 1
 		1 1 1 1 1 1
+		
+	5: 7
+	5
+		4 1
+		3 2
+		3 1 1
+		2 2 1
+		2 1 1 1
+		1 1 1 1 1	
+		
+	4: 5
+	4
+		3 1
+		2 2
+		2 1 1
+		1 1 1 1
+		
+		
+		
+	3: 3 ways
+	3
+		2 1
+		1 1 1
+	
+	2: 2 ways
+	2	
+		1 1
+		
+	1:
+	1
+		
 	 */
 	 
 	 
