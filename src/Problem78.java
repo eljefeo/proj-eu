@@ -12,12 +12,13 @@ public class Problem78 implements Problem{// THIS ONE IS NOT DONE YET
 		//int num = 100;
 		//int ans2 = howManyWaysToSumToN(0, num, 0, num-1);
 		//countTimesIn();
-		int number = 4;
+		int number = 5;
 		int[] ans = new int[number];
 		ans[0] = -1;
 		ans[1] = 1;
-		//ans[2] = 2;
+		ans[2] = 2;
 		//ans[3] = 0;
+		//return doit2(number-1, 1, 1, ans);
 		return doit2(number, ans);
 	}
 	
@@ -41,7 +42,6 @@ public class Problem78 implements Problem{// THIS ONE IS NOT DONE YET
 		}
 		return n;
 	}
-	
 	
 	public void countTimesIn() {
 		int number = 7;
@@ -73,74 +73,97 @@ public class Problem78 implements Problem{// THIS ONE IS NOT DONE YET
 		}
 	}
 	
-	public static int doit2(int number, int[] ans) {
+	//public static int doit2(int left,int right, int count, int[] ans) {
+	public static int doit2(int num, int[] ans) {
 	
 		
 		//int number = 7;
-		
-		
-		
-		int tNum = number;
-		int count = 1;
+		/*		
+		int tLeft = left, tRight = right;
 		//int numToTheLeft = 0;
 		//int right = 0;
-		int numToMinus = 0;
-		while(tNum > 1) {
-			tNum--;
-			numToMinus++;
-			System.out.println("Initial call : " + tNum + " " + numToMinus + " count: " + count);
-			count = callFind(tNum, numToMinus, count, ans);
+		//int numToMinus = 0;
+		while(tLeft > 1) {
+			
+			if(tRight > tLeft) {
+				System.out.println("Doit2 right bigger than left, " + tLeft + " " + tRight + " count: " + count);
+				tRight -= tLeft;
+				doit2(tLeft, tRight, count, ans);
+			}
+			
+			
+			//numToMinus++;
+			//count++;
+			System.out.println("Initial call : " + tLeft + " " + tRight + " count: " + count);
+			count = callFind(tLeft, tRight, count, ans);
+			System.out.println("back from Initial call : " + tLeft + " " + tRight + " count: " + count);
 			//System.exit(1);
+			tLeft--;
+			tRight++;
 		}
 		
+		*/
 		
+		int count = 2;
+		for(int i=num-1; i>1; i--) {
+			
+			//5
+			/*
+			 5-1=4
+			 -2=3
+			 -3=2...
+			 
+			 */
+			int d = num - i;
+			System.out.println("doing " + i + " " + d);
+			count = callFind(i, d, count, ans);
+
+		}
 		
-		
+			
 		return count;
 	}
 	
 	
 	
 	
-public static int callFind(int numToTheLeft, int right, int count, int[] ans) {
+public static int callFind(int left, int right, int count, int[] ans) {
 		
-	System.out.println("callFinded " + numToTheLeft + ", right: " + right + ", count: " + count );
+	System.out.println("callFinded " + left + ", right: " + right + ", count still: " + count );
 	
-	if(numToTheLeft == 1) {
-		System.out.println("!ahve num to the left is 1, returning, nums were " + numToTheLeft + ", " + right + ", count: "+ count);
-		return count+1;
+	if(left == 1) {
+		System.out.println("!ahve num to the left is 1, returning, nums were " + left + ", " + right + ", count: "+ count);
+		return count;
 	}
 	
-	if(numToTheLeft < right) {
-		System.out.println("num to the left is smaller, " + numToTheLeft + " < " + right + " calling again with " + numToTheLeft + ", " +(right-numToTheLeft) );
-		int nCount = callFind(numToTheLeft, right - numToTheLeft, count, ans);
-		System.out.println(" gotNcount " + nCount + " from smaller " + numToTheLeft + " < " + right);
-		count += nCount;
-	} else {
+	if(right > left) {
+		System.out.println("num to the left is smaller, " + left + " < " + right + " calling again with " + left + ", " +(right-left) );
 		
+		int tLeft = left, tRight = right;
+		while(tLeft > 1) {
+			System.out.println("inner, currently " + tLeft + " " + tRight + ", like " + tLeft + " " + tLeft + " " + (right-left));
+			int nCount = callFind(tLeft, right - left, count, ans); 
+			System.out.println(" gotNcount " + nCount + " from smaller " + left + " < " + right);
+			count = nCount;
+			tLeft--;
+			tRight++;
+		}
+	} else {
 		//count++;
-		System.out.println("adding 1 for this combo I guess, for " + numToTheLeft +  " and " + right + " count is now : " + count);
+		System.out.println("in else for " + left +  " and " + right + " count is still : " + count);
 		int a = ans[right];
 		if(a == 0) {
 			//we dont know this one, need to find it
 			System.out.println("&&&&dont know " + right + " going to call original");
-			int tn = right;
-			int mins = 0;
-			int tCount = 1;
-			tCount = doit2(right, ans);
-			//while (tn > 1) {
-			//	count++;
-			//	tn--;
-			//	mins++;
-			//	System.out.println("Inner callFinded loop: " +tn + ", " + mins + " count: " + count + ", tCount: " + tCount);
-			//	tCount = callFind(tn, mins, tCount++, ans);
-			//}
+
+			int tCount = 2;
+			
 			System.out.println("Had to find the inner " + right+ ", found to be : " + tCount + " setting that now..");
 			ans[right] = tCount;
 			
 			
 		} else {
-			System.out.println("We already know " + right + " = " + a);
+			System.out.println("We already know " + right + " = " + a + " for left: " + left + " right: " + right + " returning " + (count + a));
 			return count + a;
 		}
 	}
