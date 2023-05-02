@@ -19,6 +19,335 @@ public class Problem76_notes {
 	 * NOTES:
 	 * 
 	 
+	 Ok so after some looking up of different integer partitions I stumbled across euler's equation with odds and evens and how to get 
+	 the partition number for an integer. Im kinda sad that I found it cause I was trying to avoid spoilers but I am also kinda glad
+	 that I found it because damn that pattern would have taken me years to find. So I guess this is the point in the projecteuler questions
+	 where I may need to start looking up some of these principles. I will still try to figure out each question on my own going forward
+	 but if I need help I can try to investigate the principles.
+	 anyways Im going to use eulers equation 
+	 -------------
+	 ok so Ive been playing around with recursion a few times, and I know there is a better way still. 
+	 Yes it has gotten a bit better and more efficient but we are still missing a good way to do it.
+	 I am going to go back to the drawing board with the other idea of a forumla to just figure out every number.
+	 Except this time instead of just entering 100 and getting the answer back from some magical formula, lets try to figure
+	 out this:
+	 
+	 We can see that every number below has the next number inside it, and some new values added
+	 
+	 
+	 So. After you look at these numbers below, you can see that we just get the number before, and add 1 to the end 
+	 of each of its options. Now, sometimes that 1 at the end does nothing, it stays a 1 at the end. But sometimes that 
+	 1 at the end can be combined into something new. The new ones are always the ones you see that DO NOT end with 1
+	 so for 4, the new one is always the number itself (4 is new) but there is also a new 2 2
+	 and with 5, the new one (other than 5 itself) is 3 2
+	 and with 6 the new ones are 4 2, 3 3, 2 2 2. 
+	 
+	 So how do we figure out all the things that are going to be new, or at least how many new ones there are going to be. 
+	 
+	 
+	 for the examples below I have the old nums in parentheses
+	 
+	 like 2 has:
+	  
+	 	2	
+		1 1
+	 
+	 and 3 has 
+	 
+	 	 3
+	 	(2) 1
+		(1 1) 1
+	
+	 and 4 has: 5
+	 
+	 	(3) 1
+	 	 2 2
+	 	(2 1) 1
+		(1 1 1) 1
+		
+		
+		5 has: 7
+		
+		 5
+		(4) 1
+		 3 2
+		(3 1) 1
+		(2 2) 1
+		(2 1 1) 1
+		(1 1 1 1) 1	
+	
+	 
+	 	6 has : 11
+	 	 6
+		(5) 1
+		 4 2
+		(4 1) 1
+		 3 3
+		(3 2) 1
+		(3 1 1) 1
+		 2 2 2
+		(2 2 1) 1
+		(2 1 1 1) 1
+		(1 1 1 1 1) 1
+		
+	7 has: 15
+		
+		7
+		(6) 1
+		 5 2
+		(5 1) 1
+		 4 3
+		(4 2) 1
+		(4 1 1) 1
+		(3 3) 1
+		 3 2 2
+		(3 2 1) 1
+		(3 1 1 1) 1
+		(2 2 2) 1
+		(2 2 1 1) 1
+		(2 1 1 1 1) 1
+		(1 1 1 1 1 1) 1
+	
+	8: 22
+	new ones would be 
+	8
+	6 2
+	5 3
+	4 4
+	4 2 2
+	3 3 2
+	2 2 2 2
+	
+	9..new ones would be: 30
+	
+	9
+	7 2
+	6 3
+	5 4
+	5 2 2
+	4 3 2
+	3 3 3
+	3 2 2 2 
+	
+	10: 42
+	
+	10
+	8 2
+	7 3
+	6 4
+	5 5
+	4 4 2
+	4 3 3
+	4 2 2 2 2
+	3 3 2 2
+	2 2 2 2 2
+	
+	 11: 56 :: 14 new
+	 	11
+		9 2
+		8 3
+		7 4
+		7 2 2
+		6 5
+		6 3 2
+		5 4 2
+		5 3 3
+		5 2 2 2
+		4 4 3
+		4 3 2 2
+		3 3 3 2
+		3 2 2 2 2
+		
+		12: 77 ways :: 21 new
+	-	12
+		11 1
+	-	10 2
+		10 1 1
+	-	9 3
+		9 2 1
+		9 1 1 1
+	-	8 4
+		8 3 1
+	-	8 2 2
+		8 2 1 1
+		8 1 1 1 1
+	-	7 5
+		7 4 1
+	-	7 3 2
+		7 3 1 1
+		7 2 2 1
+		7 2 1 1 1
+		7 1 1 1 1 1
+	-	6 6
+		6 5 1
+		6 4 2
+		6 4 1 1
+	-	6 3 3
+		6 3 2 1
+		6 3 1 1 1
+	-	6 2 2 2
+		6 2 2 1 1
+		6 2 1 1 1 1
+		6 1 1 1 1 1 1
+	-	5 5 2
+		5 5 1 1
+	-	5 4 3
+		5 4 2 1
+		5 4 1 1 1
+		5 3 3 1
+	-	5 3 2 2
+		5 3 2 1 1
+		5 3 1 1 1 1
+		5 2 2 2 1
+		5 2 2 1 1 1
+		5 2 1 1 1 1 1
+		5 1 1 1 1 1 1 1
+	-	4 4 4
+		4 4 3 1
+	-	4 4 2 2
+		4 4 2 1 1
+		4 4 1 1 1 1
+	-	4 3 3 2
+		4 3 3 1 1
+		4 3 2 2 1
+		4 3 2 1 1 1
+		4 3 1 1 1 1 1
+	-	4 2 2 2 2
+		4 2 2 2 1 1
+		4 2 2 1 1 1 1
+		4 2 1 1 1 1 1 1
+		4 1 1 1 1 1 1 1 1
+	-	3 3 3 3
+		3 3 3 2 1
+		3 3 3 1 1 1
+	-	3 3 2 2 2
+		3 3 2 2 1 1
+		3 3 2 1 1 1 1
+		3 3 1 1 1 1 1 1
+		3 2 2 2 2 1
+		3 2 2 2 1 1 1
+		3 2 2 1 1 1 1 1
+		3 2 1 1 1 1 1 1 1
+		3 1 1 1 1 1 1 1 1 1
+	-	2 2 2 2 2 2
+		2 2 2 2 2 1 1
+		2 2 2 2 1 1 1 1
+		2 2 2 1 1 1 1 1 1
+		2 2 1 1 1 1 1 1 1 1
+		2 1 1 1 1 1 1 1 1 1 1
+		1 1 1 1 1 1 1 1 1 1 1 1
+	
+	13: 101 ways :: 34 new ones?
+		 13
+		12 1
+		11 2
+		11 1 1
+		10 3
+		10 2 1
+		10 1 1 1
+		9 4
+		9 3 1
+		9 2 2
+		9 2 1 1
+		9 1 1 1 1
+		8 5
+		8 4 1
+		8 3 2
+		8 3 1 1
+		8 2 2 1
+		8 2 1 1 1
+		8 1 1 1 1 1
+		7 6
+		7 5 1
+		7 4 2
+		7 4 1 1
+		7 3 3
+		7 3 2 1
+		7 3 1 1 1
+		7 2 2 2
+		7 2 2 1 1
+		7 2 1 1 1 1
+		7 1 1 1 1 1 1
+		6 6 1
+		6 5 2
+		6 5 1 1
+		6 4 3
+		6 4 2 1
+		6 4 1 1 1
+		6 3 3 1
+		6 3 2 2
+		6 3 2 1 1
+		6 3 1 1 1 1
+		6 2 2 2 1
+		6 2 2 1 1 1
+		6 2 1 1 1 1 1
+		6 1 1 1 1 1 1 1
+		5 5 3
+		5 5 2 1
+		5 5 1 1 1
+		5 4 4
+		5 4 3 1
+		5 4 2 2
+		5 4 2 1 1
+		5 4 1 1 1 1
+		5 3 3 2
+		5 3 3 1 1
+		5 3 2 2 1
+		5 3 2 1 1 1
+		5 3 1 1 1 1 1
+		5 2 2 2 2
+		5 2 2 2 1 1
+		5 2 2 1 1 1 1
+		5 2 1 1 1 1 1 1
+		5 1 1 1 1 1 1 1 1
+		4 4 4 1
+		4 4 3 2
+		4 4 3 1 1
+		4 4 2 2 1
+		4 4 2 1 1 1
+		4 4 1 1 1 1 1
+		4 3 3 3
+		4 3 3 2 1
+		4 3 3 1 1 1
+		4 3 2 2 2
+		4 3 2 2 1 1
+		4 3 2 1 1 1 1
+		4 3 1 1 1 1 1 1
+		4 2 2 2 2 1
+		4 2 2 2 1 1 1
+		4 2 2 1 1 1 1 1
+		4 2 1 1 1 1 1 1 1
+		4 1 1 1 1 1 1 1 1 1
+		3 3 3 3 1
+		3 3 3 2 2
+		3 3 3 2 1 1
+		3 3 3 1 1 1 1
+		3 3 2 2 2 1
+		3 3 2 2 1 1 1
+		3 3 2 1 1 1 1 1
+		3 3 1 1 1 1 1 1 1
+		3 2 2 2 2 2
+		3 2 2 2 2 1 1
+		3 2 2 2 1 1 1 1
+		3 2 2 1 1 1 1 1 1
+		3 2 1 1 1 1 1 1 1 1
+		3 1 1 1 1 1 1 1 1 1 1
+		2 2 2 2 2 2 1
+		2 2 2 2 2 1 1 1
+		2 2 2 2 1 1 1 1 1
+		2 2 2 1 1 1 1 1 1 1
+		2 2 1 1 1 1 1 1 1 1 1
+		2 1 1 1 1 1 1 1 1 1 1 1
+		1 1 1 1 1 1 1 1 1 1 1 1 1
+	 
+	 	
+	 
+	
+	 
+	 
+	
+	///////////	///////////
+	 
 	 
 	 13:
 	 Lets try 13 again....
@@ -200,6 +529,7 @@ public class Problem76_notes {
 				then extra steps at n4 for 6
 			
 	 
+	 13: 101 ways
 	 13
 		12 1
 		11 2
@@ -302,6 +632,7 @@ public class Problem76_notes {
 		2 1 1 1 1 1 1 1 1 1 1 1
 		1 1 1 1 1 1 1 1 1 1 1 1 1
 	 
+	 12: 76 ways
 	 12
 		11 1
 		10 2
@@ -514,7 +845,7 @@ public class Problem76_notes {
 		2 1 1 1 1 1 1 1
 		1 1 1 1 1 1 1 1 1
 		
-	 8:
+	 8: 22 ways
 	 8
 		7 1
 		6 2
