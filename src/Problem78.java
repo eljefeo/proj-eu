@@ -19,9 +19,9 @@ public class Problem78 implements Problem{// THIS ONE IS NOT DONE YET
 		ans[0] = -1;
 		ans[1] = 1;
 		ans[2] = 2;
-		List<Integer> all = new ArrayList<Integer>();
-		all.add(1);
-		all.add(1);
+		List<Long> all = new ArrayList<Long>();
+		all.add(1L);
+		all.add(1L);
 		//all.add(2);
 		//all.add(3);
 		//all.add(5);
@@ -39,8 +39,10 @@ public class Problem78 implements Problem{// THIS ONE IS NOT DONE YET
 		 */
 		
 		int max = 1000;
-		for(int ii = 2; ii < max; ii ++) {
-			int run = 0;
+		int ii = 2;
+		//for(int ii = 2; ii < max; ii ++) {
+		while(true) {
+			long run = 0;
 			int i = 2;
 			//while(i++ < number) {
 			int neg = -1;
@@ -51,6 +53,9 @@ public class Problem78 implements Problem{// THIS ONE IS NOT DONE YET
 			int nToDo = ii;
 			
 			while(nToDo > 0) {
+				if(run % 1000 == 0) {
+					//System.out.println("2Odd is " + odd + " doing all[" + nToDo + "] .... nat is " + nat + " ... nToDo = " + nToDo + " :: " + run );
+				}
 				nToDo = nToDo - odd;
 				
 				
@@ -72,16 +77,19 @@ public class Problem78 implements Problem{// THIS ONE IS NOT DONE YET
 				nat++;
 				posNeg *= neg;
 			}
-			if(run % 1000000 == 0) {
+			if(run % 13 == 0) {
 				return run;
 			}
+				System.out.println("ans: " + ii + " : " + run);
+				//return run;
+			//}
 			all.add(run);
-			
+			ii++;
 		}
 		
-		for(int ii = 0; ii < all.size(); ii ++) {
-			System.out.println(ii + " = " + all.get(ii));
-		}
+		//for(int i = 0; i < all.size(); i ++) {
+		//	System.out.println(i + " = " + all.get(i));
+		//}
 		/*int num = 100;
 		int max = 50;
 		int oldN = 1;
@@ -98,7 +106,7 @@ public class Problem78 implements Problem{// THIS ONE IS NOT DONE YET
 		
 		
 		//return doit2(number, ans);
-		return 0;
+		//return 0;
 	}
 	public static int howManyWaysToSumToNEulers(int i, int[] ans) {
 		
