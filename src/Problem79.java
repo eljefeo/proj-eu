@@ -48,6 +48,16 @@ Given that the three characters are always asked for in order, analyse the file 
 	 			be able to be the first digit, since that means you would need 2 more digits after it. But the second to last digit
 	 			does not have 2 digits after it, it only has the very last digit. Meaning the second to last digit would never be 
 	 			able to be the first digit in your samples.
+	 			
+	 			so far we will start with that deduction...
+	 			the code so far MAY be 73XXXXX90 - where we dont know what the X's are or how many X's we even need
+	 			
+	 			 we can also see that the numbers 4 and 5 never show up in the samples at all... maybe they are not even in the code?
+	 			 
+	 		that means the code will have a middle section (assuming the digits dont duplicate?) of 1268
+	 		
+	 		so we just need to try all the combinations of 1268 with 73 at the beginning and 90 at the end...
+	 		and see if any of those combinations can work for the below samples?
 	 */
 	private List<Integer[]> getCodes(){
 		List<Integer[]> codes = new ArrayList<Integer[]>();
