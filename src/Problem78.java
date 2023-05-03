@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class Problem78 implements Problem{// THIS ONE IS NOT DONE YET
 
@@ -12,16 +14,91 @@ public class Problem78 implements Problem{// THIS ONE IS NOT DONE YET
 		//int num = 100;
 		//int ans2 = howManyWaysToSumToN(0, num, 0, num-1);
 		//countTimesIn();
-		int number = 5;
+		int number = 7;
 		int[] ans = new int[number];
 		ans[0] = -1;
 		ans[1] = 1;
 		ans[2] = 2;
+		List<Integer> all = new ArrayList<Integer>();
+		all.add(0);
+		all.add(1);
+		all.add(2);
+		all.add(3);
+		all.add(5);
+		all.add(7);
+		all.add(11);
 		//ans[3] = 0;
 		//return doit2(number-1, 1, 1, ans);
-		return doit2(number, ans);
+		//int ff = callFind(4,7,0,ans);
+		//System.out.println("Got FFFFF : " + ff);
+		int od = 1;
+		int odd = 1;
+		int nat = 1;
+		int nToDo = number;
+		/*
+		 if trying to find 30
+		 do +n-1 +n-2
+		 do -n-5 -n-7
+		 */
+		int run = 0;
+		int i = 2;
+		//while(i++ < number) {
+		int posNeg = -1;
+		while(nToDo > 0) {
+			
+			
+			
+			
+			nToDo = nToDo - odd;
+			
+			
+			if(nToDo < 0 ) {
+				break;
+			}
+			System.out.println("Odd is " + odd + " doing all[" + nToDo + "] .... nat is " + nat + " ... nToDo = " + nToDo + " :: " + run );
+			run += all.get(nToDo) * posNeg;
+			
+			nToDo = nToDo - nat;
+			if(nToDo < 0 ) {
+				break;
+			}
+			System.out.println("2Odd is " + odd + " doing all[" + nToDo + "] .... nat is " + nat + " ... nToDo = " + nToDo + " :: " + run );
+			run += all.get(nToDo) * posNeg;
+			odd += 2; //make all odd numbers, 1 3 5 7 9 etc..
+			nat++;
+			posNeg *= posNeg;
+			
+			
+			
+		}
+		
+		/*int num = 100;
+		int max = 50;
+		int oldN = 1;
+		int diff = 1;
+		int oldDiff = 0;
+		for(int i=2; i < max; i++) {
+			int n = howManyWaysToSumToNEulers(i, ans);
+			diff = n - oldN;
+			oldN = n;
+			System.out.println("ways to make " + i + ": " + n + ", diff from last = " + diff);
+		}
+		*/
+		//int ans2 = howManyWaysToSumToN(0, num, 0, num-1);
+		
+		
+		//return doit2(number, ans);
+		return run;
 	}
-	
+	public static int howManyWaysToSumToNEulers(int i, int[] ans) {
+		
+		
+		
+		
+		return 0;
+		
+	}
+
 	public static int doit() {
 		
 		int n = 2;
@@ -78,49 +155,20 @@ public class Problem78 implements Problem{// THIS ONE IS NOT DONE YET
 	
 		
 		//int number = 7;
-		/*		
-		int tLeft = left, tRight = right;
-		//int numToTheLeft = 0;
-		//int right = 0;
-		//int numToMinus = 0;
-		while(tLeft > 1) {
-			
-			if(tRight > tLeft) {
-				System.out.println("Doit2 right bigger than left, " + tLeft + " " + tRight + " count: " + count);
-				tRight -= tLeft;
-				doit2(tLeft, tRight, count, ans);
-			}
-			
-			
-			//numToMinus++;
-			//count++;
-			System.out.println("Initial call : " + tLeft + " " + tRight + " count: " + count);
-			count = callFind(tLeft, tRight, count, ans);
-			System.out.println("back from Initial call : " + tLeft + " " + tRight + " count: " + count);
-			//System.exit(1);
-			tLeft--;
-			tRight++;
-		}
+
 		
-		*/
-		
-		int count = 2;
+		int count = 1;//for the number itself at the beginning?
 		for(int i=num-1; i>1; i--) {
-			
-			//5
-			/*
-			 5-1=4
-			 -2=3
-			 -3=2...
-			 
-			 */
+
 			int d = num - i;
-			System.out.println("doing " + i + " " + d);
+			System.out.println("OG doing " + i + " " + d);
 			count = callFind(i, d, count, ans);
+			System.out.println("OG GOT count is at " + count + " for " + i + " " + d);
 
 		}
 		
-			
+			count++; //for the 1 1 1 1 1 1 at the end?
+			System.out.println("Final count: " + count);
 		return count;
 	}
 	
@@ -142,12 +190,13 @@ public static int callFind(int left, int right, int count, int[] ans) {
 		int tLeft = left, tRight = right;
 		while(tLeft > 1) {
 			System.out.println("inner, currently " + tLeft + " " + tRight + ", like " + tLeft + " " + tLeft + " " + (right-left));
-			int nCount = callFind(tLeft, right - left, count, ans); 
-			System.out.println(" gotNcount " + nCount + " from smaller " + left + " < " + right);
-			count = nCount;
+			count = callFind(tLeft, right - left, count, ans); 
+			System.out.println(" inn got count " + count + " from smaller " + left + " < " + right);
+	
 			tLeft--;
 			tRight++;
 		}
+		System.out.println("exited inner with tLeft: " + tLeft + " tRight: " + tRight + ", left: " + left + " right: " + right + " count: " +count);
 	} else {
 		//count++;
 		System.out.println("in else for " + left +  " and " + right + " count is still : " + count);
