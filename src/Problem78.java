@@ -20,58 +20,68 @@ public class Problem78 implements Problem{// THIS ONE IS NOT DONE YET
 		ans[1] = 1;
 		ans[2] = 2;
 		List<Integer> all = new ArrayList<Integer>();
-		all.add(0);
 		all.add(1);
-		all.add(2);
-		all.add(3);
-		all.add(5);
-		all.add(7);
-		all.add(11);
+		all.add(1);
+		//all.add(2);
+		//all.add(3);
+		//all.add(5);
+		//all.add(7);
+		//all.add(11);
 		//ans[3] = 0;
 		//return doit2(number-1, 1, 1, ans);
 		//int ff = callFind(4,7,0,ans);
 		//System.out.println("Got FFFFF : " + ff);
-		int od = 1;
-		int odd = 1;
-		int nat = 1;
-		int nToDo = number;
+	
 		/*
 		 if trying to find 30
 		 do +n-1 +n-2
 		 do -n-5 -n-7
 		 */
-		int run = 0;
-		int i = 2;
-		//while(i++ < number) {
-		int posNeg = -1;
-		while(nToDo > 0) {
+		
+		int max = 1000;
+		for(int ii = 2; ii < max; ii ++) {
+			int run = 0;
+			int i = 2;
+			//while(i++ < number) {
+			int neg = -1;
+			int posNeg = 1;
+			int od = 1;
+			int odd = 1;
+			int nat = 1;
+			int nToDo = ii;
 			
-			
-			
-			
-			nToDo = nToDo - odd;
-			
-			
-			if(nToDo < 0 ) {
-				break;
+			while(nToDo > 0) {
+				nToDo = nToDo - odd;
+				
+				
+				if(nToDo < 0 ) {
+					break;
+				}
+				//System.out.println("Odd is " + odd + " doing all[" + nToDo + "] .... nat is " + nat + " ... nToDo = " + nToDo + " :: " + run );
+				//System.out.println("doing run += all.get(nToDo) * posNeg; " + run + " + " +  (all.get(nToDo) * posNeg));
+				run += all.get(nToDo) * posNeg;
+				
+				nToDo = nToDo - nat;
+				if(nToDo < 0 ) {
+					break;
+				}
+				//System.out.println("2Odd is " + odd + " doing all[" + nToDo + "] .... nat is " + nat + " ... nToDo = " + nToDo + " :: " + run );
+				//System.out.println("doing run += all.get(nToDo) * posNeg; " + run + " + " +  (all.get(nToDo) * posNeg));
+				run += all.get(nToDo) * posNeg;
+				odd += 2; //make all odd numbers, 1 3 5 7 9 etc..
+				nat++;
+				posNeg *= neg;
 			}
-			System.out.println("Odd is " + odd + " doing all[" + nToDo + "] .... nat is " + nat + " ... nToDo = " + nToDo + " :: " + run );
-			run += all.get(nToDo) * posNeg;
-			
-			nToDo = nToDo - nat;
-			if(nToDo < 0 ) {
-				break;
+			if(run % 1000000 == 0) {
+				return run;
 			}
-			System.out.println("2Odd is " + odd + " doing all[" + nToDo + "] .... nat is " + nat + " ... nToDo = " + nToDo + " :: " + run );
-			run += all.get(nToDo) * posNeg;
-			odd += 2; //make all odd numbers, 1 3 5 7 9 etc..
-			nat++;
-			posNeg *= posNeg;
-			
-			
+			all.add(run);
 			
 		}
 		
+		for(int ii = 0; ii < all.size(); ii ++) {
+			System.out.println(ii + " = " + all.get(ii));
+		}
 		/*int num = 100;
 		int max = 50;
 		int oldN = 1;
@@ -88,7 +98,7 @@ public class Problem78 implements Problem{// THIS ONE IS NOT DONE YET
 		
 		
 		//return doit2(number, ans);
-		return run;
+		return 0;
 	}
 	public static int howManyWaysToSumToNEulers(int i, int[] ans) {
 		
