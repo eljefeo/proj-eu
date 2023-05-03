@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,14 +15,10 @@ public class Problem78 implements Problem{// THIS ONE IS NOT DONE YET
 		//int num = 100;
 		//int ans2 = howManyWaysToSumToN(0, num, 0, num-1);
 		//countTimesIn();
-		int number = 7;
-		int[] ans = new int[number];
-		ans[0] = -1;
-		ans[1] = 1;
-		ans[2] = 2;
-		List<Long> all = new ArrayList<Long>();
-		all.add(1L);
-		all.add(1L);
+	
+		List<BigInteger> all = new ArrayList<BigInteger>();
+		all.add(new BigInteger("1"));
+		all.add(new BigInteger("1"));
 		//all.add(2);
 		//all.add(3);
 		//all.add(5);
@@ -37,25 +34,25 @@ public class Problem78 implements Problem{// THIS ONE IS NOT DONE YET
 		 do +n-1 +n-2
 		 do -n-5 -n-7
 		 */
-		
+		BigInteger million = new BigInteger("1000000");
 		int max = 1000;
 		int ii = 2;
 		//for(int ii = 2; ii < max; ii ++) {
 		while(true) {
-			long run = 0;
+			BigInteger run = new BigInteger("0");
 			int i = 2;
 			//while(i++ < number) {
-			int neg = -1;
-			int posNeg = 1;
+			BigInteger neg = new BigInteger("-1");
+			BigInteger posNeg = new BigInteger("1");
 			int od = 1;
 			int odd = 1;
 			int nat = 1;
 			int nToDo = ii;
 			
 			while(nToDo > 0) {
-				if(run % 1000 == 0) {
+				//if(run % 1000 == 0) {
 					//System.out.println("2Odd is " + odd + " doing all[" + nToDo + "] .... nat is " + nat + " ... nToDo = " + nToDo + " :: " + run );
-				}
+				//}
 				nToDo = nToDo - odd;
 				
 				
@@ -64,7 +61,8 @@ public class Problem78 implements Problem{// THIS ONE IS NOT DONE YET
 				}
 				//System.out.println("Odd is " + odd + " doing all[" + nToDo + "] .... nat is " + nat + " ... nToDo = " + nToDo + " :: " + run );
 				//System.out.println("doing run += all.get(nToDo) * posNeg; " + run + " + " +  (all.get(nToDo) * posNeg));
-				run += all.get(nToDo) * posNeg;
+				//run += all.get(nToDo) * posNeg;
+				run = run.add((all.get(nToDo).multiply(posNeg)));
 				
 				nToDo = nToDo - nat;
 				if(nToDo < 0 ) {
@@ -72,17 +70,19 @@ public class Problem78 implements Problem{// THIS ONE IS NOT DONE YET
 				}
 				//System.out.println("2Odd is " + odd + " doing all[" + nToDo + "] .... nat is " + nat + " ... nToDo = " + nToDo + " :: " + run );
 				//System.out.println("doing run += all.get(nToDo) * posNeg; " + run + " + " +  (all.get(nToDo) * posNeg));
-				run += all.get(nToDo) * posNeg;
+				//run += all.get(nToDo) * posNeg;
+				run = run.add((all.get(nToDo).multiply(posNeg)));
 				odd += 2; //make all odd numbers, 1 3 5 7 9 etc..
 				nat++;
-				posNeg *= neg;
+				posNeg = posNeg.multiply(neg);
 			}
-			if(run % 13 == 0) {
+			//if(run.equals(new BigInteger("30"))) {
+			//	return run;
+			//
+			if(run.mod(million).equals(BigInteger.ZERO)) {
+				System.out.println("ans: " + ii + " : " + run);
 				return run;
 			}
-				System.out.println("ans: " + ii + " : " + run);
-				//return run;
-			//}
 			all.add(run);
 			ii++;
 		}
