@@ -19,10 +19,113 @@ Given that the three characters are always asked for in order, analyse the file 
 	//static int t = 0;
 	@Override
 	public Object problem() {
+		List<Integer[]> samples = new ArrayList<Integer[]>();
+		List<Integer[]> codes = getCodes();
+		//Util.getAllCombinationsInt(null, null, null, null)
+		List<String> ls = new ArrayList<String>();
+		Integer[] middle = new Integer[] {1,2,6,8};
+		Util.makeAllPermutationsRecur("", "1268", ls);
 		
+		for(String s : ls) {
+			Integer[] newone = new Integer[] {Integer.parseInt(""+s.charAt(0)), Integer.parseInt(""+s.charAt(1)), Integer.parseInt(""+s.charAt(2)), Integer.parseInt(""+s.charAt(3))};
+			samples.add(newone);
+			System.out.println("combination: " + s);
+			Integer[] testCode = makeNewCode(s);
+			if(checkCode(testCode, codes)) {
+				System.out.println("This is the winner: " );
+				String ans = "";
+				for(Integer ss : testCode) {
+					ans += ss;
+				}
+				System.out.println("\n" + ans );
+				return ans;
+			}
+		}
+		
+		/*for(Integer[] s : samples) {
+			System.out.println("int: " + s[0] + " " + s[1] + " " + s[2] + " " + s[3] + " ");
+		}
+		
+		
+		//Integer[] someCode = codes.get(0);
+		String someCode = ls.get(0);
+		Integer[] someSample = makeNewCode(someCode);
+		
+		
+		System.out.println("Some sample we made: " + someSample);
+		for(int i=0; i< someSample.length; i++) {
+			if(someSample[i] == null) {
+				System.out.print("\n " + i + " is nullll\n");
+			} else {
+				System.out.print(someSample[i]);
+			}
+			////int someint =  someSample[i];
+			
+			//System.out.print(" " + i);
+		}
+		*/
 		return 0;
 	}
 	
+	
+	private boolean checkCode(Integer[] someFullCode, List<Integer[]> threeDigitCodes) {
+		int ind = 0;
+		boolean first = false, second = false, third = false;
+		for(Integer[] threeDigits : threeDigitCodes) {
+			for(int i : someFullCode) {
+				if(i == threeDigits[ind]) {
+					if(first) {
+						if(second) {
+							if(third) {
+								
+							} else {
+								
+								third = true;
+								ind = 0;
+								break;
+								//return true;
+							}
+						} else {
+							second = true;
+							ind++;
+						}
+					} else {
+						first = true;
+						ind++;
+					}
+				}
+			}
+			if(!first || !second || !third) {
+				return false;
+			} else {
+				first = false;
+				second = false;
+				third = false;
+			}
+		}
+		System.out.println("got all 3 ??? " + someFullCode + " :: ");
+		for(int k : someFullCode) {
+			System.out.print("" + k);
+		}
+		System.out.println();
+		return true;
+	}
+	
+	private Integer[] makeNewCode(String middle) {
+		Integer[] someSample = new Integer[8];
+		someSample[0] = 7;
+		someSample[1] = 3;
+		someSample[6] = 9;
+		someSample[7] = 0;
+		int ind = 2;
+		for(char sam : middle.toCharArray()) {
+			//System.out.println("adding " + sam + " to index: " + ind);
+			someSample[ind++] = Integer.parseInt(""+sam);;
+			
+			
+		}
+		return someSample;
+	}
 	/*
 	 for a test code, lets say the passcode is 531278
 	 if you are going to include the first number in your code, AND THE NUMBERS ARE ALWAYS ASKED FOR IN ORDER...
