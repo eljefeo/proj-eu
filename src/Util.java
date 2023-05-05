@@ -2148,6 +2148,10 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		return count;
 	}
 	
+	public static int howManyWaysToSumToN_recurEntry(int num) {
+		return Util.howManyWaysToSumToN_recur(0, num, 0, num-1);
+	}
+	
 	public static int howManyWaysToSumToN_recur(int num, int goal,  int count, int end) {
 		if(num == goal) {
 			count++;
