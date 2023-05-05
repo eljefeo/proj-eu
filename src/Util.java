@@ -2115,18 +2115,21 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		while(numWays < limit) {
 			num++;
 			//numWays = howManyWaysToSumToN_print(0, num, 0, primes.size()-1, primes, " ");
-			numWays = howManyWaysToSumPrimesToN_recur(0, num, 0, primes.size()-1, primes);
+			numWays = howManyWaysToSumPrimesToN_Primesrecur(0, num, 0, primes.size()-1, primes);
 			//System.out.println("Ways to make : " + num + " = " + numWays);
 			
 		}
 		return num;
 	}
-	public static int howManyWaysToSumPrimesToN_recur(int num, int goal,  int count, int end, List<Integer> primes) {
+	
+	
+
+	public static int howManyWaysToSumPrimesToN_Primesrecur(int num, int goal,  int count, int end, List<Integer> primes) {
 		if(num == goal) {
 			count++;
 		} else if(num < goal) {
 			for(int i = 0; i <= end; i++) {
-				count = howManyWaysToSumPrimesToN_recur(num + primes.get(i), goal, count, i, primes);
+				count = howManyWaysToSumPrimesToN_Primesrecur(num + primes.get(i), goal, count, i, primes);
 			}
 		}
 		return count;
@@ -2144,6 +2147,60 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		}
 		return count;
 	}
+	
+	public static int howManyWaysToSumToN_recur(int num, int goal,  int count, int end) {
+		if(num == goal) {
+			count++;
+		} else if(num < goal) {
+			for(int i = 1; i <= end; i++) {
+				count = howManyWaysToSumToN_recur(num + i, goal, count, i);
+			}
+		}
+		return count;
+	}
+	
+	public int howManyWaysToSumToNEulers_divisibleMillion() {
+		List<BigInteger> all = new ArrayList<BigInteger>();
+		all.add(new BigInteger("1"));
+		all.add(new BigInteger("1"));
+	
+		BigInteger million = new BigInteger("1000000");
+		int ii = 2;
+		while(true) {
+			BigInteger run = new BigInteger("0");
+			int i = 2;
+			BigInteger neg = new BigInteger("-1");
+			BigInteger posNeg = new BigInteger("1");
+			int odd = 1;
+			int nat = 1;
+			int nToDo = ii;
+			
+			while(true) {
+				nToDo = nToDo - odd;
+				if(nToDo < 0 ) {
+					break;
+				}
+				run = run.add((all.get(nToDo).multiply(posNeg)));
+				
+				nToDo = nToDo - nat;
+				if(nToDo < 0 ) {
+					break;
+				}
+				run = run.add((all.get(nToDo).multiply(posNeg)));
+				odd += 2; //make all odd numbers, 1 3 5 7 9 etc..
+				nat++;
+				posNeg = posNeg.multiply(neg);
+			}
+			
+			if(run.mod(million).equals(BigInteger.ZERO)) {
+				System.out.println("ans: " + ii + " : " + run);
+				return ii;
+			}
+			all.add(run);
+			ii++;
+		}
+	}
+
 	
 	/*
 	public boolean areCoPrime(int a, int b) {
