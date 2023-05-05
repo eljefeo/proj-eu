@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //TODO should revisit to make it a general solution
-public class Problem79 implements Problem{// Took 0.001523 seconds
+public class Problem79 implements Problem{// Took 0.001439 seconds
 
 	
 	/*
