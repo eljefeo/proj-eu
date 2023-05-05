@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem79 implements Problem{// THIS ONE IS NOT DONE YET
+//TODO should revisit to make it a general solution
+public class Problem79 implements Problem{// Took 0.001523 seconds
 
 	
 	/*
@@ -16,23 +17,23 @@ Given that the three characters are always asked for in order, analyse the file 
 		Problem p = new Problem79();
 		p.runProblem();
 	}
-	//static int t = 0;
+
 	@Override
 	public Object problem() {
 		List<Integer[]> samples = new ArrayList<Integer[]>();
 		List<Integer[]> codes = getCodes();
-		//Util.getAllCombinationsInt(null, null, null, null)
 		List<String> ls = new ArrayList<String>();
 		Integer[] middle = new Integer[] {1,2,6,8};
 		Util.makeAllPermutationsRecur("", "1268", ls);
 		
 		for(String s : ls) {
-			Integer[] newone = new Integer[] {Integer.parseInt(""+s.charAt(0)), Integer.parseInt(""+s.charAt(1)), Integer.parseInt(""+s.charAt(2)), Integer.parseInt(""+s.charAt(3))};
+			Integer[] newone = new Integer[s.length()];
+			for(int i=0; i<s.length(); i++) {
+				newone[i] = Integer.parseInt(""+s.charAt(i));
+			}
 			samples.add(newone);
-			System.out.println("combination: " + s);
 			Integer[] testCode = makeNewCode(s);
 			if(checkCode(testCode, codes)) {
-				System.out.println("This is the winner: " );
 				String ans = "";
 				for(Integer ss : testCode) {
 					ans += ss;
@@ -41,29 +42,6 @@ Given that the three characters are always asked for in order, analyse the file 
 				return ans;
 			}
 		}
-		
-		/*for(Integer[] s : samples) {
-			System.out.println("int: " + s[0] + " " + s[1] + " " + s[2] + " " + s[3] + " ");
-		}
-		
-		
-		//Integer[] someCode = codes.get(0);
-		String someCode = ls.get(0);
-		Integer[] someSample = makeNewCode(someCode);
-		
-		
-		System.out.println("Some sample we made: " + someSample);
-		for(int i=0; i< someSample.length; i++) {
-			if(someSample[i] == null) {
-				System.out.print("\n " + i + " is nullll\n");
-			} else {
-				System.out.print(someSample[i]);
-			}
-			////int someint =  someSample[i];
-			
-			//System.out.print(" " + i);
-		}
-		*/
 		return 0;
 	}
 	
@@ -74,24 +52,16 @@ Given that the three characters are always asked for in order, analyse the file 
 		for(Integer[] threeDigits : threeDigitCodes) {
 			for(int i : someFullCode) {
 				if(i == threeDigits[ind]) {
-					if(first) {
-						if(second) {
-							if(third) {
-								
-							} else {
-								
-								third = true;
-								ind = 0;
-								break;
-								//return true;
-							}
-						} else {
-							second = true;
-							ind++;
-						}
-					} else {
+					if(!first) {
 						first = true;
 						ind++;
+					} else if(!second) {
+						second = true;
+						ind++;
+					} else if(!third) {
+						third = true;
+						ind = 0;
+						break;
 					}
 				}
 			}
@@ -103,7 +73,6 @@ Given that the three characters are always asked for in order, analyse the file 
 				third = false;
 			}
 		}
-		System.out.println("got all 3 ??? " + someFullCode + " :: ");
 		for(int k : someFullCode) {
 			System.out.print("" + k);
 		}
@@ -119,10 +88,7 @@ Given that the three characters are always asked for in order, analyse the file 
 		someSample[7] = 0;
 		int ind = 2;
 		for(char sam : middle.toCharArray()) {
-			//System.out.println("adding " + sam + " to index: " + ind);
 			someSample[ind++] = Integer.parseInt(""+sam);;
-			
-			
 		}
 		return someSample;
 	}
