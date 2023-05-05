@@ -47,36 +47,24 @@ public class Problem76 implements Problem{// Took 1.581191 seconds ---- too SLOW
 			int odd = 1;
 			int nat = 1;
 			int nToDo = ii;
+			boolean shouldSubOdd = false;
 			int numToSub = odd;
-			boolean shouldSubOdd = true;
-			boolean isNeg = false;
 			while(true) {
 				
-				
-				
-				
-				
+				nToDo = nToDo - numToSub ;
+				if(nToDo < 0 ) {
+					break;
+				}
+				run = run.add((all.get(nToDo).multiply(posNeg)));
+				shouldSubOdd = !shouldSubOdd;
 				if(shouldSubOdd) {
-					nToDo = nToDo - odd ;
-					if(nToDo < 0 ) {
-						break;
-					}
-					run = run.add((all.get(nToDo).multiply(posNeg)));
-					
+					odd += 2;//make all odd numbers, 1 3 5 7 9 etc..
+					numToSub = nat;
 				} else {
-					nToDo = nToDo - nat ;
-					if(nToDo < 0 ) {
-						break;
-					}
-					run = run.add((all.get(nToDo).multiply(posNeg)));
-					odd += 2; //make all odd numbers, 1 3 5 7 9 etc..
-					nat++;
+					nat++;//make all natural numbers, 1 2 3 4 5 6 7 ...
+					numToSub = odd;
 					posNeg = posNeg.multiply(neg);
 				}
-				
-				shouldSubOdd = !shouldSubOdd;
-				
-				
 			}
 			all.add(run);
 			ii++;
