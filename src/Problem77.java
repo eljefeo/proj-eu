@@ -1,5 +1,5 @@
 
-public class Problem77 implements Problem{// Took 0.004933 seconds
+public class Problem77 implements Problem{// Took 0.004642 seconds
 
 	/*
 	 It is possible to write ten as the sum of primes in exactly five different ways:

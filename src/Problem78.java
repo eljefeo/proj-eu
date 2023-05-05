@@ -2,7 +2,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem78 implements Problem{// THIS ONE IS NOT DONE YET
+public class Problem78 implements Problem{// Took 0.809113 seconds -- barely made it
 
 	public static void main(String[] args) {
 		Problem p = new Problem78();
@@ -24,28 +24,27 @@ public class Problem78 implements Problem{// THIS ONE IS NOT DONE YET
 		int ii = 2;
 		while(true) {
 			BigInteger run = new BigInteger("0");
-			int i = 2;
 			BigInteger neg = new BigInteger("-1");
 			BigInteger posNeg = new BigInteger("1");
 			int odd = 1;
 			int nat = 1;
 			int nToDo = ii;
-			
+			boolean shouldSubOdd = false;
+			int numToSub = odd;
 			while(true) {
-				nToDo = nToDo - odd;
+				nToDo = nToDo - numToSub ;
 				if(nToDo < 0 ) {
 					break;
 				}
 				run = run.add((all.get(nToDo).multiply(posNeg)));
-				
-				nToDo = nToDo - nat;
-				if(nToDo < 0 ) {
-					break;
+				if(shouldSubOdd = !shouldSubOdd) {
+					odd += 2;//make all odd numbers, 1 3 5 7 9 etc..
+					numToSub = nat;
+				} else {
+					nat++;//make all natural numbers, 1 2 3 4 5 6 7 ...
+					numToSub = odd;
+					posNeg = posNeg.multiply(neg);
 				}
-				run = run.add((all.get(nToDo).multiply(posNeg)));
-				odd += 2; //make all odd numbers, 1 3 5 7 9 etc..
-				nat++;
-				posNeg = posNeg.multiply(neg);
 			}
 			
 			if(run.mod(million).equals(BigInteger.ZERO)) {
@@ -56,5 +55,6 @@ public class Problem78 implements Problem{// THIS ONE IS NOT DONE YET
 			ii++;
 		}
 	}
-
+	
+	
 }
