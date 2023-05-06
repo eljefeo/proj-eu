@@ -25,9 +25,9 @@ For the first one hundred natural numbers, find the total of the digital sums of
 	static int t2 = 0;
 	@Override
 	public Object problem() {
-		int num = 10;
-		BigInteger test = new BigInteger("" + 77);
-		closestSquareUnderOrEqualN(test);
+		int num = 101;
+		//BigInteger test = new BigInteger("" + 77);
+		//closestSquareUnderOrEqualN(test);
 		
 		
 		
@@ -55,10 +55,20 @@ For the first one hundred natural numbers, find the total of the digital sums of
 	
 	public List<Integer> getPerfectSquaresUnder(int n){
 		List<Integer> squares = new ArrayList<Integer>();
-		for(int i=1; i<n; i++) {
-			squares.add(i*i);
+		int ii = 0, temp = 0;
+		for(int i=1; ii<n; i++) {
+			temp = ii;
+			ii = i*i;
+			squares.add(temp);
 		}
+		
 		return squares;
+	}
+	
+	public boolean isPerfectSquare(int n) {
+		
+		//double
+		return false;
 	}
 	
 	public void longDivSqrRt(int num) {
@@ -67,9 +77,10 @@ For the first one hundred natural numbers, find the total of the digital sums of
 		//int sqrtNext = 3;
 		//int sqrt = 1;
 		List<Integer> squares = getPerfectSquaresUnder(num);
+		System.out.println("got perfect squares under: " + num);
 		int nonPerfectSquareCount = 0;
 		int numDecimals = 100;
-		int howManyToCalculate = 100;
+		int howManyToCalculate = 1;
 		int decCount = 0;
 		BigInteger i=new BigInteger("1");
 		//for(BigInteger i=new BigInteger("1"); i.compareTo(new BigInteger("100")) < 0; i = i.add(BigInteger.ONE)) {
@@ -142,13 +153,18 @@ For the first one hundred natural numbers, find the total of the digital sums of
 			decCount = 0;
 			System.out.println("Done with i=" + i + " ::: " + decs);
 			decs = decs.substring(decs.length() - numDecimals, decs.length() );
+			int remove = 0;
 			for(int j = 0; j < decs.length(); j++) {
 				total+=Integer.parseInt(decs.charAt(j) + "");
+				remove+=Integer.parseInt(decs.charAt(j) + "");
 			}
-			System.out.println("decs final for " + i + ": " + decs);
+			System.out.println("decs final for " + i + " with length " + decs.length() + " (" + remove + ") : " + decs);
 			i = i.add(BigInteger.ONE);
 		}
 		System.out.println("Skipped " + squares.size() + " perfect squares");
+		for(Integer j : squares) {
+			System.out.println("square: " + j);
+		}
 		System.out.println("total final: " + total);
 		
 	}
