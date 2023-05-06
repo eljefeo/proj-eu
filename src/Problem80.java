@@ -62,7 +62,7 @@ For the first one hundred natural numbers, find the total of the digital sums of
 		//int sqrtNext = 3;
 		//int sqrt = 1;
 		List<Integer> squares = getPerfectSquaresUnder(num);
-		int numDecimals = 10;
+		int numDecimals = 5;
 		int decCount = 0;
 		
 		for(int i=12345; i<12346; i++) {
@@ -71,23 +71,15 @@ For the first one hundred natural numbers, find the total of the digital sums of
 				System.out.println(i + " is  a perfect square");
 				continue;
 			}
-			//System.out.println("i = " + i + ", sqrtCounter = " + sqrtCounter + ", sqrtNext = " + sqrtNext + ", sqrt = " + 1);
 			
 			
 			
 			int digitCount = (int)(Math.log10(i)+1); // should be 5 for the number 12,345
 			int firstDigits = 0;
-			if(digitCount%2 == 0) {//if even num of digits, we go with the first 2 
-				//firstDigits = (int) (i / (Math.pow(10, digitCount-2)));
-				//digitCount -= 2;
-			} else { //if odd num digits we go with the first 1 digit
-				//firstDigits = (int) (i / (Math.pow(10, digitCount-1)));
-				//digitCount--;
+			if(digitCount%2 != 0) {//if even num of digits, we go with the first 2 
 				digitCount++;
-			}
-			System.out.println("before First digit: " + firstDigits + " ::: " +(Math.pow(10, digitCount-2)) + " i=" + i);
+			} 
 			firstDigits = i / (int) (Math.pow(10, digitCount-2));
-			System.out.println("First digit: " + firstDigits + " digitc now=" + digitCount);
 			
 			int sqrt = closestSquareUnderOrEqualN(firstDigits);
 			String decs = sqrt + "";
@@ -97,25 +89,26 @@ For the first one hundred natural numbers, find the total of the digital sums of
 			int next = i;
 			int left = sqrt + sqrt;
 			digitCount-=2;
-			System.out.println("first calc First digit: " + firstDigits + ", sqrd=" + sqrd + ", dif=" + dif + ", left=" + left);
-			while(digitCount > 0) {
+			while(decCount < numDecimals) {
 				
+				if(digitCount > 0) {
+					next = next - (firstDigits * (int) (Math.pow(10, digitCount)));
+					firstDigits = next / (int) (Math.pow(10, digitCount-2));
+				} else {
+					firstDigits = 0;
+					decCount++;
+				}
 				
-				next = next - (firstDigits * (int) (Math.pow(10, digitCount)));
-				firstDigits = next / (int) (Math.pow(10, digitCount-2));
 				int timesHundred = dif * 100 + firstDigits; //bring down the next 2 digits 
-				
 				
 				System.out.println("Next First digit: " + firstDigits + ", next=" + next  + ", timesHundred=" + timesHundred + ", digitc now=" + digitCount);
 				left *= 10;
 				int multAdd = 10;
 				int smaller = timesHundred + 1; //just make it bigger to go into this loop
 				while(smaller > timesHundred) {
-					//for this what if we go backwards like from 9 down to 0 so we dont have to do -1 after this loop since we would go over in this loop
 					multAdd--;
 					smaller = (left + multAdd) * multAdd;
 					System.out.println("Multadd for " + firstDigits + " is now smaller=" + smaller + ", left + multAdd=" + (left + multAdd) + ", multadd=" + multAdd + "   > " + timesHundred);
-					
 				}
 				System.out.println("Ended with Multadd for " + i + " is now smaller=" + smaller + ", multadd=" + multAdd + ", left=" + left);
 				
@@ -123,163 +116,11 @@ For the first one hundred natural numbers, find the total of the digital sums of
 				System.out.println("decs increased to " + decs);
 				dif = timesHundred - smaller; //should be 100 - 61
 				left +=  multAdd + multAdd;
-				// dif then is 10 - 9 = 1
-				 //db is to double the 3, so 3 + 3 = 6
-				
-				
 				System.out.println("i=" + i + ", sqrt=" + sqrt + ", sqrd=" + sqrd + ", dif=" + dif + ", left=" + left);
-				//left *= 10;//we move the 6 over 1 place, so its 60. then we can start the 60*0 or 61*1 etc..
-				
-				
-				
-				
-				
-				
-				
-				
-				System.out.println("next was : " + next);
-				
 				System.out.println("next is now : " + next);
 				digitCount-=2;
-				
 			}
-			
-			
-			
-			
-			//so we got the 1, now we want the 23
-			//int next2Digits = i - (firstDigits * (int)Math.pow(10, digitCount));
-			//System.out.println("1Next 2 digit: " + next2Digits);
-			//if(digitCount%2 == 0) {//if even num of digits, we go with the first 2 
-			//next2Digits =  next2Digits - (int) (next2Digits / (Math.pow(10, digitCount-2)));
-				//digitCount -= 2;
-				/*} else { //if odd num digits we go with the first 1 digit
-				firstDigits = (int) (i / (Math.pow(10, digitCount-1)));
-				digitCount--;
-			}*/
-			//System.out.println("2Next 2 digit: " + next2Digits);
-			
-			
-			
-			/* int */ sqrt = closestSquareUnderOrEqualN(i); //REMOVE THIS, incorporate with above sqrt - this one is just for testing decimals
-			getFirstD(i); //exit for testing
-			
-			decs = sqrt + "";
-			/* int */ sqrd = sqrt*sqrt; //for this example we are doing 10. so this sqrd = 3*3 = 9
-			/* int */ dif = i - sqrd; // dif then is 10 - 9 = 1
-			/* int */ left = sqrt + sqrt; //db is to double the 3, so 3 + 3 = 6
-			
-			//we need to do the whole number first. like if its 12345, need to do 1, then 23 then 45...
-			//how do we get the 1st digit if its an odd number of digits, and the first 2 if its even num of digits.
-			
-			//we could do like a log(10) to get num of digits, then if even we get the first, else get the first 2
-			// or we could loop and divide by 100 getting the last 2 digits of the number, put those in some list and go through the list backwards...
-			//ill just try the log way first
-			
-			
-			
-			while(decCount < numDecimals) {
-				//then we bring 2 more digits down. since we know 10 is already 2 digits and 
-				//we are at the end of the whole number, we start bringing decimal zeros
-			
-				//we need to update above to do the whole number 2 digits at a time. 
-					//like 12345 we would do the 1 first, then 23, then 45..then start doing decimal zeros 2 at a time
-				System.out.println("i=" + i + ", sqrt=" + sqrt + ", sqrd=" + sqrd + ", dif=" + dif + ", left=" + left);
-				int timesHundred = dif * 100; //add 2 zeros = 1 * 100 = 100
-				//so now we need to do 60 * 0 , or 61*1 or 62*2 or 63*3 etc. until we get as close to 100 without going over.
-				//int mult = left * 10; //we move the 6 over 1 place, so its 60. then we can start the 60*0 or 61*1 etc..
-				
-				left *= 10;//we move the 6 over 1 place, so its 60. then we can start the 60*0 or 61*1 etc..
-				
-				int multAdd = 10;
-				int smaller = timesHundred + 1; //just make it bigger to go into this loop
-				while(smaller > timesHundred) {
-					//for this what if we go backwards like from 9 down to 0 so we dont have to do -1 after this loop since we would go over in this loop
-					multAdd--;
-					smaller = (left + multAdd) * multAdd;
-					System.out.println("Multadd for " + i + " is now smaller=" + smaller + ", left + multAdd=" + (left + multAdd) + ", multadd=" + multAdd + "   > " + timesHundred);
-					
-				}
-				System.out.println("Ended with Multadd for " + i + " is now smaller=" + smaller + ", multadd=" + multAdd + ", left=" + left);
-				decs += multAdd;
-				System.out.println("decs increased to " + decs);
-				dif = timesHundred - smaller; //should be 100 - 61
-				left +=  multAdd + multAdd; //this is the 61 + 1 (whatever that last digit ended up being, we double it. So if its 67, then add 7 = 74. this one was 1, so 61+1
-			
-				if(decs.length() > 10)break;//just for testing
-			
-			}
-			
-			
-			System.out.println("DECS : " + decs);
-			
-			
-			
-			/*dif = timesHundred - left; //should be 100 - 61
-			left += multAdd; //this is the 61 + 1 (whatever that last digit ended up being, we double it. So if its 67, then add 7 = 74. this one was 1, so 61+1
-			System.out.println("Added " + multAdd + " to m, m is now = " + left + ", and new dif = " + dif);
-			
-			
-			//do it all over again.
-			timesHundred = dif * 100;
-			//db = m;
-			System.out.println("timesHundred again:  " + timesHundred  + " with m = " + left);
-			
-			mult = left * 10;
-			multAdd = 9;
-			left = timesHundred + 1; //just make it bigger to go into this loop
-			while(left > timesHundred) {
-				//for this what if we go backwards like from 9 down to 0 so we dont have to do -1 after this loop since we would go over in this loop
-				multAdd--;
-				left = (mult + multAdd) * multAdd;
-				System.out.println("Multadd for " + i + " is now m=" + left + ", mult=" + mult + ", multadd=" + multAdd);
-				
-			}
-			System.out.println("Ended with Multadd for " + i + " is now m=" + left + ", mult=" + mult + ", multadd=" + multAdd);
-			*/
-			
-			
-			
-			
-			
-			
-			
-			/*
-			int multAdd = 0;
-			int m = mult;
-			while(m < timesHundred) {
-				//for this what if we go backwards like from 9 down to 0 so we dont have to do -1 after this loop since we would go over in this loop
-				multAdd++;
-				m = (mult + multAdd) * multAdd;
-				System.out.println("Multadd for " + i + " is now m=" + m + ", mult=" + mult + ", multadd=" + multAdd);
-				
-			}
-			
-			System.out.println("Ended with Multadd for " + i + " is now m=" + m + ", mult=" + mult + ", multadd=" + multAdd);
-			m /= multAdd;
-			m--;
-			System.out.println("Fixed m -- Ended with Multadd for " + i + " is now m=" + m + ", mult=" + mult + ", multadd=" + multAdd);
-			*/
-			
-			/*if(sqrtCounter > sqrtNext) { // here is where we calculate the next square root
-				//System.out.println("sqrtCount is OVER... " + sqrtCounter + " > " + (sqrtNext-2));
-				sqrtNext += 2;
-				sqrtCounter = sqrtNext-sqrtCounter;
-				sqrt++;
-			}  	*/
-			
 		}
-		//so num is 10
-		/*
-		 first we find the nearest perfect square and squareroot without going over 10, in this case that is 9
-		 first num to the left is therefor 3, sqrt of 9
-		 
-		 
-		 */
-		
-		//how to find the closest sqrt to 10
-		
-		
 	}
 	
 
