@@ -1863,6 +1863,42 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		List<Integer> primes = new ArrayList<Integer>();
 		
 		int sqrtCounter = 1;
+		int sqrtNext = 2;
+		int sqrt = 1;
+		primes.add(2);
+		
+		while ((n+=2) < max) {
+			
+			sqrtCounter+=2;
+			
+			for (int p = 0; p < primes.size(); p++) {
+				int prime = primes.get(p);
+				if(prime > sqrt) {
+					primes.add(n);
+					break;
+				}
+				if (n % prime == 0)
+					break;
+			}
+			
+			if(sqrtCounter > sqrtNext) { // here is where we calculate the next square root
+				sqrtNext += 2;
+				sqrtCounter = sqrtNext-sqrtCounter;
+				sqrt++;
+			}  	
+		}
+		
+		return primes;
+	}
+	
+	public static List<Integer> getPrimesUnderOld(int max) {
+		// this method does not have to calculate the square root of the number to find the limit
+		// we use some pattern I noticed to know what the square root is
+		// a little faster because we dont have to do Math.sqrt(num)
+		int n = 1;
+		List<Integer> primes = new ArrayList<Integer>();
+		
+		int sqrtCounter = 1;
 		int sqrtNext = 3;
 		int sqrt = 1;
 		
@@ -2239,6 +2275,64 @@ public static boolean hasSameUniqueDigits(int a, int b){
 			all.add(run);
 			ii++;
 		}
+	}
+	
+	
+	public static void compare2PrimeFunctionsResults(int howManyPrimesToCalc) {
+		List<Integer> p1 = getPrimesUnder(howManyPrimesToCalc);
+		List<Integer> p2 = getPrimesUnderOld(howManyPrimesToCalc);
+		
+		System.out.println("Primes count: " + p1.size() + " : " + p2.size() + " : " + (p1.size() == p2.size()));
+		for(int i = 0; i < p1.size(); i++) {
+			if(p1.get(i).compareTo(p2.get(i)) == 0) {
+				//System.out.println("YES " + p1.get(i) + " : " + p2.get(i));
+			} else {
+				System.out.println("NOOOOOO they are not equal " + p1.get(i) + " : " + p2.get(i));
+				System.exit(1);
+			}
+		}
+		System.out.println("Yes all results matched");
+	}
+	public static void compare2PrimeFunctionsTimings() {
+		List<Double> times1 = new ArrayList<Double>();
+		List<Double> times2 = new ArrayList<Double>();
+		int howManyPrimesToCalculate = 20000;
+		int howManyTimesToTest = 1000;
+		for(int i = 0; i < howManyTimesToTest; i++) {
+		
+			long startT = System.nanoTime();
+			List<Integer> p1 = getPrimesUnder(howManyPrimesToCalculate);
+			long endT = System.nanoTime();
+			double time = (double) (endT - startT) / 1000000000;
+			times1.add(time);
+			//System.out.printf("1st one Took %f seconds\n", time);
+			
+			long startT2 = System.nanoTime();
+			List<Integer> p2 = getPrimesUnderOld(howManyPrimesToCalculate);
+			long endT2 = System.nanoTime();
+			double time2 = (double) (endT2 - startT2) / 1000000000;
+			times2.add(time2);
+			//System.out.printf("2nd one Took %f seconds\n", time2);
+		}
+		
+		
+		int t1Greater = 0;
+		int t2Greater = 0;
+		int t1t2Same = 0;
+		for(int i=0; i<times1.size(); i++) {
+			int comp = times1.get(i).compareTo(times2.get(i));
+			if(comp > 0) {
+				t1Greater++;
+			} else if(comp < 0) {
+				t2Greater++;
+			} else {
+				t1t2Same++;
+			}
+		}
+		
+		double tt = (double)t1Greater/howManyTimesToTest * 100;
+		double tt2 = (double)t2Greater/howManyTimesToTest  * 100;;
+		System.out.println("t1 was slower : " + tt + "% of the time, t2 was slower " + tt2 + "% of the time, same: " + t1t2Same);
 	}
 
 	

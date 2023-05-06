@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class Problem47 implements Problem {
+public class Problem47 implements Problem { //Took 0.022773 seconds
 
 	/*
 	 The first two consecutive numbers to have two distinct prime factors are:

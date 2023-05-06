@@ -18,13 +18,20 @@ For the first one hundred natural numbers, find the total of the digital sums of
 		p.runProblem();
 	}
 
+	
+	static int t1 = 0;
+	static int t2 = 0;
 	@Override
 	public Object problem() {
 		int num = 10;
 		longDivSqrRt(num);
 		//calcSquareRootOfTwoCheckIfNumerMoreDigitsThanDenom(9);
+		
+		Util.compare2PrimeFunctionsResults(2000000);
+		Util.compare2PrimeFunctionsTimings();
 		return 0;
 	}
+	
 	
 	public static int calcSquareRootOfTwoCheckIfNumerMoreDigitsThanDenom(int howManyIterations){
 		
@@ -93,7 +100,7 @@ For the first one hundred natural numbers, find the total of the digital sums of
 	}
 	
 
-	public static List<Integer> getPrimesUnder(int max) {
+	public static List<Integer> getPrimesUnder1(int max) {
 		// this method does not have to calculate the square root of the number to find the limit
 		// we use some pattern I noticed to know what the square root is
 		// a little faster because we dont have to do Math.sqrt(num)
@@ -134,7 +141,41 @@ For the first one hundred natural numbers, find the total of the digital sums of
 		
 	}
 	
-	
+	public static List<Integer> getPrimesUnder2(int max) {
+		// this method does not have to calculate the square root of the number to find the limit
+		// we use some pattern I noticed to know what the square root is
+		// a little faster because we dont have to do Math.sqrt(num)
+		int n = 1;
+		List<Integer> primes = new ArrayList<Integer>();
+		
+		int sqrtCounter = 1;
+		int sqrtNext = 2;
+		int sqrt = 1;
+		primes.add(2);
+		
+		while ((n+=2) < max) {
+			
+			sqrtCounter+=2;
+			
+			for (int p = 0; p < primes.size(); p++) {
+				int prime = primes.get(p);
+				if(prime > sqrt) {
+					primes.add(n);
+					break;
+				}
+				if (n % prime == 0)
+					break;
+			}
+			
+			if(sqrtCounter > sqrtNext) { // here is where we calculate the next square root
+				sqrtNext += 2;
+				sqrtCounter = sqrtNext-sqrtCounter;
+				sqrt++;
+			}  	
+		}
+		
+		return primes;
+	}
 	
 	public int closestSquareToN(int n) {
 		return 0;

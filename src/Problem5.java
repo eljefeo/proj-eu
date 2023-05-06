@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class Problem5 implements Problem { //Took 0.001478 seconds
+public class Problem5 implements Problem { // Took 0.001103 seconds
 
 	
 	/*

@@ -1,7 +1,7 @@
 import java.util.List;
 
 public class Problem60 implements Problem { //Took 3.267360 seconds
-
+//TODO need to fix this. I started changes to make it faster and have not completed. We already figured this problem out, just need to make it faster
 	
 	/*
 	 The primes 3, 7, 109, and 673, are quite remarkable. 
