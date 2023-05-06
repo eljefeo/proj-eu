@@ -1,4 +1,6 @@
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Problem80 implements Problem{// 
 
@@ -18,7 +20,9 @@ For the first one hundred natural numbers, find the total of the digital sums of
 
 	@Override
 	public Object problem() {
-		calcSquareRootOfTwoCheckIfNumerMoreDigitsThanDenom(9);
+		int num = 10;
+		longDivSqrRt(num);
+		//calcSquareRootOfTwoCheckIfNumerMoreDigitsThanDenom(9);
 		return 0;
 	}
 	
@@ -53,4 +57,115 @@ For the first one hundred natural numbers, find the total of the digital sums of
 		return counter;
 	}
 	
+	
+	public void longDivSqrRt(int num) {
+		
+		int sqrtCounter = 2;
+		int sqrtNext = 3;
+		int sqrt = 1;
+		
+		for(int i=2; i<30; i++) {
+			sqrtCounter++;
+			
+			//System.out.println("i = " + i + ", sqrtCounter = " + sqrtCounter + ", sqrtNext = " + sqrtNext + ", sqrt = " + 1);
+			System.out.println("Nearest sqrt less than or equal " + i + " is " + sqrt);
+			
+			
+			if(sqrtCounter > sqrtNext) { // here is where we calculate the next square root
+				//System.out.println("sqrtCount is OVER... " + sqrtCounter + " > " + (sqrtNext-2));
+				sqrtNext += 2;
+				sqrtCounter = sqrtNext-sqrtCounter;
+				sqrt++;
+			}  	
+			
+		}
+		//so num is 10
+		/*
+		 first we find the nearest perfect square and squareroot without going over 10, in this case that is 9
+		 first num to the left is therefor 3, sqrt of 9
+		 
+		 
+		 */
+		
+		//how to find the closest sqrt to 10
+		
+		
+	}
+	
+
+	public static List<Integer> getPrimesUnder(int max) {
+		// this method does not have to calculate the square root of the number to find the limit
+		// we use some pattern I noticed to know what the square root is
+		// a little faster because we dont have to do Math.sqrt(num)
+		int n = 1;
+		List<Integer> primes = new ArrayList<Integer>();
+		
+		int sqrtCounter = 1;
+		int sqrtNext = 3;
+		int sqrt = 1;
+		
+		primes.add(2);
+		
+		while ((n+=2) < max) {
+			
+			sqrtCounter+=2;
+			
+			for (int p = 0; p < primes.size(); p++) {
+				int prime = primes.get(p);
+				if(prime > sqrt) {
+					primes.add(n);
+					break;
+				}
+				
+				if (n % prime == 0)
+					break;
+				
+			} //1, 4, 9, 16, 25
+			
+			if(sqrtCounter > sqrtNext-2) { // here is where we calculate the next square root
+				sqrtNext += 2;
+				sqrtCounter = sqrtNext-sqrtCounter;
+				sqrt++;
+			}  	
+				
+		}
+		
+		return primes;
+		
+	}
+	
+	
+	
+	public int closestSquareToN(int n) {
+		return 0;
+	}
+
+	/*
+	 sqrt closest to num - its going in odd numbers
+	 1 = 1
+	 2 = 1
+	 3 = 1
+	 4 = 2
+	 5 = 2
+	 6 = 2
+	 7 = 2
+	 8 = 2
+	 9 = 3
+	 10 = 3
+	 11 = 3
+	 12 = 3
+	 13 = 3
+	 14 = 3
+	 15 = 3
+	 16 = 4
+	 17 = 4
+	 18
+	 19
+	 20
+	 21
+	 22
+	 23
+	 24
+	 25 = 5
+	 */
 }
