@@ -74,10 +74,9 @@ For the first one hundred natural numbers, find the total of the digital sums of
 			//System.out.println("i = " + i + ", sqrtCounter = " + sqrtCounter + ", sqrtNext = " + sqrtNext + ", sqrt = " + 1);
 			
 			
-			int sqrt = closestSquareUnderOrEqualN(i);
+			
 			int digitCount = (int)(Math.log10(i)+1); // should be 5 for the number 12,345
-			int realDigitCount = digitCount;
-			int firstDigits = i;
+			int firstDigits = 0;
 			if(digitCount%2 == 0) {//if even num of digits, we go with the first 2 
 				//firstDigits = (int) (i / (Math.pow(10, digitCount-2)));
 				//digitCount -= 2;
@@ -86,20 +85,66 @@ For the first one hundred natural numbers, find the total of the digital sums of
 				//digitCount--;
 				digitCount++;
 			}
-			System.out.println("before First digit: " + firstDigits + " ::: " +(Math.pow(10, digitCount-2)));
+			System.out.println("before First digit: " + firstDigits + " ::: " +(Math.pow(10, digitCount-2)) + " i=" + i);
+			firstDigits = i / (int) (Math.pow(10, digitCount-2));
+			System.out.println("First digit: " + firstDigits + " digitc now=" + digitCount);
+			
+			int sqrt = closestSquareUnderOrEqualN(firstDigits);
+			String decs = sqrt + "";
+			
+			int sqrd = sqrt*sqrt; //for this example we are doing 10. so this sqrd = 3*3 = 9
+			int dif = firstDigits - sqrd; 
 			int next = i;
+			int left = sqrt + sqrt;
+			digitCount-=2;
+			System.out.println("first calc First digit: " + firstDigits + ", sqrd=" + sqrd + ", dif=" + dif + ", left=" + left);
 			while(digitCount > 0) {
+				
+				
+				next = next - (firstDigits * (int) (Math.pow(10, digitCount)));
 				firstDigits = next / (int) (Math.pow(10, digitCount-2));
-				System.out.println("loop First digit: " + firstDigits + " digitc now=" + digitCount);
+				int timesHundred = dif * 100 + firstDigits; //bring down the next 2 digits 
+				
+				
+				System.out.println("Next First digit: " + firstDigits + ", next=" + next  + ", timesHundred=" + timesHundred + ", digitc now=" + digitCount);
+				left *= 10;
+				int multAdd = 10;
+				int smaller = timesHundred + 1; //just make it bigger to go into this loop
+				while(smaller > timesHundred) {
+					//for this what if we go backwards like from 9 down to 0 so we dont have to do -1 after this loop since we would go over in this loop
+					multAdd--;
+					smaller = (left + multAdd) * multAdd;
+					System.out.println("Multadd for " + firstDigits + " is now smaller=" + smaller + ", left + multAdd=" + (left + multAdd) + ", multadd=" + multAdd + "   > " + timesHundred);
+					
+				}
+				System.out.println("Ended with Multadd for " + i + " is now smaller=" + smaller + ", multadd=" + multAdd + ", left=" + left);
+				
+				decs += multAdd;
+				System.out.println("decs increased to " + decs);
+				dif = timesHundred - smaller; //should be 100 - 61
+				left +=  multAdd + multAdd;
+				// dif then is 10 - 9 = 1
+				 //db is to double the 3, so 3 + 3 = 6
+				
+				
+				System.out.println("i=" + i + ", sqrt=" + sqrt + ", sqrd=" + sqrd + ", dif=" + dif + ", left=" + left);
+				//left *= 10;//we move the 6 over 1 place, so its 60. then we can start the 60*0 or 61*1 etc..
+				
+				
+				
+				
+				
+				
+				
+				
 				System.out.println("next was : " + next);
-				next = next - (firstDigits * (int) (Math.pow(10, digitCount-2)));
+				
 				System.out.println("next is now : " + next);
 				digitCount-=2;
 				
 			}
 			
-			System.out.println("First digit: " + firstDigits);
-			System.out.println("Nearest sqrt less than or equal " + i + " is " + sqrt);
+			
 			
 			
 			//so we got the 1, now we want the 23
@@ -116,13 +161,13 @@ For the first one hundred natural numbers, find the total of the digital sums of
 			
 			
 			
+			/* int */ sqrt = closestSquareUnderOrEqualN(i); //REMOVE THIS, incorporate with above sqrt - this one is just for testing decimals
+			getFirstD(i); //exit for testing
 			
-			getFirstD(i);
-			
-			String decs = sqrt + "";
-			int sqrd = sqrt*sqrt; //for this example we are doing 10. so this sqrd = 3*3 = 9
-			int dif = i - sqrd; // dif then is 10 - 9 = 1
-			int left = sqrt + sqrt; //db is to double the 3, so 3 + 3 = 6
+			decs = sqrt + "";
+			/* int */ sqrd = sqrt*sqrt; //for this example we are doing 10. so this sqrd = 3*3 = 9
+			/* int */ dif = i - sqrd; // dif then is 10 - 9 = 1
+			/* int */ left = sqrt + sqrt; //db is to double the 3, so 3 + 3 = 6
 			
 			//we need to do the whole number first. like if its 12345, need to do 1, then 23 then 45...
 			//how do we get the 1st digit if its an odd number of digits, and the first 2 if its even num of digits.
@@ -161,7 +206,7 @@ For the first one hundred natural numbers, find the total of the digital sums of
 				dif = timesHundred - smaller; //should be 100 - 61
 				left +=  multAdd + multAdd; //this is the 61 + 1 (whatever that last digit ended up being, we double it. So if its 67, then add 7 = 74. this one was 1, so 61+1
 			
-				if(decs.length() > 10)break;
+				if(decs.length() > 10)break;//just for testing
 			
 			}
 			
