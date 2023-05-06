@@ -2318,6 +2318,17 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		double tt2 = (double)t2Greater/howManyTimesToTest  * 100;;
 		System.out.println("t1 was slower : " + tt + "% of the time, t2 was slower " + tt2 + "% of the time, same: " + t1t2Same);
 	}
+	
+	public static List<Integer> getPerfectSquaresUnderOrEqualTo(int n){
+		List<Integer> squares = new ArrayList<Integer>();
+		int ii = 0, temp = 0;
+		for(int i=1; ii<n; i++) {
+			temp = ii;
+			ii = i*i;
+			squares.add(temp);
+		}
+		return squares;
+	}
 
 	
 	/*

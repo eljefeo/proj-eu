@@ -15,7 +15,7 @@ The square root of two is 1.41421356237309504880..., and the digital sum of the 
 For the first one hundred natural numbers, find the total of the digital sums of the first one hundred decimal digits for all the irrational square roots.Given that the three characters are always asked for in order, analyse the file so as to determine the shortest possible secret passcode of unknown length.
 	 */
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) { //Took 0.036950 seconds
 		Problem p = new Problem80();
 		p.runProblem();
 	}
@@ -26,44 +26,10 @@ For the first one hundred natural numbers, find the total of the digital sums of
 	@Override
 	public Object problem() {
 		int num = 101;
-		//BigInteger test = new BigInteger("" + 77);
-		//closestSquareUnderOrEqualN(test);
-		
-		
-		
-		longDivSqrRt(num);
-		//calcSquareRootOfTwoCheckIfNumerMoreDigitsThanDenom(9);
-		
-		//Util.compare2PrimeFunctionsResults(2000000);
-		//Util.compare2PrimeFunctionsTimings();
-		
-		return 0;
+		return longDivSqrRt(num);
 	}
-	
-	
-	public void longDivSqrrtt(int num) {
-		/*
-		 10
-		 */
-		
-	}
-	
-	
-	public void getFirstD(int num) {
-		System.exit(1);
-	}
-	
-	public List<Integer> getPerfectSquaresUnder(int n){
-		List<Integer> squares = new ArrayList<Integer>();
-		int ii = 0, temp = 0;
-		for(int i=1; ii<n; i++) {
-			temp = ii;
-			ii = i*i;
-			squares.add(temp);
-		}
-		
-		return squares;
-	}
+
+
 	
 	public boolean isPerfectSquare(int n) {
 		
@@ -71,108 +37,82 @@ For the first one hundred natural numbers, find the total of the digital sums of
 		return false;
 	}
 	
-	public void longDivSqrRt(int num) {
-		long total = 0;
+	public int longDivSqrRt(int num) {
+		int total = 0;
 		//int sqrtCounter = 2;
 		//int sqrtNext = 3;
 		//int sqrt = 1;
-		List<Integer> squares = getPerfectSquaresUnder(num);
-		System.out.println("got perfect squares under: " + num);
+		List<Integer> squares = Util.getPerfectSquaresUnderOrEqualTo(num);
 		int numCounter = 0;
 		int numDecimals = 100-1;
 		int howManyToCalculate = 100;
 		int decCount = 0;
 		BigInteger i=new BigInteger("1");
-		//for(BigInteger i=new BigInteger("1"); i.compareTo(new BigInteger("100")) < 0; i = i.add(BigInteger.ONE)) {
 		while(numCounter < howManyToCalculate) {
-			System.out.println("starting i = " + i);
-			//sqrtCounter++;
+			//System.out.println("starting i = " + i);
 			numCounter++;
 			if(squares.contains(i.intValue())) {
-				System.out.println(i + " is  a perfect square");
+				//System.out.println(i + " is  a perfect square");
 				i = i.add(BigInteger.ONE);
 				continue;
 			}
 			
-			//int digitCount = (int)(Math.log10(i)+1); // should be 5 for the number 12,345
 			int digitCount = i.toString().length();
-			//System.out.println("digitCount = " + digitCount);
 			BigInteger firstDigits = BigInteger.ZERO;
 			if(digitCount%2 != 0) {//if even num of digits, we go with the first 2 
 				digitCount++;
 			} 
-			//firstDigits = i / (int) (Math.pow(10, digitCount-2));
-			//			System.out.println("First digit")
 			firstDigits = i.divide(BigInteger.TEN.pow(digitCount-2));
-			//System.out.println("firstDigits = " + firstDigits);
 			BigInteger sqrt = closestSquareUnderOrEqualN(firstDigits);
 			String decs = sqrt + "";
-			
-			BigInteger sqrd = new BigInteger("" + (sqrt.multiply(sqrt))); //for this example we are doing 10. so this sqrd = 3*3 = 9
-			BigInteger dif = firstDigits.subtract(sqrd) ;// new BigInteger("" + (firstDigits - sqrd)); 
+			//total+= sqrt.intValue();
+			BigInteger sqrd = new BigInteger("" + (sqrt.multiply(sqrt)));
+			BigInteger dif = firstDigits.subtract(sqrd) ; 
 			BigInteger next = new BigInteger("" + i);
 			BigInteger left = sqrt.add(sqrt);
-			System.out.println("firstDigits = " + firstDigits + ", decs: " + decs + ", dif=" + dif  + ", decCount: " + decCount + ", numDecimals: " + numDecimals);
 			digitCount-=2;
 			while(decCount < numDecimals) {
 				decCount++;
 				if(digitCount > 0) {
 					next = next.subtract((firstDigits.multiply(BigInteger.TEN.pow(digitCount))));
 					firstDigits = next.divide(BigInteger.TEN.pow(digitCount-2));
-					System.out.println("digitCount > 0, next: " + next + ", firstDigits: " + firstDigits);
-					System.out.println("i digitcount, firstDigit=" + firstDigits + ", next=" + next);
 				} else {
 					firstDigits = BigInteger.ZERO;
-					//System.out.println("decCount increased to " + decCount);
 					
 				}
 				
 				BigInteger timesHundred = dif.multiply(new BigInteger(""+100)).add(firstDigits);
 				
-				//System.out.println("Next First digit: " + firstDigits + ", next=" + next  + ", timesHundred=" + timesHundred + ", digitc now=" + digitCount + ", left: " +left);
 				left = left.multiply(BigInteger.TEN);
-				//System.out.println("beforebeginloop left:" + left);
 				int multAdd = 10;
 				BigInteger smaller = timesHundred.add(BigInteger.ONE); //just make it bigger to go into this loop
 				
 				while(smaller.compareTo(timesHundred) > 0) {
 					multAdd--;
 					smaller = left.add(new BigInteger(""+multAdd)).multiply(new BigInteger(""+multAdd));
-					//System.out.println("Multadd for " + firstDigits + " is now smaller=" + smaller + ", left=" + left + ", left + multAdd=" + (left.add(new BigInteger(multAdd+""))) + ", multadd=" + multAdd + "   > " + timesHundred);
 				}
-				//System.out.println("Ended with Multadd for " + i + " is now smaller=" + smaller + ", multadd=" + multAdd + ", left=" + left);
 				
 				decs += multAdd;
-				//System.out.println("decs increased to " + decs);
+				//total+= multAdd;
 				dif = timesHundred.subtract(smaller);
 				left = left.add(new BigInteger("" + multAdd)).add(new BigInteger(""+multAdd));
-				//System.out.println("i=" + i + ", sqrt=" + sqrt + ", sqrd=" + sqrd + ", dif=" + dif + ", left=" + left);
-				//System.out.println("next is now : " + next);
 				digitCount-=2;
 			}
 			
 			decCount = 0;
-			System.out.println("Done with i=" + i + " ::: " + decs + " decslength: " + decs.length());
-			//decs = decs.substring(decs.length() - numDecimals, decs.length() );
-			int remove = 0;
+			
+			int thisTotal = 0;
 			for(int j = 0; j < decs.length(); j++) {
-				total+=Integer.parseInt(decs.charAt(j) + "");
-				remove+=Integer.parseInt(decs.charAt(j) + "");
-				
+				thisTotal+=Integer.parseInt(decs.charAt(j) + "");
 			}
-			System.out.println("decs final for " + i + " with length " + decs.length() + " (" + remove + ") with runningTotal=" + total + " : " + decs);
+			//System.out.println("Done with i=" + i + " ::: " + decs + ", sumDigits=" + thisTotal + " decslength: " + decs.length());
+			total+=thisTotal;
 			i = i.add(BigInteger.ONE);
-			for(int u = 0; u < decs.length(); u++) {
-				System.out.print("," + decs.charAt(u));
-			}
-			System.out.println();
+			
 		}
-		System.out.println("Skipped " + squares.size() + " perfect squares");
-		for(Integer j : squares) {
-			System.out.println("square: " + j);
-		}
-		System.out.println("total final: " + total);
 		
+		System.out.println("total final: " + total);
+		return total;
 	}
 	
 public void longDivSqrRt2(int num) {
@@ -180,7 +120,7 @@ public void longDivSqrRt2(int num) {
 		//int sqrtCounter = 2;
 		//int sqrtNext = 3;
 		//int sqrt = 1;
-		List<Integer> squares = getPerfectSquaresUnder(num);
+		List<Integer> squares = Util.getPerfectSquaresUnderOrEqualTo(num);
 		int numDecimals = 5;
 		int decCount = 0;
 		
@@ -190,9 +130,6 @@ public void longDivSqrRt2(int num) {
 				System.out.println(i + " is  a perfect square");
 				continue;
 			}
-			
-			
-			
 			int digitCount = (int)(Math.log10(i)+1); // should be 5 for the number 12,345
 			int firstDigits = 0;
 			if(digitCount%2 != 0) {//if even num of digits, we go with the first 2 
@@ -327,20 +264,17 @@ public void longDivSqrRt2(int num) {
 			t = i;
 			i++;
 		}
-		System.out.println("closest to " + n + "  t=" + t);
 		return t;
 	}
 	
 	public BigInteger closestSquareUnderOrEqualN(BigInteger n) {
 		//TODO change this to work for perfect squares
 		BigInteger i = BigInteger.ZERO, t = BigInteger.ZERO;
-		System.out.println("Doing closest square to " + n);
 		while(n.compareTo(i.multiply(i)) >= 0) {
 			//System.out.println("loop closest square to...i*i=" + (i.multiply(i)) + ", n compare to: " + n.compareTo(i.multiply(i)));
 			t = i;
 			i = i.add(BigInteger.ONE);
 		}
-		System.out.println("closest to " + n + "  t=" + t);
 		return t;
 	}
 
