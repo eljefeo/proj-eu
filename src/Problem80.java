@@ -47,44 +47,63 @@ For the first one hundred natural numbers, find the total of the digital sums of
 		int sqrtNext = 3;
 		int sqrt = 1;
 		
+		int numDecimals = 10;
+		int decCount = 0;
+		
 		for(int i=2; i<11; i++) {
 			sqrtCounter++;
 			
 			//System.out.println("i = " + i + ", sqrtCounter = " + sqrtCounter + ", sqrtNext = " + sqrtNext + ", sqrt = " + 1);
-			System.out.println("Nearest sqrt less than or equal " + i + " is " + sqrt);
 			
+			System.out.println("Nearest sqrt less than or equal " + i + " is " + sqrt);
+			String decs = sqrt + "";
 			int sqrd = sqrt*sqrt; //for this example we are doing 10. so this sqrd = 3*3 = 9
+
 			
 			
 			
 			int dif = i - sqrd; // dif then is 10 - 9 = 1
-			
 			int left = sqrt + sqrt; //db is to double the 3, so 3 + 3 = 6
 			
-			//then we bring 2 more digits down. since we know 10 is already 2 digits and 
+			
+			while(decCount < numDecimals) {
+				//then we bring 2 more digits down. since we know 10 is already 2 digits and 
 				//we are at the end of the whole number, we start bringing decimal zeros
 			
-			//we need to update above to do the whole number 2 digits at a time. 
-				//like 12345 we would do the 1 first, then 23, then 45..then start doing decimal zeros 2 at a time
-			System.out.println("i=" + i + ", sqrt=" + sqrt + ", sqrd=" + sqrd + ", dif=" + dif + ", m=" + left);
-			int timesHundred = dif * 100; //add 2 zeros = 1 * 100 = 100
-			//so now we need to do 60 * 0 , or 61*1 or 62*2 or 63*3 etc. until we get as close to 100 without going over.
-			int mult = left * 10; //we move the 6 over 1 place, so its 60. then we can start the 60*0 or 61*1 etc..
-			
-			int multAdd = 9;
-			left = timesHundred + 1; //just make it bigger to go into this loop
-			while(left > timesHundred) {
-				//for this what if we go backwards like from 9 down to 0 so we dont have to do -1 after this loop since we would go over in this loop
-				multAdd--;
-				left = (mult + multAdd) * multAdd;
-				System.out.println("Multadd for " + i + " is now m=" + left + ", mult=" + mult + ", multadd=" + multAdd);
+				//we need to update above to do the whole number 2 digits at a time. 
+					//like 12345 we would do the 1 first, then 23, then 45..then start doing decimal zeros 2 at a time
+				System.out.println("i=" + i + ", sqrt=" + sqrt + ", sqrd=" + sqrd + ", dif=" + dif + ", left=" + left);
+				int timesHundred = dif * 100; //add 2 zeros = 1 * 100 = 100
+				//so now we need to do 60 * 0 , or 61*1 or 62*2 or 63*3 etc. until we get as close to 100 without going over.
+				//int mult = left * 10; //we move the 6 over 1 place, so its 60. then we can start the 60*0 or 61*1 etc..
 				
+				left *= 10;//we move the 6 over 1 place, so its 60. then we can start the 60*0 or 61*1 etc..
+				
+				int multAdd = 10;
+				int smaller = timesHundred + 1; //just make it bigger to go into this loop
+				while(smaller > timesHundred) {
+					//for this what if we go backwards like from 9 down to 0 so we dont have to do -1 after this loop since we would go over in this loop
+					multAdd--;
+					smaller = (left + multAdd) * multAdd;
+					System.out.println("Multadd for " + i + " is now smaller=" + smaller + ", left + multAdd=" + (left + multAdd) + ", multadd=" + multAdd + "   > " + timesHundred);
+					
+				}
+				System.out.println("Ended with Multadd for " + i + " is now smaller=" + smaller + ", multadd=" + multAdd + ", left=" + left);
+				decs += multAdd;
+				System.out.println("decs increased to " + decs);
+				dif = timesHundred - smaller; //should be 100 - 61
+				left +=  multAdd + multAdd; //this is the 61 + 1 (whatever that last digit ended up being, we double it. So if its 67, then add 7 = 74. this one was 1, so 61+1
+			
+				if(decs.length() > 10)break;
+			
 			}
-			System.out.println("Ended with Multadd for " + i + " is now m=" + left + ", mult=" + mult + ", multadd=" + multAdd);
+			
+			
+			System.out.println("DECS : " + decs);
 			
 			
 			
-			dif = timesHundred - left; //should be 100 - 61
+			/*dif = timesHundred - left; //should be 100 - 61
 			left += multAdd; //this is the 61 + 1 (whatever that last digit ended up being, we double it. So if its 67, then add 7 = 74. this one was 1, so 61+1
 			System.out.println("Added " + multAdd + " to m, m is now = " + left + ", and new dif = " + dif);
 			
@@ -105,7 +124,7 @@ For the first one hundred natural numbers, find the total of the digital sums of
 				
 			}
 			System.out.println("Ended with Multadd for " + i + " is now m=" + left + ", mult=" + mult + ", multadd=" + multAdd);
-			
+			*/
 			
 			
 			
