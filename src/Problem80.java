@@ -29,6 +29,7 @@ For the first one hundred natural numbers, find the total of the digital sums of
 		
 		//Util.compare2PrimeFunctionsResults(2000000);
 		//Util.compare2PrimeFunctionsTimings();
+		closestSquareUnderOrEqualN(180);
 		return 0;
 	}
 	
@@ -43,27 +44,43 @@ For the first one hundred natural numbers, find the total of the digital sums of
 	
 	public void longDivSqrRt(int num) {
 		
-		int sqrtCounter = 2;
-		int sqrtNext = 3;
-		int sqrt = 1;
+		//int sqrtCounter = 2;
+		//int sqrtNext = 3;
+		//int sqrt = 1;
 		
 		int numDecimals = 10;
 		int decCount = 0;
 		
 		for(int i=2; i<11; i++) {
-			sqrtCounter++;
+			//sqrtCounter++;
 			
 			//System.out.println("i = " + i + ", sqrtCounter = " + sqrtCounter + ", sqrtNext = " + sqrtNext + ", sqrt = " + 1);
+			
+			
+			int sqrt = closestSquareUnderOrEqualN(i);
+			int digitCount = (int)(Math.log10(i)+1); // should be 5 for the number 12,345
+			int firstDigits = 0;
+			if(digitCount%2 == 0) {//if even num of digits, we go with the first 2 
+				firstDigits = (int) (i / (Math.pow(10, digitCount-2)));
+				digitCount -= 2;
+			} else { //if odd num digits we go with the first 1 digit
+				firstDigits = (int) (i / (Math.pow(10, digitCount-1)));
+				digitCount--;
+			}
 			
 			System.out.println("Nearest sqrt less than or equal " + i + " is " + sqrt);
 			String decs = sqrt + "";
 			int sqrd = sqrt*sqrt; //for this example we are doing 10. so this sqrd = 3*3 = 9
-
-			
-			
-			
 			int dif = i - sqrd; // dif then is 10 - 9 = 1
 			int left = sqrt + sqrt; //db is to double the 3, so 3 + 3 = 6
+			
+			//we need to do the whole number first. like if its 12345, need to do 1, then 23 then 45...
+			//how do we get the 1st digit if its an odd number of digits, and the first 2 if its even num of digits.
+			
+			//we could do like a log(10) to get num of digits, then if even we get the first, else get the first 2
+			// or we could loop and divide by 100 getting the last 2 digits of the number, put those in some list and go through the list backwards...
+			//ill just try the log way first
+			
 			
 			
 			while(decCount < numDecimals) {
@@ -149,12 +166,12 @@ For the first one hundred natural numbers, find the total of the digital sums of
 			System.out.println("Fixed m -- Ended with Multadd for " + i + " is now m=" + m + ", mult=" + mult + ", multadd=" + multAdd);
 			*/
 			
-			if(sqrtCounter > sqrtNext) { // here is where we calculate the next square root
+			/*if(sqrtCounter > sqrtNext) { // here is where we calculate the next square root
 				//System.out.println("sqrtCount is OVER... " + sqrtCounter + " > " + (sqrtNext-2));
 				sqrtNext += 2;
 				sqrtCounter = sqrtNext-sqrtCounter;
 				sqrt++;
-			}  	
+			}  	*/
 			
 		}
 		//so num is 10
@@ -248,8 +265,18 @@ For the first one hundred natural numbers, find the total of the digital sums of
 		return primes;
 	}
 	
-	public int closestSquareToN(int n) {
-		return 0;
+	public int closestSquareUnderOrEqualN(int n) {
+		//TODO change this to work for perfect squares
+		int i = 0;
+		int ii = 0;
+		while(ii < n) {
+			ii = i * i;
+			i++;
+			
+		}
+		i-=2;
+		System.out.println("closest to " + n + " = " + i + " ii="+ii);
+		return i;
 	}
 
 public static int calcSquareRootOfTwoCheckIfNumerMoreDigitsThanDenom(int howManyIterations){
