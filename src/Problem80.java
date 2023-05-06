@@ -67,16 +67,21 @@ For the first one hundred natural numbers, find the total of the digital sums of
 		//int sqrtNext = 3;
 		//int sqrt = 1;
 		List<Integer> squares = getPerfectSquaresUnder(num);
+		int nonPerfectSquareCount = 0;
 		int numDecimals = 100;
+		int howManyToCalculate = 100;
 		int decCount = 0;
-	
-		for(BigInteger i=new BigInteger("1"); i.compareTo(new BigInteger("100")) < 0; i = i.add(BigInteger.ONE)) {
+		BigInteger i=new BigInteger("1");
+		//for(BigInteger i=new BigInteger("1"); i.compareTo(new BigInteger("100")) < 0; i = i.add(BigInteger.ONE)) {
+		while(nonPerfectSquareCount < howManyToCalculate) {
+			System.out.println("starting i = " + i);
 			//sqrtCounter++;
 			if(squares.contains(i.intValue())) {
 				System.out.println(i + " is  a perfect square");
+				i = i.add(BigInteger.ONE);
 				continue;
 			}
-			
+			nonPerfectSquareCount++;
 			//int digitCount = (int)(Math.log10(i)+1); // should be 5 for the number 12,345
 			int digitCount = i.toString().length();
 			System.out.println("digitCount = " + digitCount);
@@ -95,7 +100,7 @@ For the first one hundred natural numbers, find the total of the digital sums of
 			BigInteger dif = firstDigits.subtract(sqrd) ;// new BigInteger("" + (firstDigits - sqrd)); 
 			BigInteger next = new BigInteger("" + i);
 			BigInteger left = sqrt.add(sqrt);
-			System.out.println("firstDigits = " + firstDigits + ", decs: " + decs + ", dif=" + dif);
+			System.out.println("firstDigits = " + firstDigits + ", decs: " + decs + ", dif=" + dif  + ", decCount: " + decCount + ", numDecimals: " + numDecimals);
 			digitCount-=2;
 			while(decCount < numDecimals) {
 				
@@ -134,13 +139,16 @@ For the first one hundred natural numbers, find the total of the digital sums of
 				digitCount-=2;
 			}
 			
+			decCount = 0;
+			System.out.println("Done with i=" + i + " ::: " + decs);
 			decs = decs.substring(decs.length() - numDecimals, decs.length() );
 			for(int j = 0; j < decs.length(); j++) {
 				total+=Integer.parseInt(decs.charAt(j) + "");
 			}
-			System.out.println("decs final: " + decs);
+			System.out.println("decs final for " + i + ": " + decs);
+			i = i.add(BigInteger.ONE);
 		}
-		
+		System.out.println("Skipped " + squares.size() + " perfect squares");
 		System.out.println("total final: " + total);
 		
 	}
