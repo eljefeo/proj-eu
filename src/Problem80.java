@@ -67,7 +67,7 @@ For the first one hundred natural numbers, find the total of the digital sums of
 		//int sqrtNext = 3;
 		//int sqrt = 1;
 		List<Integer> squares = getPerfectSquaresUnder(num);
-		int numDecimals = 5;
+		int numDecimals = 100;
 		int decCount = 0;
 	
 		for(BigInteger i=new BigInteger("12345"); i.compareTo(new BigInteger("12346")) < 0; i = i.add(BigInteger.ONE)) {
@@ -100,11 +100,7 @@ For the first one hundred natural numbers, find the total of the digital sums of
 			while(decCount < numDecimals) {
 				
 				if(digitCount > 0) {
-					//next = next - (firstDigits * (int) (Math.pow(10, digitCount)));
-					//next = next.subtract((firstDigits.multiply(new BigInteger(""+ (int)(Math.pow(10, digitCount))))));
 					next = next.subtract((firstDigits.multiply(BigInteger.TEN.pow(digitCount))));
-					
-					//firstDigits = next / (int) (Math.pow(10, digitCount-2));
 					firstDigits = next.divide(BigInteger.TEN.pow(digitCount-2));
 					System.out.println("digitCount > 0, next: " + next + ", firstDigits: " + firstDigits);
 					System.out.println("i digitcount, firstDigit=" + firstDigits + ", next=" + next);
@@ -114,21 +110,16 @@ For the first one hundred natural numbers, find the total of the digital sums of
 					decCount++;
 				}
 				
-				//int timesHundred = dif * 100 + firstDigits; //bring down the next 2 digits 
 				BigInteger timesHundred = dif.multiply(new BigInteger(""+100)).add(firstDigits);
 				
 				System.out.println("Next First digit: " + firstDigits + ", next=" + next  + ", timesHundred=" + timesHundred + ", digitc now=" + digitCount + ", left: " +left);
-				//left *= 10;
 				left = left.multiply(BigInteger.TEN);
 				System.out.println("beforebeginloop left:" + left);
 				int multAdd = 10;
-				//int smaller = timesHundred + 1; //just make it bigger to go into this loop
 				BigInteger smaller = timesHundred.add(BigInteger.ONE); //just make it bigger to go into this loop
 				
-				//while(smaller > timesHundred) {
 				while(smaller.compareTo(timesHundred) > 0) {
 					multAdd--;
-					//smaller = (left + multAdd) * multAdd;
 					smaller = left.add(new BigInteger(""+multAdd)).multiply(new BigInteger(""+multAdd));
 					System.out.println("Multadd for " + firstDigits + " is now smaller=" + smaller + ", left=" + left + ", left + multAdd=" + (left.add(new BigInteger(multAdd+""))) + ", multadd=" + multAdd + "   > " + timesHundred);
 				}
@@ -136,15 +127,19 @@ For the first one hundred natural numbers, find the total of the digital sums of
 				
 				decs += multAdd;
 				System.out.println("decs increased to " + decs);
-				//dif = timesHundred - smaller; //should be 100 - 61
 				dif = timesHundred.subtract(smaller);
-				//left +=  multAdd + multAdd;
 				left = left.add(new BigInteger("" + multAdd)).add(new BigInteger(""+multAdd));
 				System.out.println("i=" + i + ", sqrt=" + sqrt + ", sqrd=" + sqrd + ", dif=" + dif + ", left=" + left);
 				System.out.println("next is now : " + next);
 				digitCount-=2;
 			}
+			
+			decs = decs.substring(0,decs.length() - numDecimals) + "." + decs.substring(decs.length() - numDecimals, decs.length() );
+			System.out.println("decs final: " + decs);
 		}
+		
+		
+		
 	}
 	
 public void longDivSqrRt2(int num) {
