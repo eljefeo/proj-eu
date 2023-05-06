@@ -2,6 +2,8 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.print.attribute.standard.Fidelity;
+
 public class Problem80 implements Problem{// 
 
 	
@@ -29,7 +31,7 @@ For the first one hundred natural numbers, find the total of the digital sums of
 		
 		//Util.compare2PrimeFunctionsResults(2000000);
 		//Util.compare2PrimeFunctionsTimings();
-		closestSquareUnderOrEqualN(180);
+		closestSquareUnderOrEqualN(25);
 		return 0;
 	}
 	
@@ -42,33 +44,81 @@ For the first one hundred natural numbers, find the total of the digital sums of
 	}
 	
 	
+	public void getFirstD(int num) {
+		System.exit(1);
+	}
+	
+	public List<Integer> getPerfectSquaresUnder(int n){
+		List<Integer> squares = new ArrayList<Integer>();
+		for(int i=1; i<n; i++) {
+			squares.add(i*i);
+		}
+		return squares;
+	}
+	
 	public void longDivSqrRt(int num) {
 		
 		//int sqrtCounter = 2;
 		//int sqrtNext = 3;
 		//int sqrt = 1;
-		
+		List<Integer> squares = getPerfectSquaresUnder(num);
 		int numDecimals = 10;
 		int decCount = 0;
 		
-		for(int i=2; i<11; i++) {
+		for(int i=12345; i<12346; i++) {
 			//sqrtCounter++;
-			
+			if(squares.contains(i)) {
+				System.out.println(i + " is  a perfect square");
+				continue;
+			}
 			//System.out.println("i = " + i + ", sqrtCounter = " + sqrtCounter + ", sqrtNext = " + sqrtNext + ", sqrt = " + 1);
 			
 			
 			int sqrt = closestSquareUnderOrEqualN(i);
 			int digitCount = (int)(Math.log10(i)+1); // should be 5 for the number 12,345
-			int firstDigits = 0;
+			int realDigitCount = digitCount;
+			int firstDigits = i;
 			if(digitCount%2 == 0) {//if even num of digits, we go with the first 2 
-				firstDigits = (int) (i / (Math.pow(10, digitCount-2)));
-				digitCount -= 2;
+				//firstDigits = (int) (i / (Math.pow(10, digitCount-2)));
+				//digitCount -= 2;
 			} else { //if odd num digits we go with the first 1 digit
-				firstDigits = (int) (i / (Math.pow(10, digitCount-1)));
-				digitCount--;
+				//firstDigits = (int) (i / (Math.pow(10, digitCount-1)));
+				//digitCount--;
+				digitCount++;
+			}
+			System.out.println("before First digit: " + firstDigits + " ::: " +(Math.pow(10, digitCount-2)));
+			int next = i;
+			while(digitCount > 0) {
+				firstDigits = next / (int) (Math.pow(10, digitCount-2));
+				System.out.println("loop First digit: " + firstDigits + " digitc now=" + digitCount);
+				System.out.println("next was : " + next);
+				next = next - (firstDigits * (int) (Math.pow(10, digitCount-2)));
+				System.out.println("next is now : " + next);
+				digitCount-=2;
+				
 			}
 			
+			System.out.println("First digit: " + firstDigits);
 			System.out.println("Nearest sqrt less than or equal " + i + " is " + sqrt);
+			
+			
+			//so we got the 1, now we want the 23
+			//int next2Digits = i - (firstDigits * (int)Math.pow(10, digitCount));
+			//System.out.println("1Next 2 digit: " + next2Digits);
+			//if(digitCount%2 == 0) {//if even num of digits, we go with the first 2 
+			//next2Digits =  next2Digits - (int) (next2Digits / (Math.pow(10, digitCount-2)));
+				//digitCount -= 2;
+				/*} else { //if odd num digits we go with the first 1 digit
+				firstDigits = (int) (i / (Math.pow(10, digitCount-1)));
+				digitCount--;
+			}*/
+			//System.out.println("2Next 2 digit: " + next2Digits);
+			
+			
+			
+			
+			getFirstD(i);
+			
 			String decs = sqrt + "";
 			int sqrd = sqrt*sqrt; //for this example we are doing 10. so this sqrd = 3*3 = 9
 			int dif = i - sqrd; // dif then is 10 - 9 = 1
@@ -267,16 +317,13 @@ For the first one hundred natural numbers, find the total of the digital sums of
 	
 	public int closestSquareUnderOrEqualN(int n) {
 		//TODO change this to work for perfect squares
-		int i = 0;
-		int ii = 0;
-		while(ii < n) {
-			ii = i * i;
+		int i = 0, t = 0;
+		while(n >= (i*i)) {
+			t = i;
 			i++;
-			
 		}
-		i-=2;
-		System.out.println("closest to " + n + " = " + i + " ii="+ii);
-		return i;
+		System.out.println("closest to " + n + "  t=" + t);
+		return t;
 	}
 
 public static int calcSquareRootOfTwoCheckIfNumerMoreDigitsThanDenom(int howManyIterations){
