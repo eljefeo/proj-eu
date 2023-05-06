@@ -1742,27 +1742,11 @@ public static boolean hasSameUniqueDigits(int a, int b){
 	public  static int deadHorsePokerHumanEncodeEval5(String as, String bs, String cs, String ds, String es){
 
 		//convert string to numbers that the eval recognizes
-		//char ac=as.charAt(0),bc=bs.charAt(0),cc=cs.charAt(0),dc=ds.charAt(0),ec=es.charAt(0);
 		int a = getSinglePokerCardValueFromHumanReadable(as);
 		int b = getSinglePokerCardValueFromHumanReadable(bs);
 		int c = getSinglePokerCardValueFromHumanReadable(cs);
 		int d = getSinglePokerCardValueFromHumanReadable(ds);
 		int e = getSinglePokerCardValueFromHumanReadable(es);
-		//int a=((ac=='A'?1<<12:ac=='K'?1<<11:ac=='Q'?1<<10:ac=='J'?1<<9:ac=='T'?1<<8:1<<(ac-50))
-		//|((ac=as.charAt(1))=='S'?0x10000:ac=='H'?0x8000:ac=='C'?0x4000:0x2000));
-		
-		//int b=((bc=='A'?1<<12:bc=='K'?1<<11:bc=='Q'?1<<10:bc=='J'?1<<9:bc=='T'?1<<8:1<<(bc-50))		
-		//|((bc=bs.charAt(1))=='S'?0x10000:bc=='H'?0x8000:bc=='C'?0x4000:0x2000));
-		
-		//int c=((cc=='A'?1<<12:cc=='K'?1<<11:cc=='Q'?1<<10:cc=='J'?1<<9:cc=='T'?1<<8:1<<(cc-50))
-		//|((cc=cs.charAt(1))=='S'?0x10000:cc=='H'?0x8000:cc=='C'?0x4000:0x2000));
-		
-		//int d=((dc=='A'?1<<12:dc=='K'?1<<11:dc=='Q'?1<<10:dc=='J'?1<<9:dc=='T'?1<<8:1<<(dc-50))
-		//|((dc=ds.charAt(1))=='S'?0x10000:dc=='H'?0x8000:dc=='C'?0x4000:0x2000));
-		
-		//int e=((ec=='A'?1<<12:ec=='K'?1<<11:ec=='Q'?1<<10:ec=='J'?1<<9:ec=='T'?1<<8:1<<(ec-50))
-		//|((ec=es.charAt(1))=='S'?0x10000:ec=='H'?0x8000:ec=='C'?0x4000:0x2000));
-		
 		return deadHorseEval5(a, b, c, d, e);
 	}
 	
