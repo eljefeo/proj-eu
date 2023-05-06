@@ -62,7 +62,7 @@ For the first one hundred natural numbers, find the total of the digital sums of
 	}
 	
 	public void longDivSqrRt(int num) {
-		
+		long total = 0;
 		//int sqrtCounter = 2;
 		//int sqrtNext = 3;
 		//int sqrt = 1;
@@ -70,7 +70,7 @@ For the first one hundred natural numbers, find the total of the digital sums of
 		int numDecimals = 100;
 		int decCount = 0;
 	
-		for(BigInteger i=new BigInteger("12345"); i.compareTo(new BigInteger("12346")) < 0; i = i.add(BigInteger.ONE)) {
+		for(BigInteger i=new BigInteger("1"); i.compareTo(new BigInteger("100")) < 0; i = i.add(BigInteger.ONE)) {
 			//sqrtCounter++;
 			if(squares.contains(i.intValue())) {
 				System.out.println(i + " is  a perfect square");
@@ -134,11 +134,14 @@ For the first one hundred natural numbers, find the total of the digital sums of
 				digitCount-=2;
 			}
 			
-			decs = decs.substring(0,decs.length() - numDecimals) + "." + decs.substring(decs.length() - numDecimals, decs.length() );
+			decs = decs.substring(decs.length() - numDecimals, decs.length() );
+			for(int j = 0; j < decs.length(); j++) {
+				total+=Integer.parseInt(decs.charAt(j) + "");
+			}
 			System.out.println("decs final: " + decs);
 		}
 		
-		
+		System.out.println("total final: " + total);
 		
 	}
 	
