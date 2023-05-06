@@ -78,24 +78,25 @@ For the first one hundred natural numbers, find the total of the digital sums of
 		//int sqrt = 1;
 		List<Integer> squares = getPerfectSquaresUnder(num);
 		System.out.println("got perfect squares under: " + num);
-		int nonPerfectSquareCount = 0;
-		int numDecimals = 100;
-		int howManyToCalculate = 1;
+		int numCounter = 0;
+		int numDecimals = 100-1;
+		int howManyToCalculate = 100;
 		int decCount = 0;
 		BigInteger i=new BigInteger("1");
 		//for(BigInteger i=new BigInteger("1"); i.compareTo(new BigInteger("100")) < 0; i = i.add(BigInteger.ONE)) {
-		while(nonPerfectSquareCount < howManyToCalculate) {
+		while(numCounter < howManyToCalculate) {
 			System.out.println("starting i = " + i);
 			//sqrtCounter++;
+			numCounter++;
 			if(squares.contains(i.intValue())) {
 				System.out.println(i + " is  a perfect square");
 				i = i.add(BigInteger.ONE);
 				continue;
 			}
-			nonPerfectSquareCount++;
+			
 			//int digitCount = (int)(Math.log10(i)+1); // should be 5 for the number 12,345
 			int digitCount = i.toString().length();
-			System.out.println("digitCount = " + digitCount);
+			//System.out.println("digitCount = " + digitCount);
 			BigInteger firstDigits = BigInteger.ZERO;
 			if(digitCount%2 != 0) {//if even num of digits, we go with the first 2 
 				digitCount++;
@@ -103,7 +104,7 @@ For the first one hundred natural numbers, find the total of the digital sums of
 			//firstDigits = i / (int) (Math.pow(10, digitCount-2));
 			//			System.out.println("First digit")
 			firstDigits = i.divide(BigInteger.TEN.pow(digitCount-2));
-			System.out.println("firstDigits = " + firstDigits);
+			//System.out.println("firstDigits = " + firstDigits);
 			BigInteger sqrt = closestSquareUnderOrEqualN(firstDigits);
 			String decs = sqrt + "";
 			
@@ -114,7 +115,7 @@ For the first one hundred natural numbers, find the total of the digital sums of
 			System.out.println("firstDigits = " + firstDigits + ", decs: " + decs + ", dif=" + dif  + ", decCount: " + decCount + ", numDecimals: " + numDecimals);
 			digitCount-=2;
 			while(decCount < numDecimals) {
-				
+				decCount++;
 				if(digitCount > 0) {
 					next = next.subtract((firstDigits.multiply(BigInteger.TEN.pow(digitCount))));
 					firstDigits = next.divide(BigInteger.TEN.pow(digitCount-2));
@@ -122,44 +123,49 @@ For the first one hundred natural numbers, find the total of the digital sums of
 					System.out.println("i digitcount, firstDigit=" + firstDigits + ", next=" + next);
 				} else {
 					firstDigits = BigInteger.ZERO;
-					System.out.println("decCount increased to " + decCount);
-					decCount++;
+					//System.out.println("decCount increased to " + decCount);
+					
 				}
 				
 				BigInteger timesHundred = dif.multiply(new BigInteger(""+100)).add(firstDigits);
 				
-				System.out.println("Next First digit: " + firstDigits + ", next=" + next  + ", timesHundred=" + timesHundred + ", digitc now=" + digitCount + ", left: " +left);
+				//System.out.println("Next First digit: " + firstDigits + ", next=" + next  + ", timesHundred=" + timesHundred + ", digitc now=" + digitCount + ", left: " +left);
 				left = left.multiply(BigInteger.TEN);
-				System.out.println("beforebeginloop left:" + left);
+				//System.out.println("beforebeginloop left:" + left);
 				int multAdd = 10;
 				BigInteger smaller = timesHundred.add(BigInteger.ONE); //just make it bigger to go into this loop
 				
 				while(smaller.compareTo(timesHundred) > 0) {
 					multAdd--;
 					smaller = left.add(new BigInteger(""+multAdd)).multiply(new BigInteger(""+multAdd));
-					System.out.println("Multadd for " + firstDigits + " is now smaller=" + smaller + ", left=" + left + ", left + multAdd=" + (left.add(new BigInteger(multAdd+""))) + ", multadd=" + multAdd + "   > " + timesHundred);
+					//System.out.println("Multadd for " + firstDigits + " is now smaller=" + smaller + ", left=" + left + ", left + multAdd=" + (left.add(new BigInteger(multAdd+""))) + ", multadd=" + multAdd + "   > " + timesHundred);
 				}
-				System.out.println("Ended with Multadd for " + i + " is now smaller=" + smaller + ", multadd=" + multAdd + ", left=" + left);
+				//System.out.println("Ended with Multadd for " + i + " is now smaller=" + smaller + ", multadd=" + multAdd + ", left=" + left);
 				
 				decs += multAdd;
-				System.out.println("decs increased to " + decs);
+				//System.out.println("decs increased to " + decs);
 				dif = timesHundred.subtract(smaller);
 				left = left.add(new BigInteger("" + multAdd)).add(new BigInteger(""+multAdd));
-				System.out.println("i=" + i + ", sqrt=" + sqrt + ", sqrd=" + sqrd + ", dif=" + dif + ", left=" + left);
-				System.out.println("next is now : " + next);
+				//System.out.println("i=" + i + ", sqrt=" + sqrt + ", sqrd=" + sqrd + ", dif=" + dif + ", left=" + left);
+				//System.out.println("next is now : " + next);
 				digitCount-=2;
 			}
 			
 			decCount = 0;
-			System.out.println("Done with i=" + i + " ::: " + decs);
-			decs = decs.substring(decs.length() - numDecimals, decs.length() );
+			System.out.println("Done with i=" + i + " ::: " + decs + " decslength: " + decs.length());
+			//decs = decs.substring(decs.length() - numDecimals, decs.length() );
 			int remove = 0;
 			for(int j = 0; j < decs.length(); j++) {
 				total+=Integer.parseInt(decs.charAt(j) + "");
 				remove+=Integer.parseInt(decs.charAt(j) + "");
+				
 			}
-			System.out.println("decs final for " + i + " with length " + decs.length() + " (" + remove + ") : " + decs);
+			System.out.println("decs final for " + i + " with length " + decs.length() + " (" + remove + ") with runningTotal=" + total + " : " + decs);
 			i = i.add(BigInteger.ONE);
+			for(int u = 0; u < decs.length(); u++) {
+				System.out.print("," + decs.charAt(u));
+			}
+			System.out.println();
 		}
 		System.out.println("Skipped " + squares.size() + " perfect squares");
 		for(Integer j : squares) {
