@@ -63,8 +63,7 @@ For the first one hundred natural numbers, find the total of the digital sums of
 			BigInteger next = new BigInteger("" + i);
 			BigInteger left = sqrt.add(sqrt);
 			digitCount-=2;
-			while(decCount < numDecimals) {
-				decCount++;
+			while(decCount++ < numDecimals) {
 				if(digitCount > 0) {
 					next = next.subtract((firstDigits.multiply(BigInteger.TEN.pow(digitCount))));
 					firstDigits = next.divide(BigInteger.TEN.pow(digitCount-2));
@@ -79,7 +78,8 @@ For the first one hundred natural numbers, find the total of the digital sums of
 				
 				while(smaller.compareTo(timesHundred) >= 0) {
 					multAdd--;
-					smaller = left.add(new BigInteger(""+multAdd)).multiply(new BigInteger(""+multAdd));
+					BigInteger m = new BigInteger(""+multAdd);
+					smaller = left.add(m).multiply(m);
 				}
 				
 				//decs += multAdd; // if you want to actually see the digits
