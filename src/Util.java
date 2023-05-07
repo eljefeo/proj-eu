@@ -2336,17 +2336,14 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		}
 		return t;
 	}
-	
+
 	public static List<Integer> getPerfectSquaresUnderOrEqualTo(int n){
 		List<Integer> squares = new ArrayList<Integer>();
-		
-		
-		
-		int ii = 0, temp = 0;
-		for(int i=1; ii<n; i++) {
-			temp = ii;
-			ii = i*i;
-			squares.add(temp);
+		int i = 0, t = 0;
+		while(n >= (i*i)) {
+			t = i;
+			i++;
+			squares.add(t*t);
 		}
 		return squares;
 	}
