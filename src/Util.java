@@ -2319,8 +2319,29 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		System.out.println("t1 was slower : " + tt + "% of the time, t2 was slower " + tt2 + "% of the time, same: " + t1t2Same);
 	}
 	
+	public static int closestSquareUnderOrEqualN(int n) {
+		int i = 0, t = 0;
+		while(n >= (i*i)) {
+			t = i;
+			i++;
+		}
+		return t;
+	}
+	
+	public static BigInteger closestSquareUnderOrEqualN(BigInteger n) {
+		BigInteger i = BigInteger.ZERO, t = BigInteger.ZERO;
+		while(n.compareTo(i.multiply(i)) >= 0) {
+			t = i;
+			i = i.add(BigInteger.ONE);
+		}
+		return t;
+	}
+	
 	public static List<Integer> getPerfectSquaresUnderOrEqualTo(int n){
 		List<Integer> squares = new ArrayList<Integer>();
+		
+		
+		
 		int ii = 0, temp = 0;
 		for(int i=1; ii<n; i++) {
 			temp = ii;
@@ -2328,6 +2349,15 @@ public static boolean hasSameUniqueDigits(int a, int b){
 			squares.add(temp);
 		}
 		return squares;
+	}
+	
+	public static boolean isPerfectSquare(int n) {
+		int odd = 1;
+		while(n > 0) {
+			n-=odd;
+			odd+=2;
+		}
+		return n == 0;
 	}
 
 	

@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.print.attribute.standard.Fidelity;
 
-public class Problem80 implements Problem{// 
+public class Problem80 implements Problem{// Took 0.032537 seconds
 
 	
 	/*
@@ -25,34 +25,27 @@ For the first one hundred natural numbers, find the total of the digital sums of
 	static int t2 = 0;
 	@Override
 	public Object problem() {
-		int num = 101;
-		return longDivSqrRt(num);
+		int howManyNums = 100;
+		int howManyDecimals = 100;
+		System.out.println("sqr : " + Util.getPerfectSquaresUnderOrEqualTo(100));
+		return longDivisionSquareRoot(howManyNums, howManyDecimals);
 	}
 
 
 	
-	public boolean isPerfectSquare(int n) {
-		
-		//double
-		return false;
-	}
+
 	
-	public int longDivSqrRt(int num) {
+	public int longDivisionSquareRoot(int howManyNums, int howManyDecimals) {
 		int total = 0;
-		//int sqrtCounter = 2;
-		//int sqrtNext = 3;
-		//int sqrt = 1;
-		List<Integer> squares = Util.getPerfectSquaresUnderOrEqualTo(num);
+		List<Integer> squares = Util.getPerfectSquaresUnderOrEqualTo(howManyNums+1);
 		int numCounter = 0;
-		int numDecimals = 100-1;
-		int howManyToCalculate = 100;
+		int numDecimals = howManyDecimals-1;
+		int howManyToCalculate = howManyNums;
 		int decCount = 0;
 		BigInteger i=new BigInteger("1");
 		while(numCounter < howManyToCalculate) {
-			//System.out.println("starting i = " + i);
 			numCounter++;
 			if(squares.contains(i.intValue())) {
-				//System.out.println(i + " is  a perfect square");
 				i = i.add(BigInteger.ONE);
 				continue;
 			}
@@ -63,8 +56,8 @@ For the first one hundred natural numbers, find the total of the digital sums of
 				digitCount++;
 			} 
 			firstDigits = i.divide(BigInteger.TEN.pow(digitCount-2));
-			BigInteger sqrt = closestSquareUnderOrEqualN(firstDigits);
-			String decs = sqrt + "";
+			BigInteger sqrt = Util.closestSquareUnderOrEqualN(firstDigits);
+			String decs = sqrt + ""; // if you want to actually see the digits:
 			//total+= sqrt.intValue();
 			BigInteger sqrd = new BigInteger("" + (sqrt.multiply(sqrt)));
 			BigInteger dif = firstDigits.subtract(sqrd) ; 
@@ -92,7 +85,7 @@ For the first one hundred natural numbers, find the total of the digital sums of
 					smaller = left.add(new BigInteger(""+multAdd)).multiply(new BigInteger(""+multAdd));
 				}
 				
-				decs += multAdd;
+				decs += multAdd; // if you want to actually see the digits
 				//total+= multAdd;
 				dif = timesHundred.subtract(smaller);
 				left = left.add(new BigInteger("" + multAdd)).add(new BigInteger(""+multAdd));
@@ -101,6 +94,7 @@ For the first one hundred natural numbers, find the total of the digital sums of
 			
 			decCount = 0;
 			
+			// if you want to actually see the digits:
 			int thisTotal = 0;
 			for(int j = 0; j < decs.length(); j++) {
 				thisTotal+=Integer.parseInt(decs.charAt(j) + "");
@@ -115,11 +109,9 @@ For the first one hundred natural numbers, find the total of the digital sums of
 		return total;
 	}
 	
-public void longDivSqrRt2(int num) {
-		
-		//int sqrtCounter = 2;
-		//int sqrtNext = 3;
-		//int sqrt = 1;
+	
+public void longDivisionSquareRootInt(int num) {
+
 		List<Integer> squares = Util.getPerfectSquaresUnderOrEqualTo(num);
 		int numDecimals = 5;
 		int decCount = 0;
@@ -137,7 +129,7 @@ public void longDivSqrRt2(int num) {
 			} 
 			firstDigits = i / (int) (Math.pow(10, digitCount-2));
 			
-			int sqrt = closestSquareUnderOrEqualN(firstDigits);
+			int sqrt = Util.closestSquareUnderOrEqualN(firstDigits);
 			String decs = sqrt + "";
 			
 			int sqrd = sqrt*sqrt; //for this example we are doing 10. so this sqrd = 3*3 = 9
@@ -179,161 +171,7 @@ public void longDivSqrRt2(int num) {
 		}
 	}
 	
-
-	public static List<Integer> getPrimesUnder1(int max) {
-		// this method does not have to calculate the square root of the number to find the limit
-		// we use some pattern I noticed to know what the square root is
-		// a little faster because we dont have to do Math.sqrt(num)
-		int n = 1;
-		List<Integer> primes = new ArrayList<Integer>();
-		
-		int sqrtCounter = 1;
-		int sqrtNext = 3;
-		int sqrt = 1;
-		
-		primes.add(2);
-		
-		while ((n+=2) < max) {
-			
-			sqrtCounter+=2;
-			
-			for (int p = 0; p < primes.size(); p++) {
-				int prime = primes.get(p);
-				if(prime > sqrt) {
-					primes.add(n);
-					break;
-				}
-				
-				if (n % prime == 0)
-					break;
-				
-			} //1, 4, 9, 16, 25
-			
-			if(sqrtCounter > sqrtNext-2) { // here is where we calculate the next square root
-				sqrtNext += 2;
-				sqrtCounter = sqrtNext-sqrtCounter;
-				sqrt++;
-			}  	
-				
-		}
-		
-		return primes;
-		
-	}
 	
-	public static List<Integer> getPrimesUnder2(int max) {
-		// this method does not have to calculate the square root of the number to find the limit
-		// we use some pattern I noticed to know what the square root is
-		// a little faster because we dont have to do Math.sqrt(num)
-		int n = 1;
-		List<Integer> primes = new ArrayList<Integer>();
-		
-		int sqrtCounter = 1;
-		int sqrtNext = 2;
-		int sqrt = 1;
-		primes.add(2);
-		
-		while ((n+=2) < max) {
-			
-			sqrtCounter+=2;
-			
-			for (int p = 0; p < primes.size(); p++) {
-				int prime = primes.get(p);
-				if(prime > sqrt) {
-					primes.add(n);
-					break;
-				}
-				if (n % prime == 0)
-					break;
-			}
-			
-			if(sqrtCounter > sqrtNext) { // here is where we calculate the next square root
-				sqrtNext += 2;
-				sqrtCounter = sqrtNext-sqrtCounter;
-				sqrt++;
-			}  	
-		}
-		
-		return primes;
-	}
-	
-	public int closestSquareUnderOrEqualN(int n) {
-		//TODO change this to work for perfect squares
-		int i = 0, t = 0;
-		while(n >= (i*i)) {
-			t = i;
-			i++;
-		}
-		return t;
-	}
-	
-	public BigInteger closestSquareUnderOrEqualN(BigInteger n) {
-		//TODO change this to work for perfect squares
-		BigInteger i = BigInteger.ZERO, t = BigInteger.ZERO;
-		while(n.compareTo(i.multiply(i)) >= 0) {
-			//System.out.println("loop closest square to...i*i=" + (i.multiply(i)) + ", n compare to: " + n.compareTo(i.multiply(i)));
-			t = i;
-			i = i.add(BigInteger.ONE);
-		}
-		return t;
-	}
 
-public static int calcSquareRootOfTwoCheckIfNumerMoreDigitsThanDenom(int howManyIterations){
-		
-		BigInteger numer = BigInteger.ONE, denom = BigInteger.TWO;
-		int counter = 0;
-		
-		for(int i=0; i< howManyIterations - 1; i++) { // we do - 1 because we already setup the first one above (1 / 2)
-			
-			numer = numer.add(denom.multiply(BigInteger.TWO)); // 5
-			//then reciprocal
-			BigInteger t = numer;
-			numer = denom;
-			denom = t;
-			System.out.println("numer: " + numer + " denom: " + denom);
-			// we calculate the final numerator and denominator here just to see if numer has more digits than denom
-			// but only temp vars, we discard them as we continue the next loop, since we dont really need them until the very end
-			int tempNumerDigitCount = numer.add(denom).toString().length();
-			int tempDenomDigitCount = denom.toString().length();
-			
-			if(tempNumerDigitCount > tempDenomDigitCount) {
-				counter++;
-			}
-		}
 
-		// this will finish the calculation to actually get the final numerator and denominator to show:
-		//after the loop - must add 1 at the end
-		numer = numer.add(denom);
-		System.out.println("Finally:\nNumer :" + numer + " \ndenom: " + denom);
-		System.out.println("Finally count of numerators having more digits than denominators : " + counter);
-		return counter;
-	}
-	/*
-	 sqrt closest to num - its going in odd numbers
-	 1 = 1
-	 2 = 1
-	 3 = 1
-	 4 = 2
-	 5 = 2
-	 6 = 2
-	 7 = 2
-	 8 = 2
-	 9 = 3
-	 10 = 3
-	 11 = 3
-	 12 = 3
-	 13 = 3
-	 14 = 3
-	 15 = 3
-	 16 = 4
-	 17 = 4
-	 18
-	 19
-	 20
-	 21
-	 22
-	 23
-	 24
-	 25 = 5
-	 */
 }
