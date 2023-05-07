@@ -23,9 +23,9 @@ public class Problem78 implements Problem{// Took 0.809113 seconds -- barely mad
 		BigInteger million = new BigInteger("1000000");
 		int ii = 2;
 		while(true) {
-			BigInteger run = new BigInteger("0");
+			BigInteger run = BigInteger.ZERO;
 			BigInteger neg = new BigInteger("-1");
-			BigInteger posNeg = new BigInteger("1");
+			BigInteger posNeg = BigInteger.ONE;
 			int odd = 1;
 			int nat = 1;
 			int nToDo = ii;
