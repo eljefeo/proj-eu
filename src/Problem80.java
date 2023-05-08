@@ -1,8 +1,7 @@
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.print.attribute.standard.Fidelity;
+import java.util.Scanner;
 
 public class Problem80 implements Problem{// Took 0.030950 seconds
 
@@ -27,7 +26,15 @@ For the first one hundred natural numbers, find the total of the digital sums of
 	public Object problem() {
 		int howManyNums = 100;
 		int howManyDecimals = 100;
-		System.out.println("sqr : " + Util.getPerfectSquaresUnderOrEqualTo(howManyNums));
+		//System.out.println("sqr : " + Util.getPerfectSquaresUnderOrEqualTo(howManyNums));
+		//Scanner scanner = new Scanner(System.in);
+		//String myString = scanner.next();
+		//int howManyNums = scanner.nextInt();
+		//System.out.println("myint: " + howManyNums);
+		//int howManyDecimals = scanner.nextInt();
+		//System.out.println("myint: " + howManyDecimals);
+		
+		//scanner.close();
 		return longDivisionSquareRoot(howManyNums, howManyDecimals);
 	}
 
@@ -37,56 +44,61 @@ For the first one hundred natural numbers, find the total of the digital sums of
 	
 	public int longDivisionSquareRoot(int howManyToCalculate, int numDecimals) {
 		int total = 0;
-		List<Integer> squares = Util.getPerfectSquaresUnderOrEqualTo(howManyToCalculate);
+		List<Integer> squares = getPerfectSquaresUnderOrEqualTo(howManyToCalculate);
 		int numCounter = 0;
 		numDecimals--; //since all nums will have at least 1 whole num, dont need to go past 99 ever
 		int decCount = 0;
 		BigInteger i=new BigInteger("1");
 		BigInteger hundred = new BigInteger("" + 100);
-		while(numCounter < howManyToCalculate) {
-			numCounter++;
+		BigInteger dif;
+		BigInteger next;
+		BigInteger left;
+		//BigInteger timesHundred;
+		BigInteger smaller;
+		BigInteger sqrt;
+		BigInteger firstDigits;
+		BigInteger m = BigInteger.ZERO;
+		while(numCounter++ < howManyToCalculate) {
+			//numCounter++;
 			if(squares.contains(i.intValue())) {
 				i = i.add(BigInteger.ONE);
 				continue;
 			}
 			
 			int digitCount = i.toString().length();
-			BigInteger firstDigits = BigInteger.ZERO;
 			if(digitCount%2 != 0) {//if even num of digits, we go with the first 2 
 				digitCount++;
 			} 
 			firstDigits = i.divide(BigInteger.TEN.pow(digitCount-2));
-			BigInteger sqrt = Util.closestSquareUnderOrEqualN(firstDigits);
+			sqrt = closestSquareUnderOrEqualN(firstDigits);
 			//String decs = sqrt + ""; // if you want to actually see the digits:
-			total+= sqrt.intValue();
-			BigInteger dif = firstDigits.subtract(sqrt.multiply(sqrt)) ; 
-			BigInteger next = new BigInteger("" + i);
-			BigInteger left = sqrt.add(sqrt);
+			total += sqrt.intValue();// if you just want to count
+			dif = firstDigits.subtract(sqrt.multiply(sqrt)) ; 
+			left = sqrt.add(sqrt);
 			digitCount-=2;
 			while(decCount++ < numDecimals) {
 				if(digitCount > 0) {
-					next = next.subtract((firstDigits.multiply(BigInteger.TEN.pow(digitCount))));
-					firstDigits = next.divide(BigInteger.TEN.pow(digitCount-2));
+					next = i.subtract(firstDigits.multiply(BigInteger.TEN.pow(digitCount)));
+					dif = dif.multiply(hundred).add(next.divide(BigInteger.TEN.pow(digitCount-2)));
+					digitCount-=2;
 				} else {
-					firstDigits = BigInteger.ZERO;
+					dif = dif.multiply(hundred);
 				}
 				
-				BigInteger timesHundred = dif.multiply(hundred).add(firstDigits);
 				left = left.multiply(BigInteger.TEN);
 				int multAdd = 10;
-				BigInteger smaller = timesHundred;
+				smaller = dif;
 				
-				while(smaller.compareTo(timesHundred) >= 0) {
+				while(smaller.compareTo(dif) >= 0) {
 					multAdd--;
-					BigInteger m = new BigInteger(""+multAdd);
+					m = new BigInteger(""+multAdd);
 					smaller = left.add(m).multiply(m);
 				}
 				
 				//decs += multAdd; // if you want to actually see the digits
-				total+= multAdd;
-				dif = timesHundred.subtract(smaller);
-				left = left.add(new BigInteger("" + multAdd)).add(new BigInteger(""+multAdd));
-				digitCount-=2;
+				total+= multAdd; // if you just want to count
+				dif = dif.subtract(smaller);
+				left = left.add(m).add(m);
 			}
 			
 			decCount = 0;
@@ -102,10 +114,28 @@ For the first one hundred natural numbers, find the total of the digital sums of
 			
 		}
 		
-		System.out.println("total final: " + total);
+		//System.out.println("total final: " + total);
 		return total;
 	}
-	
+	public static BigInteger closestSquareUnderOrEqualN(BigInteger n) {
+		BigInteger i = BigInteger.ZERO, t = BigInteger.ZERO;
+		while(n.compareTo(i.multiply(i)) >= 0) {
+			t = i;
+			i = i.add(BigInteger.ONE);
+		}
+		return t;
+	}
+
+	public static List<Integer> getPerfectSquaresUnderOrEqualTo(int n){
+		List<Integer> squares = new ArrayList<Integer>();
+		int i = 0, t = 0;
+		while(n >= (i*i)) {
+			t = i;
+			i++;
+			squares.add(t*t);
+		}
+		return squares;
+	}
 	
 public void longDivisionSquareRootInt(int num) {
 
