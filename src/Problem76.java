@@ -24,8 +24,8 @@ public class Problem76 implements Problem{// Took 0.002646 seconds
 	@Override
 	public Object problem() {
 		int num = 100;
-		BigInteger ans = Util.howManyWaysToSumToNEulers(num);
-		System.out.println("Testing : " + num + " = " + ans);
+		//we subtract 1 because this problem is asking just how many ways to SUM to this num. but partition count includes the number itself. so we minus 1
+		BigInteger ans = Util.howManyWaysToSumToNEulers(num).subtract(BigInteger.ONE);
 		return ans;
 	}
 	
