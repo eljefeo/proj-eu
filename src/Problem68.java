@@ -50,14 +50,14 @@ What is the maximum 16-digit string for a "magic" 5-gon ring?
 		
 		
 		//do3Gon();
-		System.out.println("We did this many sols for 3 gon: " + c);
-		System.out.println("Largest num for 3gon: " + bgst);
+		//System.out.println("We did this many sols for 3 gon: " + c);
+		//System.out.println("Largest num for 3gon: " + bgst);
 		
 		//reset nums after 3gon:
 		//c = 0;
 		//bgst = BigInteger.ZERO;
 		
-		doThisManyGon(3, 0);
+		//doThisManyGon(3, 0);
 		
 		
 		doThisManyGon(5, 16);

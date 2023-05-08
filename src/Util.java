@@ -412,7 +412,6 @@ public class Util {
 			}
 			if (foundPrime) 
 				return pr;
-			
 		}
 
 	}
@@ -433,7 +432,8 @@ public class Util {
 				} else if (j == allnums[i].length - 1) {
 					allnums[i][j] += allnums[i - 1][allnums[i - 1].length - 1];
 				} else {
-					allnums[i][j] += allnums[i - 1][j - 1] > allnums[i - 1][j] ? allnums[i - 1][j - 1]
+					allnums[i][j] += allnums[i - 1][j - 1] > allnums[i - 1][j] 
+							? allnums[i - 1][j - 1]
 							: allnums[i - 1][j];
 				}
 
@@ -1443,6 +1443,43 @@ public static boolean isPalindromeIntSlower(int num) {
 		return true;
 	}
 	
+	public static boolean isPermutationOf(int n1, int n2) {
+		//if((n1+"").length() != (n2+"").length()) //this makes sense to do, but actually makes it slower
+		//	return false;
+		int big; 
+		int sm;
+		if(n1 > n2) {
+			big = n1;
+			sm = n2;
+		} else {
+			sm = n1;
+			big = n2;
+		}
+		if(big/sm > 9) 
+			return false; //I hope this is valid. 
+		//Im thinking if a number has a different number of digits like 921 vs 9214...then a num with the same amount of digits, when divided by
+			//each other would give you an answer less than 10. Once you have a different number of digits your division seems to go to an answer above 10
+		
+		int[] d1 = new int[] {0,0,0,0,0,0,0,0,0,0};
+		int[] d2 = new int[] {0,0,0,0,0,0,0,0,0,0};
+		int r = 0;	
+		while (n1 != 0) {
+			r = (int) (n1 % 10);
+			d1[r]++;
+			n1 /= 10;
+		}
+		while (n2 != 0) {
+			r = (int) (n2 % 10);
+			d2[r]++;
+			n2 /= 10;
+		}
+		for(int i=0; i<d1.length; i++)
+			if(d1[i] != d2[i])
+				return false;
+		
+		return true;
+	}
+	
 	public static void findCombinationsOfSizeRecur(int[] A, String out, int index, int lengthOfThing, int sampleSize) {
         // invalid input
         if (sampleSize > lengthOfThing) {
@@ -2202,23 +2239,28 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		return count;
 	}
 	
+	//get partition count of a number:
 	public static BigInteger howManyWaysToSumToNEulers(int num) {
 		List<BigInteger> all = new ArrayList<BigInteger>();
 		all.add(new BigInteger("1"));
 		all.add(new BigInteger("1"));
 		num++;
-		int ii = 2;
-		while(ii < num) {
-			BigInteger run = new BigInteger("0");
-			BigInteger neg = new BigInteger("-1");
-			BigInteger posNeg = new BigInteger("1");
+		int ii = 1;
+		BigInteger run;
+		BigInteger neg;
+		BigInteger posNeg;
+		
+		while(++ii < num) {
+			run = BigInteger.ZERO;
+			neg = new BigInteger("-1");
+			posNeg = BigInteger.ONE;
 			int odd = 1;
 			int nat = 1;
 			int nToDo = ii;
 			boolean shouldSubOdd = false;
 			int numToSub = odd;
 			while(true) {
-				nToDo = nToDo - numToSub ;
+				nToDo -= numToSub ;
 				if(nToDo < 0 ) {
 					break;
 				}
@@ -2233,7 +2275,6 @@ public static boolean hasSameUniqueDigits(int a, int b){
 				}
 			}
 			all.add(run);
-			ii++;
 		}
 		return all.get(all.size()-1);
 	}

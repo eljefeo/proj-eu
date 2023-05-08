@@ -45,7 +45,7 @@ public class Problem78 implements Problem{// Took 0.026811 seconds
 				}
 			}
 			run %= numDivisible; //we can store only the last 6 digits because 
-				//if we add or multiply these together, the numbers after the first 6 digits dont matter or have any effect
+				//if we add or multiply these together, the numbers left of the first 6 digits dont matter or have any effect on future adding/multiplication
 			if(run == 0) {
 				return ii;
 			}

@@ -87,29 +87,36 @@ public class Problem70 implements Problem{ //Took 1.977199 seconds - probably be
 		// for (int i = test; i < test+1; i++) { // this is all the numbers we need to
 		// check 2 - a million
 
-		nums:
+		//nums:
+		double nOverPhi;
+		int phi;
+		int tempI;
+		int factorCount;
+		int sqrt;
+		int prime;
 		for (int i = 3; i < max; i++) {
 
 			if (i % step == 0)
 				System.out.println((i*10/step) + "% complete");
 			
-			int phi = 1; // set to 1 because every number has 1 has a coprime?
-			int tempI = i;
-			int factorCount = 0;
-			int sqrt = (int) Math.sqrt(tempI);
+			phi = 1; // set to 1 because every number has 1 has a coprime?
+			tempI = i;
+			factorCount = 0;
+			sqrt = (int) Math.sqrt(tempI);
 			for (int p = 0; p < primes.size(); p++) {
 				
-				int prime = primes.get(p);
+				prime = primes.get(p);
 				
 				if(prime > sqrt) {
 					if(factorCount == 0) {//or if tempI == i { // if no factors below sqrt of num, that num is prime
 						primes.add(i);
-						continue nums;// but we dont want to actually use phi of primes, its too big, so we skip it but use the prime for later
+						break;
+						//continue nums;// but we dont want to actually use phi of primes, its too big, so we skip it but use the prime for later
 					} else if(tempI > 1) { // else if no other primes under sqrt, but has other factors, then tempI is now prime and is the second factor. 
 						//This means we found a num with only 2 factors which is what we want
 						phi *= (tempI - 1);
-						double nOverPhi = (double) i / phi;
-						if(nOverPhi < smalD && Util.isPermutationDigits(i, phi)) {
+						nOverPhi = (double) i / phi;
+						if(nOverPhi < smalD && Util.isPermutationOf(i, phi)){//Util.isPermutationDigits(i, phi)) {
 							smalD = nOverPhi;
 							smalN = i;
 							smalPhi = phi;
@@ -125,7 +132,8 @@ public class Problem70 implements Problem{ //Took 1.977199 seconds - probably be
 					tempI /= prime; // divide our temp value, dividing out this factor
 					factorCount++;
 					if(factorCount > 1 || tempI % prime == 0)  
-						continue nums;
+						break;
+						//continue nums;
 						// tempI % prime == 0  this num (i) is divisible by the same factor twice, this is not what we want. This will increase phi and we want phi to be closest to 1
 						// factorCount > 1  smallest ratio should be with numbers that are composed of only 2 primes (and not the same 2 primes)...
 						// if we get here and we found more than 1 factor, we should have caught it above in the sqrt check for a num with only 2 factors. 
