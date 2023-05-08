@@ -1,7 +1,8 @@
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Map;
 
 public class Problem80 implements Problem{// Took 0.030950 seconds
 
@@ -26,6 +27,8 @@ For the first one hundred natural numbers, find the total of the digital sums of
 	public Object problem() {
 		int howManyNums = 100;
 		int howManyDecimals = 100;
+		//System.out.println("facts : " + );
+		
 		//System.out.println("sqr : " + Util.getPerfectSquaresUnderOrEqualTo(howManyNums));
 		//Scanner scanner = new Scanner(System.in);
 		//String myString = scanner.next();
@@ -35,9 +38,42 @@ For the first one hundred natural numbers, find the total of the digital sums of
 		//System.out.println("myint: " + howManyDecimals);
 		
 		//scanner.close();
-		return longDivisionSquareRoot(howManyNums, howManyDecimals);
+		//return longDivisionSquareRoot(howManyNums, howManyDecimals);
+		longDivisionSquareRoot(howManyNums, howManyDecimals);
+		test();
+		return 0;
 	}
-
+	
+	public static void test() {
+		String r2 = "2449489742783178098197284074705891391965947480656670128432692567250960377457315026539859433104640234";
+		String r3 = "3316624790355399849114932736670686683927088545589353597058682146116484642609043846708843399128290650";
+		String r6 = "8774964387392122060406388307416309560875876827554503590927695629782764646219306281675693157068705755";
+		System.out.println("digit count: " + r2.length() + " " + r3.length() + " " + r6.length());
+		
+		int r2s = addFirstThisManyDigitsInString(r2, 100);
+		int r3s = addFirstThisManyDigitsInString(r3, 100);
+		int r6s = addFirstThisManyDigitsInString(r6, 100);
+		System.out.println("sum2: " + r2s + ", sum3: " + r3s + ", sum6: " + r6s);
+		
+		
+		
+		BigInteger b2 = new BigInteger(r2);
+		BigInteger b3 = new BigInteger(r3);
+		BigInteger b6 = new BigInteger(r6);
+		
+		BigInteger b23 = b2.multiply(b3);
+		BigInteger b23Abb = new BigInteger(b23.toString().substring(0,100));
+		System.out.println("b2 * b3: " + b23);
+		System.out.println("b23Abb: " + b23Abb);
+		System.out.println("b6: " + b6);
+		
+		
+		List<Integer> p = Util.getPrimeFactors(72);
+		for(Integer ps : p) {
+			System.out.println("factors: " + ps);
+		}
+		
+	}
 
 	
 
@@ -45,9 +81,11 @@ For the first one hundred natural numbers, find the total of the digital sums of
 	public int longDivisionSquareRoot(int howManyToCalculate, int numDecimals) {
 		int total = 0;
 		List<Integer> squares = getPerfectSquaresUnderOrEqualTo(howManyToCalculate);
+		List<Integer> primes = Util.getPrimesUnder(howManyToCalculate);
 		int numCounter = 0;
-		numDecimals--; //since all nums will have at least 1 whole num, dont need to go past 99 ever
+		//numDecimals--; //since all nums will have at least 1 whole num, dont need to go past 99 ever
 		int decCount = 0;
+		Map<Integer, String> roots = new HashMap<Integer, String>();
 		BigInteger i=new BigInteger("1");
 		BigInteger hundred = new BigInteger("" + 100);
 		BigInteger dif;
@@ -58,12 +96,37 @@ For the first one hundred natural numbers, find the total of the digital sums of
 		BigInteger sqrt;
 		BigInteger firstDigits;
 		BigInteger m = BigInteger.ZERO;
+		int numDecimalsExtra = numDecimals + 3;
 		while(numCounter++ < howManyToCalculate) {
-			//numCounter++;
-			if(squares.contains(i.intValue())) {
+			System.out.println("Doing " + i);
+			 if(squares.contains(i.intValue())) {
 				i = i.add(BigInteger.ONE);
 				continue;
-			}
+			} 
+			 else if(!primes.contains(i.intValue())) {
+				List<Integer> factors = Util.getPrimeFactors(i.intValue());
+				BigInteger tot = BigInteger.ONE;
+				for(Integer fact : factors) {
+					BigInteger primeRoot = new BigInteger(roots.get(fact));
+					System.out.println("Got this root saved for " + fact + " : " + primeRoot.toString());
+					tot = tot.multiply(primeRoot);
+					
+					
+					
+					//get the decimals of the known prime, then multiple them all together
+					//cause sqrt of 15 is just the sqrt of 3 * sqrt of 5
+					//so since we already did 3 and 5, go get those 100 digits, multiply together
+					//and that is the answer to sqrt of 15. You do have to calc sqrt of 3 and 5 to a few
+					//more digits than just 100 though, because when we multiply it may need extra digits 		
+										// for accuracy I think? not exactly sure how many, gotta think a little hmm....
+					
+				}
+				System.out.println("we now found this root for " + i  + " : " + tot);
+				total += addFirstThisManyDigitsInString(tot.toString(), numDecimals);
+				roots.put(i.intValue(), tot.toString()); // YOU CAN PROBABLY REMOVE ME LATER AFTER SOME TESTING :)
+				i = i.add(BigInteger.ONE);
+				continue;
+			} 
 			
 			int digitCount = i.toString().length();
 			if(digitCount%2 != 0) {//if even num of digits, we go with the first 2 
@@ -71,12 +134,12 @@ For the first one hundred natural numbers, find the total of the digital sums of
 			} 
 			firstDigits = i.divide(BigInteger.TEN.pow(digitCount-2));
 			sqrt = closestSquareUnderOrEqualN(firstDigits);
-			//String decs = sqrt + ""; // if you want to actually see the digits:
-			total += sqrt.intValue();// if you just want to count
+			String decs = sqrt + ""; // if you want to actually see the digits:
+			//total += sqrt.intValue();// if you just want to count
 			dif = firstDigits.subtract(sqrt.multiply(sqrt)) ; 
 			left = sqrt.add(sqrt);
 			digitCount-=2;
-			while(decCount++ < numDecimals) {
+			while(decCount++ < numDecimalsExtra) {
 				if(digitCount > 0) {
 					next = i.subtract(firstDigits.multiply(BigInteger.TEN.pow(digitCount)));
 					dif = dif.multiply(hundred).add(next.divide(BigInteger.TEN.pow(digitCount-2)));
@@ -95,8 +158,8 @@ For the first one hundred natural numbers, find the total of the digital sums of
 					smaller = left.add(m).multiply(m);
 				}
 				
-				//decs += multAdd; // if you want to actually see the digits
-				total+= multAdd; // if you just want to count
+				decs += multAdd; // if you want to actually see the digits
+				//total+= multAdd; // if you just want to count
 				dif = dif.subtract(smaller);
 				left = left.add(m).add(m);
 			}
@@ -104,18 +167,42 @@ For the first one hundred natural numbers, find the total of the digital sums of
 			decCount = 0;
 			
 			// if you want to actually see the digits:
-			//int thisTotal = 0;
-			//for(int j = 0; j < decs.length(); j++) {
-			//	thisTotal+=Integer.parseInt(decs.charAt(j) + "");
-			//}
+			
 			//System.out.println("Done with i=" + i + " ::: " + decs + ", sumDigits=" + thisTotal + " decslength: " + decs.length());
-			//total+=thisTotal;
+			roots.put(i.intValue(),decs);
+			total += addFirstThisManyDigitsInString(decs, numDecimals);
 			i = i.add(BigInteger.ONE);
 			
 		}
 		
-		//System.out.println("total final: " + total);
+		System.out.println("done calculating all square roots... ");
+		for(Integer d : roots.keySet()) {
+			System.out.println("root " + d + " =\t" + roots.get(d) + " sum: " + addFirstThisManyDigitsInString(roots.get(d), 100));
+		}
+		
+		System.out.println("total: " + total);
 		return total;
+	}
+	
+	public static int addAllDigitsInString(String s) {
+		int thisTotal = 0;
+		for(int j = 0; j < s.length(); j++) {
+			thisTotal+=Integer.parseInt(s.charAt(j) + "");
+		}
+		return thisTotal;
+	}
+	
+	public static int addFirstThisManyDigitsInString(String s, int howMany) {
+		int thisTotal = 0;
+		if(s.length() < howMany) {
+			System.out.println("cannot sum these digits, string doesnt have enough characters " + s.length() + " howmany:" + howMany);
+			return 0;
+		} 
+			
+		for(int j = 0; j < howMany; j++) {
+			thisTotal+=Integer.parseInt(s.charAt(j) + "");
+		}
+		return thisTotal;
 	}
 	public static BigInteger closestSquareUnderOrEqualN(BigInteger n) {
 		BigInteger i = BigInteger.ZERO, t = BigInteger.ZERO;
