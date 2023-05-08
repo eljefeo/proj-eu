@@ -68,9 +68,9 @@ anything?
 			
 			long cb = (long) Math.pow(i, 3);
 			
-			//This will test if our cubes are now another digit bigger, like going from 999 to 10000 (3 digits to 4)
+			//This will test if our cubes are now another digit longer, like going from 999 to 10000 (3 digits to 4)
 			//when this happens we are not going to get any more permutations obviously of the numbers before, so lets
-				//just clear out the map so we are not checking on old stuff we know is not true anymore
+				//just clear out the map so we are not checking on old stuff we know is not going to be true
 			if(cb / digitTester > 10) {
 				alln = new HashMap<Long, Integer>();
 				digitTester = digitTester*10 + 1; //add another 1 to our digit tester, 11 goes to 111, or goes to 1111 etc..
