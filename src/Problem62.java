@@ -7,9 +7,10 @@ public class Problem62 implements Problem {
 	
 	 /*
 	 
-	  The cube, 41063625 (345^3), can be permuted to produce two other cubes: 56623104 (384^3) and 66430125 (405^3). In fact, 41063625 is the smallest cube which has exactly three permutations of its digits which are also cube.
+	  The cube, 41063625 (345^3), can be permuted to produce two other cubes: 56623104 (384^3) and 66430125 (405^3). 
+	  In fact, 41063625 is the smallest cube which has exactly three permutations of its digits which are also cube.
 
-Find the smallest cube for which exactly five permutations of its digits are cube.
+		Find the smallest cube for which exactly five permutations of its digits are cube.
 	 
 Doing 2500
 Doing 2510	 
@@ -36,20 +37,45 @@ anything?
 		//System.out.println("anything?");
 	}
 	
+	/*
+	 numbers cubed and what they end in
+	 1 = 1
+	 2 = 8
+	 3 = 27
+	 4 = 64
+	 5 = 125
+	 6 = 216
+	 7 =  343
+	 8 = 512
+	 9 = 729
+	 
+	 no 2, no
+	 */
+	
 	public String problem() {
 		int min = 200;
-		int max = 10000;
 		int targetNumberOfCubes = 5;
 		
 		Map<Long, Integer> alln = new HashMap<Long, Integer>();
 		
-		for(int i = min; i < max; i++) {
+		int i = min;
+		long digitTester = 1;
+		while(true) {
 			
 			if(i%1000 == 0) { // just for logging
 				System.out.println("Doing " + i + "....");
 			}
 			
 			long cb = (long) Math.pow(i, 3);
+			
+			//This will test if our cubes are now another digit bigger, like going from 999 to 10000 (3 digits to 4)
+			//when this happens we are not going to get any more permutations obviously of the numbers before, so lets
+				//just clear out the map so we are not checking on old stuff we know is not true anymore
+			if(cb / digitTester > 10) {
+				alln = new HashMap<Long, Integer>();
+				digitTester = digitTester*10 + 1; //add another 1 to our digit tester, 11 goes to 111, or goes to 1111 etc..
+			}
+				
 			long res = alreadyHas2(cb, alln);
 			
 			if(res != 0) {
@@ -65,9 +91,10 @@ anything?
 			} else {
 				alln.put(cb, 1);
 			}
+			i++;
 		}
 		
-		return null;
+		//return null;
 		
 	}
 	

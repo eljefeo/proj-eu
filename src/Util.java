@@ -1407,6 +1407,22 @@ public static boolean isPalindromeIntSlower(int num) {
 	}
 	
 	public static boolean isPermutationOf(long n1, long n2) {
+		//if((n1+"").length() != (n2+"").length()) //this makes sense to do, but actually makes it slower
+		//	return false;
+		long big; 
+		long sm;
+		if(n1 > n2) {
+			big = n1;
+			sm = n2;
+		} else {
+			sm = n1;
+			big = n2;
+		}
+		if(big/sm > 9) 
+			return false; //I hope this is valid. 
+		//Im thinking if a number has a different number of digits like 921 vs 9214...then a num with the same amount of digits, when divided by
+			//each other would give you an answer less than 10. Once you have a different number of digits your division seems to go to an answer above 10
+		
 		int[] d1 = new int[] {0,0,0,0,0,0,0,0,0,0};
 		int[] d2 = new int[] {0,0,0,0,0,0,0,0,0,0};
 		int r = 0;	
