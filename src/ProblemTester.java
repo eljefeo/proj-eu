@@ -86,6 +86,9 @@ public class ProblemTester {
 		problems.add(new Problem75());
 		problems.add(new Problem76());
 		problems.add(new Problem77());
+		problems.add(new Problem78());
+		problems.add(new Problem79());
+		problems.add(new Problem80());
 		
 		System.out.println("Have this many problems : " + problems.size());
 		Map<Integer, String> answers = AnswersToProblems.getAnswersEncrypted();
