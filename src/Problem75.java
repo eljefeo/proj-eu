@@ -33,7 +33,6 @@ Given that L is the length of the wire, for how many values of L <= 1,500,000 ca
 		
 		Problem p = new Problem75();
 		p.runProblem();
-		//doOtherGuys(70, max, false);
 	}
 
 	public String problem(){

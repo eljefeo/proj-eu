@@ -2131,7 +2131,7 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		}
 	}
 	
-	public static int findNumWithThisManyPrimeSums(int limit) {
+	public static int findNumWithThisManyPrimeSumsRecur(int limit) {
 		int num = 1;
 		int numWays = 0;
 		List<Integer> primes = Util.getPrimesUnder(limit);
@@ -2141,7 +2141,6 @@ public static boolean hasSameUniqueDigits(int a, int b){
 			//numWays = howManyWaysToSumToN_print(0, num, 0, primes.size()-1, primes, " ");
 			numWays = howManyWaysToSumPrimesToN_Primesrecur(0, num, 0, primes.size()-1, primes);
 			//System.out.println("Ways to make : " + num + " = " + numWays);
-			
 		}
 		return num;
 	}

@@ -38,7 +38,6 @@ Given that the three characters are always asked for in order, analyse the file 
 				for(Integer ss : testCode) {
 					ans += ss;
 				}
-				System.out.println("\n" + ans );
 				return ans;
 			}
 		}

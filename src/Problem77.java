@@ -23,7 +23,7 @@ public class Problem77 implements Problem{// Took 0.004642 seconds
 	public Object problem() {
 		int limit = 5000;
 		
-		return Util.findNumWithThisManyPrimeSums(limit);
+		return Util.findNumWithThisManyPrimeSumsRecur(limit);
 	}
 	
 }
