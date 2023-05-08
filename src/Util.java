@@ -1838,6 +1838,10 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		return ns.charAt(0) + "" + ns.charAt(1);
 	}
 	
+	public static List<Integer> getPrimesUnderOrEqual(int max) {
+		return getPrimesUnder(++max);
+	}
+	
 	
 	public static List<Integer> getPrimesUnder(int max) {
 		// this method does not have to calculate the square root of the number to find the limit
