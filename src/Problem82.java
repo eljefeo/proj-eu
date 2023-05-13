@@ -33,7 +33,7 @@ Find the minimal path sum from the left column to the right column in matrix.txt
 		//return Util.findMinPath2Ways(nums);
 	}
 	
-	public static void doThing() {
+	public static int doThing() {
 		int[][] nums = new int[][] {
 			{131,	673,	234,	103,	18},
 			{201,	96,		342,	965,	150},
@@ -41,7 +41,61 @@ Find the minimal path sum from the left column to the right column in matrix.txt
 			{537,	699,	497,	121,	956},
 			{805,	732,	524,	37,		331}
 		};
+		System.out.println("Original:");
+		Util.print2DIntArray(nums);
+		int[][] nums2 = new int[nums.length][nums[0].length] ;
+		int xl = nums[0].length;
+		int yl = nums.length;
+
+		System.out.println("after doing Left edge adding to the right num :");
+		// do left edge numbers:
+		for (int i = 0; i < yl ; i++) {
+			nums2[i][1] = nums[i][1] + nums[i][0];
+		}
+		Util.print2DIntArray(nums2);
 		
+		for(int ii=1; ii < xl-1; ii++) {
+			
+		}
+		// do top down numbers, this gives us the value of coming from above to this cell:
+		for (int i = 1; i < xl; i++) {
+			int up = nums[i][1] + nums2[i-1][1];
+			if(nums2[i][1] > up) {
+				System.out.println("switching up " + up + " vs " + nums[i][1]);
+				nums2[i][1] = up;
+			}
+		}
+		System.out.println("after doing next column checking up vs left");
+		Util.print2DIntArray(nums2);
+		
+		
+		
+		// do bottom up numbers, this gives us the value of coming from below to this cell:
+		for (int i = xl-2; i >= 0; i--) {
+			int down = nums[i][1] + nums2[i+1][1];
+			if(nums2[i][1] > down) {
+				System.out.println("switching down " + down + " vs " + nums2[i][1]);
+				nums2[i][1] = down;
+			} else {
+				System.out.println("did not switch down " + down + " vs " + nums2[i][1]);
+			}
+		}
+		System.out.println("after doing next column checking down vs up vs left");
+		Util.print2DIntArray(nums2);
+		// do all rest of middle numbers:
+		for (int i = 1; i < yl; i++) {
+			for (int j = 1; j < xl; j++) {
+				int left = nums[i][j - 1];
+				int up = nums[i - 1][j];
+				nums[i][j] += left < up ? left : up;
+			}
+		}
+
+		//System.out.println("Final array:");
+		//Util.print2DIntArray(nums);
+		
+		int finalNum = nums[nums.length - 1][nums[0].length - 1];
+		return finalNum;
 		//I guess the first thing to do is figure out which num on the left to start at
 		// for that I suppose we just add 2 nums left and right and see which is less maybe?
 		//hmm
@@ -76,6 +130,41 @@ Find the minimal path sum from the left column to the right column in matrix.txt
 		
 		
 	}
+	
+	public static int findMinPath2Ways(int[][] nums) {
+
+		// This is assuming all the rows and columns have the same num of elements I
+		// guess. Like a square
+		int xl = nums[0].length;
+		int yl = nums.length;
+
+		//System.out.println("after doing edges :");
+		// do left edge numbers:
+		for (int i = 1; i < yl; i++) {
+			nums[i][0] += nums[i - 1][0];
+		}
+
+		// do top edge numbers:
+		for (int i = 1; i < xl; i++) {
+			nums[0][i] += nums[0][i - 1];
+		}
+
+		// do all rest of middle numbers:
+		for (int i = 1; i < yl; i++) {
+			for (int j = 1; j < xl; j++) {
+				int left = nums[i][j - 1];
+				int up = nums[i - 1][j];
+				nums[i][j] += left < up ? left : up;
+			}
+		}
+
+		//System.out.println("Final array:");
+		//Util.print2DIntArray(nums);
+		
+		int finalNum = nums[nums.length - 1][nums[0].length - 1];
+		return finalNum;
+	}
+
 	 /*
 	 original:
 		{131,	673,	234,	103,	18},
