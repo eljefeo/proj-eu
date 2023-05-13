@@ -1,5 +1,5 @@
 
-public class Problem9 implements Problem { //Took 0.006984 seconds
+public class Problem9 implements Problem { //Took 0.002638 seconds
 	
 	/*A Pythagorean triplet is a set of three natural numbers, a < b < c, for which,
 
@@ -16,16 +16,14 @@ public class Problem9 implements Problem { //Took 0.006984 seconds
 	
 	public String problem(){
 		for(int i = 1; i < 1000; i++){
-			int a = (int) Math.pow(i, 2);
+			int a = i*i;
 			for(int j = i+1; j < 1000; j++){
-				int b = (int) Math.pow(j, 2);
+				int b = j*j;
 				double k = Math.sqrt(a+b);
-				if((k - (int)k) == 0){
-					if((i + j + k) == 1000){
-						System.out.println("Found : " + i + " " + j + " " + k );
-						System.out.println("Product : " + (i*j*(int)k));
-						return "" + (i*j*(int)k);
-					}
+				if((k - (int)k) == 0 && (i + j + k) == 1000){
+					System.out.println("Found : " + i + " " + j + " " + k );
+					System.out.println("Product : " + (i*j*(int)k));
+					return "" + (i*j*(int)k);
 				}
 				
 			}
