@@ -1,11 +1,5 @@
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
 
-public class Problem81 implements Problem {// Took 0.018977 seconds
+public class Problem81 implements Problem {// Took 0.001596 seconds
 
 	/*
 	 * In the 5 by 5 matrix below, the minimal path sum from the top left to the
