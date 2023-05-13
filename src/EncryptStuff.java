@@ -74,9 +74,9 @@ public class EncryptStuff {
     }
 
     public static void main(String[] args) {
-        final String secretKey = "putSecretKeyHere";
+        final String secretKey = "SomeSecretKeyHere";
 
-        String originalString = "SomeTextHereToHide";
+        String originalString = "SomeMessageHereToEncrypt";
 
         EncryptStuff encryptStuff = new EncryptStuff();
         String encryptedString = encryptStuff.encrypt(originalString, secretKey);
@@ -87,15 +87,15 @@ public class EncryptStuff {
         System.out.println(decryptedString);
         
         
-        Map<Integer, String> ans = AnswersToProblems.getAnswersEncrypted();
+       // Map<Integer, String> ans = AnswersToProblems.getAnswersEncrypted();
         //Map<Integer, String> ans = AnswersToProblems.getAnswersUnencrypted();
-        for(Integer i : ans.keySet()){
+        //for(Integer i : ans.keySet()){
         	//ans.put(1, "e7UcHBk4RgYhszoRF+uqtg==");
         	//System.out.println("ans: " + ans.get(i));
-        	System.out.println("ans.put(" + i + ", \"" + (encryptStuff.decrypt(ans.get(i), secretKey)) + "\"); ");
+        	//System.out.println("ans.put(" + i + ", \"" + (encryptStuff.decrypt(ans.get(i), secretKey)) + "\"); ");
         	//System.out.println("ans.put(" + i + ", \"" + (encryptStuff.encrypt(ans.get(i), secretKey)) + "\"); ");
         	
-        }
+        //}
         
     }
 	

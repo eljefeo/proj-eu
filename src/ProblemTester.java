@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class ProblemTester {
 	
-	private static final String superSecretPasscode = "PutSomeSecreteKeyHere";
+	private static final String superSecretPasscode = "some key here please";
 
 	public static void main(String[] args) {
 		List<Problem> problems = new ArrayList<Problem>();
@@ -89,6 +89,7 @@ public class ProblemTester {
 		problems.add(new Problem78());
 		problems.add(new Problem79());
 		problems.add(new Problem80());
+		problems.add(new Problem81());
 		
 		System.out.println("Have this many problems : " + problems.size());
 		Map<Integer, String> answers = AnswersToProblems.getAnswersEncrypted();

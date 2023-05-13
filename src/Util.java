@@ -2416,6 +2416,51 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		}
 		return n == 0;
 	}
+	
+	public static void print2DIntArray(int[][] n) {
+		for(int i=0; i < n.length; i++) {
+			for(int j=0; j < n[i].length; j++) {
+				System.out.print(n[i][j] + "\t");
+			}
+			System.out.println();
+		}
+		System.out.println("-----------------------------------------------");
+		
+	}
+	
+	public static int findMinPath2Ways(int[][] nums) {
+
+		// This is assuming all the rows and columns have the same num of elements I
+		// guess. Like a square
+		int xl = nums[0].length;
+		int yl = nums.length;
+
+		//System.out.println("after doing edges :");
+		// do left edge numbers:
+		for (int i = 1; i < yl; i++) {
+			nums[i][0] += nums[i - 1][0];
+		}
+
+		// do top edge numbers:
+		for (int i = 1; i < xl; i++) {
+			nums[0][i] += nums[0][i - 1];
+		}
+
+		// do all rest of middle numbers:
+		for (int i = 1; i < yl; i++) {
+			for (int j = 1; j < xl; j++) {
+				int left = nums[i][j - 1];
+				int up = nums[i - 1][j];
+				nums[i][j] += left < up ? left : up;
+			}
+		}
+
+		//System.out.println("Final array:");
+		//Util.print2DIntArray(nums);
+		
+		int finalNum = nums[nums.length - 1][nums[0].length - 1];
+		return finalNum;
+	}
 
 	
 	/*
