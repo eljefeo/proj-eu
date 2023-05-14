@@ -53,16 +53,20 @@ Find the minimal path sum from the left column to the right column in matrix.txt
 		//int[][] nums2 = new int[nums.length][nums[0].length] ;
 		
 
-		System.out.println("after doing Left edge adding to the right num...lefts:");
-		// do left edge numbers:
-		for (int i = 0; i < yl ; i++) {
-			lefts[i][1] = nums[i][1] + nums[i][0];
-		}
-		Util.print2DIntArray(lefts);
+		
 		
 		/////////////////////////////////////////////////
 		for (int a = 1; a < xl-1; a++) { 
+			System.out.println("a is at " + a);
 			
+			System.out.println("after doing Left edge adding to the right num...lefts:");
+			// do left edge numbers:
+			for (int i = 0; i < yl ; i++) {
+				lefts[i][a] = nums[i][a] + nums[i][a-1];
+				System.out.println("Leftsss " + i + " " + a + " adding " + nums[i][a] + " + " + nums[i][a-1] + " = " + lefts[i][a]);
+					
+			}
+			Util.print2DIntArray(lefts);
 		
 			// do top down numbers, this gives us the value of coming from up above to this cell:
 			System.out.println("after doing next column checking up vs left...ups:");
@@ -83,8 +87,8 @@ Find the minimal path sum from the left column to the right column in matrix.txt
 			Util.print2DIntArray(downs);
 			
 			
-			nums[a][0] = lefts[a][0] > downs[a][0] ? downs[a][0] : lefts[a][0];
-			nums[a][yl-1] = lefts[a][yl-1] > ups[a][yl-1] ? ups[a][yl-1] : lefts[a][yl-1];
+			nums[0][a] = lefts[0][a] > downs[0][a] ? downs[0][a] : lefts[0][a];
+			nums[yl-1][a] = lefts[yl-1][a] > ups[yl-1][a] ? ups[yl-1][a] : lefts[yl-1][a];
 			for (int b = 1; b < xl-1; b++) {
 				nums[a][b] = Math.min(lefts[a][0], Math.min(ups[a][0], downs[a][0]));
 			}
@@ -97,22 +101,20 @@ Find the minimal path sum from the left column to the right column in matrix.txt
 		System.out.println("after doing Right edge adding to the left num...lefts:");
 		// do right edge numbers:
 		for (int i = 0; i < yl ; i++) {
-			lefts[i][nums.length-1] = nums[i][nums.length-1] + nums[i][nums.length-2];
+			nums[i][nums.length-1] = nums[i][nums.length-1] + nums[i][nums.length-2];
 		}
 		Util.print2DIntArray(lefts);
-		/*// do all rest of middle numbers:
-		for (int i = 1; i < yl; i++) {
-			for (int j = 1; j < xl; j++) {
-				int left = nums[i][j - 1];
-				int up = nums[i - 1][j];
-				nums[i][j] += left < up ? left : up;
+		
+		int finalNum = nums[0][xl-1];
+		for(int i=0; i<xl; i++) {
+			if(nums[i][xl-1] < finalNum) {
+				finalNum = nums[i][xl-1];
 			}
 		}
-		 	*/
-		//System.out.println("Final array:");
-		//Util.print2DIntArray(nums);
 		
-		int finalNum = nums[nums.length - 1][nums[0].length - 1];
+		
+		
+		//int finalNum = nums[nums.length - 1][nums[0].length - 1];
 		return finalNum;
 		//I guess the first thing to do is figure out which num on the left to start at
 		// for that I suppose we just add 2 nums left and right and see which is less maybe?
