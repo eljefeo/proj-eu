@@ -41,48 +41,47 @@ Find the minimal path sum from the left column to the right column in matrix.txt
 			{537,	699,	497,	121,	956},
 			{805,	732,	524,	37,		331}
 		};
-		System.out.println("Original:");
-		Util.print2DIntArray(nums);
-		int[][] nums2 = new int[nums.length][nums[0].length] ;
 		int xl = nums[0].length;
 		int yl = nums.length;
+		int[][] ups = new int[yl][xl];
+		int[][] downs = new int[yl][xl];
+		int[][] lefts = new int[yl][xl];
+		
+		System.out.println("Original nums:");
+		Util.print2DIntArray(nums);
+		
+		//int[][] nums2 = new int[nums.length][nums[0].length] ;
+		
 
-		System.out.println("after doing Left edge adding to the right num :");
+		System.out.println("after doing Left edge adding to the right num...lefts:");
 		// do left edge numbers:
 		for (int i = 0; i < yl ; i++) {
-			nums2[i][1] = nums[i][1] + nums[i][0];
+			lefts[i][1] = nums[i][1] + nums[i][0];
 		}
-		Util.print2DIntArray(nums2);
+		Util.print2DIntArray(lefts);
 		
-		for(int ii=1; ii < xl-1; ii++) {
-			
+		
+		// do top down numbers, this gives us the value of coming from up above to this cell:
+		System.out.println("after doing next column checking up vs left...ups:");
+		ups[1][1] = nums[1][1] + lefts[0][1];
+		for (int i = 2; i < yl; i++) { 
+			ups[i][1] = nums[i][1] + ( lefts[i-1][1] > ups[i-1][1] ? ups[i-1][1] : lefts[i-1][1] ); //this one need to check the left vs the up
 		}
-		// do top down numbers, this gives us the value of coming from above to this cell:
-		for (int i = 1; i < xl; i++) {
-			int up = nums[i][1] + nums2[i-1][1];
-			if(nums2[i][1] > up) {
-				System.out.println("switching up " + up + " vs " + nums[i][1]);
-				nums2[i][1] = up;
-			}
-		}
-		System.out.println("after doing next column checking up vs left");
-		Util.print2DIntArray(nums2);
+		Util.print2DIntArray(ups);
 		
 		
 		
 		// do bottom up numbers, this gives us the value of coming from below to this cell:
+		System.out.println("after doing next column checking down vs left...downs:");
+		downs[yl-2][1] = nums[yl-2][1] + lefts[yl-1][1];
 		for (int i = xl-2; i >= 0; i--) {
-			int down = nums[i][1] + nums2[i+1][1];
-			if(nums2[i][1] > down) {
-				System.out.println("switching down " + down + " vs " + nums2[i][1]);
-				nums2[i][1] = down;
-			} else {
-				System.out.println("did not switch down " + down + " vs " + nums2[i][1]);
-			}
+			downs[i][1] = nums[i][1] + ( lefts[i+1][1] > downs[i+1][1] ? downs[i+1][1] : lefts[i+1][1]);// nums[i][1] + nums2[i+1][1];
 		}
-		System.out.println("after doing next column checking down vs up vs left");
-		Util.print2DIntArray(nums2);
-		// do all rest of middle numbers:
+		Util.print2DIntArray(downs);
+		
+		
+		
+		/*// do all rest of middle numbers:
 		for (int i = 1; i < yl; i++) {
 			for (int j = 1; j < xl; j++) {
 				int left = nums[i][j - 1];
@@ -90,11 +89,11 @@ Find the minimal path sum from the left column to the right column in matrix.txt
 				nums[i][j] += left < up ? left : up;
 			}
 		}
-
+		 	*/
 		//System.out.println("Final array:");
 		//Util.print2DIntArray(nums);
 		
-		int finalNum = nums[nums.length - 1][nums[0].length - 1];
+		int finalNum = 99999;//nums[nums.length - 1][nums[0].length - 1];
 		return finalNum;
 		//I guess the first thing to do is figure out which num on the left to start at
 		// for that I suppose we just add 2 nums left and right and see which is less maybe?
