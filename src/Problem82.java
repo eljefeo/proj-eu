@@ -26,9 +26,8 @@ Find the minimal path sum from the left column to the right column in matrix.txt
 	@Override
 	public Object problem() {
 		
-		doThing();
+		return doThing();
 		
-		return 0;
 		//int[][] nums = Problem82Helper.getNums();
 		//return Util.findMinPath2Ways(nums);
 	}
@@ -71,9 +70,11 @@ Find the minimal path sum from the left column to the right column in matrix.txt
 			// do top down numbers, this gives us the value of coming from up above to this cell:
 			System.out.println("after doing next column checking up vs left...ups:");
 			ups[1][a] = nums[1][a] + lefts[0][a];
+			Util.print2DIntArray(ups);
 			for (int i = 2; i < yl; i++) { 
 				ups[i][a] = nums[i][a] + ( lefts[i-1][a] > ups[i-1][a] ? ups[i-1][a] : lefts[i-1][a] ); //this one need to check the left vs the up
 			}
+			System.out.println("ups:");
 			Util.print2DIntArray(ups);
 			
 			
@@ -81,17 +82,25 @@ Find the minimal path sum from the left column to the right column in matrix.txt
 			// do bottom up numbers, this gives us the value of coming from below to this cell:
 			System.out.println("after doing next column checking down vs left...downs:");
 			downs[yl-2][a] = nums[yl-2][a] + lefts[yl-1][a];
-			for (int i = xl-2; i >= 0; i--) {
+			System.out.println("checking down " + downs[yl-2][a] + " douss. setting down[" + (yl-2) + "][" + a + "] ... nums["+(yl-2)+"]["+a+"] = " + nums[yl-2][a] + ", lefts[" + (yl-1) + "][" + a + "] = " + lefts[yl-1][a] + " :::: " + (nums[yl-2][a] + lefts[yl-1][a]));
+			Util.print2DIntArray(downs);
+			for (int i = xl-3; i >= 0; i--) {
 				downs[i][a] = nums[i][a] + ( lefts[i+1][a] > downs[i+1][a] ? downs[i+1][a] : lefts[i+1][a]);// nums[i][1] + nums2[i+1][1];
 			}
+			System.out.println("downs:");
 			Util.print2DIntArray(downs);
 			
 			
 			nums[0][a] = lefts[0][a] > downs[0][a] ? downs[0][a] : lefts[0][a];
+			System.out.println("Just set nums end nums[0][" + a + "] = " + (lefts[0][a] > downs[0][a] ? downs[0][a] : lefts[0][a]));
 			nums[yl-1][a] = lefts[yl-1][a] > ups[yl-1][a] ? ups[yl-1][a] : lefts[yl-1][a];
+			System.out.println("Just set nums end nums[" + (yl-1) + "][" + a + "] = " + (lefts[yl-1][a] > ups[yl-1][a] ? ups[yl-1][a] : lefts[yl-1][a]));
 			for (int b = 1; b < xl-1; b++) {
-				nums[a][b] = Math.min(lefts[a][0], Math.min(ups[a][0], downs[a][0]));
+				nums[b][a] = Math.min(lefts[b][a], Math.min(ups[b][a], downs[b][a]));
+				System.out.println("Just set nums end bnums[" + b + "][" + a + "] = " + (nums[b][a]));
 			}
+			System.out.println("End of loop, here is nums so far:");
+			Util.print2DIntArray(nums);
 			
 		}
 		/////////////////////////////////////////////////
@@ -101,13 +110,15 @@ Find the minimal path sum from the left column to the right column in matrix.txt
 		System.out.println("after doing Right edge adding to the left num...lefts:");
 		// do right edge numbers:
 		for (int i = 0; i < yl ; i++) {
-			nums[i][nums.length-1] = nums[i][nums.length-1] + nums[i][nums.length-2];
+			nums[i][yl-1] = nums[i][yl-1] + nums[i][yl-2];
 		}
-		Util.print2DIntArray(lefts);
+		Util.print2DIntArray(nums);
 		
 		int finalNum = nums[0][xl-1];
 		for(int i=0; i<xl; i++) {
+			System.out.println("checking final nums " + i + " " + (xl-1) + " = " + nums[i][xl-1]);
 			if(nums[i][xl-1] < finalNum) {
+				System.out.println("set new smallest to : " +  nums[i][xl-1]);
 				finalNum = nums[i][xl-1];
 			}
 		}
