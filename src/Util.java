@@ -2462,6 +2462,64 @@ public static boolean hasSameUniqueDigits(int a, int b){
 		return finalNum;
 	}
 
+	public static int findMinPath3Ways(int[][] nums) {
+		/*int[][] nums = new int[][] {
+			{131,	673,	234,	103,	18},
+			{201,	96,		342,	965,	150},
+			{630,	803,	746,	422,	111},
+			{537,	699,	497,	121,	956},
+			{805,	732,	524,	37,		331}
+		};*/
+		nums = Problem82Helper.getNums();
+		int xl = nums[0].length;
+		int yl = nums.length;
+		int[][] ups = new int[yl][xl];
+		int[][] downs = new int[yl][xl];
+		int[][] lefts = new int[yl][xl];
+		
+		//System.out.println("Original nums:");
+		//Util.print2DIntArray(nums);
+		
+		for (int a = 1; a < xl-1; a++) { 
+			// do left edge numbers:
+			for (int i = 0; i < yl ; i++) {
+				lefts[i][a] = nums[i][a] + nums[i][a-1];
+			}
+
+			// do top down numbers, this gives us the value of coming from up above to this cell:
+			ups[1][a] = nums[1][a] + lefts[0][a];
+			for (int i = 2; i < yl; i++) { 
+				ups[i][a] = nums[i][a] + ( lefts[i-1][a] > ups[i-1][a] ? ups[i-1][a] : lefts[i-1][a] ); //this one need to check the left vs the up
+			}
+			
+			// do bottom up numbers, this gives us the value of coming from below to this cell:
+			downs[yl-2][a] = nums[yl-2][a] + lefts[yl-1][a];
+			for (int i = xl-3; i >= 0; i--) {
+				downs[i][a] = nums[i][a] + ( lefts[i+1][a] > downs[i+1][a] ? downs[i+1][a] : lefts[i+1][a]);// nums[i][1] + nums2[i+1][1];
+			}
+			
+			nums[0][a] = lefts[0][a] > downs[0][a] ? downs[0][a] : lefts[0][a];
+			nums[yl-1][a] = lefts[yl-1][a] > ups[yl-1][a] ? ups[yl-1][a] : lefts[yl-1][a];
+			for (int b = 1; b < xl-1; b++) {
+				nums[b][a] = Math.min(lefts[b][a], Math.min(ups[b][a], downs[b][a]));
+			}
+			
+		}
+		
+		// do right edge numbers:
+		for (int i = 0; i < yl ; i++) {
+			nums[i][yl-1] = nums[i][yl-1] + nums[i][yl-2];
+		}
+		
+		int finalNum = nums[0][xl-1];
+		for(int i=0; i<xl; i++) {
+			if(nums[i][xl-1] < finalNum) {
+				finalNum = nums[i][xl-1];
+			}
+		}
+		
+		return finalNum;
+	}
 	
 	/*
 	public boolean areCoPrime(int a, int b) {
