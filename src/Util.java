@@ -525,7 +525,7 @@ public static int summationFromTo(int start, int end) {
 		return result;
 	}
 
-	public static int getAmicableNumer(int num) {
+	public static int getAmicableNumber(int num) {
 		// return 0 if no amicable number found
 		int sum1 = Util.addAllIntegers(Util.getProperDivisors(num));
 		int sum2 = Util.addAllIntegers(Util.getProperDivisors(sum1));

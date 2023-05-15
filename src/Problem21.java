@@ -31,7 +31,7 @@ public class Problem21 implements Problem { //Took 0.076784 seconds
 				System.out.println("Skipping " + i);
 				continue;
 			}
-			int amicableNum = Util.getAmicableNumer(i);
+			int amicableNum = Util.getAmicableNumber(i);
 			if (amicableNum != 0) {
 				if(an.add(i))
 					runningTotal += i;
