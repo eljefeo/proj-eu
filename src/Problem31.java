@@ -28,7 +28,7 @@ public class Problem31 implements Problem  {
 
 	static List<List<Integer>> all;
 
-	public String problem() {
+	public Object problem() {
 		all = new ArrayList<List<Integer>>();
 		int[] UKcoins = {1,2,5,10,20,50,100,200} ;
 		int agoal = 200;
@@ -45,13 +45,27 @@ public class Problem31 implements Problem  {
 		
 		//double time = (double) (endT - startT)/1000000000;
 		  
-		return "" + res;
+		return res;
 		
 	}
 	
 	private static int findAllNumsThatAddToNumJustCount(int[] nums, int goal){
 		return recurLoopJustCount(nums, goal, 0, 0);
 		//System.out.println("Found " + count + " solutions ");
+	}
+	
+	private static int recurLoopJustCount(int[] allNums, int goal,  int ind, int counter) {
+		if (goal==0) {
+			counter++;
+		} else if (goal>0) {
+			for (int i = ind; i < allNums.length; i++) {
+				int newGoal = goal - allNums[i];
+				if(newGoal>=0){
+					counter = recurLoopJustCount(allNums, newGoal, i, counter);
+				} 
+			}
+		} 
+		return counter;
 	}
 	
 	private static void findAllNumsThatAddToNumWithResults(int[] nums, int goal){
@@ -67,22 +81,6 @@ public class Problem31 implements Problem  {
 	}
 
 
-	private static int recurLoopJustCount(int[] allNums, int goal,  int ind, int counter) {
-		if (goal==0) {
-			counter++;
-		} else if (goal>0) {
-			for (int i = ind; i < allNums.length; i++) {
-				int newGoal = goal - allNums[i];
-				if(newGoal>=0){
-					counter = recurLoopJustCount(allNums, newGoal, i, counter);
-				} 
-			}
-		} 
-		return counter;
-	}
-	
-	
-	
 	private static boolean recurLoopWithResults(int[] allNums, int goal, List<Integer> myNums, int ind) {
 
 		if (goal==0) {
