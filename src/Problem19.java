@@ -23,6 +23,7 @@ How many Sundays fell on the first of the month during the twentieth century (1 
 
 	}
 	
+	//While the other problem below is a nice lucky cheesy way to get the right answer, it may not work in every scenario, but this code should..
 	@Override
 	public Object problem(){
 		
@@ -41,13 +42,28 @@ How many Sundays fell on the first of the month during the twentieth century (1 
 					if(day==1 && dayOfWeek==1){
 						numOfSundaysOnFirstOfMonth++;
 					}
-					//System.out.println("Year: " + year + ", Month: " + month + ", " + "day of month: " + day + ", day of the week: " + dayOfWeek + ", day index: " + dayindex);
+					System.out.println("Year: " + year + ", Month: " + month + ", " + "day of month: " + day + ", day of the week: " + dayOfWeek);
 				}
 			}
 		}
 		
 		//System.out.println("Found: " + numOfSundaysOnFirstOfMonth);
 		return numOfSundaysOnFirstOfMonth;
+	}
+	
+	// This also gives the correct answer because of good 'ol statistics and logic, and a bit of luck:
+	public Object problemLuckyCheesy(){
+		/*
+		 *  Assuming each day of the week has equal likelihood of falling on the first of the month...
+		 *  then, since there are 1200 months in the twentieth century the answer should be 1200/7 days of the week
+		 *  (as long as we are not off by more than a little we can probably round up just in case if need be)
+		 */
+		
+		int howManyYears = 100;
+		int monthsPerYear = 12;
+		int daysPerWeek = 7;
+		return howManyYears * monthsPerYear / daysPerWeek;
+		
 	}
 	
 
