@@ -74,7 +74,9 @@ public class EncryptStuff {
     }
 
     public static void main(String[] args) {
-        final String secretKey = "SomeSecretKeyHere";
+    	
+        //final String secretKey = "someSecretKeyHere";
+    	final String secretKey = Util.getSecretKeyFromFile();
 
         String originalString = "SomeMessageHereToEncrypt";
 

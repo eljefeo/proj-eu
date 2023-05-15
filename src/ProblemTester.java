@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class ProblemTester {
 	
-	private static final String superSecretPasscode = "some key here please";
+	private static final String superSecretKey = Util.getSecretKeyFromFile();
 
 	public static void main(String[] args) {
 		List<Problem> problems = new ArrayList<Problem>();
@@ -90,6 +90,7 @@ public class ProblemTester {
 		problems.add(new Problem79());
 		problems.add(new Problem80());
 		problems.add(new Problem81());
+		problems.add(new Problem82());
 		
 		System.out.println("Have this many problems : " + problems.size());
 		Map<Integer, String> answers = AnswersToProblems.getAnswersEncrypted();
@@ -100,7 +101,7 @@ public class ProblemTester {
 		List<Integer> incorrectAnswers = new ArrayList<Integer>();
 		for(int i = 0; i < problems.size(); i++) {
 			System.out.println("\n\n*****----... Problem " + (i+1) + " ...----*****\n");
-			String expectedAnswer = encryptStuff.decrypt(answers.get(i+1), superSecretPasscode);
+			String expectedAnswer = encryptStuff.decrypt(answers.get(i+1), superSecretKey);
 			long startT = System.nanoTime();
 			Problem p = problems.get(i);
 			String res = p.runProblem();

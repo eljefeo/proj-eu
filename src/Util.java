@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +11,25 @@ import java.util.Set;
 
 
 public class Util {
+	
+	
+	public static String getSecretKeyFromFile() {
+		
+		BufferedReader reader;
+		try {
+			reader = new BufferedReader(new FileReader("D:\\ProjectEu_Answers_secret"));
+			String line = reader.readLine();
+			//System.out.println("Read secret key: " + line);
+			reader.close();
+			return line;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Secret key file not found... please put the key in a file at D:\\ProjectEu_Answers_secret (no extension on that file)");
+		return "Yea... this is not the secret key you want";
+	}
+	
+	
 	public static boolean isPrime(int num) {
 
 		if (num == 2) 

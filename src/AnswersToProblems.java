@@ -97,6 +97,8 @@ public class AnswersToProblems {
 		ans.put(79, "f1vD0toEmOHAHI58Xr23fQ==");
 		ans.put(80, "m7Kt5Qs4VPXjo/hjy5Coaw==");
 		ans.put(81, "WrXQZ0d7nREVJP0IR4cRLg==");
+		ans.put(82, "r5/cGgxSXz6Qa6cNYASbAA==");
+		
 		
 		
 		return ans;
