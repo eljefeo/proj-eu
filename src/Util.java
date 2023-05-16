@@ -192,7 +192,7 @@ public class Util {
 	
 	
 	public static int getNthSquareNumber(int i) {
-		return (int) Math.pow(i, 2);
+		return i*i;
 	}
 	
 	public static int getNthPentagonalNumber(int i) {
