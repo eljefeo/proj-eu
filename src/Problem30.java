@@ -16,19 +16,66 @@ public class Problem30 implements Problem {
 	 */
 
 	public static void main(String[] args) {
+		
 		Problem p = new Problem30();
 		p.runProblem();
+		//problemOrig();
+		//int n = 9;
+		//System.out.println("");
+		//for(int i=1; i < 10; i++)
+		//	System.out.println("Fifth power of " + i + " : " + Math.pow(i, 5));
+		
+		
+		//problem1();
 	}
 	
-	@Override
-	public String problem(){
+	
+	public static Object problem1(){
 		int pow = 5;
-		int num = 2;
+		int num = 9;
+		int tottot = 0;
+		// TODO while (???? How do we know when to stop????? - 
+		// I just went up to 1,000,000 hoping they would all be below 1,000,000 but how would I have known when I found them all?
+		// neeed to figure out some way of knowing when to stop looking for the 4th or 5th or Nth powers...
+		//194980
+		//for(int i=2; i< 12; i++) {
+			String is = num+"";
+			int tot = 0;
+			for(char c : is.toCharArray()){
+				System.out.println("i: " + num + " c: " + c );
+				tot += Math.pow(Integer.parseInt(c+""),pow);
+			}
+			if(tot == num) {
+				tottot += tot;
+				System.out.println("Found one!  :::  " + num + " with tot: " + tot );
+			}
+		//}
+		System.out.println("Total!  :::  " + tottot + " " + tot);
+		return tottot;
+	}
+	
+	/*
+	 so lets think about when to stop..
+	 The question says: Find the sum of all the numbers that can be written as the sum of fifth powers of their digits.
+	 Meaning there is a finite number of these.. how can we tell when we have gone too far..
+	 fifth powers and sum of their digits
+	 10000 = 1
+	 10002 = 33
+	 99999 = 295245
+	 
+	 
+	 
+	 
+	 */
+	
+	@Override
+	public Object problem(){
+		int pow = 5;
 		int tottot = 0;
 		// TODO while (???? How do we know when to stop????? - 
 		// I just went up to 10,000,000 hoping they would all be below 10,000,000 but how would I have known when I found them all?
 		// neeed to figure out the proof of how they knew when to stop looking for the 4th powers...
-		for(int i=2; i< 10000000; i++){
+		for(int i=2; i< 1000000; i++){
 			String is = i+"";
 			int tot = 0;
 			for(char c : is.toCharArray()){
@@ -40,7 +87,11 @@ public class Problem30 implements Problem {
 			}
 		}
 		//System.out.println("Total!  :::  " + tottot);
-		return "" + tottot;
+		return tottot;
 	}
 
+	@Override
+	public int getId() {
+		return 30;
+	}
 }
