@@ -1,11 +1,9 @@
 
+public class Problem71 implements Problem { //Took 0.001084 seconds
 
-// THIS IS THE CURRENT CODE CHECKED INTO GITHUB, BUT THERE IS SOMETHING WRONG WITH THE LOGIC
-// USE Problem71_2 to try and test new stuff to figure out the issue.
-
-
-public class Problem71 implements Problem{
-
+	
+	///TODO double check if this implementation works 100% of the time.
+	//there was a bug in the original code, this latest code I think should be fine. but maybe double check one day when you get bored.
 	
 	/*
 	 
@@ -23,9 +21,18 @@ By listing the set of reduced proper fractions for d <= 1,000,000 in ascending o
 	 */
 	
 	public static void main(String[] args) { //Took 0.029194 seconds
-		//new Problem71().runProblem();
-		problem5();
+		new Problem71().runProblem();
+		//problem5();
 	}
+	
+	@Override
+	public Object problem() {
+		long[] leftFraction = Util.getFractionToTheLeft(1000000, 3, 7);
+		//System.out.println("Found " + leftFraction[0] + "/" + leftFraction[1]);
+		
+		return leftFraction[0];
+	}
+	
 	/*
 	 
 	 so after looking at these fractions for a while here's what Im thinking
@@ -60,13 +67,7 @@ By listing the set of reduced proper fractions for d <= 1,000,000 in ascending o
 	
 
 	
-	@Override
-	public String problem() {
-		long[] leftFraction = Util.getFractionToTheLeft(1000000, 3, 7);
-		//System.out.println("Found " + leftFraction[0] + "/" + leftFraction[1]);
-		
-		return leftFraction[0] + "";
-	}
+
 	
 	public static String problem5() { // So this was the first solution but I worked on but it has issues with some numbers
 		// like 1/2 should have 3/7 to the left, but this returns 3/8...

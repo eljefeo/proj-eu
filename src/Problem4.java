@@ -1,6 +1,4 @@
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+
 
 public class Problem4 implements Problem{
 
@@ -18,7 +16,7 @@ public class Problem4 implements Problem{
 	
 	public Object problem(){
 		
-		Set<Integer> palindromes = new HashSet<Integer>();
+		//Set<Integer> palindromes = new HashSet<Integer>();
 		
 		int min = 100;
 		int max = 999;

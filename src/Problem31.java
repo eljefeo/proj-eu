@@ -1,9 +1,5 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Problem31 implements Problem  {
 
@@ -33,7 +29,7 @@ public class Problem31 implements Problem  {
 		int[] UKcoins = {1,2,5,10,20,50,100,200} ;
 		int agoal = 200;
 		
-		int[] nums = new int[] { 1, 2, 3};
+		//int[] nums = new int[] { 1, 2, 3};
 		//int goal = 6;
 		
 		//long startT = System.nanoTime();

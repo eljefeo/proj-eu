@@ -15,7 +15,8 @@ public class Problem14 implements Problem { // Took 0.208588 seconds
 	 * The following iterative sequence is defined for the set of positive integers:
 
 
-It can be seen that this sequence (starting at 13 and finishing at 1) contains 10 terms. Although it has not been proved yet (Collatz Problem), it is thought that all starting numbers finish at 1.
+It can be seen that this sequence (starting at 13 and finishing at 1) contains 10 terms. Although it has not been proved yet (Collatz Problem), 
+it is thought that all starting numbers finish at 1.
 
 Which starting number, under one million, produces the longest chain?
 
@@ -55,8 +56,8 @@ NOTE: Once the chain starts the terms are allowed to go above one million.
 	}
 	
 	
-	//this way keeps track of numbers we have already done, so we dont have to redo it..
-	// but seems to take longer. probably keeping track of all that info takes a lot of work
+	// this way keeps track of numbers we have already done, so we dont have to redo a num we have already hit..
+	// but seems to take longer. Keeping track of all that info is heavy and takes a lot of work I guess
 	public static String problem2(){
 		
 		//System.out.println("Here in 2");
@@ -81,9 +82,8 @@ NOTE: Once the chain starts the terms are allowed to go above one million.
 					steps += nums.get(test);
 					break;
 				} else {
-				//System.out.println("thisnums adding i=" + i + ", test=" + test + " at step " + steps);
+					//System.out.println("thisnums adding i=" + i + ", test=" + test + " at step " + steps);
 					thisNums.add(test);
-				
 					steps++;
 					test = Util.collatzConjectureNextNum(test);
 				}
