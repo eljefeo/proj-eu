@@ -3,7 +3,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Problem24 implements Problem { //Took 0.330024 seconds
+public class Problem24 implements Problem { //Took 0.330024 seconds (old comp 8700k) 0.199077 seconds seconds (new 12900k)
+	// !!! I tried to update this code so it just counts (int) the perms, instead of having a List that holds all perms and then doing perm.size() after
+	// expecting that to be faster but I havent finished it...
+	//permutationKeep - this uses the list, and this way works : we get the correct answer
+	//permutation - this is a beginning attempt to not use a list, this is not working just yet
+	
 	
 /*	A permutation is an ordered arrangement of objects. For example, 3124 is one possible permutation of the digits 1, 2, 3 and 4. 
  * If all of the permutations are listed numerically or alphabetically, we call it lexicographic order. 
@@ -32,19 +37,25 @@ public class Problem24 implements Problem { //Took 0.330024 seconds
 		int max = 1000000;
 		List<String> perms = new ArrayList<String>();
 		//String res = permutation("", "0123456789", perms, max); 
-		permutation("", "0123456789", perms, max); 
+		//String ff = permutation("", "0123456789", 0, max); 
 		
-		//System.out.println("Found: "  + perms.get(perms.size()-1) + " of " + perms.size() + " total permutations");
+		//System.out.println("Found: "  + ff + " of " + 00 + " total permutations");
+		
+		
+		//int max = 1000000;
+		//List<String> perms = new ArrayList<String>();
+		//String res = permutation("", "0123456789", perms, max); 
+		permutationKeep("", "0123456789", perms, max); 
+		
+		System.out.println("sFound: "  + perms.get(perms.size()-1) + " of " + perms.size() + " total permutations");
+		
+		
+		//return ff + "";
 		return "" + perms.get(perms.size()-1);
-		
 	}
 
-
-	// since the natural permutation of the num will result in lexicographic order
-	// we can just stop when we get the max'th number, since that is our answer
-	// no need to get the rest of the permutations
 	
-	private static void permutation(String prefix, String str, List<String> perms, int max) {
+	private static void permutationKeep(String prefix, String str, List<String> perms, int max) {
 	    if(perms.size() == max)
 	    	return;
 	    int n = str.length();
@@ -52,8 +63,33 @@ public class Problem24 implements Problem { //Took 0.330024 seconds
 	    	perms.add(prefix);
 	    else 
 	    	for (int i = 0; i < n; i++)
-	            permutation(prefix + str.charAt(i), str.substring(0, i) + str.substring(i+1, n), perms, max);
+	    		permutationKeep(prefix + str.charAt(i), str.substring(0, i) + str.substring(i+1, n), perms, max);
 	}
+	
+	// since the natural permutation of the num will result in lexicographic order
+	// we can just stop when we get the max'th number, since that is our answer
+	// no need to get the rest of the permutations
+	
+	private static String permutation(String prefix, String str, int counter, int max) {
+		// if(perms.size() == max)
+		    //	return;
+		    int n = str.length();
+		    if (n == 0) {
+		    	//System.out.println("2returning " + prefix + " counter: " + counter);
+		    	return prefix;
+		    }
+		    else 
+		    	for (int i = 0; i < n; i++) {
+		    		counter++;
+		    		String perm = permutation(prefix + str.charAt(i), str.substring(0, i) + str.substring(i+1, n), counter, max);
+		    		System.out.println("MID returning " + perm + " counter: " + counter);
+		    		if(counter == max) {
+		    			//System.out.println("returning " + perm + " counter: " + counter);
+		    			return perm;
+		    		}
+		    	}
+		    return prefix;
+		}
 	
 	
 	private static String permutationHmm(String prefix, String str, List<String> perms, int max) {
@@ -77,6 +113,9 @@ public class Problem24 implements Problem { //Took 0.330024 seconds
 	    	}
 	    return "";
 	}
-
+	@Override
+	public int getId() {
+		return 24;
+	}
 	
 }
