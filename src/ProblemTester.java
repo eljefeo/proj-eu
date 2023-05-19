@@ -1,6 +1,10 @@
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.LinkedHashMap;
 
 public class ProblemTester {
 	
@@ -94,11 +98,11 @@ public class ProblemTester {
 		
 		System.out.println("Have this many problems : " + problems.size());
 		Map<Integer, String> answers = AnswersToProblems.getAnswersEncrypted();
-		
-		//Problem p = problems.get(3);
-		//p.runProblem();
+		Map<Integer,Double> times = new HashMap<Integer,Double>();
 		List<Integer> longProblems = new ArrayList<Integer>();
 		List<Integer> incorrectAnswers = new ArrayList<Integer>();
+		
+
 		for(int i = 0; i < problems.size(); i++) {
 			System.out.println("\n\n*****----... Problem " + (i+1) + " ...----*****\n");
 			String expectedAnswer = encryptStuff.decrypt(answers.get(i+1), superSecretKey);
@@ -107,19 +111,24 @@ public class ProblemTester {
 			String res = p.runProblem();
 			long endT = System.nanoTime();
 			double time = (double) (endT - startT) / 1000000000;
+			times.put(p.getId(), time);
 			//System.out.println("\ngot answer from the thing : " + res);
 			
 			System.out.println("\nComparing " + res + " to expected answer: " + expectedAnswer);
 			if(!res.equals(expectedAnswer)) {
-				incorrectAnswers.add(i+1);
+				incorrectAnswers.add(p.getId());
 			} 
 			
-			
 			if(time > 1) {
-				longProblems.add(i+1);
+				longProblems.add(p.getId());
 			}
 		}
 		
+		times = sortByValue(times);
+
+		for(Integer id : times.keySet()) {
+			System.out.printf("Problem " + id + " took %f seconds\n", times.get(id));
+		}
 		
 		for(Integer i : longProblems) {
 			System.out.println("\nProblem " + i + " took over 1 second ");
@@ -130,5 +139,46 @@ public class ProblemTester {
 		}
 		
 	}
+	
+	public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
+        List<Entry<K, V>> list = new ArrayList<>(map.entrySet());
+        list.sort(Entry.comparingByValue());
 
+        Map<K, V> result = new LinkedHashMap<>();
+        for (Entry<K, V> entry : list) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+
+        return result;
+    }
+}
+
+class ValueComparator implements Comparator<Integer> {
+
+    Map<Integer, Double> base;
+    public ValueComparator(Map<Integer, Double> base) {
+        this.base = base;
+    }
+
+    // Note: this comparator imposes orderings that are inconsistent with equals.    
+    public int compare(Integer a, Integer b) {
+    	System.out.println("Called compare for int " + a + " and  " + b);
+    	if(a == null || b == null || base == null || base.get(b) == null) {
+    		System.out.println("something is null....");
+    		System.out.println("a " + a);
+    		System.out.println("b " + b);
+    		System.out.println("base " + base);
+    		System.out.println("base.get(b)  " + base.get(b));
+    		return -1;
+    	} else {
+    		System.out.println("everything was not null for once!!! ");
+    	}
+    		//
+    	
+        if (base.get(a) >= base.get(b)) {
+            return -1;
+        } else {
+            return 1;
+        } // returning 0 would merge keys
+    }
 }
