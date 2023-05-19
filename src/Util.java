@@ -941,6 +941,16 @@ public static boolean isPalindromeIntSlower(int num) {
 		}
 		return false;
 	}
+	
+	public static boolean intHasDuplicateDigits2(int num) {
+		String ss = "" + num;
+		for (int i = 0; i < ss.length(); i++) {
+			if(ss.substring(i+1,ss.length()).contains(""+ss.charAt(i))) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public static int getIntFromIntArr(int[] nums) {
 		int result = 0;
@@ -1136,6 +1146,10 @@ public static boolean isPalindromeIntSlower(int num) {
 			n /= 10;
 		}
 		return false;
+	}
+	
+	public static boolean intHasAZeroInIt2(int n) {
+		return ("" + n).contains("0");
 	}
 
 	public static long gcd(long numer, long denom) {
