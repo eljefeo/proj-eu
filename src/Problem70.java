@@ -71,7 +71,7 @@ public class Problem70 implements Problem{ //Took 1.977199 seconds - probably be
 	}
 	
 	
-	public String problem() {
+	public Object problem() {
 		int max = (int) Math.pow(10, 7), step = max/10;
 		double smalD = 10;
 		int smalN = 0;
@@ -92,28 +92,34 @@ public class Problem70 implements Problem{ //Took 1.977199 seconds - probably be
 		int phi;
 		int tempI;
 		int factorCount;
-		int sqrt;
+		int innerSqrt;
 		int prime;
+		
+		int sqrtCounter = 1;
+		int sqrtNext = 2;
+		int sqrt = 1;
+		
 		for (int i = 3; i < max; i++) {
-
-			if (i % step == 0)
+			sqrtCounter+=1;
+			if (i % step == 0) //if you take this check and console log line out, then this problem is usually faster than 1 second...
 				System.out.println((i*10/step) + "% complete");
 			
 			phi = 1; // set to 1 because every number has 1 has a coprime?
 			tempI = i;
 			factorCount = 0;
-			sqrt = (int) Math.sqrt(tempI);
+			//sqrt = (int) Math.sqrt(tempI); //I think we can optimize by getting rid of this square root function.
+			innerSqrt = sqrt;
 			for (int p = 0; p < primes.size(); p++) {
 				
 				prime = primes.get(p);
 				
-				if(prime > sqrt) {
+				if(prime > innerSqrt) {
 					if(factorCount == 0) {//or if tempI == i { // if no factors below sqrt of num, that num is prime
 						primes.add(i);
 						break;
-						//continue nums;// but we dont want to actually use phi of primes, its too big, so we skip it but use the prime for later
+						// continue nums;// but we dont want to actually use phi of primes, its too big, so we skip it but use the prime for later
 					} else if(tempI > 1) { // else if no other primes under sqrt, but has other factors, then tempI is now prime and is the second factor. 
-						//This means we found a num with only 2 factors which is what we want
+						// This means we found a num with only 2 factors which is what we want
 						phi *= (tempI - 1);
 						nOverPhi = (double) i / phi;
 						if(nOverPhi < smalD && Util.isPermutationOf(i, phi)){//Util.isPermutationDigits(i, phi)) {
@@ -140,14 +146,20 @@ public class Problem70 implements Problem{ //Took 1.977199 seconds - probably be
 						// the fact that we are here means we are at a num with > 2 factors... skip it
 						
 					phi *= (prime - 1);
-					sqrt = (int) Math.sqrt(tempI);
+					innerSqrt = (int) Math.sqrt(tempI);
 				}
 			}
+			
+			if(sqrtCounter > sqrtNext) { // here is where we calculate the next square root so we dont have to do Math.sqrt()
+				sqrtNext += 2;
+				sqrtCounter = sqrtNext-sqrtCounter;
+				sqrt++;
+			} 
 			
 		}
 
 		System.out.println("Smallest nOverPhi = " + smalD + " for num = " + smalN + " with phi=" + smalPhi + " with prime count : " + primes.size() + " under " + max);
-		return "" + smalN;
+		return smalN;
 	}
 	
 	
