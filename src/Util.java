@@ -2496,7 +2496,7 @@ public static boolean hasSameUniqueDigits(int a, int b){
 			for (int j = 1; j < xl; j++) {
 				int left = nums[i][j - 1];
 				int up = nums[i - 1][j];
-				nums[i][j] += left < up ? left : up;
+				nums[i][j] += Math.min(left, up);
 			}
 		}
 
@@ -2534,17 +2534,17 @@ public static boolean hasSameUniqueDigits(int a, int b){
 			// do top down numbers, this gives us the value of coming from up above to this cell:
 			ups[1][a] = nums[1][a] + lefts[0][a];
 			for (int i = 2; i < yl; i++) { 
-				ups[i][a] = nums[i][a] + ( lefts[i-1][a] > ups[i-1][a] ? ups[i-1][a] : lefts[i-1][a] ); //this one need to check the left vs the up
+				ups[i][a] = nums[i][a] + Math.min(lefts[i-1][a], ups[i-1][a]); //this one need to check the left vs the up
 			}
 			
 			// do bottom up numbers, this gives us the value of coming from below to this cell:
 			downs[yl-2][a] = nums[yl-2][a] + lefts[yl-1][a];
 			for (int i = xl-3; i >= 0; i--) {
-				downs[i][a] = nums[i][a] + ( lefts[i+1][a] > downs[i+1][a] ? downs[i+1][a] : lefts[i+1][a]);// nums[i][1] + nums2[i+1][1];
+				downs[i][a] = nums[i][a] + Math.min(lefts[i+1][a], downs[i+1][a]);
 			}
 			
-			nums[0][a] = lefts[0][a] > downs[0][a] ? downs[0][a] : lefts[0][a];
-			nums[yl-1][a] = lefts[yl-1][a] > ups[yl-1][a] ? ups[yl-1][a] : lefts[yl-1][a];
+			nums[0][a] = Math.min(lefts[0][a], downs[0][a]);
+			nums[yl-1][a] = Math.min(lefts[yl-1][a], ups[yl-1][a]);
 			for (int b = 1; b < xl-1; b++) {
 				nums[b][a] = Math.min(lefts[b][a], Math.min(ups[b][a], downs[b][a]));
 			}
