@@ -45,12 +45,11 @@ public class UtilTest {
 	public void getPrimesUnderTest() {
 		
 		int under = 10000000; // ten million
-		int primeCount = 664579 ;//there should be this many primes under ten million
+		int primeCount = 664579 ;// there should be this many primes under ten million
 		
 		List<Integer> primes = Util.getPrimesUnder(under);
 		
 		assertEquals(primeCount, primes.size());
-		
 		for(int p : primes) {
 			assertTrue(Util.isPrime(p));
 		}
