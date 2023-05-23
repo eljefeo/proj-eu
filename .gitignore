@@ -23,3 +23,8 @@ $RECYCLE.BIN/
 # =========================
 /bin/
 /build/
+/target/
+.settings/org.eclipse.m2e.core.prefs
+.settings/org.eclipse.jdt.core.prefs
+.project
+.classpath
