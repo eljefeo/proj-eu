@@ -1,0 +1,41 @@
+package ProjEuProblems;
+
+import ProjEuUtil.Util;
+
+public class Problem4 implements Problem{
+
+	
+/*	A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 � 99.
+
+			Find the largest palindrome made from the product of two 3-digit numbers.*/
+	
+	
+	public static void main(String[] args) {
+		
+		Problem p = new Problem4();
+		p.runProblem();
+	}
+	
+	public Object problem(){
+		
+		//Set<Integer> palindromes = new HashSet<Integer>();
+		
+		int min = 100;
+		int max = 999;
+		int largest = 0;
+		for (int i = min; i <= max; i++){
+			for (int j = min; j <= max; j++){
+				int prod = i*j;
+				if(Util.isPalindromeInt(prod) && prod > largest){
+					largest = prod;
+				}
+			}
+		}
+		
+		//System.out.println("Largest palindrome " + largest);
+		return largest;
+	}
+	
+	
+
+}
