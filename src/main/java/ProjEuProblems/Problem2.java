@@ -24,7 +24,7 @@ public class Problem2 implements Problem { //Took 0.000018 seconds
 		// we start with 1 and 2, thats adding an odd and an even
 		// that gives us an odd (3)
 		// then adding an odd and an even (2 and 3) , gives us another odd (5)
-		//but then we add an odd and an odd (3 and 5), which gives us an even (8)
+		// but then we add an odd and an odd (3 and 5), which gives us an even (8)
 		// what im trying to say.. is every 3 goes we get an even
 		// so we dont have to check every time if we have an even number to add
 		// we just do the sequence three times, add that number, then 3 more and add, etc..

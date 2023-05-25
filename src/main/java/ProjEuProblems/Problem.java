@@ -33,8 +33,7 @@ public interface Problem {
 				//then you can either just do this one line :
 				new Problem999().runProblem();
 				
-				
-				// or you can do this
+				// or
 				Problem p = new Problem999();
 				p.runProblem();
 				
