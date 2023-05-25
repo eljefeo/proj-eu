@@ -269,6 +269,7 @@ public class Util {
 	}
 
 	public static Set<Long> getFactorsLong(Long num) {
+		System.out.println("Check if we have an updated method for getting factors. This method was never actually used and may be outdated");
 
 		Set<Long> factors = new HashSet<Long>();
 		factors.add((long) 1);
