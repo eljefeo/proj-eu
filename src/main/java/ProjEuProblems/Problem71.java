@@ -71,8 +71,8 @@ By listing the set of reduced proper fractions for d <= 1,000,000 in ascending o
 
 	
 
-	
-	public static String problem5() { // So this was the first solution but I worked on but it has issues with some numbers
+	//OLD - just leaving here for references and to keep me humbled
+	public static String problem5() { // So this was the first solution I worked on but it has issues with some numbers
 		// like 1/2 should have 3/7 to the left, but this returns 3/8...
 		// I found another way to do it above anyways, and it works correctly.
 
