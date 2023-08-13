@@ -11,6 +11,23 @@ import org.junit.jupiter.api.Test;
 import ProjEuUtil.Util;
 
 public class UtilTest {
+	
+	@Test
+	public void isPrimeTestSame() {
+		
+		int howMany = 1000;
+		List<Integer> p1 = Util.getPrimesUnder(howMany);
+		List<Integer> p2 = Util.getPrimesUnderWithSqrt(howMany);
+		
+		assertTrue(p1.size() == p2.size());
+		
+		for(int i = 0; i < p1.size(); i++) {
+			//System.out.println("Checking " + p1.get(i) + " vs " + p2.get(i));
+			assertTrue(p1.get(i).intValue() == p2.get(i).intValue());
+		}
+		//Util.compare2PrimeFunctionsTimings();
+		
+	}
 
 	
 	@Test

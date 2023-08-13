@@ -38,7 +38,7 @@ public class Util {
 		if (num == 2) 
 			return true;
 		
-		if (num < 0 || num == 1 || num % 2 == 0) 
+		if (num < 2 || num % 2 == 0) 
 			return false;
 		
 		for (long i = 3; i <= Math.sqrt(num); i += 2) 
@@ -1946,21 +1946,21 @@ public static boolean hasSameUniqueDigits(int a, int b){
 	
 	public static List<Integer> getPrimesUnder(int max) {
 		// this method does not have to calculate the square root of the number to find the limit
-		// we use some pattern I noticed to know what the square root is
-		// a little faster because we dont have to do Math.sqrt(num)
-		int n = 1;
-		List<Integer> primes = new ArrayList<Integer>();
+		// we use some pattern to know what the square root is
+		// sometimes a little faster because we dont have to do Math.sqrt(num)
 		
-		int sqrtCounter = 1;
-		int sqrtNext = 2;
-		int sqrt = 1;
+		List<Integer> primes = new ArrayList<Integer>();
 		primes.add(2);
+		
+		int n = 1;
+		int sqrtCounter = 0;
+		int sqrt = 1;
 		
 		while ((n+=2) < max) {
 			
-			sqrtCounter+=2;
+			sqrtCounter++;
 			
-			for (int p = 0; p < primes.size(); p++) {
+			for (int p = 0; p < primes.size(); p++) { //using an advanced for loop is actually a lot slower: for (Integer prime : primes) {
 				int prime = primes.get(p);
 				if(prime > sqrt) {
 					primes.add(n);
@@ -1970,66 +1970,25 @@ public static boolean hasSameUniqueDigits(int a, int b){
 					break;
 			}
 			
-			if(sqrtCounter > sqrtNext) { // here is where we calculate the next square root
-				sqrtNext += 2;
-				sqrtCounter = sqrtNext-sqrtCounter;
+			if(sqrtCounter == sqrt) { // here is where we get the sqrt for the next number without Math.sqrt()
+				sqrtCounter = 0;
 				sqrt++;
-			}  	
+			}  
+			
 		}
 		
 		return primes;
 	}
-	
-	public static List<Integer> getPrimesUnderOld(int max) {
-		// this method does not have to calculate the square root of the number to find the limit
-		// we use some pattern I noticed to know what the square root is
-		// a little faster because we dont have to do Math.sqrt(num)
-		int n = 1;
-		List<Integer> primes = new ArrayList<Integer>();
-		
-		int sqrtCounter = 1;
-		int sqrtNext = 3;
-		int sqrt = 1;
-		
-		primes.add(2);
-		
-		while ((n+=2) < max) {
-			
-			sqrtCounter+=2;
-			
-			for (int p = 0; p < primes.size(); p++) {
-				int prime = primes.get(p);
-				if(prime > sqrt) {
-					primes.add(n);
-					break;
-				}
-				
-				if (n % prime == 0)
-					break;
-				
-			} //1, 4, 9, 16, 25
-			
-			if(sqrtCounter > sqrtNext-2) { // here is where we calculate the next square root
-				sqrtNext += 2;
-				sqrtCounter = sqrtNext-sqrtCounter;
-				sqrt++;
-			}  	
-				
-		}
-		
-		return primes;
-		
-	}
+
 	
 	public static List<Integer> getPrimesUnderWithSqrt(int max) {
 		int n = 1;
 		List<Integer> primes = new ArrayList<Integer>();
 		primes.add(2);
 		while ((n+=2) < max) {
-			int sqrt = (int) Math.sqrt(n);
 			for (int p = 0; p < primes.size(); p++) {
 				int prime = primes.get(p);
-				if(prime > sqrt) {
+				if(prime > Math.sqrt(n)) {
 					primes.add(n);
 					break;
 				}
@@ -2412,7 +2371,7 @@ public static boolean hasSameUniqueDigits(int a, int b){
 	
 	public static void compare2PrimeFunctionsResults(int howManyPrimesToCalc) {
 		List<Integer> p1 = getPrimesUnder(howManyPrimesToCalc);
-		List<Integer> p2 = getPrimesUnderOld(howManyPrimesToCalc);
+		List<Integer> p2 = getPrimesUnderWithSqrt(howManyPrimesToCalc);
 		
 		System.out.println("Primes count: " + p1.size() + " : " + p2.size() + " : " + (p1.size() == p2.size()));
 		for(int i = 0; i < p1.size(); i++) {
@@ -2428,8 +2387,8 @@ public static boolean hasSameUniqueDigits(int a, int b){
 	public static void compare2PrimeFunctionsTimings() {
 		List<Double> times1 = new ArrayList<Double>();
 		List<Double> times2 = new ArrayList<Double>();
-		int howManyPrimesToCalculate = 20000;
-		int howManyTimesToTest = 1000;
+		int howManyPrimesToCalculate = 20000000;
+		int howManyTimesToTest = 10;
 		for(int i = 0; i < howManyTimesToTest; i++) {
 		
 			long startT = System.nanoTime();
@@ -2440,11 +2399,12 @@ public static boolean hasSameUniqueDigits(int a, int b){
 			//System.out.printf("1st one Took %f seconds\n", time);
 			
 			long startT2 = System.nanoTime();
-			List<Integer> p2 = getPrimesUnderOld(howManyPrimesToCalculate);
+			List<Integer> p2 = getPrimesUnderWithSqrt(howManyPrimesToCalculate);
 			long endT2 = System.nanoTime();
 			double time2 = (double) (endT2 - startT2) / 1000000000;
 			times2.add(time2);
 			//System.out.printf("2nd one Took %f seconds\n", time2);
+			
 		}
 		
 		
@@ -2462,9 +2422,9 @@ public static boolean hasSameUniqueDigits(int a, int b){
 			}
 		}
 		
-		double tt = (double)t1Greater/howManyTimesToTest * 100;
-		double tt2 = (double)t2Greater/howManyTimesToTest  * 100;;
-		System.out.println("t1 was slower : " + tt + "% of the time, t2 was slower " + tt2 + "% of the time, same: " + t1t2Same);
+		double t1 = (double)t1Greater/howManyTimesToTest * 100;
+		double t2 = (double)t2Greater/howManyTimesToTest  * 100;;
+		System.out.println("t1 was slower : " + t1 + "% of the time, t2 was slower " + t2 + "% of the time, same: " + t1t2Same);
 	}
 	
 	public static int closestSquareUnderOrEqualN(int n) {
