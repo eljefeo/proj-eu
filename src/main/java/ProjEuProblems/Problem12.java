@@ -38,7 +38,7 @@ public class Problem12 implements Problem { // Took 0.215236 seconds
 			int tri = Util.getNthTriangleNumber(ind);
 			Set<Integer> factors = Util.getDistinctFactorsInt(tri);
 			if (factors.size() > factorLimit) {
-				System.out.print("Found: " + tri + " with " + factors.size() + " factors");
+				System.out.print("Found: " + tri + " with " + factors.size() + " factors\n");
 				return tri;
 			} else if (factors.size() > biggestFactorSize) {
 				biggestFactorSize = factors.size();

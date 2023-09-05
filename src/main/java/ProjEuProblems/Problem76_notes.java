@@ -22,7 +22,8 @@ public class Problem76_notes {
 	 
 	 Ok so after some looking up of different integer partitions I stumbled across euler's equation with naturals and odds and how to get 
 	 the partition number for an integer. Im kinda sad that I found it cause I was trying to avoid spoilers but I am also kinda glad
-	 that I found it because damn that pattern would have taken me years to find. So I guess this is the point in the projecteuler questions
+	 that I found it because damn that pattern would have taken me forever to find as I am not as smart as Euler. 
+	 So I guess this is the point in the projecteuler questions
 	 where I may need to start looking up some of these principles. I will still try to figure out each question on my own going forward
 	 but if I need help I can try to investigate the principles.
 	 anyways Im going to use eulers equation 

@@ -33,7 +33,7 @@ public class Problem76 implements Problem{// Took 0.002646 seconds
 	}
 	
 	
-	//Just an extra func for testing:
+	//Just an extra func for testing, this one shows answers as we go:
 	public static int howManyWaysToSumToN_printAnswers(int num, int goal,  int count, int end, String text) {
 			for(int i = 1; i <= end; i++) {
 				int ni = num + i;
