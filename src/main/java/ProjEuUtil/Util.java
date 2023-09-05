@@ -1526,6 +1526,19 @@ public static boolean isPalindromeIntSlower(int num) {
 		
 		return true;
 	}
+	public static int[][] getAllCombinationsInt(int[] nums){
+		int[] rest = nums;
+		int numOfCombos = Util.factorial(nums.length);
+		int[][] combosInput = new int[numOfCombos][];
+		return Util.getAllCombinationsInt(combosInput, new int[0], nums, 0);
+	}
+
+	public static int getNChooseKSize(int n, int k){
+		int nFact = factorial(n);
+		int kFact = factorial(k);
+		int res = nFact / (kFact * factorial(n - k));
+		return res;
+	}
 	
 	public static void findCombinationsOfSizeRecur(int[] A, String out, int index, int lengthOfThing, int sampleSize) {
         // invalid input

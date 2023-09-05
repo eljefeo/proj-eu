@@ -4,14 +4,41 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import ProjEuUtil.Util;
-
 public class UtilTest {
 
+
+
+
+
+	@Test
+	public void testCombinations() {
+
+		int numberOf1s = 3;
+		int numberOf0s = 2;
+		int[] nums = new int[]{1,1,1,0,0};
+		int expectedSize = Util.getNChooseKSize(numberOf1s + numberOf0s, numberOf0s);
+		int[][] combos = Util.getAllCombinationsInt(nums);
+
+		Set<String> comst = new HashSet<>();
+		for (int[] arr : combos) {
+			String com = "";
+			for(int i : arr)
+				com += i;
+			comst.add(com);
+		}
+		System.out.println("Found " + comst.size() + " things " + expectedSize);
+		for(String s : comst){
+			System.out.println(s);
+		}
+
+		assertTrue(comst.size() == expectedSize);
+	}
 	
 	@Test
 	public void isPrimeTest() {
