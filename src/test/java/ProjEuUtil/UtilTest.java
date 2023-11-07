@@ -6,14 +6,106 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
 public class UtilTest {
 
+	@Test
+	public void testDuplicates() {
+		//Something about an array of size n+1 that contains the numbers from 1 through n.
+		// show that this array must have a duplicate number, return the duplicate.
 
 
+
+		int howManyRuns = 100;
+		int size = 10000;
+
+		double timings = 0;
+		for(int i = 0; i < howManyRuns; i++){
+			//System.out.println("on run: " + i + "/" + howManyRuns);
+			int[] arr = getArrNPlus1(size);
+
+			long startT = System.nanoTime();
+
+			/*
+			dup1:
+				Average:  0.000013 seconds (size 1000, 1000 times)
+				Average:  0.000184 seconds (size 10000, 1000 times)
+				Average:  0.001630 seconds (size 100000, 1000 times)
+				Average:  0.042187 seconds (size 1000000, 1000 times)
+				Average:  0.538733 seconds (size 10000000, 100 times)
+
+			dup2:
+				Average:  0.000001 seconds (size 1000, 1000 times)
+				Average:  0.000010 seconds (size 10000, 1000 times)
+				Average:  0.000106 seconds (size 100000, 1000 times)
+				Average:  0.002191 seconds (size 1000000, 1000 times)
+				Average:  0.028886 seconds (size 10000000, 100 times)
+			 */
+
+			int dup1 = dup1(arr); //Average:  0.000013 seconds (size 1000, 1000 times), Average:  0.000133 seconds (size 10000, 10000 times)
+			//int dup2 = dup2(arr);   //Average:  0.000001 seconds (size 1000, 1000 times), Average:  0.000007 seconds, (size 10000, 10000 times)
+
+			long endT = System.nanoTime();
+			double time = (double) (endT - startT) / 1000000000;
+			//System.out.printf("Took %f seconds\n", time);
+			timings += time;
+			//System.out.printf("Answer : %s\n", dup1);
+		}
+		timings = timings / howManyRuns;
+		System.out.printf("Average:  %f seconds\n", timings);
+
+	}
+
+
+	public int dup1(int[] arr) {
+		Set<Integer> s = new HashSet<Integer>();
+		for(int i = 0; i < arr.length; i++){
+			if(!s.add(arr[i])){
+				return arr[i];
+			}
+		}
+		return -1;
+	}
+
+	public int dup2(int[] arr) {
+		int[] dd = new int[arr.length];
+		for(int i = 0; i < arr.length; i++){
+			if(dd[arr[i]] != 0){
+				return arr[i];
+			}
+			dd[arr[i]] = 1;
+		}
+		return -1;
+	}
+
+	public int[] getArrNPlus1(int size){
+		int[] arr = new int[size+1];
+		arr[0] = size;
+		for(int i = 1; i < size; i++){
+			arr[i] = i;
+		}
+		arr[size] = new Random().nextInt(1,size);;
+		arr = shuffleIntArray(arr);
+
+		return arr;
+	}
+
+	public int[] shuffleIntArray(int[] arr){
+		Random rand = new Random();
+
+		for (int i = 0; i < arr.length; i++) {
+			int randomIndexToSwap = rand.nextInt(arr.length);
+			int temp = arr[randomIndexToSwap];
+			arr[randomIndexToSwap] = arr[i];
+			arr[i] = temp;
+		}
+
+		return arr;
+	}
 
 
 	@Test
