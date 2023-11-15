@@ -12,6 +12,23 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 public class UtilTest {
+	
+	@Test
+	public void isPrimeTestSame() {
+		
+		int howMany = 1000;
+		List<Integer> p1 = Util.getPrimesUnder(howMany);
+		List<Integer> p2 = Util.getPrimesUnderWithSqrt(howMany);
+		
+		assertTrue(p1.size() == p2.size());
+		
+		for(int i = 0; i < p1.size(); i++) {
+			//System.out.println("Checking " + p1.get(i) + " vs " + p2.get(i));
+			assertTrue(p1.get(i).intValue() == p2.get(i).intValue());
+		}
+		//Util.compare2PrimeFunctionsTimings();
+		
+	}
 
 	@Test
 	public void testDuplicates() {
@@ -164,12 +181,11 @@ public class UtilTest {
 	public void getPrimesUnderTest() {
 		
 		int under = 10000000; // ten million
-		int primeCount = 664579 ;//there should be this many primes under ten million
+		int primeCount = 664579 ;// there should be this many primes under ten million
 		
 		List<Integer> primes = Util.getPrimesUnder(under);
 		
 		assertEquals(primeCount, primes.size());
-		
 		for(int p : primes) {
 			assertTrue(Util.isPrime(p));
 		}

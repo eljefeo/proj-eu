@@ -15,14 +15,7 @@ public class Problem62 implements Problem {
 
 		Find the smallest cube for which exactly five permutations of its digits are cube.
 	 
-Doing 2500
-Doing 2510	 
-A cube : 15926924096
-A cube : 10926269459
-A cube : 21694295069
-Found a thing : 15926924096 for 2516
-anything?
-	 
+
 	 */
 	
 

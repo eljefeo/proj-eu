@@ -20,29 +20,20 @@ public class Problem37 implements Problem {
 		p.runProblem();
 	}
 
-	public String problem() {
-		int max = 1000000, sum = 0, count = 0, expectedPrimeCount = 11;
-		
-		for (int i = expectedPrimeCount; i < max; i++) {
-			if (Util.isTruncatablePrimeBackwardsAndForwards(i)) {
-				System.out.println("is truncatable prime : " + i);
-				sum += i;
+	public Object problem() {
+		int sum = 0, count = 0, expectedPrimeCount = 11, num = 11;
+		while(count < expectedPrimeCount) {
+			if (Util.isTruncatablePrimeBackwardsAndForwards(num)) {
+				System.out.println("is truncatable prime : " + num);
+				sum += num;
 				count++;
 			}
-		}
-		if (count == expectedPrimeCount) {
-			System.out.println("Found all " + count + " primes! :: Sum : " + sum);
-																				 
-		} else {
-			System.out.println(
-					"There should only be 11 truncatable primes that are truncatable left to right and right to left, how the hell did you find "
-							+ count);
+			num += 2; //since we want primes, skip even numbers
 		}
 		
-		return "" + sum;
+		System.out.println("Found all " + count + " primes! :: Sum : " + sum);
+		
+		return sum;
 	}
-
-
-
 
 }
