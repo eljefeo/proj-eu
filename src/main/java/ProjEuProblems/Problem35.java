@@ -25,7 +25,7 @@ public class Problem35 implements Problem {
 		
 		for(int i=2; i<max; i++){
 			if(Util.isCircularPrime(i)){
-				System.out.println("cirprime: " + i);
+				//System.out.println("cirprime: " + i);
 				counter++;
 			}
 		}

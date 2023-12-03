@@ -10,17 +10,17 @@ public class Problem66 implements Problem { //Took 0.041852 seconds
 
 x^2 - Dy^2 = 1
 
-For example, when D=13, the minimal solution in x is 649^2 - 13×180^2 = 1.
+For example, when D=13, the minimal solution in x is 649^2 - 13ï¿½180^2 = 1.
 
 It can be assumed that there are no solutions in positive integers when D is square.
 
 By finding minimal solutions in x for D = {2, 3, 5, 6, 7}, we obtain the following:
 
-3^2 – 2×2^2 = 1
-2^2 – 3×1^2 = 1
-9^2 – 5×4^2 = 1  --> 9 is highlighted in red in the picture because it is the largest <= 7 as requested below
-5^2 – 6×2^2 = 1
-8^2 – 7×3^2 = 1
+3^2 ï¿½ 2ï¿½2^2 = 1
+2^2 ï¿½ 3ï¿½1^2 = 1
+9^2 ï¿½ 5ï¿½4^2 = 1  --> 9 is highlighted in red in the picture because it is the largest <= 7 as requested below
+5^2 ï¿½ 6ï¿½2^2 = 1
+8^2 ï¿½ 7ï¿½3^2 = 1
 
 Hence, by considering minimal solutions in x for D <= 7, the largest x is obtained when D=5.
 
@@ -57,7 +57,7 @@ Find the value of D <= 1000 in minimal solutions of x for which the largest valu
 		BigInteger maxX = BigInteger.ZERO;
 		int maxD = 0;
 		for(int d = 2; d <= max; d++) {
-			System.out.println("doing d= " + d);
+			//System.out.println("doing d= " + d);
 			BigInteger x = pellsEquation(d);
 			//period(23);
 			if(x != null && x.compareTo(maxX) == 1) {
@@ -122,7 +122,7 @@ Find the value of D <= 1000 in minimal solutions of x for which the largest valu
 				BigInteger dy2 = d.multiply(y.multiply(y));
 				//System.out.println("Next fraction: " + x + " / " + y + " with period: " + periodNum + " with result = " + x2 + " - " + dy2 + " = " + (x2.subtract(dy2)));
 				if(x2.subtract(dy2).compareTo(BigInteger.ONE) == 0) {
-					System.out.println("yay found it for d=" + d + ", x = " + x + ", y = " + y);
+					//System.out.println("yay found it for d=" + d + ", x = " + x + ", y = " + y);
 					return x;
 				}
 				

@@ -19,7 +19,7 @@ public class Problem39 implements Problem {
 		p.runProblem();
 	}
 	
-	public String problem(){
+	public Object problem(){
 		// Right triangle perimeter = a+b + sqrRoot(a^2 + b^2)
 		// a and b are the 2 sides on the right angle. C is the longest side
 		// a^2 + b^2 = c^2
@@ -37,7 +37,7 @@ public class Problem39 implements Problem {
 			}
 		}
 		//System.out.println("Answer: " + maxP + " with count " + maxPCount);
-		return "" + maxP;
+		return maxP;
 	}
 	
 
