@@ -55,7 +55,7 @@ public class Problem38 implements Problem {
 		}
 		
 		for(int[] arr : numsAndN){
-			System.out.println("Found sol : " + arr[0]  + " :: 1..." +arr[1] + " = " + arr[2] );
+			//System.out.println("Found sol : " + arr[0]  + " :: 1..." +arr[1] + " = " + arr[2] );
 		}
 		//System.out.println("Max : " + maxSol);
 		return "" + maxSol;
