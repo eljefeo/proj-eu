@@ -10,7 +10,7 @@ public class Problem67 implements Problem { //Took 0.003008 seconds
 
 	}
 
-	public String problem(){
+	public Object problem(){
 		int allnums[][] = {
 				{59},
 				{73, 41},
@@ -118,7 +118,7 @@ public class Problem67 implements Problem { //Took 0.003008 seconds
 		//System.out.println("Greatest Sum = " + greatestSum);
 		
 		
-		return "" + greatestSum;
+		return greatestSum;
 	}
 	
 }

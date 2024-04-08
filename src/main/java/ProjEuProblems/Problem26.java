@@ -34,7 +34,7 @@ public class Problem26 implements Problem { //Took 0.017057 seconds
 			if(remainderSize > biggestRemainderSet){
 				biggestRemainderSet = remainderSize;
 				biggestD = i;
-				System.out.println("New biggest set of remainders is size " + biggestRemainderSet + " for d=" + i);
+				//System.out.println("New biggest set of remainders is size " + biggestRemainderSet + " for d=" + i);
 			}
 		}
 		//System.out.println("Biggest set of remainders " + biggestRemainderSet + " for d=" + biggestD);

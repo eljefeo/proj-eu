@@ -45,7 +45,7 @@ How many Sundays fell on the first of the month during the twentieth century (1 
 					if(day==1 && dayOfWeek==1){
 						numOfSundaysOnFirstOfMonth++;
 					}
-					System.out.println("Year: " + year + ", Month: " + month + ", " + "day of month: " + day + ", day of the week: " + dayOfWeek);
+					//System.out.println("Year: " + year + ", Month: " + month + ", " + "day of month: " + day + ", day of the week: " + dayOfWeek);
 				}
 			}
 		}

@@ -31,7 +31,7 @@ In the first one-thousand expansions, how many fractions contain a numerator wit
 		p.runProblem();
 	}
 
-	public String problem() {
+	public Object problem() {
 		//1 + 3/2	     7/5      17/12		41/29 
 		
 		//forget the one for now
@@ -62,8 +62,7 @@ In the first one-thousand expansions, how many fractions contain a numerator wit
 		 */
 		
 		int howManyIterations = 1000;
-		int res = Util.calcSquareRootOfTwoCheckIfNumerMoreDigitsThanDenom(howManyIterations);
-		return "" + res;
+		return Util.calcSquareRootOfTwoCheckIfNumerMoreDigitsThanDenom(howManyIterations);
 	}
 	
 

@@ -36,14 +36,16 @@ Find the lowest sum for a set of five primes for which any two primes concatenat
 		int end = 10000;
 		int start = 3;
 		int comboSize = 5;
-		int pCount = 0;
+
 		
 		List<Integer> primes = Util.getPrimesUnder(end);
-		for(int i=start; i<end; i+=2) {
-			if(Util.isPrime(i)) {
-				pCount++;
-			}
-		}
+		int pCount = primes.size() - 1;
+		//for(int i=start; i<end; i+=2) {
+		//	if(Util.isPrime(i)) {
+		//		pCount++;
+		//	}
+		//}
+		//System.out.println("pCount from pcoutn: " + pCount + " : " + primes.size());
 		int[] nums = new int[pCount];
 	
 		

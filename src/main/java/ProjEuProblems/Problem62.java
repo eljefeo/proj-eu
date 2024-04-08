@@ -23,7 +23,7 @@ public class Problem62 implements Problem {
 	
 	public static void main(String[] args) { //Took 1.548868 seconds
 		
-		allNums = new HashSet<Long>();
+		allNums = new HashSet<>();
 		Problem p = new Problem62();
 		p.runProblem();
 		
@@ -48,7 +48,7 @@ public class Problem62 implements Problem {
 	 no 2, no
 	 */
 	
-	public String problem() {
+	public Object problem() {
 		int min = 200;
 		int targetNumberOfCubes = 5;
 		
@@ -58,9 +58,9 @@ public class Problem62 implements Problem {
 		long digitTester = 1;
 		while(true) {
 			
-			if(i%1000 == 0) { // just for logging
-				System.out.println("Doing " + i + "....");
-			}
+			//if(i%1000 == 0) { // just for logging
+			//	System.out.println("Doing " + i + "....");
+			//}
 			
 			long cb = (long) Math.pow(i, 3);
 			
@@ -80,7 +80,7 @@ public class Problem62 implements Problem {
 				
 				if(newCount == targetNumberOfCubes) {
 					System.out.println("Found : " + res);
-					return "" + res;
+					return res;
 				} else {
 					alln.put(res, newCount);
 				}
@@ -95,6 +95,7 @@ public class Problem62 implements Problem {
 	}
 	
 	public static long alreadyHas2(long n, Map<Long, Integer> alln) {
+
 		for(Long l : alln.keySet()) {
 			if(Util.isPermutationOf(n, l)) {
 				return l;
@@ -151,7 +152,7 @@ public class Problem62 implements Problem {
 		if(s.startsWith("0"))
 			return;
 		
-		if(r.length() == 0){
+		if(r.isEmpty()){
 			if(Util.isCube(Long.parseLong(s))){
 				all.add(s);
 			}

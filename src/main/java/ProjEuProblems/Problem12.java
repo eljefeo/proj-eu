@@ -42,7 +42,7 @@ public class Problem12 implements Problem { // Took 0.215236 seconds
 				return tri;
 			} else if (factors.size() > biggestFactorSize) {
 				biggestFactorSize = factors.size();
-				System.out.println("new largest: " + tri + " : with " + biggestFactorSize + " factors"); //just to log some interesting data
+				//System.out.println("new largest: " + tri + " : with " + biggestFactorSize + " factors"); //just to log some interesting data
 			}
 			ind++;
 		}

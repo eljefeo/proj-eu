@@ -40,7 +40,7 @@ public class Problem63 implements Problem { //Took 0.130695 seconds
 				if(b2.toString().length() == j) {
 					count++;
 					
-					System.out.println("Count at " + count + " for i=" + i + " and exponent=" + j + " for " + b2);
+					//System.out.println("Count at " + count + " for i=" + i + " and exponent=" + j + " for " + b2);
 						
 					
 				}
