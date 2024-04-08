@@ -24,7 +24,7 @@ public class Problem37 implements Problem {
 		int sum = 0, count = 0, expectedPrimeCount = 11, num = 11;
 		while(count < expectedPrimeCount) {
 			if (Util.isTruncatablePrimeBackwardsAndForwards(num)) {
-				System.out.println("is truncatable prime : " + num);
+				//System.out.println("is truncatable prime : " + num);
 				sum += num;
 				count++;
 			}

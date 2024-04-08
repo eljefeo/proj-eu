@@ -136,7 +136,7 @@ one hundred decimal digits for all the irrational square roots.
 			
 			decCount = 0;
 			roots.put(i.intValue(),decs);
-			System.out.println("Square root of " + i + ": " + decs);
+			//System.out.println("Square root of " + i + ": " + decs);
 			total += addFirstThisManyDigitsInString(decs, numDecimals); //only add the first hundred, we calculated extra for accuracy during mulo
 			i = i.add(BigInteger.ONE);
 		}

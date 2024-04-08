@@ -28,9 +28,9 @@ public class Problem63 implements Problem { //Took 0.130695 seconds
 		for(int i = min; i < max; i++) {
 			
 			
-			if(i%100 == 0) { // just for logging
-				System.out.println("Doing " + i + "....");
-			}
+			//if(i%100 == 0) { // just for logging
+			//	System.out.println("Doing " + i + "....");
+			//}
 			
 			BigInteger b1 = new BigInteger("" + i);
 			
