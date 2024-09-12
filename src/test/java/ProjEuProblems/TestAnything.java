@@ -1,5 +1,6 @@
 package ProjEuProblems;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -8,12 +9,55 @@ import java.util.Set;
 import ProjEuUtil.Util;
 
 public class TestAnything implements Problem{
-	
-	
-	
-	
+
 
 	public static void main(String[] args) {
+
+		//int test = 9, max = 1000000;
+		long startT = System.nanoTime();
+
+		//int[] n = new int[] {6,1,2,4,5,6,7,8};
+		//System.out.println(fizzBuzz(500000));
+		new TestAnything().runProblem();
+		//String answer = "" + problem();
+		long endT = System.nanoTime();
+		double time = (double) (endT - startT) / 1000000000;
+		System.out.printf("\nTook %f seconds\n", time);
+		//System.out.printf("Answer : %s", answer);
+
+
+
+
+		//List<Integer> primesB = Util.getPrimesUnder(max);
+		//testPrimeAccuracy();
+		//System.out.println("Class: " + pp.getClass().toString());
+		//int classNum = Integer.parseInt(pp.getClass().toString().split("class Problem")[1]);
+		//System.out.println("dup digits: " + Util.intHasDuplicateDigits2(33));
+	}
+
+
+	public Object problem() {
+		//public String problem() {
+		int max = 270000;
+		max--;
+
+		BigInteger a = BigInteger.ZERO;
+		BigInteger b = BigInteger.ONE;
+		BigInteger c = BigInteger.ZERO;
+		for(int i = 0; i < max; i++){
+			c = a.add(b);
+			a = b;
+			b = c;
+
+		}
+
+		System.out.println("a= " + a + "\nb = " + b + "\nc = " + c + "\nnum of digits = " + (c.toString().length()));
+
+		return c;
+	}
+	
+
+	public static void main2(String[] args) {
 		
 		Problem51 pp = new Problem51();
 		
@@ -89,7 +133,7 @@ public class TestAnything implements Problem{
 		
 	}
 	
-	public String problem() {
+	public String problem3() {
 	//public String problem() {
 		int max = 70000;
 		List<Integer> primesB = Util.getPrimesUnder(max);
