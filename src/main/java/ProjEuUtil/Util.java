@@ -2131,10 +2131,10 @@ public static boolean hasSameUniqueDigits(int a, int b){
 			max--;
 		
 		for(int i=max; i > 2; i-=inc) {
-			if(isDEven && i % 2 == 0) {
-				//System.out.println("continuing because isdevn and " + i + " % 2 == 0");
-				continue;
-			}
+			//if(isDEven && i % 2 == 0) {
+			//	System.out.println("continuing because isdevn and " + i + " % 2 == 0");
+			//	continue;
+			//}
 			
 			if(i == rightDenomGoal) {
 				//System.out.println("continuing because " + i + " == " + rightDenomGoal);

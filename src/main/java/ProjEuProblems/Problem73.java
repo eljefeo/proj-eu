@@ -50,7 +50,7 @@ How many fractions lie between 1/3 and 1/2 in the sorted set of reduced proper f
 
 	
 	@Override
-	public String problem() {
+	public Object problem() {
 		// we go through all fractions for each denom
 		// we count the fractions that are > 1/3 and < 1/2 and also that are not reduceable
 		List<Integer> primes = new ArrayList<Integer>();
@@ -115,7 +115,7 @@ How many fractions lie between 1/3 and 1/2 in the sorted set of reduced proper f
 
 		System.out.println("Counter = " + counter);
 		
-		return "" + counter;
+		return counter;
 	}
 	public String problemBestChanceStillSucks() {
 		int max = 12000, counter = 0;
@@ -296,10 +296,10 @@ How many fractions lie between 1/3 and 1/2 in the sorted set of reduced proper f
 	
 	
 	when we go from 4/5 we do 3/4 - this does seem to follow our first instinct
-	but then we would think we should do 3/4 -> 2/3...
+	then we would think we should do 3/4 -> 2/3...
 	buuuuuttttttt there appears to be a fraction that fits in between that ::: 5/7
 	... so what we could do is get the next fraction (in this case 2/3)... 
-	... bt then somehow come up with a way to identify anything that could fit in between?
+	... then somehow come up with a way to identify anything that could fit in between?
 	
 	 ....hmmmmmmmmmmmmmmm
 	 
