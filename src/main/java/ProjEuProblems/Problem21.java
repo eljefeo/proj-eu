@@ -4,7 +4,7 @@ import java.util.Set;
 
 import ProjEuUtil.Util;
 
-public class Problem21 implements Problem { //Took 0.076784 seconds
+public class Problem21 implements Problem { //Took 0.043127 seconds
 
 	public static void main(String[] args) {
 		Problem p = new Problem21();

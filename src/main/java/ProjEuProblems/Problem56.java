@@ -3,7 +3,7 @@ import java.math.BigInteger;
 
 import ProjEuUtil.Util;
 
-public class Problem56 implements Problem { //Took 0.092728 seconds
+public class Problem56 implements Problem { //Took 0.055890 seconds
 
 	
 	/*
@@ -21,7 +21,7 @@ Considering natural numbers of the form, a^b, where a, b < 100, what is the maxi
 	}
 
 	
-	public String problem() {
+	public Object problem() {
 		
 		int max = 100;
 		int largestSum = 0;
@@ -30,7 +30,7 @@ Considering natural numbers of the form, a^b, where a, b < 100, what is the maxi
 		
 		for(int i=1; i<max; i++) {
 			for(int j=1; j<max; j++) {
-				BigInteger b = new BigInteger(""+i);
+				BigInteger b = new BigInteger(Integer.toString(i));
 				BigInteger s = b.pow(j);
 				int sum = Util.addUpAllDigits(s);
 				if(sum > largestSum) {
@@ -42,7 +42,7 @@ Considering natural numbers of the form, a^b, where a, b < 100, what is the maxi
 		}
 		
 		System.out.println("Largest sum: " + largestSum + " from " + largestI + " to the power " + largestJ);
-		return "" + largestSum;
+		return largestSum;
 	}
 	
 

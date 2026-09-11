@@ -1298,8 +1298,7 @@ public static boolean isPalindromeIntSlower(int num) {
 	}
 	 
 	 public static BigInteger reverseDigitsThenAdd(BigInteger num) {
-			String reversed = Util.reverseString("" + num);
-			return num.add(new BigInteger(reversed));
+			return num.add(new BigInteger(Util.reverseString(num.toString())));
 	 }
 	 
 
@@ -1834,7 +1833,7 @@ public static boolean hasSameUniqueDigits(int a, int b){
 	
 	/*
 	 * 
-	 * THESE FUNCTIONS ARE COPIED FROM DEADHORSE EVAL BY ELJEFEO - HOPEFULLY IF THEY GET UPDATED OVER THERE I REMEMBER TO UPDATE HERE....
+	 * THESE FUNCTIONS ARE COPIED FROM DEADHORSE EVAL BY ELJEFEO (me) - HOPEFULLY IF THEY GET UPDATED OVER THERE I REMEMBER TO UPDATE HERE....
 	 * SHOULD DO MAVEN LOL
 	 * 
 	 */
@@ -2132,10 +2131,10 @@ public static boolean hasSameUniqueDigits(int a, int b){
 			max--;
 		
 		for(int i=max; i > 2; i-=inc) {
-			if(isDEven && i % 2 == 0) {
-				//System.out.println("continuing because isdevn and " + i + " % 2 == 0");
-				continue;
-			}
+			//if(isDEven && i % 2 == 0) {
+			//	System.out.println("continuing because isdevn and " + i + " % 2 == 0");
+			//	continue;
+			//}
 			
 			if(i == rightDenomGoal) {
 				//System.out.println("continuing because " + i + " == " + rightDenomGoal);
@@ -2179,7 +2178,7 @@ public static boolean hasSameUniqueDigits(int a, int b){
 
 	public static boolean isLychrelNumber(int n, int howManyIterationsToCheck) {
 		BigInteger bn = new BigInteger("" + n);
-		for (int i = 1; i < howManyIterationsToCheck; i++) { // this will be 50 instead of 10, just starting with 10 to test size of these things
+		for (int i = 1; i < howManyIterationsToCheck; i++) {
 			bn = Util.reverseDigitsThenAdd(bn);
 			if (Util.isPalindromeString(bn.toString())) {
 				return false;

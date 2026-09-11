@@ -1,7 +1,7 @@
 package ProjEuProblems;
 import ProjEuUtil.Util;
 
-public class Problem55 implements Problem { //Took 0.082786 seconds
+public class Problem55 implements Problem { //Took 0.057438 seconds
 
 	/*
 	 * If we take 47, reverse and add, 47 + 74 = 121, which is palindromic.
@@ -39,7 +39,7 @@ public class Problem55 implements Problem { //Took 0.082786 seconds
 
 	}
 
-	public String problem() {
+	public Object problem() {
 		//int sn = 196; // This is a lychrel number (well it seems to be at least... nothing has been proven)
 		int maxIterations = 50;
 		int maxNum = 10000;
@@ -50,7 +50,7 @@ public class Problem55 implements Problem { //Took 0.082786 seconds
 			}
 		}
 		System.out.println("Count of Lychrel numbers below " + maxNum + " is ::: " + counter);
-		return "" + counter;
+		return counter;
 	}
 
 

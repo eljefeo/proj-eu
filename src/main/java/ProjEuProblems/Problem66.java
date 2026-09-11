@@ -1,7 +1,7 @@
 package ProjEuProblems;
 import java.math.BigInteger;
 
-public class Problem66 implements Problem { //Took 0.041852 seconds
+public class Problem66 implements Problem { //Took 0.025771 seconds
 	
 	/*
 	 
@@ -52,7 +52,7 @@ Find the value of D <= 1000 in minimal solutions of x for which the largest valu
 }
 	
 	
-	public String problem() {
+	public Object problem() {
 		int max = 1000;
 		BigInteger maxX = BigInteger.ZERO;
 		int maxD = 0;
@@ -68,7 +68,7 @@ Find the value of D <= 1000 in minimal solutions of x for which the largest valu
 		}
 		
 		System.out.println("Max d = " + maxD + ", with x = " + maxX);
-		return "" + maxD;
+		return maxD;
 		
 	}
 	
@@ -81,10 +81,10 @@ Find the value of D <= 1000 in minimal solutions of x for which the largest valu
 				return null; // dont do perfect squares...
 			}
 			int sni = (int)sn;
-			BigInteger d = new BigInteger(""+i);
-			BigInteger snb = new BigInteger(""+sni);
-			BigInteger firstWholeNum = new BigInteger(""+sni);
-			BigInteger startNumerator = new BigInteger(""+firstWholeNum);
+			BigInteger d = new BigInteger(String.valueOf(i));
+			BigInteger snb = new BigInteger(String.valueOf(sni));
+			BigInteger firstWholeNum = new BigInteger(String.valueOf(sni));
+			BigInteger startNumerator = new BigInteger(String.valueOf(firstWholeNum));
 			BigInteger startDenom = BigInteger.ONE;
 			BigInteger prevNum = BigInteger.ONE;
 			BigInteger prevDenom = BigInteger.ZERO;
@@ -95,7 +95,7 @@ Find the value of D <= 1000 in minimal solutions of x for which the largest valu
 			// we use the 4 to get the next period 1
 			// we do 4 * period 1 + prev fraction numerator (1 to start)
 			
-			firstWholeNum = firstWholeNum.multiply(new BigInteger(""+(-1)));
+			firstWholeNum = firstWholeNum.multiply(new BigInteger(String.valueOf((-1))));
 			BigInteger firstBottom = BigInteger.ONE;
 			
 			while(true) {
@@ -103,9 +103,9 @@ Find the value of D <= 1000 in minimal solutions of x for which the largest valu
 				// its numerator * period (next whole number) and then + the previous numerator. This gives you the next numerator for the next convergent fraction
 				// same goes for denominator : denominator * period (next whole number) and then + the previous denominator
 				// this way we just keep figuring out the next fraction until we find one that works.
-				BigInteger periodNum = BigInteger.ZERO;
+				BigInteger periodNum;
 				BigInteger firstNumer = firstBottom; // do reciprocal first, numer becomes denom for next iteration
-				firstWholeNum = firstWholeNum.multiply(new BigInteger(""+(-1)));
+				firstWholeNum = firstWholeNum.multiply(new BigInteger(String.valueOf((-1))));
 				firstBottom = d.subtract(firstWholeNum.multiply(firstWholeNum)); // 23 - 9 = 14
 				firstBottom = firstBottom.divide(firstNumer);
 				periodNum = snb.add(firstWholeNum).divide(firstBottom);

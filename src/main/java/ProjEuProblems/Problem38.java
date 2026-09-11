@@ -26,7 +26,7 @@ public class Problem38 implements Problem {
 		p.runProblem();
 	}
 
-	public String problem() { // TODO when do we stop...why do we just go to 999999
+	public Object problem() { // TODO when do we stop...why do we just go to 999999
 		int maxSol = 0;
 		int min = 1;
 		int max = 9999; // if we start doing 5 digit numbers we will at least end up with 10 digits in the result, too many
@@ -54,11 +54,11 @@ public class Problem38 implements Problem {
 
 		}
 		
-		for(int[] arr : numsAndN){
-			//System.out.println("Found sol : " + arr[0]  + " :: 1..." +arr[1] + " = " + arr[2] );
-		}
+		//for(int[] arr : numsAndN){
+		//	System.out.println("Found sol : " + arr[0]  + " :: 1..." +arr[1] + " = " + arr[2] );
+		//}
 		//System.out.println("Max : " + maxSol);
-		return "" + maxSol;
+		return maxSol;
 	}
 	
 /*	private static int[] appendIntArrayToIntArray(int[] someNums, int[]allNums){

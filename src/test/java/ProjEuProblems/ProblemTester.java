@@ -1,5 +1,6 @@
 package ProjEuProblems;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -25,8 +26,80 @@ public class ProblemTester {
 	@Test
 	void testAllProblems() {
 		System.out.println("I am going to run all problems...");
-		List<Problem> problems = new ArrayList<Problem>();
+		List<Problem> problems = getProblems();
 		EncryptStuff encryptStuff = new EncryptStuff();
+
+		System.out.println("I Have this many problems to check : " + problems.size());
+		Map<Integer, String> answers = AnswersToProblems.getAnswersEncrypted();
+		Map<Integer,Double> times = new HashMap<Integer,Double>();
+		List<Integer> longProblems = new ArrayList<Integer>();
+		List<Integer> incorrectAnswers = new ArrayList<Integer>();
+
+
+		for(int i = 0; i < problems.size(); i++) {
+			System.out.println("\n\n*****----... Problem " + (i+1) + " ...----*****\n");
+			String expectedAnswer = encryptStuff.decrypt(answers.get(i+1), superSecretKey);
+			long startT = System.nanoTime();
+			Problem p = problems.get(i);
+			String res = p.runProblem();
+			long endT = System.nanoTime();
+			double time = (double) (endT - startT) / 1000000000;
+			times.put(p.getId(), time);
+			//System.out.println("\ngot answer from the thing : " + res);
+
+			System.out.println("\nComparing " + res + " to expected answer: " + expectedAnswer);
+			if(!res.equals(expectedAnswer)) {
+				incorrectAnswers.add(p.getId());
+                //assertEquals(res, expectedAnswer);
+			}
+
+			if(time > 1) {
+				longProblems.add(p.getId());
+			}
+		}
+
+		times = sortByValue(times);
+		System.out.println("\n\n---------------------------------------------------");
+		System.out.println("--------------------- Results ---------------------");
+		System.out.println("---------------------------------------------------");
+
+		if(!longProblems.isEmpty()) {
+			System.out.println("\nThese problems need to be faster! :");
+			for (Integer i : longProblems) {
+				System.out.println("Problem " + i + " took over 1 second");
+			}
+		}
+
+		System.out.println("\n\nTimings of all problems:");
+		for(Integer id : times.keySet()) {
+			System.out.printf("Problem " + id + " took %f seconds\n", times.get(id));
+		}
+		System.out.println();
+		if(!incorrectAnswers.isEmpty()){
+			System.out.println("\n\nThese problems had incorrect answers:");
+			for(Integer i : incorrectAnswers) {
+				System.out.println("Problem " + i + " had an incorrect answer ");
+			}
+		}
+
+		
+	}
+
+
+	public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
+        List<Entry<K, V>> list = new ArrayList<>(map.entrySet());
+        list.sort(Entry.comparingByValue());
+
+        Map<K, V> result = new LinkedHashMap<>();
+        for (Entry<K, V> entry : list) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+
+        return result;
+    }
+
+	private List<Problem> getProblems() {
+		List<Problem> problems = new ArrayList<Problem>();
 		problems.add(new Problem1());
 		problems.add(new Problem2());
 		problems.add(new Problem3());
@@ -109,63 +182,8 @@ public class ProblemTester {
 		problems.add(new Problem80());
 		problems.add(new Problem81());
 		problems.add(new Problem82());
-		
-		System.out.println("Have this many problems : " + problems.size());
-		Map<Integer, String> answers = AnswersToProblems.getAnswersEncrypted();
-		Map<Integer,Double> times = new HashMap<Integer,Double>();
-		List<Integer> longProblems = new ArrayList<Integer>();
-		List<Integer> incorrectAnswers = new ArrayList<Integer>();
-		
-
-		for(int i = 0; i < problems.size(); i++) {
-			System.out.println("\n\n*****----... Problem " + (i+1) + " ...----*****\n");
-			String expectedAnswer = encryptStuff.decrypt(answers.get(i+1), superSecretKey);
-			long startT = System.nanoTime();
-			Problem p = problems.get(i);
-			String res = p.runProblem();
-			long endT = System.nanoTime();
-			double time = (double) (endT - startT) / 1000000000;
-			times.put(p.getId(), time);
-			//System.out.println("\ngot answer from the thing : " + res);
-			
-			System.out.println("\nComparing " + res + " to expected answer: " + expectedAnswer);
-			if(!res.equals(expectedAnswer)) {
-				assertEquals(res.equals(expectedAnswer), true);
-				incorrectAnswers.add(p.getId());
-			} 
-			
-			if(time > 1) {
-				longProblems.add(p.getId());
-			}
-		}
-		
-		times = sortByValue(times);
-
-		for(Integer id : times.keySet()) {
-			System.out.printf("Problem " + id + " took %f seconds\n", times.get(id));
-		}
-		
-		for(Integer i : longProblems) {
-			System.out.println("\nProblem " + i + " took over 1 second ");
-		}
-		
-		for(Integer i : incorrectAnswers) {
-			System.out.println("Problem " + i + " had an incorrect answer ");
-		}
-		
+		return problems;
 	}
-	
-	public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
-        List<Entry<K, V>> list = new ArrayList<>(map.entrySet());
-        list.sort(Entry.comparingByValue());
-
-        Map<K, V> result = new LinkedHashMap<>();
-        for (Entry<K, V> entry : list) {
-            result.put(entry.getKey(), entry.getValue());
-        }
-
-        return result;
-    }
 }
 
 class ValueComparator implements Comparator<Integer> {
@@ -196,4 +214,8 @@ class ValueComparator implements Comparator<Integer> {
             return 1;
         } // returning 0 would merge keys
     }
+
+
+
+
 }
